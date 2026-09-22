@@ -1,0 +1,21 @@
+---
+layout: base.njk
+title: Sprache
+section: sprache
+---
+<h1 class="page-title">Sprache</h1>
+<p class="page-intro">*(Replace with a standing intro about this topic.)*</p>
+
+{% if collections.sprachePosts.length %}
+<ul class="entry-list">
+  {% for post in collections.sprachePosts %}
+  <li>
+    <span class="entry-date">{{ post.data.date | dateDisplay }}</span>
+    <a class="entry-title" href="{{ post.url }}">{{ post.data.title }}</a>
+    {% if post.data.excerpt %}<p class="entry-excerpt">{{ post.data.excerpt }}</p>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty-note">No entries yet.</p>
+{% endif %}

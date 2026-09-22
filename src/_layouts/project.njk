@@ -1,0 +1,19 @@
+---
+layout: base.njk
+section: projects
+---
+<a class="back-link" href="/projects/">← Back to Projects</a>
+<article class="post">
+  <span class="project-kind">{{ kind }}</span>
+  <h1>{{ title }}</h1>
+  {{ content | safe }}
+
+  {% if embed %}
+  <p><iframe src="{{ embed }}" width="100%" height="500" style="border:1px solid #e5ddcf; border-radius:6px;" loading="lazy"></iframe></p>
+  {% endif %}
+
+  <div class="project-links">
+    {% if repo %}<a href="{{ repo }}" target="_blank" rel="noopener">View source</a>{% endif %}
+    {% if demo %}<a href="{{ demo }}" target="_blank" rel="noopener">Live demo</a>{% endif %}
+  </div>
+</article>

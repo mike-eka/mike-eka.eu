@@ -1,0 +1,10 @@
+---
+layout: base.njk
+section: blog
+---
+<a class="back-link" href="/blog/">← Back to Blog</a>
+<article class="post">
+  <h1>{{ title }}</h1>
+  <span class="entry-date">{{ date | dateDisplay }}</span>
+  {{ content | safe }}
+</article>

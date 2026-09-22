@@ -1,0 +1,21 @@
+---
+layout: base.njk
+title: Blog
+section: blog
+---
+<h1 class="page-title">Blog</h1>
+<p class="page-intro">Short articles and notes.</p>
+
+{% if collections.posts.length %}
+<ul class="entry-list">
+  {% for post in collections.posts %}
+  <li>
+    <span class="entry-date">{{ post.data.date | dateDisplay }}</span>
+    <a class="entry-title" href="{{ post.url }}">{{ post.data.title }}</a>
+    {% if post.data.excerpt %}<p class="entry-excerpt">{{ post.data.excerpt }}</p>{% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty-note">No posts yet.</p>
+{% endif %}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>html, body { margin: 0; overflow: hidden; background: #fffaf0; }</style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+</head>
+<body>
+<script>
+  // Example p5.js sketch: a few orbiting dots. Replace with your own.
+  let angle = 0;
+  function setup() {
+    createCanvas(windowWidth, 420);
+  }
+  function draw() {
+    background(255, 250, 240);
+    translate(width / 2, height / 2);
+    for (let i = 0; i < 5; i++) {
+      const r = 40 + i * 30;
+      const a = angle + i * (TWO_PI / 5);
+      const x = r * cos(a);
+      const y = r * sin(a);
+      noStroke();
+      fill(191, 87, 72);
+      circle(x, y, 14);
+    }
+    angle += 0.02;
+  }
+  function windowResized() {
+    resizeCanvas(windowWidth, 420);
+  }
+</script>
+</body>
+</html>

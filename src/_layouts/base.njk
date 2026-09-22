@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} · {% endif %}Mike Eka</title>
+  {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+  <h1><a href="/">Mike Eka</a></h1>
+
+  <div id="menu">
+    <div class="item"><a href="/blog/" class="{% if section == 'blog' %}current{% endif %}">Blog</a></div>
+    <div class="item"><a href="/bio/" class="{% if section == 'bio' %}current{% endif %}">Bio</a></div>
+    <div class="item"><a href="/sprache/" class="{% if section == 'sprache' %}current{% endif %}">Sprache</a></div>
+    <div class="item"><a href="/polit/" class="{% if section == 'polit' %}current{% endif %}">Polit</a></div>
+    <div class="item"><a href="/projects/" class="{% if section == 'projects' %}current{% endif %}">Projects</a></div>
+  </div>
+
+  <main>
+    {{ content | safe }}
+  </main>
+
+  <footer>
+    <a href="https://github.com/mike-eka/mike-eka.eu" target="_blank" rel="noopener">Source on GitHub</a>
+  </footer>
+
+  <script>
+    const container = document.getElementById('menu');
+    [...container.children].forEach((el, i) => {
+      el.style.setProperty('--offset', i); // 0-based index
+    });
+  </script>
+
+</body>
+
+</html>
