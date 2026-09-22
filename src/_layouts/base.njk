@@ -32,9 +32,33 @@
 
   <script>
     const container = document.getElementById('menu');
-    [...container.children].forEach((el, i) => {
-      el.style.setProperty('--offset', i); // 0-based index
-    });
+    const items = [...container.children];
+    const MOBILE_BREAKPOINT = 640; // keep in sync with the CSS media query
+    const RIGHT_MARGIN = 60; // px kept clear on the right edge
+
+    function layoutMenu() {
+      if (window.innerWidth <= MOBILE_BREAKPOINT) {
+        // Below the breakpoint the CSS media query stacks items flush left;
+        // clear any inline offset so it doesn't fight with that.
+        items.forEach((el) => { el.style.marginLeft = ''; });
+        return;
+      }
+
+      // Reset offsets before measuring, so widths reflect an unshifted layout.
+      items.forEach((el) => { el.style.marginLeft = '0px'; });
+
+      const startX = container.getBoundingClientRect().left;
+      const lastItemWidth = items[items.length - 1].getBoundingClientRect().width;
+      const available = window.innerWidth - startX - lastItemWidth - RIGHT_MARGIN;
+      const step = items.length > 1 ? available / (items.length - 1) : 0;
+
+      items.forEach((el, i) => {
+        el.style.marginLeft = Math.max(0, step * i) + 'px';
+      });
+    }
+
+    layoutMenu();
+    window.addEventListener('resize', layoutMenu);
   </script>
 
 </body>
