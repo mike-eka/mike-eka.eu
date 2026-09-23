@@ -3,19 +3,20 @@ layout: base.njk
 title: Blog
 section: blog
 ---
-<h1 class="page-title">Blog</h1>
-<p class="page-intro">Short articles and notes.</p>
+{% set posts = collections.posts | byLocale(locale) %}
+<h1 class="page-title">{{ i18n[locale].blog }}</h1>
+<p class="page-intro">Kurze Artikel und Notizen.</p>
 
-{% if collections.posts.length %}
+{% if posts.length %}
 <ul class="entry-list">
-  {% for post in collections.posts %}
+  {% for post in posts %}
   <li>
-    <span class="entry-date">{{ post.data.date | dateDisplay }}</span>
+    <span class="entry-date">{{ post.data.date | dateDisplay(locale) }}</span>
     <a class="entry-title" href="{{ post.url }}">{{ post.data.title }}</a>
     {% if post.data.excerpt %}<p class="entry-excerpt">{{ post.data.excerpt }}</p>{% endif %}
   </li>
   {% endfor %}
 </ul>
 {% else %}
-<p class="empty-note">No posts yet.</p>
+<p class="empty-note">{{ i18n[locale].noPosts }}</p>
 {% endif %}

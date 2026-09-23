@@ -4,7 +4,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/fonts");
   eleventyConfig.addPassthroughCopy("src/js");
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
-  eleventyConfig.addPassthroughCopy("src/projects/**/*.{js,png,jpg,jpeg,svg,gif,mp3,wav}");
+  eleventyConfig.addPassthroughCopy("src/**/projects/**/*.{js,png,jpg,jpeg,svg,gif,mp3,wav}");
   eleventyConfig.addPassthroughCopy("src/embeds");
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
 
@@ -23,12 +23,31 @@ module.exports = function (eleventyConfig) {
     collectionApi.getFilteredByTag("project").sort((a, b) => a.data.title.localeCompare(b.data.title))
   );
 
-  eleventyConfig.addFilter("dateDisplay", (date) => {
-    return new Date(date).toLocaleDateString("de-DE", {
+  eleventyConfig.addFilter("dateDisplay", (date, locale) => {
+    return new Date(date).toLocaleDateString(locale === "en" ? "en-GB" : "de-DE", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+  });
+
+  // Filters a collection down to items in the given locale (used so the
+  // German and English versions of Blog/Sprache/Polit/Projects can share
+  // one set of collections instead of duplicating them per language).
+  eleventyConfig.addFilter("byLocale", (items, locale) =>
+    (items || []).filter((item) => (item.data.locale || "de") === locale)
+  );
+
+  // Computes the URL of the other-language version of the current page,
+  // assuming the same page exists at the same path under /en/ (or without
+  // it). If a specific post/project hasn't been translated yet, this will
+  // point at a URL that doesn't exist -- that's expected until you add a
+  // matching file under src/en/ (or src/) with the same file name.
+  eleventyConfig.addFilter("otherLocaleUrl", (url, locale) => {
+    if (locale === "en") {
+      return url.replace(/^\/en\//, "/").replace(/^\/en$/, "/");
+    }
+    return "/en" + url;
   });
 
   return {

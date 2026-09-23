@@ -1,11 +1,11 @@
 ---
 layout: base.njk
-title: Sprache
-section: sprache
+title: Blog
+section: blog
 ---
-{% set posts = collections.sprachePosts | byLocale(locale) %}
-<h1 class="page-title">{{ i18n[locale].sprache }}</h1>
-<p class="page-intro">*(Replace with a standing intro about this topic.)*</p>
+{% set posts = collections.posts | byLocale(locale) %}
+<h1 class="page-title">{{ i18n[locale].blog }}</h1>
+<p class="page-intro">Short articles and notes.</p>
 
 {% if posts.length %}
 <ul class="entry-list">

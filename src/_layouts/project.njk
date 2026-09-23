@@ -2,7 +2,8 @@
 layout: base.njk
 section: projects
 ---
-<a class="back-link" href="/projects/">← Back to Projects</a>
+{% set prefix = "/en" if locale == "en" else "" %}
+<a class="back-link" href="{{ prefix }}/projects/">{{ i18n[locale].backToProjects }}</a>
 <article class="post">
   <span class="project-kind">{{ kind }}</span>
   <h1>{{ title }}</h1>

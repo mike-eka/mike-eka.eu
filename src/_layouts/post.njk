@@ -2,9 +2,10 @@
 layout: base.njk
 section: blog
 ---
-<a class="back-link" href="/blog/">← Back to Blog</a>
+{% set prefix = "/en" if locale == "en" else "" %}
+<a class="back-link" href="{{ prefix }}/blog/">{{ i18n[locale].backToBlog }}</a>
 <article class="post">
   <h1>{{ title }}</h1>
-  <span class="entry-date">{{ date | dateDisplay }}</span>
+  <span class="entry-date">{{ date | dateDisplay(locale) }}</span>
   {{ content | safe }}
 </article>

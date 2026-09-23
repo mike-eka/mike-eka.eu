@@ -397,6 +397,26 @@ a {
 
 a:hover {
     color: #bf5748;
+    font-weight: bold;
+}
+
+.lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 25px;
+    font-size: 0.9rem;
+}
+
+.lang-toggle .current {
+    color: #bf5748;
+    font-weight: bold;
+}
+
+@media (max-width: 640px) {
+    .lang-toggle {
+        top: 12px;
+        right: 15px;
+    }
 }
 
 #menu {

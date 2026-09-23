@@ -5,7 +5,7 @@ section: projects
 ---
 {% set projects = collections.projects | byLocale(locale) %}
 <h1 class="page-title">{{ i18n[locale].projects }}</h1>
-<p class="page-intro">Kleine p5.js-Sketches, D3.js-Visualisierungen und NLP-Skripte.</p>
+<p class="page-intro">Small p5.js sketches, D3.js visualizations, and NLP scripts.</p>
 
 {% if projects.length %}
 <div class="project-grid">

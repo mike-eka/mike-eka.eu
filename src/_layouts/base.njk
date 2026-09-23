@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="{{ locale }}">
 
 <head>
   <meta charset="utf-8">
@@ -12,14 +12,25 @@
 
 <body>
 
-  <h1><a href="/">Mike Eka</a></h1>
+  {% set prefix = "/en" if locale == "en" else "" %}
+  {% set otherUrl = page.url | otherLocaleUrl(locale) %}
+
+  <div class="lang-toggle">
+    {% if locale == "de" %}
+      <span class="current">de</span> | <a href="{{ otherUrl }}">en</a>
+    {% else %}
+      <a href="{{ otherUrl }}">de</a> | <span class="current">en</span>
+    {% endif %}
+  </div>
+
+  <h1><a href="{{ prefix }}/">Mike Eka</a></h1>
 
   <div id="menu">
-    <div class="item"><a href="/blog/" class="{% if section == 'blog' %}current{% endif %}">Blog</a></div>
-    <div class="item"><a href="/bio/" class="{% if section == 'bio' %}current{% endif %}">Bio</a></div>
-    <div class="item"><a href="/sprache/" class="{% if section == 'sprache' %}current{% endif %}">Sprache</a></div>
-    <div class="item"><a href="/polit/" class="{% if section == 'polit' %}current{% endif %}">Polit</a></div>
-    <div class="item"><a href="/projects/" class="{% if section == 'projects' %}current{% endif %}">Projects</a></div>
+    <div class="item"><a href="{{ prefix }}/blog/" class="{% if section == 'blog' %}current{% endif %}">{{ i18n[locale].blog }}</a></div>
+    <div class="item"><a href="{{ prefix }}/bio/" class="{% if section == 'bio' %}current{% endif %}">{{ i18n[locale].bio }}</a></div>
+    <div class="item"><a href="{{ prefix }}/sprache/" class="{% if section == 'sprache' %}current{% endif %}">{{ i18n[locale].sprache }}</a></div>
+    <div class="item"><a href="{{ prefix }}/polit/" class="{% if section == 'polit' %}current{% endif %}">{{ i18n[locale].polit }}</a></div>
+    <div class="item"><a href="{{ prefix }}/projects/" class="{% if section == 'projects' %}current{% endif %}">{{ i18n[locale].projects }}</a></div>
   </div>
 
   <main>
@@ -27,7 +38,7 @@
   </main>
 
   <footer>
-    <a href="https://github.com/mike-eka/mike-eka.eu" target="_blank" rel="noopener">Source on GitHub</a>
+    <a href="https://github.com/mike-eka/mike-eka.eu" target="_blank" rel="noopener">{{ i18n[locale].source }}</a>
   </footer>
 
   <script>
