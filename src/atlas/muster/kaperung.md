@@ -7,6 +7,11 @@ veroeffentlicht: false      # Entwurf: wird nicht gebaut
 im_framework: false
 kurz: "TODO"
 
+effekt:                     # Kachel „Was sich verschlechtert“
+  vorher: "TODO"
+  nachher: "TODO"
+  hinsichten: "TODO"
+
 minimalpaar:
   muster:    "TODO [[Markierung]]"
   gegenform: "TODO [[Markierung]]"
@@ -17,33 +22,26 @@ mittel:
   erklaerung: "TODO"
   test: "TODO"
 
-vier_fragen:
-  was:       "TODO"
-  fuer_wen:  "TODO"
-  vergleich: "TODO"
-  hinsicht:  "TODO"
-
 schablone:                  # Stufe „Muster“: was das Muster festlegt
   inhalt:         { status: offen, text: ["TODO", ""] }
-  publikum:       { status: offen, text: ["TODO", ""] }
   vergleichsfall: { status: offen, text: ["TODO", ""] }
   hinsicht:       { status: offen, text: ["TODO", ""] }
   urteil:         { status: offen, text: ["TODO", ""] }
   wirkung:        { status: offen, text: ["TODO", ""] }
 
+# Stellschraube: was | vergleich | hinsicht (nicht fuer_wen). Jede
+# Einschätzung braucht das zugehörige Feld: inhalt | vergleichsfall | hinsicht.
 kippt_an: TODO
+grenzfall_frage: "TODO"
 einschaetzungen:
   - label: "TODO"
-    publikum: "TODO"
+    inhalt: "TODO"          # Feldname je nach kippt_an
     urteil: strittig
     begruendung: "TODO"
-    wirkung: keine
   - label: "TODO"
-    publikum: "TODO"
+    inhalt: "TODO"
     urteil: strittig
     begruendung: "TODO"
-    wirkung: keine
-grenzfall_frage: "TODO"
 
 etiketten:
   wahrheitsstatus: TODO

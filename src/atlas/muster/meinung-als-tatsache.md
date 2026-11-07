@@ -8,6 +8,11 @@ im_framework: true          # erscheint als Grenzfall auf der Begriffsmodell-Sei
 kurz: >-
   Ein Werturteil klingt wie eine Feststellung und wird als entschieden gehört.
 
+effekt:                     # Kachel „Was sich verschlechtert“
+  vorher: "Ob Tempo 30 den Innenstädten schadet, ist eine offene Frage. Man wägt Gründe ab."
+  nachher: "Die Frage gilt als entschieden. Man ist sich sicherer, als die Belege erlauben, und fragt nicht mehr nach Gründen."
+  hinsichten: "Wem wir glauben · Worauf wir achten"
+
 minimalpaar:
   muster:    "Tempo 30 [[macht]] unsere Innenstädte [[kaputt]]."
   gegenform: "[[Ich halte]] Tempo 30 [[für schädlich]] für unsere Innenstädte."
@@ -22,33 +27,27 @@ mittel:
     die Form einer Tatsachenbehauptung.
   test: "Passt als Erwiderung „Das stimmt nicht“ oder „Das sehe ich anders“?"
 
-vier_fragen:
-  was:      "Eine Aussage: eine Wertung in Tatsachenform"
-  fuer_wen: "Hängt vom Publikum ab (siehe Grenzfall)"
-  vergleich: "Mit der Gegenformulierung"
-  hinsicht: "Wem wir glauben · Worauf wir achten"
-
 schablone:                  # Stufe „Muster“: was das Muster festlegt
   inhalt:         { status: muster, text: ["Aussage: eine Wertung,", "die wie eine Tatsache klingt"] }
-  publikum:       { status: offen,  text: ["offen:", "hier entsteht der Grenzfall"] }
   vergleichsfall: { status: muster, text: ["dieselbe Aussage mit", "Einstellungsmarker"] }
   hinsicht:       { status: muster, text: ["Wem wir glauben", ""] }
   urteil:         { status: offen,  text: ["offen", ""] }
   wirkung:        { status: muster, text: ["typisch:", "verschlechtern"] }
 
-kippt_an: fuer_wen
-einschaetzungen:            # Grenzfall: dieselbe Aussage, zwei Einschätzungen
-  - label: "vertraut der Ministerin"
-    publikum: "vertraut der Ministerin"
+# Stellschraube: was | vergleich | hinsicht (nicht fuer_wen – das Publikum
+# ist Rahmen jeder Einschätzung). Jede Einschätzung füllt das zugehörige
+# Feld (hier: inhalt) und das Urteil.
+kippt_an: was
+grenzfall_frage: "Ist die ganze Aussage der Inhalt, oder nur ihr Tatsachenanteil?"
+einschaetzungen:
+  - label: "ganze Aussage"
+    inhalt: "Tempo 30 verlängert die Fahrzeiten und macht unsere Innenstädte kaputt."
     urteil: ja
-    begruendung: "Die offene Frage gilt als erledigt."
-    wirkung: verschlechtern
-  - label: "kritisch"
-    publikum: "kritisch"
+    begruendung: "Der prüfbare Teil leiht der Wertung seine Autorität; sie wirkt wie eine weitere Tatsache."
+  - label: "nur der Tatsachenanteil"
+    inhalt: "Tempo 30 verlängert die Fahrzeiten."
     urteil: nein
-    begruendung: "Wird als Meinung gehört."
-    wirkung: keine
-grenzfall_frage: "Wie viele im Publikum müssen betroffen sein, damit es Desinformation ist?"
+    begruendung: "Eine prüfbare Tatsachenbehauptung, gegebenenfalls sogar wahr."
 
 etiketten:
   wahrheitsstatus: unklar

@@ -38,7 +38,7 @@
     <div class="item"><a href="{{ prefix }}/projects/" class="{% if section == 'projects' %}current{% endif %}">{{ i18n[locale].projects }}</a></div>
   </div>
 
-  <main>
+  <main{% if mainClass %} class="{{ mainClass }}"{% endif %}>
     {{ content | safe }}
   </main>
 

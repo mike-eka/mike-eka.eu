@@ -36,15 +36,57 @@ function sortiereMuster(items) {
   );
 }
 
+const istTodo = (v) => v == null || v === "" || String(v).trim().toUpperCase().startsWith("TODO");
+
+// Content checks, printed as build warnings (the build does not fail).
+function pruefeAtlas(items) {
+  const bm = items[0]?.data.atlas?.begriffsmodell;
+  if (!bm) return;
+  const fragen = bm.pruefragen || [];
+  const musterFragen = fragen.filter((q) => q.art === "muster");
+  const warn = (msg) => console.warn(`[atlas] ${msg}`);
+
+  for (const item of items) {
+    const { kippt_an: kipp, einschaetzungen, veroeffentlicht } = item.data;
+    const datei = item.inputPath;
+    if (!istTodo(kipp)) {
+      const frage = fragen.find((q) => q.id === kipp);
+      if (frage && frage.art === "rahmen") {
+        warn(`${datei}: kippt_an "${kipp}" ist Rahmen jeder Einschätzung, keine Stellschraube eines Musters (erlaubt: ${musterFragen.map((q) => q.id).join(", ")})`);
+      } else if (!frage || frage.art !== "muster") {
+        warn(`${datei}: unbekanntes kippt_an "${kipp}" (erlaubt: ${musterFragen.map((q) => q.id).join(", ")})`);
+      } else if (veroeffentlicht === true) {
+        (einschaetzungen || []).forEach((e, i) => {
+          if (istTodo(e && e[frage.feld])) {
+            warn(`${datei}: Einschätzung ${i + 1} ("${e && e.label}") hat kein Feld "${frage.feld}" für die Stellschraube "${kipp}"`);
+          }
+        });
+      }
+    }
+  }
+
+  const stufen = bm.schablone_stufen || {};
+  if (stufen.muster) {
+    const karte = items.find((item) => item.page.fileSlug === stufen.muster);
+    if (!karte) warn(`schablone_stufen.muster: Karte "${stufen.muster}" gibt es nicht`);
+    else if (!(karte.data.einschaetzungen || []).length) warn(`schablone_stufen.muster: Karte "${stufen.muster}" hat keine einschaetzungen`);
+  }
+  if (stufen.nachbar && !(bm.nachbarn || []).some((n) => n.id === stufen.nachbar)) {
+    warn(`schablone_stufen.nachbar: Nachbar "${stufen.nachbar}" gibt es nicht`);
+  }
+}
+
 module.exports = function atlasPlugin(eleventyConfig) {
   // Global data files in YAML (src/_data/atlas/*.yaml -> `atlas.<name>`).
   eleventyConfig.addDataExtension("yaml,yml", (contents) => yaml.load(contents));
 
   // All cards, drafts included (for titles of related cards), and the
   // published ones (`veroeffentlicht: true`), which are the only ones built.
-  eleventyConfig.addCollection("atlasMusterAlle", (api) =>
-    sortiereMuster(api.getFilteredByGlob(MUSTER_GLOB))
-  );
+  eleventyConfig.addCollection("atlasMusterAlle", (api) => {
+    const items = sortiereMuster(api.getFilteredByGlob(MUSTER_GLOB));
+    pruefeAtlas(items);
+    return items;
+  });
   eleventyConfig.addCollection("atlasMuster", (api) =>
     sortiereMuster(api.getFilteredByGlob(MUSTER_GLOB).filter((item) => item.data.veroeffentlicht === true))
   );

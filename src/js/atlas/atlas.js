@@ -1,11 +1,13 @@
 // Atlas: generic switches. Progressive enhancement only — without this script
-// every panel stays visible as a plain list.
+// every variant stays visible as a plain list.
 //
-// Markup (see _includes/atlas/einschaetzungen.njk):
-//   [data-atlas-schalter]          container
-//     .atlas-schalter[hidden]      button group, shown by this script
-//       button[data-ziel=<id>]     one per panel, aria-pressed marks the start
-//     [data-panel]#<id>            the panels
+// Markup (see _includes/atlas/schablone.njk):
+//   [data-atlas-schalter]            container
+//     .atlas-schalter[hidden]        button group, shown by this script
+//       button[data-ziel=<key>]      one per variant; aria-pressed marks the start
+//     [data-panel=<key>]             any number of elements per key, anywhere in
+//                                    the container (e.g. the value at the
+//                                    adjusting screw and the verdict)
 (function () {
   "use strict";
 
@@ -13,14 +15,14 @@
     var gruppe = root.querySelector(".atlas-schalter");
     var knoepfe = Array.prototype.slice.call(root.querySelectorAll("[data-ziel]"));
     var panels = Array.prototype.slice.call(root.querySelectorAll("[data-panel]"));
-    if (!gruppe || knoepfe.length < 2 || panels.length < 2) return;
+    if (!gruppe || knoepfe.length < 2 || !panels.length) return;
 
-    function zeige(id) {
+    function zeige(key) {
       knoepfe.forEach(function (k) {
-        k.setAttribute("aria-pressed", String(k.getAttribute("data-ziel") === id));
+        k.setAttribute("aria-pressed", String(k.getAttribute("data-ziel") === key));
       });
       panels.forEach(function (p) {
-        p.hidden = p.id !== id;
+        p.hidden = p.getAttribute("data-panel") !== key;
       });
     }
 

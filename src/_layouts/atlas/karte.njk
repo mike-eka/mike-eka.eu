@@ -2,12 +2,11 @@
 layout: base.njk
 ---
 {%- from "atlas/schablone.njk" import schablone as schablonenRaster -%}
-{%- from "atlas/einschaetzungen.njk" import einschaetzungen as grenzfallSchalter -%}
-{%- from "atlas/vier-fragen.njk" import vierFragen -%}
 {%- set bm = atlas.begriffsmodell -%}
 {%- set b = atlas.beschriftungen -%}
 {%- set h = bm.hinsichten | nachId(hinsicht) -%}
 {%- set kipp = bm.pruefragen | nachId(kippt_an) -%}
+{%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
 
 {%- macro musterLink(slug) -%}
   {%- set m = collections.atlasMusterAlle | musterNachSlug(slug) -%}
@@ -16,9 +15,8 @@ layout: base.njk
   {%- else -%}{{ slug }}{%- endif -%}
 {%- endmacro -%}
 
-<a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
-
 <article class="atlas atlas-karte">
+  <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
   <header class="atlas-karte__kopf">
     <h1>{{ titel }}</h1>
     {% if fachbegriff %}<p class="atlas-fachbegriff" lang="en">{{ fachbegriff }}</p>{% endif %}
@@ -26,73 +24,78 @@ layout: base.njk
     {% if kurz %}<p class="atlas-kurz">{{ kurz }}</p>{% endif %}
   </header>
 
-  {% if minimalpaar %}
-  <section class="atlas-abschnitt" aria-labelledby="minimalpaar">
-    <h2 id="minimalpaar">{{ b.karte.minimalpaar }}</h2>
-    <dl class="atlas-paar">
-      <div class="atlas-paar__zeile ist-muster">
-        <dt>{{ b.karte.muster }}</dt>
-        <dd><q>{{ minimalpaar.muster | markiere | safe }}</q></dd>
+  <div class="atlas-kacheln">
+    {% if schablone %}
+    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="schablone">
+      <h2 id="schablone">{{ b.karte.schablone }}</h2>
+      {{ schablonenRaster(schablone, b.schablone, {
+        kippFeld: kippFeld,
+        einschaetzungen: einschaetzungen,
+        grenzfallFrage: grenzfall_frage,
+        urteile: bm.urteile,
+        prefix: "schablone",
+        publikumLink: "/atlas/begriffsmodell/#" + bm.publikum_abschnitt.anker,
+        publikumLinkText: bm.publikum_abschnitt.titel
+      }) }}
+    </section>
+    {% endif %}
+
+    {% if effekt %}
+    <section class="atlas-kachel atlas-kachel--effekt" aria-labelledby="effekt">
+      <h2 id="effekt">{{ b.karte.effekt }}</h2>
+      <div class="atlas-effekt">
+        <div class="atlas-effekt__seite ist-vorher">
+          <span class="atlas-label">{{ b.karte.effekt_vorher }}</span>
+          <p>{{ effekt.vorher }}</p>
+        </div>
+        <span class="atlas-effekt__pfeil" aria-hidden="true">→</span>
+        <div class="atlas-effekt__seite ist-nachher">
+          <span class="atlas-label">{{ b.karte.effekt_nachher }}</span>
+          <p>{{ effekt.nachher }}</p>
+        </div>
       </div>
-      <div class="atlas-paar__zeile ist-gegenform">
-        <dt>{{ b.karte.gegenform }}</dt>
-        <dd><q>{{ minimalpaar.gegenform | markiere | safe }}</q></dd>
+      {% if effekt.hinsichten %}
+      <p class="atlas-effekt__hinsichten"><span class="atlas-label">{{ b.karte.effekt_hinsichten }}</span> {{ effekt.hinsichten }}</p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if minimalpaar %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="minimalpaar">
+      <h2 id="minimalpaar">{{ b.karte.minimalpaar }}</h2>
+      <dl class="atlas-paar">
+        <div class="atlas-paar__zeile">
+          <dt>{{ b.karte.muster }}</dt>
+          <dd><q>{{ minimalpaar.muster | markiere | safe }}</q></dd>
+        </div>
+        <div class="atlas-paar__zeile">
+          <dt>{{ b.karte.gegenform }}</dt>
+          <dd><q>{{ minimalpaar.gegenform | markiere | safe }}</q></dd>
+        </div>
+      </dl>
+      {% if minimalpaar.hinweis %}<p class="atlas-hinweis">{{ minimalpaar.hinweis }}</p>{% endif %}
+    </section>
+    {% endif %}
+
+    {% if mittel %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="mittel">
+      <h2 id="mittel">{{ b.karte.mittel }}</h2>
+      <p class="atlas-mittel__name">{{ mittel.name }}</p>
+      {% if mittel.erklaerung %}<p>{{ mittel.erklaerung }}</p>{% endif %}
+      {% if mittel.test %}
+      <div class="atlas-test">
+        <span class="atlas-label">{{ b.karte.test }}</span>
+        <p>{{ mittel.test }}</p>
       </div>
-    </dl>
-    {% if minimalpaar.hinweis %}<p class="atlas-hinweis">{{ minimalpaar.hinweis }}</p>{% endif %}
-  </section>
-  {% endif %}
-
-  {% if mittel %}
-  <section class="atlas-abschnitt" aria-labelledby="mittel">
-    <h2 id="mittel">{{ b.karte.mittel }}</h2>
-    <p class="atlas-mittel__name">{{ mittel.name }}</p>
-    {% if mittel.erklaerung %}<p>{{ mittel.erklaerung }}</p>{% endif %}
-    {% if mittel.test %}
-    <div class="atlas-test">
-      <span class="atlas-label">{{ b.karte.test }}</span>
-      <p>{{ mittel.test }}</p>
-    </div>
+      {% endif %}
+    </section>
     {% endif %}
-  </section>
-  {% endif %}
 
-  {% if schablone %}
-  <section class="atlas-abschnitt" aria-labelledby="schablone">
-    <h2 id="schablone">{{ b.karte.schablone }}</h2>
-    {{ schablonenRaster(schablone, b.schablone) }}
-  </section>
-  {% endif %}
+    {# Grafik (grafik.typ: netz | balken) folgt in Schritt 4. #}
 
-  {% if vier_fragen %}
-  <section class="atlas-abschnitt" aria-labelledby="vier-fragen">
-    <h2 id="vier-fragen">{{ b.karte.vier_fragen }}</h2>
-    {{ vierFragen(bm.pruefragen, vier_fragen, kippt_an, b.karte.grenzfall) }}
-  </section>
-  {% endif %}
-
-  {% if einschaetzungen and einschaetzungen.length %}
-  <section class="atlas-abschnitt" aria-labelledby="grenzfall">
-    <h2 id="grenzfall">{{ b.karte.grenzfall }}</h2>
-    {% if kipp %}
-    <p class="atlas-kippt"><span class="atlas-label">{{ b.karte.kippt_an }}</span> {{ kipp.frage }}</p>
-    {% endif %}
-    {{ grenzfallSchalter(einschaetzungen, bm, b.einschaetzung, "einschaetzung") }}
-    {% if grenzfall_frage %}
-    <div class="atlas-offene-frage">
-      <span class="atlas-label">{{ b.karte.offene_frage }}</span>
-      <p>{{ grenzfall_frage }}</p>
-    </div>
-    {% endif %}
-  </section>
-  {% endif %}
-
-  {# Grafik (grafik.typ: netz | balken) folgt in Schritt 4. #}
-
-  {%- set wirkungsIds = einschaetzungen | eindeutig("wirkung") -%}
-  <div class="atlas-eckdaten">
+    {%- set wirkungsIds = einschaetzungen | eindeutig("wirkung") -%}
     {% if wirkungsIds.length %}
-    <section class="atlas-eckdatum" aria-labelledby="wirkung">
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="wirkung">
       <h2 id="wirkung">{{ b.karte.wirkung }}</h2>
       <ul class="atlas-liste-schlicht">
         {% for id in wirkungsIds %}{% set w = bm.wirkungen | nachId(id) %}{% if w %}
@@ -103,7 +106,7 @@ layout: base.njk
     {% endif %}
 
     {% if etiketten %}
-    <section class="atlas-eckdatum" aria-labelledby="etiketten">
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="etiketten">
       <h2 id="etiketten">{{ b.karte.etiketten }}</h2>
       <dl class="atlas-werte">
         {% for key, wert in etiketten %}
@@ -115,47 +118,47 @@ layout: base.njk
     {% endif %}
 
     {% if normalfall %}
-    <section class="atlas-eckdatum" aria-labelledby="normalfall">
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="normalfall">
       <h2 id="normalfall">{{ b.karte.normalfall }}</h2>
       <p>{{ normalfall }}</p>
     </section>
     {% endif %}
+
+    {% if (verwandt and verwandt.length) or spiegelfall %}
+    <section class="atlas-kachel atlas-kachel--still atlas-bezuege" aria-labelledby="verwandt">
+      <h2 id="verwandt">{{ b.karte.verwandt }}</h2>
+      {% if verwandt and verwandt.length %}
+      <p>{% for slug in verwandt %}{{ musterLink(slug) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+      {% endif %}
+      {% if spiegelfall %}
+      <p><span class="atlas-label">{{ b.karte.spiegelfall }}</span> {{ musterLink(spiegelfall) }}</p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if anschlussfaecher and anschlussfaecher.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="anschlussfaecher">
+      <h2 id="anschlussfaecher">{{ b.karte.anschlussfaecher }}</h2>
+      <ul class="atlas-faecher">
+        {% for fach in anschlussfaecher %}<li>{{ fach }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if literatur and literatur.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="literatur">
+      <h2 id="literatur">{{ b.karte.literatur }}</h2>
+      <ul class="atlas-literatur">
+        {% for eintrag in literatur %}<li>{{ eintrag }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if content | trim %}
+    <section class="atlas-kachel atlas-kachel--still atlas-fliesstext" aria-labelledby="erlaeuterung">
+      <h2 id="erlaeuterung">{{ b.karte.mehr }}</h2>
+      {{ content | safe }}
+    </section>
+    {% endif %}
   </div>
-
-  {% if (verwandt and verwandt.length) or spiegelfall %}
-  <section class="atlas-abschnitt atlas-bezuege" aria-label="{{ b.karte.verwandt }}">
-    {% if verwandt and verwandt.length %}
-    <p><span class="atlas-label">{{ b.karte.verwandt }}</span>
-      {% for slug in verwandt %}{{ musterLink(slug) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
-    {% endif %}
-    {% if spiegelfall %}
-    <p><span class="atlas-label">{{ b.karte.spiegelfall }}</span> {{ musterLink(spiegelfall) }}</p>
-    {% endif %}
-  </section>
-  {% endif %}
-
-  {% if anschlussfaecher and anschlussfaecher.length %}
-  <section class="atlas-abschnitt" aria-labelledby="anschlussfaecher">
-    <h2 id="anschlussfaecher">{{ b.karte.anschlussfaecher }}</h2>
-    <ul class="atlas-faecher">
-      {% for fach in anschlussfaecher %}<li>{{ fach }}</li>{% endfor %}
-    </ul>
-  </section>
-  {% endif %}
-
-  {% if literatur and literatur.length %}
-  <section class="atlas-abschnitt" aria-labelledby="literatur">
-    <h2 id="literatur">{{ b.karte.literatur }}</h2>
-    <ul class="atlas-literatur">
-      {% for eintrag in literatur %}<li>{{ eintrag }}</li>{% endfor %}
-    </ul>
-  </section>
-  {% endif %}
-
-  {% if content | trim %}
-  <section class="atlas-abschnitt atlas-fliesstext" aria-labelledby="erlaeuterung">
-    <h2 id="erlaeuterung">{{ b.karte.mehr }}</h2>
-    {{ content | safe }}
-  </section>
-  {% endif %}
 </article>

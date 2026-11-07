@@ -1,46 +1,122 @@
 {#
-  Schablone einer Einschätzung: sechs Felder als CSS-Raster (kein SVG, damit
-  lange Texte umbrechen). Die sechs Felder sind bewusst im Code angelegt.
+  Schablone einer Einschätzung als CSS-Raster (kein SVG, damit lange Texte
+  umbrechen). Die Felder sind bewusst im Code angelegt:
+    Rahmen:  publikum (Für wen? – stellt sich bei jeder Einschätzung)
+    Fragen:  inhalt (Was?), vergleichsfall (Im Vergleich wozu?), hinsicht
+    Mitte:   urteil, wirkung
 
-  felder: { inhalt: { status, text }, publikum: …, vergleichsfall: …,
-            hinsicht: …, urteil: …, wirkung: … }
+  felder: { inhalt|vergleichsfall|hinsicht|urteil|wirkung|publikum: { status, text } }
           status: offen | muster | belegt | fehlt (fehlend = offen)
-          text:   Liste von Zeilen (leere Zeilen werden ausgelassen) oder Text
+          text:   Liste von Zeilen (leere werden ausgelassen) oder Text
   b:      atlas.beschriftungen.schablone
+  o:      Optionen
+    kippFeld:         Feld der Stellschraube (aus kippt_an), z. B. "inhalt"
+    einschaetzungen:  Liste { label, <kippFeld>, urteil, begruendung, wirkung? }
+    grenzfallFrage:   Frage an der Stellschraube
+    urteile:          begriffsmodell.urteile (Namen der Urteile)
+    prefix:           eindeutiger Präfix für IDs
+    publikumLink, publikumLinkText: Verweis auf den Abschnitt „Für wen?“
+
+  Ohne JS stehen alle Einschätzungen untereinander (in der Stellschraube und
+  im Urteil); atlas.js blendet die Knöpfe ein und zeigt jeweils eine.
 #}
 
-{% macro feld(id, f, b) %}
-  {%- set status = (f.status if f and f.status else "offen") -%}
+{% macro zeilen(f) -%}
   {%- set roh = (f.text if f and f.text else []) -%}
-  {%- set zeilen = ([roh] if roh is string else (roh | select)) -%}
-  <div class="atlas-feld atlas-feld--{{ id }} ist-{{ status }}">
-    <span class="atlas-feld__name">{{ b.felder[id] }}</span>
-    <span class="atlas-feld__text">{% for zeile in zeilen %}{{ zeile }}{% if not loop.last %}<br>{% endif %}{% endfor %}</span>
+  {%- set liste = ([roh] if roh is string else (roh | select)) -%}
+  {%- for zeile in liste %}{{ zeile }}{% if not loop.last %}<br>{% endif %}{% endfor -%}
+{%- endmacro %}
+
+{% macro kopf(id, b, zusatz) -%}
+  <h3 class="atlas-feld__kopf">
+    {%- if b.felder[id].frage %}<span class="atlas-feld__frage">{{ b.felder[id].frage }}</span><span class="atlas-feld__trenner" aria-hidden="true"> · </span>{% endif -%}
+    <span class="atlas-feld__name">{{ b.felder[id].name }}</span>
+    {%- if zusatz %} <span class="atlas-stellschraube-etikett">{{ zusatz }}</span>{% endif -%}
+  </h3>
+{%- endmacro %}
+
+{% macro frageFeld(id, f, b, o) %}
+  {%- set status = (f.status if f and f.status else "offen") -%}
+  {%- set istKipp = (o.kippFeld == id and o.einschaetzungen and o.einschaetzungen.length) -%}
+  <div class="atlas-feld atlas-feld--{{ id }} ist-{{ status }}{% if istKipp %} ist-stellschraube{% endif %}">
+    {{ kopf(id, b, b.stellschraube if istKipp else "") }}
+    <p class="atlas-feld__text">{{ zeilen(f) }}</p>
+    <span class="visually-hidden">({{ b.status[status] }})</span>
+    {% if istKipp %}
+      {% if o.grenzfallFrage %}<p class="atlas-grenzfrage">{{ o.grenzfallFrage }}</p>{% endif %}
+      <div class="atlas-schalter" role="group" aria-label="{{ b.schalter }}" hidden>
+        {% for e in o.einschaetzungen %}
+        <button type="button" data-ziel="{{ loop.index }}" aria-controls="{{ o.prefix }}-wert-{{ loop.index }} {{ o.prefix }}-urteil-{{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
+        {% endfor %}
+      </div>
+      <ul class="atlas-varianten">
+        {% for e in o.einschaetzungen %}
+        <li class="atlas-variante" id="{{ o.prefix }}-wert-{{ loop.index }}" data-panel="{{ loop.index }}">
+          <span class="atlas-variante__label">{{ e.label }}</span>
+          <span class="atlas-variante__wert">{% if id == "inhalt" %}<q>{{ e[id] }}</q>{% else %}{{ e[id] }}{% endif %}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro urteilFeld(f, b, o) %}
+  {%- set mitVarianten = (o.kippFeld and o.einschaetzungen and o.einschaetzungen.length) -%}
+  <div class="atlas-feld atlas-feld--urteil ist-neutral">
+    {{ kopf("urteil", b) }}
+    {% if mitVarianten %}
+      <p class="atlas-feld__hinweis">{{ b.urteil_hinweis }}</p>
+      <ul class="atlas-varianten" aria-live="polite">
+        {% for e in o.einschaetzungen %}
+        {%- set u = o.urteile | nachId(e.urteil) -%}
+        <li class="atlas-variante" id="{{ o.prefix }}-urteil-{{ loop.index }}" data-panel="{{ loop.index }}">
+          <span class="atlas-variante__label">{{ e.label }}</span>
+          <strong class="atlas-variante__urteil">{{ u.name if u else e.urteil }}</strong>
+          {% if e.begruendung %}<span class="atlas-variante__begruendung">{{ e.begruendung }}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="atlas-feld__text">{{ zeilen(f) }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro wirkungFeld(f, b) %}
+  {%- set status = (f.status if f and f.status else "offen") -%}
+  <div class="atlas-feld atlas-feld--wirkung ist-{{ status }}">
+    {{ kopf("wirkung", b) }}
+    <p class="atlas-feld__text">{{ zeilen(f) }}</p>
     <span class="visually-hidden">({{ b.status[status] }})</span>
   </div>
 {% endmacro %}
 
-{% macro schablone(felder, b) %}
+{% macro schablone(felder, b, o) %}
 {%- set genutzt = felder | schablonenStatus -%}
-<figure class="atlas-schablone">
-  <div class="atlas-schablone__raster">
-    {{ feld("inhalt", felder.inhalt, b) }}
-    {{ feld("publikum", felder.publikum, b) }}
-    <div class="atlas-schablone__mitte">
-      <span class="atlas-schablone__mitte-titel">{{ b.mitte }}</span>
-      {{ feld("urteil", felder.urteil, b) }}
-      {{ feld("wirkung", felder.wirkung, b) }}
-    </div>
-    {{ feld("vergleichsfall", felder.vergleichsfall, b) }}
-    {{ feld("hinsicht", felder.hinsicht, b) }}
-  </div>
-  <figcaption>
-    <span class="visually-hidden">{{ b.legende }}:</span>
-    <ul class="atlas-legende">
-      {% for key, label in b.status %}{% if key in genutzt %}
-      <li><span class="atlas-legende__probe ist-{{ key }}" aria-hidden="true"></span>{{ label }}</li>
-      {% endif %}{% endfor %}
-    </ul>
+<figure class="atlas-schablone"{% if o.einschaetzungen and o.einschaetzungen.length %} data-atlas-schalter{% endif %}>
+  <figcaption class="atlas-legende">
+    <span>{{ b.legende }}</span>
+    {% for key in ["belegt", "fehlt"] %}{% if key in genutzt %}
+    <span class="atlas-legende__eintrag"><span class="atlas-legende__probe ist-{{ key }}" aria-hidden="true"></span>{{ b.status[key] }}</span>
+    {% endif %}{% endfor %}
   </figcaption>
+  <div class="atlas-rahmen">
+    <p class="atlas-rahmen__band">
+      <span class="atlas-feld__frage">{{ b.felder.publikum.frage }}</span><span aria-hidden="true"> · </span><span class="atlas-feld__name">{{ b.felder.publikum.name }}</span>:
+      {% if felder.publikum and felder.publikum.text %}{{ zeilen(felder.publikum) }}. {% endif %}{{ b.publikum_verweis }}
+      {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ o.publikumLinkText }}</a>{% endif %}
+    </p>
+    <div class="atlas-schablone__raster">
+      {{ frageFeld("inhalt", felder.inhalt, b, o) }}
+      {{ frageFeld("vergleichsfall", felder.vergleichsfall, b, o) }}
+      {{ frageFeld("hinsicht", felder.hinsicht, b, o) }}
+      <div class="atlas-schablone__mitte">
+        <p class="atlas-schablone__mitte-titel">{{ b.mitte }}</p>
+        {{ urteilFeld(felder.urteil, b, o) }}
+        {{ wirkungFeld(felder.wirkung, b) }}
+      </div>
+    </div>
+  </div>
 </figure>
 {% endmacro %}

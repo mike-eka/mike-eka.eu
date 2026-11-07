@@ -5,8 +5,13 @@ kernsatz: >-
   für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
   verschlechtert.
 
+# art: muster  – ein Muster kann diese Frage festlegen oder offenlassen;
+#                nur diese Fragen sind als `kippt_an` (Stellschraube) erlaubt.
+# art: rahmen  – stellt sich bei jeder Einschätzung (Publikum), kein
+#                Merkmal eines Musters.
 pruefragen:
   - id: was
+    art: muster
     frage: "Was genau ist der Inhalt?"
     feld: inhalt
     erklaerung: >-
@@ -14,12 +19,14 @@ pruefragen:
       eine Abfolge oder die Position eines Sprechers. Manches ist erst
       zusammen problematisch.
   - id: fuer_wen
+    art: rahmen
     frage: "Für wen?"
     feld: publikum
     erklaerung: >-
       Welches Publikum, und wie viele dort betroffen sein müssen. Derselbe
       Satz kann für die einen harmlos sein und für die anderen nicht.
   - id: vergleich
+    art: muster
     frage: "Im Vergleich wozu?"
     feld: vergleichsfall
     erklaerung: >-
@@ -27,11 +34,21 @@ pruefragen:
       Formulierung. Ohne Vergleich lässt sich nicht sagen, ob etwas
       schlechter wird.
   - id: hinsicht
+    art: muster
     frage: "In welcher Hinsicht?"
     feld: hinsicht
     erklaerung: >-
       Was genau schlechter wird. Faktenchecks prüfen nur eine dieser
       Hinsichten.
+
+# Abschnitt „Für wen?“ auf der Begriffsmodell-Seite (Schritt 3). Jede Karte
+# verweist im Rahmen ihrer Schablone darauf (/atlas/begriffsmodell/#<anker>).
+publikum_abschnitt:
+  anker: fuer-wen
+  titel: "Für wen? Eine Frage, die sich immer stellt"
+  einleitung: "TODO"
+  aggregation: "TODO"
+  beispiel: "TODO"
 
 hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
   - id: glauben
@@ -91,6 +108,7 @@ anschlussfaecher:      # aus der Ausschreibung
 
 schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
   muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
+                                   # (jede füllt das Feld der Stellschraube `kippt_an` und das Urteil)
   nachbar: einschuechterung        # id eines Nachbarn
 
 schablone_leer:        # Texte der leeren Schablone

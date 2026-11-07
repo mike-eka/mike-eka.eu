@@ -1,15 +1,37 @@
 /* Atlas (src/atlas/). Loaded only on Atlas pages, after style.css.
-   All colours are variables here; change them in this block only. */
+   All colours are variables here; change them in this block only.
+   Contrast (WCAG): every text colour below reaches ≥ 4.5:1 on every tile and
+   field tone it is used on; lines and controls ≥ 3:1. */
 :root {
+    /* Page */
     --atlas-grund: #fffaf0;            /* page background (as in style.css) */
-    --atlas-linie: #e5ddcf;            /* thin lines, neutral borders */
-    --atlas-gedaempft: #7a7267;        /* secondary text */
-    --atlas-kern: #bf5748;             /* accent 1: lines, "by pattern", "yes" */
-    --atlas-kern-text: #a3453a;        /* accent 1 for text (contrast ≥ 4.5:1) */
-    --atlas-hinsicht: #4f6d7a;         /* accent 2: "by example", "no", focus */
-    --atlas-hinsicht-flaeche: #eef2f1; /* light fill for accent 2 */
-    --atlas-offen: #7a7267;            /* open fields, "contested" */
+    --atlas-text: #1f1b16;
+    --atlas-gedaempft: #6b6358;        /* secondary text */
+    --atlas-linie: #e5ddcf;            /* decorative hairlines */
+
+    /* Accent 1 (warm, from #bf5748): fixed by the pattern, core content */
+    --atlas-kern: #bf5748;             /* lines */
+    --atlas-kern-text: #983f35;        /* text */
     --atlas-mark: var(--atlas-kern-text); /* highlights in the minimal pair */
+
+    /* Accent 2 (cool): hinsicht badge, "by example", focus ring */
+    --atlas-hinsicht: #4f6d7a;
+    --atlas-hinsicht-flaeche: #eef2f1;
+
+    /* Open fields, neutral verdict */
+    --atlas-offen: #8a8175;            /* dashed lines */
+    --atlas-neutral: #9b9183;          /* verdict field line */
+
+    /* Tiles: core content warm, background information quiet */
+    --atlas-kachel-kern: #fbeee7;      /* Schablone */
+    --atlas-kachel-effekt: #f6dfd4;    /* Was sich verschlechtert (strongest) */
+    --atlas-kachel-ruhig: #f5efe3;     /* Minimalpaar, Mittel */
+    --atlas-kachel-still: #f1eee7;     /* Etiketten, Normal weil, Verwandt, … */
+    --atlas-feld: #fffdf9;             /* fields inside tiles */
+    --atlas-knopf-an: #f8e4db;         /* pressed switch */
+
+    --atlas-radius: 14px;
+    --atlas-versatz: 1.75rem;          /* zigzag offset on wide screens */
 }
 
 /* ---- Helpers ---- */
@@ -25,9 +47,21 @@
     border: 0;
 }
 
+.atlas [hidden] {
+    display: none !important;
+}
+
+/* Atlas pages are wider than the 40rem text column and centred. */
+main.atlas-wide {
+    max-width: none;
+}
+
 .atlas {
+    color: var(--atlas-text);
     line-height: 1.6;
     overflow-wrap: break-word;
+    max-width: 46rem;
+    margin: 0 auto;
 }
 
 .atlas :focus-visible {
@@ -37,11 +71,7 @@
 
 .atlas h2 {
     font-size: 1.05rem;
-    margin: 0 0 0.75rem;
-}
-
-.atlas-abschnitt {
-    margin-top: 2.5rem;
+    margin: 0 0 0.9rem;
 }
 
 .atlas-label {
@@ -59,6 +89,12 @@
 
 .atlas-entwurf {
     color: var(--atlas-gedaempft);
+}
+
+.atlas-liste-schlicht {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .atlas-werte {
@@ -82,13 +118,11 @@
     margin: 0;
 }
 
-.atlas-liste-schlicht {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* ---- Card header ---- */
+.atlas-karte__kopf {
+    margin-bottom: 2rem;
 }
 
-/* ---- Card header ---- */
 .atlas-karte__kopf h1 {
     margin-bottom: 0.1rem;
 }
@@ -116,8 +150,308 @@
 }
 
 .atlas-kurz {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     margin: 1rem 0 0;
+}
+
+/* ---- Tiles ---- */
+.atlas-kacheln {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.atlas-kachel {
+    border-radius: var(--atlas-radius);
+    padding: 1.25rem 1.5rem 1.4rem;
+    width: calc(100% - var(--atlas-versatz));
+    box-sizing: border-box;
+}
+
+/* Zigzag: alternately a little to the left and to the right. */
+.atlas-kachel:nth-child(odd) { align-self: flex-start; }
+.atlas-kachel:nth-child(even) { align-self: flex-end; }
+
+.atlas-kachel > :last-child {
+    margin-bottom: 0;
+}
+
+.atlas-kachel--kern { background: var(--atlas-kachel-kern); }
+.atlas-kachel--effekt { background: var(--atlas-kachel-effekt); }
+.atlas-kachel--ruhig { background: var(--atlas-kachel-ruhig); }
+.atlas-kachel--still { background: var(--atlas-kachel-still); }
+
+.atlas-kachel--kern h2,
+.atlas-kachel--effekt h2 {
+    color: var(--atlas-kern-text);
+}
+
+@media (max-width: 640px) {
+    .atlas-kachel {
+        width: 100%;
+        padding: 1rem 1rem 1.1rem;
+    }
+}
+
+/* ---- Schablone ---- */
+.atlas-schablone {
+    margin: 0;
+}
+
+.atlas-legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--atlas-gedaempft);
+    margin-bottom: 0.75rem;
+}
+
+.atlas-legende__probe {
+    display: inline-block;
+    width: 1.1rem;
+    height: 0.75rem;
+    border-radius: 3px;
+    margin-right: 0.4rem;
+    vertical-align: -0.05rem;
+}
+
+/* Audience: a narrow frame around the whole template. */
+.atlas-rahmen {
+    border: 1px solid var(--atlas-offen);
+    border-radius: calc(var(--atlas-radius) - 2px);
+    padding: 0.5rem 0.6rem 0.6rem;
+}
+
+.atlas-rahmen__band {
+    margin: 0 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.atlas-rahmen__band a {
+    text-decoration: underline;
+}
+
+.atlas-schablone__raster {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row dense;
+    gap: 0.6rem;
+}
+
+.atlas-feld {
+    min-width: 0;
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+    line-height: 1.45;
+}
+
+.atlas-feld__kopf {
+    font-size: 0.8rem;
+    font-weight: normal;
+    margin: 0 0 0.3rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-feld__frage {
+    font-weight: bold;
+    color: var(--atlas-text);
+}
+
+.atlas-feld__name {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+}
+
+.atlas-feld__text {
+    margin: 0;
+}
+
+.atlas-feld__hinweis {
+    margin: 0 0 0.4rem;
+    font-size: 0.8rem;
+    color: var(--atlas-gedaempft);
+    font-style: italic;
+}
+
+/* Status: "colour = fixed by the pattern, dashed = left open". */
+.atlas-schablone .ist-muster { border: 1px solid var(--atlas-kern); }
+.atlas-schablone .ist-belegt { border: 1px solid var(--atlas-hinsicht); background: var(--atlas-hinsicht-flaeche); }
+.atlas-schablone .ist-offen { border: 1px dashed var(--atlas-offen); }
+.atlas-schablone .ist-offen > .atlas-feld__text { color: var(--atlas-gedaempft); font-style: italic; }
+.atlas-schablone .ist-fehlt { border: 1px dotted var(--atlas-offen); }
+.atlas-schablone .ist-fehlt > .atlas-feld__text { color: var(--atlas-gedaempft); }
+
+/* The adjusting screw: where the borderline case turns. Full width. */
+.atlas-schablone .ist-stellschraube {
+    grid-column: 1 / -1;
+    border: 2px dashed var(--atlas-kern);
+}
+
+.atlas-stellschraube-etikett {
+    display: inline-block;
+    margin-left: 0.4rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-kern-text);
+    border: 1px solid var(--atlas-kern);
+    border-radius: 999px;
+    padding: 0 0.45rem;
+    vertical-align: 0.05rem;
+}
+
+.atlas-grenzfrage {
+    margin: 0.6rem 0 0.5rem;
+    font-weight: 500;
+}
+
+.atlas-schalter:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.atlas-schalter button {
+    background: var(--atlas-feld);
+    color: inherit;
+    border: 1px solid var(--atlas-offen);
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    min-height: 2.5rem;
+    cursor: pointer;
+}
+
+.atlas-schalter button:hover {
+    border-color: var(--atlas-kern);
+}
+
+.atlas-schalter button[aria-pressed="true"] {
+    border-color: var(--atlas-kern);
+    color: var(--atlas-kern-text);
+    background: var(--atlas-knopf-an);
+}
+
+.atlas-varianten {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.atlas-variante__label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-variante__urteil {
+    display: block;
+    font-size: 1.05rem;
+}
+
+.atlas-variante__begruendung {
+    display: block;
+}
+
+/* With JS, the buttons name the variant at the screw itself. */
+.atlas-schablone.ist-aktiv .ist-stellschraube .atlas-variante__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Centre: the assessment with verdict and effect. Full width. */
+.atlas-schablone__mitte {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 0.6rem;
+    border: 1px solid var(--atlas-kern);
+    border-radius: 10px;
+    padding: 0.6rem;
+}
+
+.atlas-schablone__mitte-titel {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-weight: 500;
+    color: var(--atlas-kern-text);
+}
+
+/* The verdict is neutral: it follows from the screw, the pattern does not set it. */
+.atlas-schablone .ist-neutral {
+    border: 1px solid var(--atlas-neutral);
+}
+
+@media (max-width: 640px) {
+    .atlas-schablone__raster,
+    .atlas-schablone__mitte {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Was sich verschlechtert ---- */
+.atlas-effekt {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.atlas-effekt__seite {
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+}
+
+.atlas-effekt__seite p {
+    margin: 0.25rem 0 0;
+}
+
+.atlas-effekt__seite.ist-vorher {
+    border: 1px dashed var(--atlas-offen);
+}
+
+.atlas-effekt__seite.ist-nachher {
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-kern);
+}
+
+.atlas-effekt__seite.ist-nachher .atlas-label {
+    color: var(--atlas-kern-text);
+}
+
+.atlas-effekt__pfeil {
+    align-self: center;
+    font-size: 1.4rem;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-effekt__hinsichten {
+    margin: 0.9rem 0 0;
+}
+
+@media (max-width: 640px) {
+    .atlas-effekt {
+        grid-template-columns: 1fr;
+    }
+
+    .atlas-effekt__pfeil {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
 }
 
 /* ---- Minimal pair ---- */
@@ -143,7 +477,7 @@
 
 .atlas-paar dd {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
 }
 
 .atlas mark {
@@ -160,233 +494,19 @@
     margin: 0;
 }
 
-.atlas-test,
-.atlas-offene-frage {
-    border-left: 1px solid var(--atlas-linie);
+.atlas-test {
+    border-left: 2px solid var(--atlas-linie);
     padding-left: 1rem;
     margin-top: 1rem;
 }
 
-.atlas-test p,
-.atlas-offene-frage p {
+.atlas-test p {
     margin: 0.2rem 0 0;
-}
-
-/* ---- Schablone (six fields) ---- */
-.atlas-schablone {
-    margin: 0;
-}
-
-.atlas-schablone__raster {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        "inhalt publikum"
-        "mitte mitte"
-        "vergleichsfall hinsicht";
-    gap: 0.75rem;
-}
-
-.atlas-feld--inhalt { grid-area: inhalt; }
-.atlas-feld--publikum { grid-area: publikum; }
-.atlas-feld--vergleichsfall { grid-area: vergleichsfall; }
-.atlas-feld--hinsicht { grid-area: hinsicht; }
-
-.atlas-schablone__mitte {
-    grid-area: mitte;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-    border: 1px solid var(--atlas-kern);
-    border-radius: 6px;
-    padding: 0.75rem;
-}
-
-.atlas-schablone__mitte-titel {
-    grid-column: 1 / -1;
-    font-weight: 500;
-    color: var(--atlas-kern-text);
-}
-
-.atlas-feld {
-    min-width: 0;
-    border: 1px solid var(--atlas-linie);
-    border-radius: 6px;
-    padding: 0.5rem 0.75rem;
-    line-height: 1.4;
-}
-
-.atlas-feld__name {
-    display: block;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--atlas-gedaempft);
-    margin-bottom: 0.2rem;
-}
-
-/* Status: shown by line style and fill, not by colour alone. */
-.atlas-schablone .ist-muster { border: 1px solid var(--atlas-kern); }
-.atlas-schablone .ist-belegt { border: 1px solid var(--atlas-hinsicht); background: var(--atlas-hinsicht-flaeche); }
-.atlas-schablone .ist-offen { border: 1px dashed var(--atlas-offen); }
-.atlas-schablone .ist-offen .atlas-feld__text { color: var(--atlas-gedaempft); font-style: italic; }
-.atlas-schablone .ist-fehlt { border: 1px dotted var(--atlas-offen); }
-.atlas-schablone .ist-fehlt .atlas-feld__text { color: var(--atlas-gedaempft); }
-
-.atlas-legende {
-    list-style: none;
-    margin: 0.75rem 0 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.25rem;
-    font-size: 0.8rem;
-    color: var(--atlas-gedaempft);
-}
-
-.atlas-legende__probe {
-    display: inline-block;
-    width: 1.1rem;
-    height: 0.75rem;
-    border-radius: 3px;
-    margin-right: 0.4rem;
-    vertical-align: -0.05rem;
-}
-
-@media (max-width: 480px) {
-    .atlas-schablone__raster {
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "inhalt"
-            "publikum"
-            "mitte"
-            "vergleichsfall"
-            "hinsicht";
-    }
-
-    .atlas-schablone__mitte {
-        grid-template-columns: 1fr;
-    }
-
-    .atlas-paar__zeile,
-    .atlas-werte > div {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-}
-
-/* ---- Four questions ---- */
-.atlas-vier-fragen {
-    margin: 0;
-    display: grid;
-    gap: 0.75rem;
-}
-
-.atlas-frage dt {
-    font-weight: 500;
-}
-
-.atlas-frage dd {
-    margin: 0;
-}
-
-.atlas-frage.ist-kipppunkt {
-    border-left: 2px solid var(--atlas-kern);
-    padding-left: 0.75rem;
-}
-
-.atlas-kipp-marke {
-    font-size: 0.75rem;
-    font-weight: normal;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--atlas-kern-text);
-    margin-left: 0.4rem;
-}
-
-/* ---- Borderline case switch ---- */
-.atlas-kippt {
-    margin: 0 0 1rem;
-}
-
-.atlas-schalter:not([hidden]) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-}
-
-.atlas-schalter button {
-    background: transparent;
-    color: inherit;
-    border: 1px solid var(--atlas-linie);
-    border-radius: 999px;
-    padding: 0.45rem 0.9rem;
-    cursor: pointer;
-}
-
-.atlas-schalter button:hover {
-    border-color: var(--atlas-gedaempft);
-}
-
-.atlas-schalter button[aria-pressed="true"] {
-    border-color: var(--atlas-kern);
-    color: var(--atlas-kern-text);
-    background: #fbefe9;
-}
-
-.atlas-einschaetzungen__liste {
-    display: grid;
-    gap: 1rem;
-}
-
-.atlas-einschaetzung {
-    border-left: 3px solid var(--atlas-offen);
-    padding: 0.25rem 0 0.25rem 1rem;
-}
-
-.atlas-einschaetzung.ist-ja { border-left-color: var(--atlas-kern); }
-.atlas-einschaetzung.ist-nein { border-left-color: var(--atlas-hinsicht); }
-.atlas-einschaetzung.ist-strittig { border-left-style: dashed; }
-
-.atlas-einschaetzung__titel {
-    font-size: 1rem;
-    margin: 0 0 0.4rem;
-}
-
-.atlas-einschaetzung__urteil dd {
-    font-weight: 500;
-}
-
-/* With JS, the buttons name the case, so the heading is only for screen readers. */
-.atlas-einschaetzungen.ist-aktiv .atlas-einschaetzung__titel {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-}
-
-/* ---- Effect, labels, normal case ---- */
-.atlas-eckdaten {
-    margin-top: 2.5rem;
-    display: grid;
-    gap: 1.5rem;
-}
-
-.atlas-eckdatum p {
-    margin: 0;
-}
-
-.atlas-eckdatum .atlas-hinweis {
-    margin-top: 0.4rem;
 }
 
 /* ---- Related, disciplines, literature ---- */
 .atlas-bezuege p {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.5rem;
 }
 
 .atlas-faecher {
@@ -399,6 +519,7 @@
 }
 
 .atlas-faecher li {
+    background: var(--atlas-feld);
     border: 1px solid var(--atlas-linie);
     border-radius: 999px;
     padding: 0.1rem 0.7rem;
@@ -406,7 +527,20 @@
 }
 
 .atlas-literatur {
+    margin: 0;
     padding-left: 1.2rem;
+}
+
+.atlas-fliesstext p:first-of-type {
+    margin-top: 0;
+}
+
+@media (max-width: 480px) {
+    .atlas-paar__zeile,
+    .atlas-werte > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
 }
 
 /* ---- Overview (list fallback) ---- */

@@ -8,16 +8,16 @@ uebersicht:
   nicht_schwerpunkt: "nicht Schwerpunkt"
 
 karte:
+  schablone: "Was das Muster festlegt"
+  effekt: "Was sich verschlechtert"
+  effekt_vorher: "Vorher"
+  effekt_nachher: "Nachher"
+  effekt_hinsichten: "In Hinsicht"
   minimalpaar: "Minimalpaar"
   muster: "Muster"
   gegenform: "Gegenform"
   mittel: "Sprachliches Mittel"
   test: "Test"
-  schablone: "Was das Muster festlegt"
-  vier_fragen: "Die vier Prüffragen"
-  grenzfall: "Grenzfall"
-  kippt_an: "Kippt an der Frage"
-  offene_frage: "Offene Frage"
   wirkung: "Wirkung"
   etiketten: "Etiketten"
   etiketten_hinweis: "Etiketten beschreiben den Inhalt. Sie sind keine Bedingung für Desinformation."
@@ -29,24 +29,26 @@ karte:
   literatur: "Literatur"
   mehr: "Erläuterung"
 
-einschaetzung:
-  schalter: "Einschätzung wählen"
-  publikum: "Publikum"
-  urteil: "Desinformation?"
-  begruendung: "Begründung"
-  wirkung: "Wirkung"
-  keine_wirkung: "keine"
-
 schablone:
   mitte: "Einschätzung"
-  legende: "Legende"
-  felder:            # die sechs Felder der Schablone (im Code angelegt)
-    inhalt: "Inhalt"
-    publikum: "Publikum"
-    vergleichsfall: "Vergleichsfall"
-    hinsicht: "Hinsicht"
-    urteil: "Urteil"
-    wirkung: "Wirkung"
+  # Legende über der Schablone
+  legende: "Farbig: legt das Muster fest. Gestrichelt: lässt es offen."
+  # Feld, an dem der Grenzfall kippt (`kippt_an`)
+  stellschraube: "Stellschraube"
+  schalter: "Einschätzung wählen"
+  urteil_hinweis: "ergibt sich aus der Stellschraube"
+  # Rahmen „Publikum“ um die Schablone; der Link führt zu
+  # begriffsmodell.publikum_abschnitt (Linktext = dessen Titel)
+  publikum_verweis: "Rahmen jeder Einschätzung, kein Merkmal des Musters."
+  felder:            # die Felder der Schablone (im Code angelegt)
+    inhalt:         { frage: "Was?", name: "Inhalt" }
+    publikum:       { frage: "Für wen?", name: "Publikum" }
+    vergleichsfall: { frage: "Im Vergleich wozu?", name: "Vergleichsfall" }
+    hinsicht:       { frage: "In welcher Hinsicht?", name: "Hinsicht" }
+    urteil:         { name: "Urteil" }
+    wirkung:        { name: "Wirkung" }
+  # Status der Felder: für Screenreader und für weitere Legenden-Einträge
+  # (belegt / fehlt erscheinen erst in der großen Schablone)
   status:
     offen: "offen"
     muster: "durch Muster festgelegt"
