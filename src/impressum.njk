@@ -2,24 +2,37 @@
 layout: base.njk
 title: Impressum
 alternateUrl: /en/
-# Solange `platzhalter: true` gesetzt ist, meldet der Build einen Hinweis.
-# Nach dem Einsetzen der endgültigen Texte entfernen.
+# Platzhalter stehen in [eckigen Klammern] und werden hervorgehoben.
+# Solange `platzhalter: true` gesetzt ist oder noch Platzhalter übrig sind,
+# meldet jeder Build einen Hinweis. `platzhalter: true` erst entfernen,
+# wenn alle Platzhalter ersetzt sind.
 platzhalter: true
 ---
 <h1 class="page-title">Impressum</h1>
 
-<p class="platzhalter-hinweis" role="note"><strong>Platzhalter:</strong> Auf dieser Seite steht noch kein gültiger Text.
-Alles in [eckigen Klammern] wird ersetzt. Die Gliederung ist nur ein Vorschlag und keine Rechtsberatung.</p>
+{% if platzhalter %}
+<p class="platzhalter-hinweis" role="note"><strong>Entwurf:</strong> Die markierten Stellen sind Platzhalter und werden vor der Veröffentlichung ersetzt.</p>
+{% endif %}
 
-<h2>[PLATZHALTER: Angaben nach § 5 DDG]</h2>
+{% filter platzhalter %}
+<h2>Angaben gemäß § 5 DDG</h2>
 <p>
-  [PLATZHALTER: Vor- und Nachname]<br>
-  [PLATZHALTER: Straße und Hausnummer]<br>
-  [PLATZHALTER: PLZ und Ort]
+  [VOLLSTÄNDIGER BÜRGERLICHER NAME]<br>
+  [STRASSE HAUSNUMMER]<br>
+  [PLZ ORT]<br>
+  Deutschland
 </p>
 
-<h2>[PLATZHALTER: Kontakt]</h2>
-<p>[PLATZHALTER: E-Mail-Adresse]</p>
+<h2>Kontakt</h2>
+<p>
+  E-Mail: [E-MAIL-ADRESSE]<br>
+  [OPTIONAL: Telefon]
+</p>
 
-<h2>[PLATZHALTER: Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV]</h2>
-<p>[PLATZHALTER: Name und Anschrift]</p>
+<h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+<p>
+  [VOLLSTÄNDIGER BÜRGERLICHER NAME]<br>
+  [STRASSE HAUSNUMMER]<br>
+  [PLZ ORT]
+</p>
+{% endfilter %}

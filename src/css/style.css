@@ -577,6 +577,15 @@ footer a {
     padding: 0.75rem 1rem;
 }
 
+/* Each remaining placeholder: hard to overlook on purpose. */
+mark.platzhalter {
+    background: #ffe27a;
+    color: #000;
+    outline: 1px dashed #bf5748;
+    outline-offset: 1px;
+    padding: 0 0.15em;
+}
+
 @font-face {
     font-family: Sono;
     src: url("../fonts/Sono/static/Sono-Regular.ttf");

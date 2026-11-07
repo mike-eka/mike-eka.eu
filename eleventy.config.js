@@ -34,19 +34,44 @@ module.exports = function (eleventyConfig) {
     collectionApi.getFilteredByTag("project").sort((a, b) => a.data.title.localeCompare(b.data.title))
   );
 
-  // Pages marked `platzhalter: true` (e.g. Impressum/Datenschutz before the
-  // final texts are in) are listed as a warning on every build, so they
-  // aren't forgotten before merging to main.
+  // Placeholders like "[E-MAIL-ADRESSE]" in the legal pages. Text wrapped in
+  // {% filter platzhalter %}…{% endfilter %} gets every [ … ] highlighted.
+  // Every build then warns about (a) pages still marked `platzhalter: true`
+  // and (b) every page whose output still contains a highlighted
+  // placeholder, with the count -- so nothing reaches main unnoticed.
+  // Nunjucks-only, so the result can be marked safe (a {% filter %} block
+  // can't be piped through `| safe`).
+  eleventyConfig.addNunjucksFilter("platzhalter", function (html) {
+    const markiert = String(html).replace(/\[([^\[\]<>]+)\]/g, '<mark class="platzhalter">[$1]</mark>');
+    return this.env.getFilter("safe")(markiert);
+  });
+
+  const platzhalterMarkiert = new Set();
+  const platzhalterGefunden = new Map();
+  eleventyConfig.on("eleventy.before", () => {
+    platzhalterMarkiert.clear();
+    platzhalterGefunden.clear();
+  });
   eleventyConfig.addCollection("platzhalterSeiten", (collectionApi) => {
     const items = collectionApi.getAll().filter((item) => item.data.platzhalter === true);
-    if (items.length) {
-      console.warn(
-        `[mike-eka] Seiten mit Platzhaltertext (vor dem Merge nach main ersetzen): ${items
-          .map((item) => item.url)
-          .join(", ")}`
-      );
-    }
+    items.forEach((item) => platzhalterMarkiert.add(item.url));
     return items;
+  });
+  eleventyConfig.addTransform("platzhalterZaehlen", function (content) {
+    if ((this.page.outputPath || "").endsWith(".html")) {
+      const n = (content.match(/<mark class="platzhalter">/g) || []).length;
+      if (n) platzhalterGefunden.set(this.page.url, n);
+    }
+    return content;
+  });
+  eleventyConfig.on("eleventy.after", () => {
+    const urls = new Set([...platzhalterMarkiert, ...platzhalterGefunden.keys()]);
+    if (!urls.size) return;
+    const liste = [...urls]
+      .sort()
+      .map((url) => `${url} (${platzhalterGefunden.get(url) || 0} offen${platzhalterMarkiert.has(url) ? ", platzhalter: true" : ""})`)
+      .join(", ");
+    console.warn(`[mike-eka] Platzhalter vor dem Merge nach main ersetzen: ${liste}`);
   });
 
   eleventyConfig.addFilter("dateDisplay", (date, locale) => {

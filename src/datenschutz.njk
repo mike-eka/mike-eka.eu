@@ -2,26 +2,77 @@
 layout: base.njk
 title: Datenschutz
 alternateUrl: /en/
-# Solange `platzhalter: true` gesetzt ist, meldet der Build einen Hinweis.
-# Nach dem Einsetzen der endgültigen Texte entfernen.
+# Platzhalter stehen in [eckigen Klammern] und werden hervorgehoben.
+# Solange `platzhalter: true` gesetzt ist oder noch Platzhalter übrig sind,
+# meldet jeder Build einen Hinweis. `platzhalter: true` erst entfernen,
+# wenn alle Platzhalter ersetzt sind.
 platzhalter: true
 ---
-<h1 class="page-title">Datenschutz</h1>
+<h1 class="page-title">Datenschutzerklärung</h1>
 
-<p class="platzhalter-hinweis" role="note"><strong>Platzhalter:</strong> Auf dieser Seite steht noch kein gültiger Text.
-Alles in [eckigen Klammern] wird ersetzt. Die Gliederung ist nur ein Vorschlag und keine Rechtsberatung.</p>
+{% if platzhalter %}
+<p class="platzhalter-hinweis" role="note"><strong>Entwurf:</strong> Die markierten Stellen sind Platzhalter und werden vor der Veröffentlichung ersetzt.</p>
+{% endif %}
 
-<h2>[PLATZHALTER: Verantwortlicher]</h2>
-<p>[PLATZHALTER: Name, Anschrift, Kontakt]</p>
+{% filter platzhalter %}
+<h2>1. Verantwortlicher</h2>
+<p>Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der
+Datenschutz-Grundverordnung (DSGVO) ist:</p>
+<p>
+  [VOLLSTÄNDIGER BÜRGERLICHER NAME]<br>
+  [STRASSE HAUSNUMMER]<br>
+  [PLZ ORT]<br>
+  E-Mail: [E-MAIL-ADRESSE]
+</p>
 
-<h2>[PLATZHALTER: Hosting]</h2>
-<p>[PLATZHALTER: Die Seite liegt bei GitHub Pages. Hier beschreiben, welche Daten (z. B. Server-Logs mit IP-Adressen) dort verarbeitet werden, auf welcher Rechtsgrundlage, und dass Daten in die USA übermittelt werden können.]</p>
+<h2>2. Das Wichtigste in Kürze</h2>
+<p>Diese Website verwendet keine Cookies, kein Tracking und keine Analysewerkzeuge.
+Schriften und Skripte werden vom selben Server geladen wie die Seite selbst; es
+werden keine Inhalte von Drittanbietern eingebunden. Personenbezogene Daten
+fallen nur an, soweit das für die technische Bereitstellung nötig ist (Abschnitt 3)
+oder wenn Sie mir eine E-Mail schreiben (Abschnitt 4).</p>
 
-<h2>[PLATZHALTER: Cookies, Tracking, externe Inhalte]</h2>
-<p>[PLATZHALTER: z. B. keine Cookies, kein Tracking; Schriften und Skripte werden selbst gehostet, es werden keine Inhalte von Dritten nachgeladen.]</p>
+<h2>3. Hosting über GitHub Pages</h2>
+<p>Diese Website wird über GitHub Pages bereitgestellt, einen Dienst der
+GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA.</p>
+<p>Beim Aufruf der Website verarbeitet GitHub technisch notwendige Daten, insbesondere
+Ihre IP-Adresse, Datum und Uhrzeit des Abrufs, die aufgerufene Adresse, die zuvor
+besuchte Seite (Referrer) sowie Angaben zu Browser und Betriebssystem. Diese Daten
+werden benötigt, um die Website auszuliefern und ihre Sicherheit zu gewährleisten.</p>
+<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse besteht
+in einer sicheren und zuverlässigen Bereitstellung dieser Website.</p>
+<p>Dabei können Daten in die USA übermittelt werden. GitHub stützt solche Übermittlungen
+nach eigenen Angaben auf [PRÜFEN: EU-Standardvertragsklauseln (Art. 46 DSGVO) und/oder
+die Zertifizierung nach dem EU-US Data Privacy Framework (Art. 45 DSGVO)].
+Wie lange GitHub diese Daten speichert, richtet sich nach den Angaben von GitHub
+[PRÜFEN: Speicherdauer laut GitHub Privacy Statement].</p>
+<p>Weitere Informationen: GitHub Privacy Statement,
+<a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement</a>
+[PRÜFEN: Link aktuell?]</p>
 
-<h2>[PLATZHALTER: Externe Links]</h2>
-<p>[PLATZHALTER: z. B. Link auf GitHub im Footer]</p>
+<h2>4. Kontakt per E-Mail</h2>
+<p>Wenn Sie mir eine E-Mail schreiben, verarbeite ich Ihre Adresse und den Inhalt Ihrer
+Nachricht, um Ihre Anfrage zu beantworten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f
+DSGVO (Beantwortung von Anfragen) bzw. Art. 6 Abs. 1 lit. b DSGVO, wenn Ihre Anfrage
+auf einen Vertrag zielt. Ich lösche die Nachricht, sobald sie erledigt ist und keine
+gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+<p>[PRÜFEN: Welcher E-Mail-Anbieter? Ggf. einen Satz ergänzen.]</p>
 
-<h2>[PLATZHALTER: Ihre Rechte]</h2>
-<p>[PLATZHALTER: Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Beschwerde bei einer Aufsichtsbehörde]</p>
+<h2>5. Links zu anderen Websites</h2>
+<p>Diese Website enthält Links zu anderen Angeboten, etwa zu Zenodo oder GitHub. Erst
+wenn Sie einen solchen Link anklicken, verbindet sich Ihr Browser mit dem jeweiligen
+Anbieter. Für die Verarbeitung dort gelten dessen Datenschutzhinweise.</p>
+
+<h2>6. Ihre Rechte</h2>
+<p>Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16 DSGVO),
+Löschung (Art. 17 DSGVO), Einschränkung der Verarbeitung (Art. 18 DSGVO) und
+Datenübertragbarkeit (Art. 20 DSGVO). Soweit eine Verarbeitung auf Art. 6 Abs. 1
+lit. f DSGVO beruht, können Sie ihr widersprechen (Art. 21 DSGVO). Wenden Sie sich
+dafür an die oben genannte Adresse.</p>
+<p>Sie haben außerdem das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu
+beschweren (Art. 77 DSGVO), zum Beispiel bei der für meinen Wohnsitz zuständigen
+Behörde: [ZUSTÄNDIGE AUFSICHTSBEHÖRDE MIT ANSCHRIFT].</p>
+
+<h2>7. Stand</h2>
+<p>Diese Datenschutzerklärung hat den Stand November 2026.</p>
+{% endfilter %}
