@@ -29,6 +29,21 @@ module.exports = function (eleventyConfig) {
     collectionApi.getFilteredByTag("project").sort((a, b) => a.data.title.localeCompare(b.data.title))
   );
 
+  // Pages marked `platzhalter: true` (e.g. Impressum/Datenschutz before the
+  // final texts are in) are listed as a warning on every build, so they
+  // aren't forgotten before merging to main.
+  eleventyConfig.addCollection("platzhalterSeiten", (collectionApi) => {
+    const items = collectionApi.getAll().filter((item) => item.data.platzhalter === true);
+    if (items.length) {
+      console.warn(
+        `[mike-eka] Seiten mit Platzhaltertext (vor dem Merge nach main ersetzen): ${items
+          .map((item) => item.url)
+          .join(", ")}`
+      );
+    }
+    return items;
+  });
+
   eleventyConfig.addFilter("dateDisplay", (date, locale) => {
     return new Date(date).toLocaleDateString(locale === "en" ? "en-GB" : "de-DE", {
       year: "numeric",

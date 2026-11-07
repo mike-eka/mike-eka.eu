@@ -570,6 +570,13 @@ footer a {
     text-decoration: underline;
 }
 
+/* Marks pages whose text is still a placeholder (Impressum, Datenschutz). */
+.platzhalter-hinweis {
+    border: 1px dashed #bf5748;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+}
+
 @font-face {
     font-family: Sono;
     src: url("../fonts/Sono/static/Sono-Regular.ttf");
