@@ -93,7 +93,7 @@ function pruefeAtlas(items) {
     }
     if (g.typ === "netz") {
       const key = g.zustand_aus_einschaetzung;
-      const bekannt = new Set(["kennzahl", ...(g.schalter || []).map((s) => s.id), ...(key ? [key] : [])]);
+      const bekannt = new Set(["kennzahl", "kennzahl_2", ...(g.schalter || []).map((s) => s.id), ...(key ? [key] : [])]);
       if (key) {
         (item.data.einschaetzungen || []).forEach((e, i) => {
           if (!e.grafik_zustand || e.grafik_zustand[key] == null) {
@@ -237,7 +237,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
     basis.forEach((z) =>
       kombis.forEach((k) => {
         const r = netzLogik.auswerten(grafik, { ...z.werte, ...k });
-        zeilen.push({ label: z.label, schalter: k, kennzahl: r.kennzahl, urteil: r.urteil });
+        zeilen.push({ label: z.label, schalter: k, kennzahl: r.kennzahl, kennzahl_2: r.kennzahl_2, urteil: r.urteil });
       })
     );
     return zeilen;

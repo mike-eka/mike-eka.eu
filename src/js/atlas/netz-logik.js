@@ -125,20 +125,36 @@
     return Math.round((summe / quellen.length) * 100);
   }
 
+  // Second key figure (grafik.kennzahl_2: { label, von, nach_gruppe }):
+  // number of visible edges between node `von` and nodes of `nach_gruppe`.
+  function kennzahl2(grafik, netz) {
+    var kz = grafik.kennzahl_2;
+    if (!kz) return null;
+    var gruppe = {};
+    netz.knoten.forEach(function (k) { gruppe[k.id] = k.gruppe; });
+    return netz.kanten.filter(function (e) {
+      return (e.von === kz.von && gruppe[e.nach] === kz.nach_gruppe) ||
+        (e.nach === kz.von && gruppe[e.von] === kz.nach_gruppe);
+    }).length;
+  }
+
   function urteil(grafik, z) {
     var u = (grafik.urteile || []).filter(function (x) { return pruefe(x.wenn, z); });
     return u.length ? u[0] : null;
   }
 
-  // Everything for one state: visible network, key figure, verdict.
+  // Everything for one state: visible network, key figures, verdict.
+  // Conditions may use `kennzahl` and `kennzahl_2`.
   function auswerten(grafik, zustand) {
     var netz = sichtbar(grafik, zustand);
     var k = kennzahl(grafik, netz);
+    var k2 = kennzahl2(grafik, netz);
     var z = {};
     Object.keys(zustand || {}).forEach(function (n) { z[n] = zustand[n]; });
     z.kennzahl = k;
-    return { netz: netz, kennzahl: k, urteil: urteil(grafik, z) };
+    z.kennzahl_2 = k2;
+    return { netz: netz, kennzahl: k, kennzahl_2: k2, urteil: urteil(grafik, z) };
   }
 
-  return { pruefe: pruefe, analysiere: analysiere, sichtbar: sichtbar, kennzahl: kennzahl, auswerten: auswerten };
+  return { pruefe: pruefe, analysiere: analysiere, sichtbar: sichtbar, kennzahl: kennzahl, kennzahl2: kennzahl2, auswerten: auswerten };
 });

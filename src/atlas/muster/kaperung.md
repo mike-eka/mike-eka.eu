@@ -123,6 +123,10 @@ grafik:
     von_gruppe: publikum
     nach: T
     ueber: V
+  kennzahl_2:                  # Kanten vom Vermittler zu Knoten der Gruppe „fach“
+    label: "Verbindungen zur Fachgemeinschaft des Themas"
+    von: V
+    nach_gruppe: fach
   urteile:
     - { wenn: "rueckbindung == klima", text: "Vermittlung: Brücke mit Rückbindung", ton: gut }
     - { wenn: "rueckbindung == anderes_fach", text: "Strittig: Rückbindung ans falsche Fach", ton: neutral }

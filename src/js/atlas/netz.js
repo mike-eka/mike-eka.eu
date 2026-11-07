@@ -39,6 +39,7 @@
 
     var knoepfe = Array.prototype.slice.call(kachel.querySelectorAll("[data-grafik-einschaetzung]"));
     var kennzahlEl = kachel.querySelector("[data-grafik-kennzahl]");
+    var kennzahl2El = kachel.querySelector("[data-grafik-kennzahl-2]");
     var urteilEl = kachel.querySelector("[data-grafik-urteil]");
 
     function setzeEinschaetzung(k) {
@@ -122,12 +123,14 @@
       // result + text alternative
       var kennText = g.kennzahl && r.kennzahl != null ? g.kennzahl.label + ": " + r.kennzahl + " %" : "";
       var urteilText = r.urteil ? r.urteil.text : "";
+      var kenn2Text = g.kennzahl_2 && r.kennzahl_2 != null ? g.kennzahl_2.label + ": " + r.kennzahl_2 : "";
       if (kennzahlEl) kennzahlEl.textContent = kennText;
+      if (kennzahl2El) kennzahl2El.textContent = kenn2Text;
       if (urteilEl) {
         urteilEl.textContent = urteilText;
         urteilEl.className = "atlas-grafik__urteil" + (r.urteil && r.urteil.ton ? " ist-" + r.urteil.ton : "");
       }
-      svg.attr("aria-label", [T.netz_alt, urteilText, kennText].filter(Boolean).join(". "));
+      svg.attr("aria-label", [T.netz_alt, urteilText, kennText, kenn2Text].filter(Boolean).join(". "));
     }
 
     function groesse() {

@@ -112,6 +112,8 @@ grafik:                 # Grafiken auf den Karten (netz.js, balken.js)
   nein: "nein"
   mass_waehlen: "Vergleichsmaß wählen"
   netz_alt: "Netzdiagramm"
+  # unter den Kennzahlen, wenn eine Grafik kennzahl_2 hat:
+  kennzahl_2_hinweis: "Die erste Zahl bleibt gleich. Das ist der Punkt: Die Brückenposition allein unterscheidet Vermittlung nicht von Kaperung."
   balken_alt: "Balkendiagramm"
 
 etiketten:

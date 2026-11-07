@@ -174,9 +174,11 @@ layout: base.njk
       {% if grafik.typ == "netz" %}
       <div class="atlas-grafik__ergebnis" data-nur-js hidden aria-live="polite">
         {% if grafik.kennzahl %}<p data-grafik-kennzahl></p>{% endif %}
+        {% if grafik.kennzahl_2 %}<p data-grafik-kennzahl-2></p>{% endif %}
         <p class="atlas-grafik__urteil" data-grafik-urteil></p>
       </div>
       {% endif %}
+      {% if grafik.typ == "netz" and grafik.kennzahl_2 and gb.kennzahl_2_hinweis %}<p class="atlas-hinweis atlas-grafik__kennzahl-hinweis">{{ gb.kennzahl_2_hinweis }}</p>{% endif %}
 
       {# Ohne JS (und als Textalternative): die Daten als Tabelle #}
       <details class="atlas-grafik__daten" open data-grafik-tabelle>
@@ -188,6 +190,7 @@ layout: base.njk
               <th scope="col">{{ gb.einschaetzung }}</th>
               {% for s in grafik.schalter %}<th scope="col">{{ s.label }}</th>{% endfor %}
               {% if grafik.kennzahl %}<th scope="col">{{ grafik.kennzahl.label }}</th>{% endif %}
+              {% if grafik.kennzahl_2 %}<th scope="col">{{ grafik.kennzahl_2.label }}</th>{% endif %}
               <th scope="col">{{ gb.urteil }}</th>
             </tr>
           </thead>
@@ -197,6 +200,7 @@ layout: base.njk
               <th scope="row">{{ z.label }}</th>
               {% for s in grafik.schalter %}<td data-label="{{ s.label }}">{{ gb.ja if z.schalter[s.id] else gb.nein }}</td>{% endfor %}
               {% if grafik.kennzahl %}<td data-label="{{ grafik.kennzahl.label }}">{{ z.kennzahl }} %</td>{% endif %}
+              {% if grafik.kennzahl_2 %}<td data-label="{{ grafik.kennzahl_2.label }}">{{ z.kennzahl_2 }}</td>{% endif %}
               <td data-label="{{ gb.urteil }}">{{ z.urteil.text if z.urteil else "–" }}</td>
             </tr>
             {% endfor %}
