@@ -8,6 +8,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/embeds");
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
 
+  // Third-party libraries, self-hosted from node_modules (no CDN requests).
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/d3/dist/d3.min.js": "js/vendor/d3.min.js",
+    "node_modules/p5/lib/p5.min.js": "js/vendor/p5.min.js",
+  });
+
   // Collections, grouped by tag so standing pages (Sprache, Polit) can
   // list just their own posts, and the Blog page can list everything.
   eleventyConfig.addCollection("posts", (collectionApi) =>
