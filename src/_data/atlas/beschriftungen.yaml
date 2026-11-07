@@ -14,6 +14,11 @@ karte:
   effekt_nachher: "Nachher"
   effekt_hinsichten: "In Hinsicht"
   minimalpaar: "Minimalpaar"
+  analogie: "Wo die Analogie bricht"
+  analogie_merkmal: "Merkmal"
+  analogie_art:         # steht als Wort in jeder Zeile der Tabelle
+    passt: "passt"
+    bricht: "bricht"
   muster: "Muster"
   gegenform: "Gegenform"
   mittel: "Sprachliches Mittel"

@@ -18,8 +18,14 @@
     prefix:           eindeutiger Präfix für IDs
     publikumLink, publikumLinkText: Verweis auf den Abschnitt „Für wen?“
 
-  Ohne JS stehen alle Einschätzungen untereinander (in der Stellschraube und
-  im Urteil); atlas.js blendet die Knöpfe ein und zeigt jeweils eine.
+  Zwei Darstellungen der Einschätzungen:
+    ohne JS ([data-ohne-js]): in der Stellschraube eine Liste, gruppiert nach
+      Einschätzung – je Label als Zwischenüberschrift, Wert, Urteil,
+      Begründung und Wirkung zusammen. Urteil- und Wirkungsfeld zeigen den
+      Text des Musters.
+    mit JS ([data-nur-js], anfangs hidden): Knöpfe in der Stellschraube; der
+      Wert, das Urteil und ggf. die Wirkung der gewählten Einschätzung stehen
+      in ihren Feldern. atlas.js schaltet zwischen beiden Darstellungen um.
 #}
 
 {% macro zeilen(f) -%}
@@ -36,7 +42,31 @@
   </h3>
 {%- endmacro %}
 
-{% macro frageFeld(id, f, b, o) %}
+{% macro wert(id, e) -%}
+  {%- if id == "inhalt" %}<q>{{ e[id] }}</q>{% else %}{{ e[id] }}{% endif -%}
+{%- endmacro %}
+
+{% macro urteilText(e, o) -%}
+  {%- set u = o.urteile | nachId(e.urteil) -%}
+  <strong class="atlas-variante__urteil">{{ u.name if u else e.urteil }}</strong>
+  {%- if e.begruendung %} <span class="atlas-variante__begruendung">{{ e.begruendung }}</span>{% endif -%}
+{%- endmacro %}
+
+{# Wirkung einer Einschätzung; ohne `wirkung` der Text des Musters (f). #}
+{% macro wirkungText(e, f, b, o) -%}
+  {%- set w = o.wirkungen | nachId(e.wirkung) -%}
+  {%- if w -%}
+    <strong class="atlas-variante__urteil">{{ w.name }}</strong> <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
+  {%- elif e.wirkung == "keine" -%}
+    <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
+  {%- elif e.wirkung -%}
+    <strong class="atlas-variante__urteil">{{ e.wirkung }}</strong>
+  {%- else -%}
+    <span class="atlas-variante__begruendung">{{ zeilen(f) }}</span>
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro frageFeld(id, f, b, o, wirkungF) %}
   {%- set status = (f.status if f and f.status else "offen") -%}
   {%- set istKipp = (o.kippFeld == id and o.einschaetzungen and o.einschaetzungen.length) -%}
   <div class="atlas-feld atlas-feld--{{ id }} ist-{{ status }}{% if istKipp %} ist-stellschraube{% endif %}">
@@ -44,20 +74,37 @@
     <p class="atlas-feld__text">{{ zeilen(f) }}</p>
     <span class="visually-hidden">({{ b.status[status] }})</span>
     {% if istKipp %}
+      {%- set mitWirkung = o.einschaetzungen | eindeutig("wirkung") | length -%}
       {% if o.grenzfallFrage %}<p class="atlas-grenzfrage">{{ o.grenzfallFrage }}</p>{% endif %}
-      <div class="atlas-schalter" role="group" aria-label="{{ b.schalter }}" hidden>
+
+      {# mit JS: Knöpfe und der Wert der gewählten Einschätzung #}
+      <div class="atlas-schalter" role="group" aria-label="{{ b.schalter }}" data-nur-js hidden>
         {% for e in o.einschaetzungen %}
-        <button type="button" data-ziel="{{ loop.index }}" aria-controls="{{ o.prefix }}-wert-{{ loop.index }} {{ o.prefix }}-urteil-{{ loop.index }}{% if o.einschaetzungen | eindeutig('wirkung') | length %} {{ o.prefix }}-wirkung-{{ loop.index }}{% endif %}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
+        <button type="button" data-ziel="{{ loop.index }}" aria-controls="{{ o.prefix }}-wert-{{ loop.index }} {{ o.prefix }}-urteil-{{ loop.index }}{% if mitWirkung %} {{ o.prefix }}-wirkung-{{ loop.index }}{% endif %}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
         {% endfor %}
       </div>
-      <ul class="atlas-varianten">
+      <ul class="atlas-varianten" data-nur-js hidden>
         {% for e in o.einschaetzungen %}
         <li class="atlas-variante" id="{{ o.prefix }}-wert-{{ loop.index }}" data-panel="{{ loop.index }}">
-          <span class="atlas-variante__label">{{ e.label }}</span>
-          <span class="atlas-variante__wert">{% if id == "inhalt" %}<q>{{ e[id] }}</q>{% else %}{{ e[id] }}{% endif %}</span>
+          <span class="visually-hidden">{{ e.label }}:</span>
+          <span class="atlas-variante__wert">{{ wert(id, e) }}</span>
         </li>
         {% endfor %}
       </ul>
+
+      {# ohne JS: nach Einschätzung gruppiert #}
+      <div class="atlas-einschaetzungen" data-ohne-js>
+        {% for e in o.einschaetzungen %}
+        <section class="atlas-einschaetzung" aria-labelledby="{{ o.prefix }}-e{{ loop.index }}">
+          <h4 class="atlas-einschaetzung__titel" id="{{ o.prefix }}-e{{ loop.index }}">{{ e.label }}</h4>
+          <dl class="atlas-werte">
+            <div><dt>{{ b.felder[id].name }}</dt><dd>{{ wert(id, e) }}</dd></div>
+            <div><dt>{{ b.felder.urteil.name }}</dt><dd>{{ urteilText(e, o) }}</dd></div>
+            {% if mitWirkung %}<div><dt>{{ b.felder.wirkung.name }}</dt><dd>{{ wirkungText(e, wirkungF, b, o) }}</dd></div>{% endif %}
+          </dl>
+        </section>
+        {% endfor %}
+      </div>
     {% endif %}
   </div>
 {% endmacro %}
@@ -68,13 +115,11 @@
     {{ kopf("urteil", b) }}
     {% if mitVarianten %}
       <p class="atlas-feld__hinweis">{{ b.urteil_hinweis }}</p>
-      <ul class="atlas-varianten" aria-live="polite">
+      <ul class="atlas-varianten" aria-live="polite" data-nur-js hidden>
         {% for e in o.einschaetzungen %}
-        {%- set u = o.urteile | nachId(e.urteil) -%}
         <li class="atlas-variante" id="{{ o.prefix }}-urteil-{{ loop.index }}" data-panel="{{ loop.index }}">
           <span class="atlas-variante__label">{{ e.label }}</span>
-          <strong class="atlas-variante__urteil">{{ u.name if u else e.urteil }}</strong>
-          {% if e.begruendung %}<span class="atlas-variante__begruendung">{{ e.begruendung }}</span>{% endif %}
+          {{ urteilText(e, o) }}
         </li>
         {% endfor %}
       </ul>
@@ -96,21 +141,12 @@
   {% if mitVarianten %}
   <div class="atlas-feld atlas-feld--wirkung ist-neutral">
     {{ kopf("wirkung", b) }}
-    <ul class="atlas-varianten" aria-live="polite">
+    <p class="atlas-feld__text" data-ohne-js>{{ zeilen(f) }}</p>
+    <ul class="atlas-varianten" aria-live="polite" data-nur-js hidden>
       {% for e in o.einschaetzungen %}
-      {%- set w = o.wirkungen | nachId(e.wirkung) -%}
       <li class="atlas-variante" id="{{ o.prefix }}-wirkung-{{ loop.index }}" data-panel="{{ loop.index }}">
         <span class="atlas-variante__label">{{ e.label }}</span>
-        {% if w %}
-          <strong class="atlas-variante__urteil">{{ w.name }}</strong>
-          <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
-        {% elif e.wirkung == "keine" %}
-          <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
-        {% elif e.wirkung %}
-          <strong class="atlas-variante__urteil">{{ e.wirkung }}</strong>
-        {% else %}
-          <span class="atlas-variante__begruendung">{{ zeilen(f) }}</span>
-        {% endif %}
+        {{ wirkungText(e, f, b, o) }}
       </li>
       {% endfor %}
     </ul>
@@ -141,9 +177,9 @@
       {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ o.publikumLinkText }}</a>{% endif %}
     </p>
     <div class="atlas-schablone__raster">
-      {{ frageFeld("inhalt", felder.inhalt, b, o) }}
-      {{ frageFeld("vergleichsfall", felder.vergleichsfall, b, o) }}
-      {{ frageFeld("hinsicht", felder.hinsicht, b, o) }}
+      {{ frageFeld("inhalt", felder.inhalt, b, o, felder.wirkung) }}
+      {{ frageFeld("vergleichsfall", felder.vergleichsfall, b, o, felder.wirkung) }}
+      {{ frageFeld("hinsicht", felder.hinsicht, b, o, felder.wirkung) }}
       <div class="atlas-schablone__mitte">
         <p class="atlas-schablone__mitte-titel">{{ b.mitte }}</p>
         {{ urteilFeld(felder.urteil, b, o) }}

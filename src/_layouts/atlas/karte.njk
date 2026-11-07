@@ -78,6 +78,39 @@ layout: base.njk
     </section>
     {% endif %}
 
+    {# Optional: Analogie (z. B. Pseudo-Erklärung), an der Stelle des Minimalpaars #}
+    {% if analogie %}
+    <section class="atlas-kachel atlas-kachel--kern atlas-analogie" aria-labelledby="analogie">
+      <h2 id="analogie">{{ b.karte.analogie }}</h2>
+      {% if analogie.aussage %}<p class="atlas-analogie__aussage"><q>{{ analogie.aussage | markiere | safe }}</q></p>{% endif %}
+      {% if analogie.hinweis %}<p class="atlas-hinweis">{{ analogie.hinweis }}</p>{% endif %}
+      {% if analogie.zeilen and analogie.zeilen.length %}
+      <table class="atlas-analogie__tabelle">
+        <thead>
+          <tr>
+            <th scope="col">{{ b.karte.analogie_merkmal }}</th>
+            <th scope="col">{{ analogie.quelle }}</th>
+            <th scope="col">{{ analogie.ziel }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for z in analogie.zeilen %}
+          <tr class="ist-{{ z.art }}">
+            <th scope="row">
+              <span class="atlas-analogie__merkmal">{{ z.merkmal }}</span>
+              <span class="atlas-analogie__art">{{ b.karte.analogie_art[z.art] or z.art }}</span>
+            </th>
+            <td data-label="{{ analogie.quelle }}">{{ z.quelle }}</td>
+            <td data-label="{{ analogie.ziel }}">{{ z.ziel }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+      {% if analogie.fazit %}<p class="atlas-analogie__fazit">{{ analogie.fazit }}</p>{% endif %}
+    </section>
+    {% endif %}
+
     {% if mittel %}
     <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="mittel">
       <h2 id="mittel">{{ b.karte.mittel }}</h2>

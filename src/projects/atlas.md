@@ -5,5 +5,5 @@ link: "/atlas/"
 permalink: false
 eleventyComputed:
   title: "{{ atlas.begriffsmodell.titel }}"
-summary: "Ein Atlas wenig beachteter Desinformationsmuster."
+summary: "Ein Atlas wenig beachteter Desinformationsmuster und ein kleines Begriffsmodell dazu, wann ein Inhalt die Erkenntnislage verschlechtert."
 ---

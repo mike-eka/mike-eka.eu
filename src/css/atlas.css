@@ -362,15 +362,30 @@ main.atlas-wide {
     display: block;
 }
 
-/* With JS, the buttons name the variant at the screw itself. */
-.atlas-schablone.ist-aktiv .ist-stellschraube .atlas-variante__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+/* Without JS: the assessments grouped one by one inside the screw. */
+.atlas-einschaetzungen {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.atlas-einschaetzung {
+    border-left: 2px solid var(--atlas-offen);
+    padding-left: 0.75rem;
+}
+
+.atlas-einschaetzung__titel {
+    font-size: 0.95rem;
+    margin: 0 0 0.3rem;
+}
+
+.atlas-einschaetzung .atlas-werte > div {
+    grid-template-columns: 7rem 1fr;
+}
+
+.atlas-einschaetzung .atlas-variante__urteil {
+    display: inline;
+    font-size: 1rem;
 }
 
 /* Centre: the assessment with verdict and effect. Full width. */
@@ -488,6 +503,136 @@ main.atlas-wide {
     text-underline-offset: 0.2em;
 }
 
+/* ---- Analogy (where it breaks) ---- */
+.atlas-analogie__aussage {
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem;
+}
+
+.atlas-analogie__tabelle {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.35rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.atlas-analogie__tabelle thead th {
+    text-align: left;
+    font-weight: normal;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+    padding: 0 0.6rem;
+}
+
+.atlas-analogie__tabelle tbody th,
+.atlas-analogie__tabelle td {
+    text-align: left;
+    vertical-align: top;
+    background: var(--atlas-feld);
+    padding: 0.5rem 0.6rem;
+}
+
+.atlas-analogie__tabelle tbody th {
+    font-weight: normal;
+    width: 9rem;
+    border-radius: 8px 0 0 8px;
+    border-left: 3px solid var(--atlas-linie);
+}
+
+.atlas-analogie__tabelle td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.atlas-analogie__merkmal {
+    display: block;
+    font-weight: 500;
+}
+
+.atlas-analogie__art {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--atlas-offen);
+    border-radius: 999px;
+    padding: 0 0.45rem;
+    color: var(--atlas-gedaempft);
+}
+
+/* Breaking rows stand out: accent edge, tint, filled word "bricht". */
+.atlas-analogie__tabelle tr.ist-bricht th,
+.atlas-analogie__tabelle tr.ist-bricht td {
+    background: var(--atlas-knopf-an);
+}
+
+.atlas-analogie__tabelle tr.ist-bricht th {
+    border-left-color: var(--atlas-kern);
+}
+
+.atlas-analogie__tabelle tr.ist-bricht .atlas-analogie__art {
+    border-color: var(--atlas-kern);
+    color: var(--atlas-kern-text);
+    font-weight: bold;
+}
+
+.atlas-analogie__fazit {
+    margin: 0;
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 1rem;
+}
+
+/* Narrow: each row becomes a stacked block with labelled cells. */
+@media (max-width: 640px) {
+    .atlas-analogie__tabelle thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .atlas-analogie__tabelle,
+    .atlas-analogie__tabelle tbody,
+    .atlas-analogie__tabelle tr,
+    .atlas-analogie__tabelle tbody th,
+    .atlas-analogie__tabelle td {
+        display: block;
+        width: auto;
+    }
+
+    .atlas-analogie__tabelle tr {
+        margin-bottom: 0.6rem;
+        border-left: 3px solid var(--atlas-linie);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .atlas-analogie__tabelle tr.ist-bricht {
+        border-left-color: var(--atlas-kern);
+    }
+
+    .atlas-analogie__tabelle tbody th,
+    .atlas-analogie__tabelle td,
+    .atlas-analogie__tabelle td:last-child {
+        border-radius: 0;
+        border-left: 0;
+    }
+
+    .atlas-analogie__tabelle td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--atlas-gedaempft);
+    }
+}
+
 /* ---- Means + test ---- */
 .atlas-mittel__name {
     font-weight: 500;
@@ -537,7 +682,8 @@ main.atlas-wide {
 
 @media (max-width: 480px) {
     .atlas-paar__zeile,
-    .atlas-werte > div {
+    .atlas-werte > div,
+    .atlas-einschaetzung .atlas-werte > div {
         grid-template-columns: 1fr;
         gap: 0;
     }

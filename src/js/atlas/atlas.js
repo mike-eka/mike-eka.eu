@@ -3,7 +3,9 @@
 //
 // Markup (see _includes/atlas/schablone.njk):
 //   [data-atlas-schalter]            container
-//     .atlas-schalter[hidden]        button group, shown by this script
+//     [data-nur-js][hidden]          shown by this script (incl. the buttons)
+//     [data-ohne-js]                 hidden by this script (no-JS fallback)
+//     .atlas-schalter                button group
 //       button[data-ziel=<key>]      one per variant; aria-pressed marks the start
 //     [data-panel=<key>]             any number of elements per key, anywhere in
 //                                    the container (e.g. the value at the
@@ -46,6 +48,14 @@
       return k.getAttribute("aria-pressed") === "true";
     })[0] || knoepfe[0];
 
+    // Switch from the no-JS presentation (grouped by assessment) to the
+    // interactive one (values in their fields).
+    Array.prototype.forEach.call(root.querySelectorAll("[data-nur-js]"), function (el) {
+      el.hidden = false;
+    });
+    Array.prototype.forEach.call(root.querySelectorAll("[data-ohne-js]"), function (el) {
+      el.hidden = true;
+    });
     gruppe.hidden = false;
     root.classList.add("ist-aktiv");
     zeige(start.getAttribute("data-ziel"));
