@@ -1,0 +1,5 @@
+---
+permalink: /atlas/atlas.jsonld
+eleventyExcludeFromCollections: true
+---
+{{ atlas.begriffsmodell | atlasJsonLd(collections.atlasMusterAlle, atlas.beschriftungen) | safe }}

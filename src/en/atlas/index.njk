@@ -1,0 +1,53 @@
+---
+layout: base.njk
+styles: ["/css/atlas.css"]
+mainClass: atlas-wide
+eleventyComputed:
+  title: "{{ atlas.en.titel }}"
+  description: "{{ atlas.en.kernsatz }}"
+---
+{#- English short version. Texts from src/_data/atlas/en.yaml; the patterns
+    are named by their `fachbegriff` and link to the German cards. Only
+    published cards are listed. Locale "en" comes from src/en/en.json. -#}
+{%- set en = atlas.en -%}
+{%- set eb = en.beschriftungen -%}
+{%- set bm = atlas.begriffsmodell -%}
+<article class="atlas atlas-uebersicht atlas-en">
+  <header class="atlas-uebersicht__kopf">
+    <h1 class="page-title">{{ en.titel }}</h1>
+    {% if en.einleitung %}<p>{{ en.einleitung }}</p>{% endif %}
+    <p class="atlas-kernsatz">{{ en.kernsatz }}</p>
+  </header>
+
+  <section class="atlas-struktur" aria-labelledby="en-fragen">
+    <h2 id="en-fragen">{{ eb.fragen }}</h2>
+    <ul class="atlas-baum">
+      {% for q in bm.pruefragen %}{% if en.fragen[q.id] %}
+      <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ eb.rahmen }}:</span> {% endif %}{{ en.fragen[q.id] }}</li>
+      {% endif %}{% endfor %}
+    </ul>
+
+    <h2 id="en-muster">{{ eb.hinsichten }}</h2>
+    <ul class="atlas-hinsichten">
+      {% for h in bm.hinsichten %}
+      {%- set karten = collections.atlasMuster | musterInHinsicht(h.id) -%}
+      <li class="{% if h.schwerpunkt == false %}ist-nebensache{% endif %}">
+        <span class="atlas-hinsicht__name">{{ en.hinsichten[h.id] or h.name }}</span>
+        {% if h.schwerpunkt == false %}<span class="atlas-hinweis">({{ eb.nicht_schwerpunkt }})</span>{% endif %}
+        {% if karten.length %}
+        <ul>
+          {% for k in karten %}
+          <li><a href="{{ k.url }}" hreflang="de">{{ k.data.fachbegriff or k.data.titel }}</a> <span class="atlas-hinweis" lang="de">({{ k.data.titel }})</span></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% if en.muster_hinweis %}<p class="atlas-hinweis">{{ en.muster_hinweis }}</p>{% endif %}
+    <p>
+      <a class="atlas-weiter" href="/atlas/" hreflang="de">{{ eb.deutsch }}</a> ·
+      <a class="atlas-weiter" href="/atlas/begriffsmodell/" hreflang="de">{{ eb.begriffsmodell }}</a>
+    </p>
+  </section>
+</article>

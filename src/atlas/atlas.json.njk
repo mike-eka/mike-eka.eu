@@ -1,0 +1,5 @@
+---
+permalink: /atlas/atlas.json
+eleventyExcludeFromCollections: true
+---
+{{ atlas.begriffsmodell | atlasJson(collections.atlasMusterAlle) | safe }}

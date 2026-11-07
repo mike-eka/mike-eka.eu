@@ -3,6 +3,8 @@
 // and src/atlas/muster/*.md.
 const yaml = require("js-yaml");
 const netzLogik = require("../src/js/atlas/netz-logik.js");
+const schemaSvg = require("./schema-svg.js");
+const atlasExport = require("./export.js");
 
 const GRAFIK_TYPEN = ["netz", "balken"];
 
@@ -192,6 +194,14 @@ module.exports = function atlasPlugin(eleventyConfig) {
     };
     return JSON.stringify(daten).replace(/</g, "\\u003c");
   });
+
+  // Step 5: schema SVG (Anhang), JSON / JSON-LD exports, build month (Handout).
+  eleventyConfig.addFilter("schemaSvg", (beziehungen, texte, titel) => schemaSvg(beziehungen, texte, titel));
+  eleventyConfig.addFilter("atlasJson", (bm, alle) => JSON.stringify(atlasExport.atlasJson(bm, alle), null, 2));
+  eleventyConfig.addFilter("atlasJsonLd", (bm, alle, b) => JSON.stringify(atlasExport.atlasJsonLd(bm, alle, b), null, 2));
+  eleventyConfig.addFilter("monatJahr", () =>
+    new Date().toLocaleDateString("de-DE", { month: "long", year: "numeric" })
+  );
 
   // True if either argument is a list (minimal pair as a selection of items).
   eleventyConfig.addFilter("istListe", (a, b) => Array.isArray(a) || Array.isArray(b));

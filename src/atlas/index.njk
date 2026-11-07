@@ -16,7 +16,13 @@ eleventyComputed:
     <p class="atlas-untertitel">{{ bm.untertitel }}</p>
     <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
     {% if bm.haltung %}<p class="atlas-haltung">{{ bm.haltung }}</p>{% endif %}
-    <p><a class="atlas-weiter" href="/atlas/begriffsmodell/">{{ b.uebersicht.begriffsmodell_link }}</a></p>
+    <nav class="atlas-seitennav" aria-label="{{ bm.titel }}">
+      <ul>
+        {% for n in b.uebersicht.navigation %}
+        <li><a href="{{ n.url }}"{% if n.lang %} hreflang="{{ n.lang }}" lang="{{ n.lang }}"{% endif %}>{{ n.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
   </header>
 
   <figure class="atlas-landkarte" data-landkarte="atlas-landkarte-daten" hidden>

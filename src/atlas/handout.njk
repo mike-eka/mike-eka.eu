@@ -1,0 +1,56 @@
+---
+layout: base.njk
+title: Handout
+mainClass: atlas-wide atlas-druckseite
+---
+{#- Handout: eine A4-Seite (Druck-CSS in atlas.css), ganz aus vorhandenen
+    Daten: Kernsatz, Prüffragen, Hinsichten mit veröffentlichten Mustern und
+    deren `kurz`. Keine eigenen Texte. -#}
+{%- set bm = atlas.begriffsmodell -%}
+{%- set b = atlas.beschriftungen -%}
+{%- set bh = b.handout -%}
+<article class="atlas atlas-handout">
+  <p class="atlas-handout__druckhinweis atlas-hinweis"><a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a><br>{{ bh.druckhinweis }}</p>
+
+  <div class="atlas-handout__blatt">
+    <header class="atlas-handout__kopf">
+      <h1>{{ bm.titel }}</h1>
+      <p class="atlas-untertitel">{{ bm.untertitel }}</p>
+    </header>
+
+    <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+
+    <section aria-labelledby="h-fragen">
+      <h2 id="h-fragen">{{ bh.pruefragen }}</h2>
+      <ul class="atlas-handout__fragen">
+        {% for q in bm.pruefragen %}
+        <li{% if q.art == "rahmen" %} class="ist-rahmen"{% endif %}>
+          <strong>{{ q.frage }}</strong>{% if q.art == "rahmen" %} <span class="atlas-hinweis">({{ bh.rahmen }})</span>{% endif %}
+          <span class="atlas-handout__erklaerung">{{ q.erklaerung }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section aria-labelledby="h-hinsichten">
+      <h2 id="h-hinsichten">{{ bh.hinsichten }}</h2>
+      <div class="atlas-handout__hinsichten">
+        {% for h in bm.hinsichten %}
+        {%- set karten = collections.atlasMuster | musterInHinsicht(h.id) -%}
+        <section class="atlas-handout__hinsicht{% if h.schwerpunkt == false %} ist-nebensache{% endif %}" aria-labelledby="h-{{ h.id }}">
+          <h3 id="h-{{ h.id }}">{{ h.name }} <span class="atlas-hinweis">– {{ h.leitfrage }}</span></h3>
+          {% if h.schwerpunkt == false and h.hinweis %}<p class="atlas-hinweis">{{ b.uebersicht.nicht_schwerpunkt }}: {{ h.hinweis }}</p>{% endif %}
+          {% for k in karten %}
+          <p class="atlas-handout__muster"><strong>{{ k.data.titel }}.</strong> {{ k.data.kurz }}</p>
+          {% endfor %}
+        </section>
+        {% endfor %}
+      </div>
+    </section>
+
+    <footer class="atlas-handout__fuss">
+      <span>{{ bh.fuss }}</span>
+      <span>{{ bh.stand }}: {{ "" | monatJahr }}</span>
+    </footer>
+  </div>
+</article>

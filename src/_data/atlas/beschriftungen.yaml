@@ -18,7 +18,53 @@ uebersicht:
   nachbarn: "Nachbarn: Schaden ohne Inhalt"
   nachbarn_hinweis: "außerhalb der Definition"
   schadet_in: "schadet in"              # Nachbar → Hinsicht (Liste)
-  begriffsmodell_link: "Zum Begriffsmodell →"
+  navigation:                           # Links unter Kernsatz und Haltung
+    - { label: "Begriffsmodell", url: "/atlas/begriffsmodell/" }
+    - { label: "Formaler Anhang", url: "/atlas/anhang/" }
+    - { label: "Über diesen Atlas", url: "/atlas/ueber/" }
+    - { label: "Handout (A4)", url: "/atlas/handout/" }
+    - { label: "English", url: "/en/atlas/", lang: "en" }
+
+ueber:                                  # Seite /atlas/ueber/
+  entstehung: "Entstehung"
+  haltung: "Haltung"
+  ki_hinweis: "KI-Hinweis"
+  kontakt: "Kontakt"
+  impressum_link: "Zum Impressum"
+
+anhang:                                 # Seite /atlas/anhang/
+  definition: "Definition"
+  legende: "Die Zeichen"
+  anmerkungen: "Anmerkungen"
+  offene_stellen: "Offene Stellen"
+  schema: "Schema"
+  schema_liste: "Die Beziehungen als Liste"
+  schema_hinweis: "Pfeile zeigen die Beziehungen aus begriffsmodell.yaml. Das Publikum ist als Rahmen um die Einschätzung gezeichnet."
+  modell: "Begriffsmodell und Ontologie"
+  download: "Download"
+  download_json: "Begriffsmodell und Karten als JSON"
+  klassen:                              # Anzeigenamen der Klassen im Schema
+    Einschaetzung: "Einschätzung"
+    Inhalt: "Inhalt"
+    Publikum: "Publikum"
+    Vergleichsfall: "Vergleichsfall"
+    Hinsicht: "Hinsicht"
+    Muster: "Muster"
+    SprachlichesMittel: "Sprachliches Mittel"
+    Nachbar: "Nachbar"
+  eigenschaften:                        # Eigenschaften in den Kästen des Schemas
+    Einschaetzung: ["Urteil · Wirkung"]
+    Inhalt: ["Etiketten: Wahrheit · Absicht"]
+    Nachbar: ["außerhalb der Definition"]
+  rahmen: "Rahmen jeder Einschätzung"
+
+handout:                                # Seite /atlas/handout/ (A4)
+  druckhinweis: "Diese Seite ist für den Druck auf einer A4-Seite gestaltet (Drucken oder „Als PDF speichern“)."
+  pruefragen: "Die Prüffragen"
+  hinsichten: "Hinsichten und Muster"
+  rahmen: "Rahmen"
+  fuss: "Online: mike-eka.eu/atlas/"
+  stand: "Stand"
 
 begriffsmodell:                         # Seite /atlas/begriffsmodell/
   titel: "Begriffsmodell"
