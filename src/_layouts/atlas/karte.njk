@@ -64,13 +64,20 @@ layout: base.njk
     {% if minimalpaar %}
     <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="minimalpaar">
       <h2 id="minimalpaar">{{ b.karte.minimalpaar }}</h2>
-      <dl class="atlas-paar">
+      {# Optional: die Frage, auf die beide Fassungen antworten #}
+      {% if minimalpaar.frage %}
+      <p class="atlas-paar__frage">
+        <span class="atlas-label">{{ b.karte.minimalpaar_frage }}</span>
+        <q>{{ minimalpaar.frage }}</q>
+      </p>
+      {% endif %}
+      <dl class="atlas-paar{% if minimalpaar.frage %} atlas-paar--antworten{% endif %}">
         <div class="atlas-paar__zeile">
-          <dt>{{ b.karte.muster }}</dt>
+          <dt>{{ b.karte.antwort_muster if minimalpaar.frage else b.karte.muster }}</dt>
           <dd><q>{{ minimalpaar.muster | markiere | safe }}</q></dd>
         </div>
         <div class="atlas-paar__zeile">
-          <dt>{{ b.karte.gegenform }}</dt>
+          <dt>{{ b.karte.antwort_gegenform if minimalpaar.frage else b.karte.gegenform }}</dt>
           <dd><q>{{ minimalpaar.gegenform | markiere | safe }}</q></dd>
         </div>
       </dl>
@@ -191,7 +198,8 @@ layout: base.njk
     {% if content | trim %}
     <section class="atlas-kachel atlas-kachel--still atlas-fliesstext" aria-labelledby="erlaeuterung">
       <h2 id="erlaeuterung">{{ b.karte.mehr }}</h2>
-      {{ content | safe }}
+      {# Überschriften im Fließtext eine Ebene unter die Kachel-Überschrift (h2 → h3) #}
+      {{ content | ueberschriftenTiefer | safe }}
     </section>
     {% endif %}
   </div>

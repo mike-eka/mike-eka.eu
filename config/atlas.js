@@ -138,6 +138,39 @@ module.exports = function atlasPlugin(eleventyConfig) {
     return JSON.stringify(daten).replace(/</g, "\\u003c");
   });
 
+  // Shift headings in rendered Markdown one level down (h2 -> h3 …), so a
+  // card's body text sits under its tile heading.
+  eleventyConfig.addFilter("ueberschriftenTiefer", (html) =>
+    String(html || "").replace(/<(\/?)h([1-5])(\s|>)/g, (m, slash, n, rest) => `<${slash}h${Number(n) + 1}${rest}`)
+  );
+
+  // Fields of one stage of the big template for an assessment: the card's
+  // template, with the field of the adjusting screw and the verdict (and the
+  // effect, if given) filled in from the assessment ("belegt").
+  eleventyConfig.addFilter("einschaetzungsStufe", (schablone, e, kippFeld, bm, keineLabel) => {
+    const felder = { ...(schablone || {}) };
+    if (!e) return felder;
+    if (kippFeld) felder[kippFeld] = { status: "belegt", text: [e[kippFeld]] };
+    const u = (bm.urteile || []).find((x) => x.id === e.urteil);
+    felder.urteil = { status: "belegt", text: [u ? u.name : e.urteil, e.begruendung].filter(Boolean) };
+    if (e.wirkung) {
+      const w = (bm.wirkungen || []).find((x) => x.id === e.wirkung);
+      felder.wirkung = { status: "belegt", text: [w ? w.name : e.wirkung === "keine" ? keineLabel : e.wirkung] };
+    }
+    return felder;
+  });
+
+  // Normalise template fields: a bare list or string (as in schablone_leer)
+  // becomes { status: <standard>, text: … }.
+  eleventyConfig.addFilter("schablonenFelder", (felder, standard = "offen") =>
+    Object.fromEntries(
+      Object.entries(felder || {}).map(([id, f]) => [
+        id,
+        Array.isArray(f) || typeof f === "string" ? { status: standard, text: f } : f,
+      ])
+    )
+  );
+
   // Statuses used in a schablone (for its legend); a field without status is "offen".
   eleventyConfig.addFilter("schablonenStatus", (felder) => [
     ...new Set(Object.values(felder || {}).map((f) => (f && f.status) || "offen")),

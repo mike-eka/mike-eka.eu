@@ -1,59 +1,111 @@
 ---
 titel: "Ablenkung"
-fachbegriff: "TODO"
+fachbegriff: "question shifting / distraction"
 hinsicht: achten
 reihenfolge: 1
-veroeffentlicht: false      # Entwurf: wird nicht gebaut
-im_framework: false
-kurz: "TODO"
-
-effekt:                     # Kachel „Was sich verschlechtert“
-  vorher: "TODO"
-  nachher: "TODO"
-  hinsichten: "TODO"
+veroeffentlicht: true
+im_framework: true
+kurz: >-
+  Auf eine Frage kommt etwas, das wie eine Antwort klingt, aber eine andere
+  Frage beantwortet. Die ursprüngliche Frage gilt danach als behandelt.
 
 minimalpaar:
-  muster:    "TODO [[Markierung]]"
-  gegenform: "TODO [[Markierung]]"
-  hinweis: "TODO"
+  frage: "Warum wird die Sanierung der Grundschule erneut verschoben?"
+  muster:    "[[Wissen Sie, wie viele Schulen die Vorgängerregierung verfallen ließ? Wir haben in dieser Wahlperiode schon drei Turnhallen eröffnet.]]"
+  gegenform: "[[Weil die Ausschreibung kein Angebot im Kostenrahmen ergeben hat. Wir schreiben im Frühjahr neu aus.]]"
+  hinweis: >-
+    Erfundene Stadtratssitzung. Beide Antworten können wahr sein. Der
+    Unterschied liegt darin, welche Frage sie beantworten.
 
 mittel:
-  name: "TODO"
-  erklaerung: "TODO"
-  test: "TODO"
+  name: "Verschiebung der Leitfrage (Question under Discussion)"
+  erklaerung: >-
+    Jede Äußerung im Gespräch wird als Beitrag zur gerade offenen Frage
+    gehört. Diese Erwartung (Relevanzimplikatur) lässt eine Antwort auf eine
+    andere Frage so wirken, als gehöre sie zur gestellten.
+  test: >-
+    Frage-Antwort-Kongruenz: Passt die Antwort zum Fokus der Frage? Lässt sich
+    „Warum wird verschoben?“ mit „drei Turnhallen eröffnet“ beantworten?
 
-schablone:                  # Stufe „Muster“: was das Muster festlegt
-  inhalt:         { status: offen, text: ["TODO", ""] }
-  vergleichsfall: { status: offen, text: ["TODO", ""] }
-  hinsicht:       { status: offen, text: ["TODO", ""] }
-  urteil:         { status: offen, text: ["TODO", ""] }
-  wirkung:        { status: offen, text: ["TODO", ""] }
+schablone:                  # Stufe „Muster“
+  inhalt:         { status: muster, text: ["Äußerung:", "eine Antwort auf eine andere Frage"] }
+  vergleichsfall: { status: offen,  text: ["eine Antwort auf die Frage –", "oder gar keine Antwort?"] }
+  hinsicht:       { status: muster, text: ["Worauf wir achten", ""] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  wirkung:        { status: muster, text: ["typisch:", "festhalten"] }
 
-# Stellschraube: was | vergleich | hinsicht (nicht fuer_wen). Jede
-# Einschätzung braucht das zugehörige Feld: inhalt | vergleichsfall | hinsicht.
-kippt_an: TODO
-grenzfall_frage: "TODO"
+effekt:
+  vorher: >-
+    Die Frage nach der Sanierung ist gestellt und wartet auf eine Antwort.
+  nachher: >-
+    Man hat etwas gehört, das wie eine Antwort klingt. Die eigentliche Frage
+    gilt als behandelt und wird nicht weiter gestellt, oft auch nicht von
+    denen, deren Aufgabe das wäre.
+  hinsichten: "Worauf wir achten"
+
+kippt_an: vergleich
+grenzfall_frage: "Womit vergleicht man: mit einer echten Antwort oder mit gar keiner?"
 einschaetzungen:
-  - label: "TODO"
-    inhalt: "TODO"          # Feldname je nach kippt_an
+  - label: "mit einer Antwort auf die Frage"
+    vergleichsfall: "Die Bürgermeisterin nennt den Grund für die Verschiebung."
+    urteil: ja
+    begruendung: >-
+      Die Frage bleibt offen, wirkt aber erledigt. Gegenüber einer echten
+      Antwort steht das Publikum schlechter da.
+    wirkung: festhalten
+  - label: "mit gar keiner Antwort"
+    vergleichsfall: "Die Bürgermeisterin schweigt oder verweist auf später."
     urteil: strittig
-    begruendung: "TODO"
-  - label: "TODO"
-    inhalt: "TODO"
-    urteil: strittig
-    begruendung: "TODO"
+    begruendung: >-
+      Man erfährt etwas Wahres, nur nicht das, was man wissen wollte. Ob man
+      schlechter dasteht, hängt davon ab, ob man merkt, dass die Frage offen
+      geblieben ist.
+    wirkung: keine
 
 etiketten:
-  wahrheitsstatus: TODO
-  absicht: TODO
+  wahrheitsstatus: wahr
+  absicht: unbekannt
 
-normalfall: "TODO"
-verwandt: []
-spiegelfall: null
-anschlussfaecher: []
+normalfall: >-
+  Gespräche wechseln ständig das Thema, und manchmal ist die neue Frage
+  tatsächlich wichtiger. Problematisch wird es, wenn der Wechsel als Antwort
+  auftritt.
+verwandt: [gewichtung-auslassung]
+spiegelfall: doppelter-massstab
+anschlussfaecher: [Linguistik, Politikwissenschaft, Journalismus]
 literatur:
-  - "TODO: 1–2 Angaben"
+  - "Roberts, C. (2012). Information structure in discourse: Towards an integrated formal theory of pragmatics. Semantics and Pragmatics 5(6), 1–69."
+  - "Grice, H. P. (1975). Logic and conversation. In P. Cole & J. L. Morgan (Hg.), Syntax and Semantics 3: Speech Acts, 41–58. New York: Academic Press."
+  - "Clayman, S. & Heritage, J. (2002). The News Interview: Journalists and Public Figures on the Air. Cambridge: Cambridge University Press."
 grafik: null
 ---
 
-TODO: Erläuterungstext.
+Ablenkung funktioniert, weil wir im Gespräch davon ausgehen, dass jede
+Äußerung zur gerade offenen Frage beiträgt. Wer auf „Warum wird verschoben?“
+mit einer Zahl über Turnhallen antwortet, nutzt diese Erwartung: Das Publikum
+sucht unwillkürlich den Zusammenhang, den die Antwort nur behauptet. Am Ende
+hat man etwas Wahres gehört, und die eigentliche Frage ist aus dem Blick.
+
+## Warum es so oft gelingt
+
+Ob eine Ablenkung wirkt, hängt auch davon ab, ob jemand die Frage festhält.
+In Interviews und Talkshows wäre das die Aufgabe der Moderation. Häufig
+geben sich Interviewende aber mit der Ausweichantwort zufrieden, haken
+höchstens einmal nach oder geben dann auf. Für das Publikum entsteht so der
+Eindruck, die Frage sei gestellt und beantwortet worden. Damit wird aus einem
+gescheiterten Versuch, eine Antwort zu bekommen, scheinbar eine erledigte
+Frage.
+
+## Flutung
+
+Eine Spielart der Ablenkung braucht keine Gegenfrage. Viele einzelne
+Meldungen, jede für sich harmlos und oft zutreffend, ziehen die Aufmerksamkeit
+so lange auf andere Themen, bis eine bestimmte Frage niemand mehr stellt.
+Hier liegt der Schaden nicht in einer Äußerung, sondern in der Menge.
+
+## Spiegelfall
+
+Die Gegenfrage „Und was ist mit …?“ ist nicht immer Ablenkung. Sie kann auch
+ein berechtigter Hinweis auf einen doppelten Maßstab sein. Ob sie ablenkt
+oder prüft, entscheidet sich daran, ob die ursprüngliche Frage danach noch
+beantwortet wird.

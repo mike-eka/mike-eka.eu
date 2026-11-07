@@ -495,6 +495,32 @@ main.atlas-wide {
     font-size: 1.1rem;
 }
 
+/* Optional question above the pair; both versions read as answers to it. */
+.atlas-paar__frage {
+    margin: 0 0 0.9rem;
+    font-size: 1.1rem;
+    background: var(--atlas-feld);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+}
+
+.atlas-paar__frage .atlas-label {
+    margin-bottom: 0.15rem;
+}
+
+.atlas-paar--antworten {
+    margin-left: 1.1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--atlas-linie);
+}
+
+@media (max-width: 480px) {
+    .atlas-paar--antworten {
+        margin-left: 0.4rem;
+        padding-left: 0.75rem;
+    }
+}
+
 .atlas mark {
     background: none;
     color: var(--atlas-mark);
@@ -684,6 +710,139 @@ main.atlas-wide {
     .atlas-paar__zeile,
     .atlas-werte > div,
     .atlas-einschaetzung .atlas-werte > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+/* ---- Begriffsmodell page ---- */
+.atlas-pruefragen,
+.atlas-optionen {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.atlas-pruefrage {
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-kern);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+}
+
+.atlas-pruefrage dt {
+    margin-bottom: 0.2rem;
+}
+
+.atlas-pruefrage__frage {
+    font-weight: bold;
+}
+
+.atlas-pruefrage .atlas-feld__name {
+    color: var(--atlas-gedaempft);
+    margin-left: 0.3rem;
+}
+
+.atlas-pruefrage dd,
+.atlas-optionen dd {
+    margin: 0;
+}
+
+.atlas-fuer-wen h3 {
+    font-size: 0.95rem;
+    margin: 1.4rem 0 0.4rem;
+}
+
+.atlas-fuer-wen p {
+    margin: 0 0 0.75rem;
+}
+
+.atlas-optionen {
+    margin: 0.5rem 0 0.75rem;
+    gap: 0.4rem;
+}
+
+.atlas-optionen > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 0.75rem;
+    background: var(--atlas-feld);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+}
+
+.atlas-optionen dt {
+    font-weight: 500;
+}
+
+.atlas-fuer-wen__bezug {
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 1rem;
+}
+
+/* Big template with stages: without JS all stages one below the other. */
+.atlas-stufe + .atlas-stufe {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--atlas-linie);
+}
+
+.atlas-stufen.ist-aktiv .atlas-stufe + .atlas-stufe {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.atlas-stufe__titel {
+    font-size: 0.95rem;
+    margin: 0 0 0.3rem;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-stufe__zusatz {
+    margin: 0 0 0.6rem;
+    font-size: 0.9rem;
+}
+
+.atlas-stufe__zusatz a {
+    text-decoration: underline;
+}
+
+.atlas-grenzfaelle {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.atlas-grenzfaelle li {
+    background: var(--atlas-feld);
+    border-left: 3px solid var(--atlas-kern);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.atlas-grenzfaelle li.ist-nachbar {
+    border-left: 3px dotted var(--atlas-offen);
+}
+
+.atlas-grenzfall__titel {
+    font-weight: 500;
+    margin-right: 0.4rem;
+}
+
+.atlas-grenzfall__frage {
+    display: block;
+    margin-top: 0.2rem;
+}
+
+.atlas-weiter {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .atlas-optionen > div {
         grid-template-columns: 1fr;
         gap: 0;
     }

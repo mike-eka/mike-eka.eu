@@ -18,6 +18,26 @@ uebersicht:
   nachbarn: "Nachbarn: Schaden ohne Inhalt"
   nachbarn_hinweis: "außerhalb der Definition"
   schadet_in: "schadet in"              # Nachbar → Hinsicht (Liste)
+  begriffsmodell_link: "Zum Begriffsmodell →"
+
+begriffsmodell:                         # Seite /atlas/begriffsmodell/
+  titel: "Begriffsmodell"
+  pruefragen: "Die drei Prüffragen"
+  aggregation_optionen: "Mögliche Antworten"
+  beispiel: "Beispiel"
+  wirkungen: "Wirkungen"
+  etiketten: "Etiketten"
+  etiketten_werte: "Werte"
+  schablone: "Die Schablone"
+  schablone_schalter: "Stufe wählen"
+  stufe_leer: "leer"
+  stufe_muster: "Muster"
+  stufe_beispiel: "Beispiel"
+  stufe_nachbar: "Nachbar"
+  zur_karte: "Zur Karte"
+  grenzfaelle: "Grenzfälle"
+  kippt_an: "kippt an"
+  nachbar_ausserhalb: "Nachbar, außerhalb der Definition"
 
 karte:
   schablone: "Was das Muster festlegt"
@@ -26,6 +46,10 @@ karte:
   effekt_nachher: "Nachher"
   effekt_hinsichten: "In Hinsicht"
   minimalpaar: "Minimalpaar"
+  # nur wenn minimalpaar.frage gesetzt ist:
+  minimalpaar_frage: "Gefragt"
+  antwort_muster: "Antwort im Muster"
+  antwort_gegenform: "Gegenform"
   analogie: "Wo die Analogie bricht"
   analogie_merkmal: "Merkmal"
   analogie_art:         # steht als Wort in jeder Zeile der Tabelle

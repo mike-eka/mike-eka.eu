@@ -34,12 +34,13 @@
   {%- for zeile in liste %}{{ zeile }}{% if not loop.last %}<br>{% endif %}{% endfor -%}
 {%- endmacro %}
 
-{% macro kopf(id, b, zusatz) -%}
-  <h3 class="atlas-feld__kopf">
+{% macro kopf(id, b, zusatz, ebene) -%}
+  {%- set h = "h" + (ebene or 3) -%}
+  <{{ h }} class="atlas-feld__kopf">
     {%- if b.felder[id].frage %}<span class="atlas-feld__frage">{{ b.felder[id].frage }}</span><span class="atlas-feld__trenner" aria-hidden="true"> · </span>{% endif -%}
     <span class="atlas-feld__name">{{ b.felder[id].name }}</span>
     {%- if zusatz %} <span class="atlas-stellschraube-etikett">{{ zusatz }}</span>{% endif -%}
-  </h3>
+  </{{ h }}>
 {%- endmacro %}
 
 {% macro wert(id, e) -%}
@@ -68,12 +69,13 @@
 
 {% macro frageFeld(id, f, b, o, wirkungF) %}
   {%- set status = (f.status if f and f.status else "offen") -%}
-  {%- set istKipp = (o.kippFeld == id and o.einschaetzungen and o.einschaetzungen.length) -%}
+  {%- set istKipp = (o.kippFeld == id) -%}
+  {%- set mitSchalter = (istKipp and o.einschaetzungen and o.einschaetzungen.length) -%}
   <div class="atlas-feld atlas-feld--{{ id }} ist-{{ status }}{% if istKipp %} ist-stellschraube{% endif %}">
-    {{ kopf(id, b, b.stellschraube if istKipp else "") }}
+    {{ kopf(id, b, b.stellschraube if istKipp else "", o.ebene) }}
     <p class="atlas-feld__text">{{ zeilen(f) }}</p>
     <span class="visually-hidden">({{ b.status[status] }})</span>
-    {% if istKipp %}
+    {% if mitSchalter %}
       {%- set mitWirkung = o.einschaetzungen | eindeutig("wirkung") | length -%}
       {% if o.grenzfallFrage %}<p class="atlas-grenzfrage">{{ o.grenzfallFrage }}</p>{% endif %}
 
@@ -96,7 +98,8 @@
       <div class="atlas-einschaetzungen" data-ohne-js>
         {% for e in o.einschaetzungen %}
         <section class="atlas-einschaetzung" aria-labelledby="{{ o.prefix }}-e{{ loop.index }}">
-          <h4 class="atlas-einschaetzung__titel" id="{{ o.prefix }}-e{{ loop.index }}">{{ e.label }}</h4>
+          {%- set hu = "h" + ((o.ebene or 3) + 1) -%}
+          <{{ hu }} class="atlas-einschaetzung__titel" id="{{ o.prefix }}-e{{ loop.index }}">{{ e.label }}</{{ hu }}>
           <dl class="atlas-werte">
             <div><dt>{{ b.felder[id].name }}</dt><dd>{{ wert(id, e) }}</dd></div>
             <div><dt>{{ b.felder.urteil.name }}</dt><dd>{{ urteilText(e, o) }}</dd></div>
@@ -111,8 +114,10 @@
 
 {% macro urteilFeld(f, b, o) %}
   {%- set mitVarianten = (o.kippFeld and o.einschaetzungen and o.einschaetzungen.length) -%}
-  <div class="atlas-feld atlas-feld--urteil ist-neutral">
-    {{ kopf("urteil", b) }}
+  {%- set status = (f.status if f and f.status else "offen") -%}
+  {# Mit Varianten neutral (folgt aus der Stellschraube), sonst nach Status #}
+  <div class="atlas-feld atlas-feld--urteil {{ 'ist-neutral' if mitVarianten else 'ist-' + status }}">
+    {{ kopf("urteil", b, "", o.ebene) }}
     {% if mitVarianten %}
       <p class="atlas-feld__hinweis">{{ b.urteil_hinweis }}</p>
       <ul class="atlas-varianten" aria-live="polite" data-nur-js hidden>
@@ -125,6 +130,7 @@
       </ul>
     {% else %}
       <p class="atlas-feld__text">{{ zeilen(f) }}</p>
+      <span class="visually-hidden">({{ b.status[status] }})</span>
     {% endif %}
   </div>
 {% endmacro %}
@@ -140,7 +146,7 @@
   {%- set mitVarianten = (o.kippFeld and o.einschaetzungen and (o.einschaetzungen | eindeutig("wirkung") | length)) -%}
   {% if mitVarianten %}
   <div class="atlas-feld atlas-feld--wirkung ist-neutral">
-    {{ kopf("wirkung", b) }}
+    {{ kopf("wirkung", b, "", o.ebene) }}
     <p class="atlas-feld__text" data-ohne-js>{{ zeilen(f) }}</p>
     <ul class="atlas-varianten" aria-live="polite" data-nur-js hidden>
       {% for e in o.einschaetzungen %}
@@ -153,7 +159,7 @@
   </div>
   {% else %}
   <div class="atlas-feld atlas-feld--wirkung ist-{{ status }}">
-    {{ kopf("wirkung", b) }}
+    {{ kopf("wirkung", b, "", o.ebene) }}
     <p class="atlas-feld__text">{{ zeilen(f) }}</p>
     <span class="visually-hidden">({{ b.status[status] }})</span>
   </div>
@@ -173,7 +179,7 @@
     <p class="atlas-rahmen__band">
       <span class="atlas-feld__frage">{{ b.felder.publikum.frage }}</span><span aria-hidden="true"> · </span><span class="atlas-feld__name">{{ b.felder.publikum.name }}</span>:
       {%- set publikumText %}{{ zeilen(felder.publikum) }}{% endset %}
-      {% if publikumText | trim %}{{ publikumText | trim | safe }}. {% endif %}{{ b.publikum_verweis }}
+      {% if publikumText | trim %}{{ publikumText | trim | safe }} – {% endif %}{{ b.publikum_verweis }}
       {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ o.publikumLinkText }}</a>{% endif %}
     </p>
     <div class="atlas-schablone__raster">

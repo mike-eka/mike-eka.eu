@@ -4,8 +4,27 @@ kernsatz: >-
   Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
   für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
   verschlechtert.
-# Ein Absatz Haltung für die Übersicht (Werkzeug, Gesprächsangebot)
-haltung: "TODO: ein Absatz Haltung (Werkzeug, Gesprächsangebot, keine Gegentheorie)."
+# Ein Absatz Haltung für die Übersicht
+haltung: >-
+  Dieser Atlas sammelt Muster, die in Faktenchecks selten vorkommen, weil
+  sie ohne falsche Behauptung auskommen. Er orientiert sich an der
+  Arbeitsdefinition des DFG-Schwerpunktprogramms „Rethinking
+  Disinformation“ (Re:DIS), nach der Desinformation „jede Form öffentlich
+  verbreiteter Inhalte“ ist, „die die Erkenntnissituation der Empfänger
+  verschlechtert“, unabhängig vom Wahrheitsgehalt und von der Absicht der
+  Verfasser. Der Atlas ist ein Arbeitsstand und ein Gesprächsangebot: Die
+  Beispiele sind erfunden, die Einordnungen lassen sich bestreiten, und
+  gerade an den Grenzfällen wird es interessant.
+
+# Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
+begriffsmodell_einleitung: >-
+  Das Begriffsmodell macht sichtbar, welche Entscheidungen in dem Satz
+  „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als
+  Eigenschaft eines Inhalts, sondern als Einschätzung: Ein Inhalt wird für
+  ein Publikum, im Vergleich zu etwas und in einer bestimmten Hinsicht
+  beurteilt. Die Muster des Atlas sind teilweise ausgefüllte Fassungen
+  dieser Einschätzung. Jedes lässt eine Frage offen, und an ihr
+  entscheidet sich das Urteil.
 
 # art: muster  – ein Muster kann diese Frage festlegen oder offenlassen;
 #                nur diese Fragen sind als `kippt_an` (Stellschraube) erlaubt.
@@ -152,6 +171,7 @@ nachbarn:
   - id: einschuechterung
     name: "Einschüchterung von Forschenden"
     hinsicht: vertrauen
+    im_framework: true   # erscheint in der Liste der Grenzfälle (Begriffsmodell-Seite)
     beschreibung: >-
       Forschende ziehen sich aus der Öffentlichkeit zurück. Eine gute Quelle
       verschwindet, ohne dass ein Inhalt verbreitet wurde.

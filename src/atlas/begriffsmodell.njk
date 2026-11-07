@@ -1,0 +1,149 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ atlas.beschriftungen.begriffsmodell.titel }}"
+  description: "{{ atlas.begriffsmodell.kernsatz }}"
+---
+{#- Begriffsmodell: Einleitung, Kernsatz, die drei Prüffragen, das Publikum
+    als Rahmen (Abschnitt „Für wen?“), Wirkungen, Etiketten, die große
+    Schablone mit Stufen und die Liste der Grenzfälle. Alle Texte aus
+    begriffsmodell.yaml, beschriftungen.yaml und den Karten. -#}
+{%- from "atlas/schablone.njk" import schablone as schablonenRaster -%}
+{%- from "atlas/pruefragen.njk" import pruefragen -%}
+{%- set bm = atlas.begriffsmodell -%}
+{%- set b = atlas.beschriftungen -%}
+{%- set bb = b.begriffsmodell -%}
+{%- set pa = bm.publikum_abschnitt -%}
+{%- set anker = pa.anker or "fuer-wen" -%}
+
+{#- Große Schablone: welche Karte und welcher Nachbar (schablone_stufen) -#}
+{%- set stufen = bm.schablone_stufen or {} -%}
+{%- set mk = collections.atlasMusterAlle | musterNachSlug(stufen.muster) -%}
+{%- set nb = bm.nachbarn | nachId(stufen.nachbar) -%}
+{%- set kipp = (bm.pruefragen | nachId(mk.data.kippt_an)) if mk else null -%}
+{%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
+
+{%- macro stufe(key, titel, felder, kippFeld, zusatz, b, anker, pa) -%}
+<div class="atlas-stufe" id="stufe-{{ key }}" data-panel="{{ key }}">
+  <h3 class="atlas-stufe__titel">{{ titel }}</h3>
+  {% if zusatz %}<p class="atlas-stufe__zusatz">{{ zusatz | safe }}</p>{% endif %}
+  {{ schablonenRaster(felder, b.schablone, {
+    kippFeld: kippFeld,
+    prefix: "stufe-" + key,
+    ebene: 4,
+    publikumLink: "#" + anker,
+    publikumLinkText: pa.titel
+  }) }}
+</div>
+{%- endmacro -%}
+
+<article class="atlas atlas-begriffsmodell">
+  <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
+  <header class="atlas-karte__kopf">
+    <h1>{{ bb.titel }}</h1>
+    {% if bm.begriffsmodell_einleitung %}<p class="atlas-kurz">{{ bm.begriffsmodell_einleitung }}</p>{% endif %}
+    <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+  </header>
+
+  <div class="atlas-kacheln">
+    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="pruefragen">
+      <h2 id="pruefragen">{{ bb.pruefragen }}</h2>
+      {{ pruefragen(bm.pruefragen, b.schablone) }}
+    </section>
+
+    <section class="atlas-kachel atlas-kachel--ruhig atlas-fuer-wen" id="{{ anker }}" aria-labelledby="{{ anker }}-titel">
+      <h2 id="{{ anker }}-titel">{{ pa.titel }}</h2>
+      {% if pa.einleitung %}<p>{{ pa.einleitung }}</p>{% endif %}
+      {% if pa.aggregation %}
+      <h3>{{ pa.aggregation.titel }}</h3>
+      {% if pa.aggregation.text %}<p>{{ pa.aggregation.text }}</p>{% endif %}
+      {% if pa.aggregation.optionen and pa.aggregation.optionen.length %}
+      <dl class="atlas-optionen" aria-label="{{ bb.aggregation_optionen }}">
+        {% for opt in pa.aggregation.optionen %}
+        <div><dt>{{ opt.name }}</dt><dd>{{ opt.text }}</dd></div>
+        {% endfor %}
+      </dl>
+      {% endif %}
+      {% endif %}
+      {% if pa.beispiel %}
+      <h3>{{ bb.beispiel }}</h3>
+      <p>{{ pa.beispiel }}</p>
+      {% endif %}
+      {% if pa.bezug %}<p class="atlas-fuer-wen__bezug">{{ pa.bezug }}</p>{% endif %}
+    </section>
+
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="wirkungen">
+      <h2 id="wirkungen">{{ bb.wirkungen }}</h2>
+      <dl class="atlas-werte">
+        {% for w in bm.wirkungen %}
+        <div><dt>{{ w.name }}</dt><dd>{{ w.erklaerung }}</dd></div>
+        {% endfor %}
+      </dl>
+    </section>
+
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="etiketten">
+      <h2 id="etiketten">{{ bb.etiketten }}</h2>
+      <dl class="atlas-werte">
+        {% for key, werte in bm.etiketten %}
+        <div><dt>{{ b.etiketten[key] or key }}</dt><dd>{{ werte | join(" · ") }}</dd></div>
+        {% endfor %}
+      </dl>
+      <p class="atlas-hinweis">{{ b.karte.etiketten_hinweis }}</p>
+    </section>
+
+    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="schablone">
+      <h2 id="schablone">{{ bb.schablone }}</h2>
+      <div class="atlas-stufen" data-atlas-schalter>
+        <div class="atlas-schalter" role="group" aria-label="{{ bb.schablone_schalter }}" data-nur-js hidden>
+          <button type="button" data-ziel="leer" aria-controls="stufe-leer" aria-pressed="true">{{ bb.stufe_leer }}</button>
+          {% if mk %}
+          <button type="button" data-ziel="muster" aria-controls="stufe-muster" aria-pressed="false">{{ bb.stufe_muster }}</button>
+          {% for e in mk.data.einschaetzungen %}
+          <button type="button" data-ziel="beispiel-{{ loop.index }}" aria-controls="stufe-beispiel-{{ loop.index }}" aria-pressed="false">{{ e.label }}</button>
+          {% endfor %}
+          {% endif %}
+          {% if nb and nb.schablone %}
+          <button type="button" data-ziel="nachbar" aria-controls="stufe-nachbar" aria-pressed="false">{{ bb.stufe_nachbar }}</button>
+          {% endif %}
+        </div>
+
+        {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", "", b, anker, pa) }}
+
+        {% if mk %}
+        {%- set kartenLink -%}{% if mk.data.veroeffentlicht %}<a href="{{ mk.url }}">{{ bb.zur_karte }}: {{ mk.data.titel }}</a>{% endif %}{%- endset -%}
+        {{ stufe("muster", bb.stufe_muster + ": " + mk.data.titel, mk.data.schablone, kippFeld, kartenLink, b, anker, pa) }}
+        {% for e in mk.data.einschaetzungen %}
+        {{ stufe("beispiel-" + loop.index, bb.stufe_beispiel + ": " + e.label,
+                 mk.data.schablone | einschaetzungsStufe(e, kippFeld, bm, b.schablone.wirkung_keine),
+                 kippFeld, mk.data.grenzfall_frage | escape, b, anker, pa) }}
+        {% endfor %}
+        {% endif %}
+
+        {% if nb and nb.schablone %}
+        {{ stufe("nachbar", bb.stufe_nachbar + ": " + nb.name, nb.schablone, "", nb.beschreibung | escape, b, anker, pa) }}
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="grenzfaelle">
+      <h2 id="grenzfaelle">{{ bb.grenzfaelle }}</h2>
+      <ul class="atlas-grenzfaelle">
+        {% for k in collections.atlasMuster %}{% if k.data.im_framework %}
+        {%- set kq = bm.pruefragen | nachId(k.data.kippt_an) -%}
+        <li>
+          <a class="atlas-grenzfall__titel" href="{{ k.url }}">{{ k.data.titel }}</a>
+          {% if kq %}<span class="atlas-hinweis">{{ bb.kippt_an }}: {{ kq.frage }}</span>{% endif %}
+          {% if k.data.grenzfall_frage %}<span class="atlas-grenzfall__frage">{{ k.data.grenzfall_frage }}</span>{% endif %}
+        </li>
+        {% endif %}{% endfor %}
+        {% for n in bm.nachbarn %}{% if n.im_framework %}
+        <li class="ist-nachbar">
+          <span class="atlas-grenzfall__titel">{{ n.name }}</span>
+          <span class="atlas-hinweis">{{ bb.nachbar_ausserhalb }}</span>
+          {% if n.beschreibung %}<span class="atlas-grenzfall__frage">{{ n.beschreibung }}</span>{% endif %}
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+    </section>
+  </div>
+</article>
