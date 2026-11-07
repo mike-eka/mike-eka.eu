@@ -14,6 +14,7 @@
     einschaetzungen:  Liste { label, <kippFeld>, urteil, begruendung, wirkung? }
     grenzfallFrage:   Frage an der Stellschraube
     urteile:          begriffsmodell.urteile (Namen der Urteile)
+    wirkungen:        begriffsmodell.wirkungen (Namen und Erklärungen)
     prefix:           eindeutiger Präfix für IDs
     publikumLink, publikumLinkText: Verweis auf den Abschnitt „Für wen?“
 
@@ -46,7 +47,7 @@
       {% if o.grenzfallFrage %}<p class="atlas-grenzfrage">{{ o.grenzfallFrage }}</p>{% endif %}
       <div class="atlas-schalter" role="group" aria-label="{{ b.schalter }}" hidden>
         {% for e in o.einschaetzungen %}
-        <button type="button" data-ziel="{{ loop.index }}" aria-controls="{{ o.prefix }}-wert-{{ loop.index }} {{ o.prefix }}-urteil-{{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
+        <button type="button" data-ziel="{{ loop.index }}" aria-controls="{{ o.prefix }}-wert-{{ loop.index }} {{ o.prefix }}-urteil-{{ loop.index }}{% if o.einschaetzungen | eindeutig('wirkung') | length %} {{ o.prefix }}-wirkung-{{ loop.index }}{% endif %}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
         {% endfor %}
       </div>
       <ul class="atlas-varianten">
@@ -83,13 +84,44 @@
   </div>
 {% endmacro %}
 
-{% macro wirkungFeld(f, b) %}
+{#
+  Wirkung: Trägt mindestens eine Einschätzung ein Feld `wirkung`, schaltet
+  das Feld mit dem Urteil um (neutral gestaltet, da es aus der Stellschraube
+  folgt). Einschätzungen ohne `wirkung` zeigen dabei den Text des Musters.
+  Trägt keine Einschätzung eine Wirkung, zeigt das Feld den Text des Musters.
+#}
+{% macro wirkungFeld(f, b, o) %}
   {%- set status = (f.status if f and f.status else "offen") -%}
+  {%- set mitVarianten = (o.kippFeld and o.einschaetzungen and (o.einschaetzungen | eindeutig("wirkung") | length)) -%}
+  {% if mitVarianten %}
+  <div class="atlas-feld atlas-feld--wirkung ist-neutral">
+    {{ kopf("wirkung", b) }}
+    <ul class="atlas-varianten" aria-live="polite">
+      {% for e in o.einschaetzungen %}
+      {%- set w = o.wirkungen | nachId(e.wirkung) -%}
+      <li class="atlas-variante" id="{{ o.prefix }}-wirkung-{{ loop.index }}" data-panel="{{ loop.index }}">
+        <span class="atlas-variante__label">{{ e.label }}</span>
+        {% if w %}
+          <strong class="atlas-variante__urteil">{{ w.name }}</strong>
+          <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
+        {% elif e.wirkung == "keine" %}
+          <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
+        {% elif e.wirkung %}
+          <strong class="atlas-variante__urteil">{{ e.wirkung }}</strong>
+        {% else %}
+          <span class="atlas-variante__begruendung">{{ zeilen(f) }}</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% else %}
   <div class="atlas-feld atlas-feld--wirkung ist-{{ status }}">
     {{ kopf("wirkung", b) }}
     <p class="atlas-feld__text">{{ zeilen(f) }}</p>
     <span class="visually-hidden">({{ b.status[status] }})</span>
   </div>
+  {% endif %}
 {% endmacro %}
 
 {% macro schablone(felder, b, o) %}
@@ -104,7 +136,8 @@
   <div class="atlas-rahmen">
     <p class="atlas-rahmen__band">
       <span class="atlas-feld__frage">{{ b.felder.publikum.frage }}</span><span aria-hidden="true"> · </span><span class="atlas-feld__name">{{ b.felder.publikum.name }}</span>:
-      {% if felder.publikum and felder.publikum.text %}{{ zeilen(felder.publikum) }}. {% endif %}{{ b.publikum_verweis }}
+      {%- set publikumText %}{{ zeilen(felder.publikum) }}{% endset %}
+      {% if publikumText | trim %}{{ publikumText | trim | safe }}. {% endif %}{{ b.publikum_verweis }}
       {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ o.publikumLinkText }}</a>{% endif %}
     </p>
     <div class="atlas-schablone__raster">
@@ -114,7 +147,7 @@
       <div class="atlas-schablone__mitte">
         <p class="atlas-schablone__mitte-titel">{{ b.mitte }}</p>
         {{ urteilFeld(felder.urteil, b, o) }}
-        {{ wirkungFeld(felder.wirkung, b) }}
+        {{ wirkungFeld(felder.wirkung, b, o) }}
       </div>
     </div>
   </div>

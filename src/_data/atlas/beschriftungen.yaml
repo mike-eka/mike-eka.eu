@@ -37,6 +37,7 @@ schablone:
   stellschraube: "Stellschraube"
   schalter: "Einschätzung wählen"
   urteil_hinweis: "ergibt sich aus der Stellschraube"
+  wirkung_keine: "keine"   # Einschätzung mit `wirkung: keine`
   # Rahmen „Publikum“ um die Schablone; der Link führt zu
   # begriffsmodell.publikum_abschnitt (Linktext = dessen Titel)
   publikum_verweis: "Rahmen jeder Einschätzung, kein Merkmal des Musters."

@@ -5,5 +5,5 @@ link: "/atlas/"
 permalink: false
 eleventyComputed:
   title: "{{ atlas.begriffsmodell.titel }}"
-summary: "Ein Atlas leiser Desinformationsmuster: wann ein Inhalt die Erkenntnislage verschlechtert, auch wenn nichts daran falsch ist."
+summary: "Ein Atlas wenig beachteter Desinformationsmuster."
 ---

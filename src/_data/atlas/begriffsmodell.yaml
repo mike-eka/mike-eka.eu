@@ -44,11 +44,38 @@ pruefragen:
 # Abschnitt „Für wen?“ auf der Begriffsmodell-Seite (Schritt 3). Jede Karte
 # verweist im Rahmen ihrer Schablone darauf (/atlas/begriffsmodell/#<anker>).
 publikum_abschnitt:
-  anker: fuer-wen
+  anker: fuer-wen      # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
   titel: "Für wen? Eine Frage, die sich immer stellt"
-  einleitung: "TODO"
-  aggregation: "TODO"
-  beispiel: "TODO"
+  einleitung: >-
+    Ob ein Inhalt die Erkenntnislage verschlechtert, hängt immer auch davon
+    ab, wer ihn aufnimmt. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
+    und die Gruppe, in der man etwas hört, verändern seine Wirkung. Derselbe
+    Satz kann für die einen harmlos sein und für die anderen nicht. Weil das
+    für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
+    sondern hier: Sie ist der Rahmen jeder Einschätzung.
+  aggregation:
+    titel: "Wie viele müssen betroffen sein?"
+    text: >-
+      Ist ein Publikum gemischt, muss man entscheiden, wie man die Wirkungen
+      zusammenfasst. Jede Antwort hat Folgen: Reicht es, dass einige
+      schlechter dastehen, wäre fast jede politische Rede Desinformation.
+      Müssen alle betroffen sein, fast keine. Das Begriffsmodell entscheidet
+      diese Frage nicht, es macht sie sichtbar.
+    optionen:
+      - { name: "einige",   text: "Es genügt, dass ein Teil des Publikums schlechter dasteht." }
+      - { name: "Mehrheit", text: "Die meisten müssen schlechter dastehen." }
+      - { name: "alle",     text: "Niemand darf besser oder gleich dastehen." }
+      - { name: "Gewicht",  text: "Es zählt, wie viele betroffen sind und wie stark." }
+  beispiel: >-
+    „Tempo 30 macht unsere Innenstädte kaputt.“ Wer der Sprecherin vertraut,
+    hält die Frage danach womöglich für entschieden. Wer ihr misstraut, hört
+    eine Meinung. Für die einen hat sich die Erkenntnislage verschlechtert,
+    für die anderen nicht.
+  bezug: >-
+    Für die Frage, welche Desinformation eine liberale Demokratie hinnehmen
+    muss, ist das zentral. Ein Maßstab, der sich am verletzlichsten Teil des
+    Publikums ausrichtet, schränkt mehr ein als einer, der sich am
+    Durchschnitt ausrichtet.
 
 hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
   - id: glauben

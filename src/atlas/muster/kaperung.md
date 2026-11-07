@@ -1,99 +1,152 @@
 ---
 titel: "Kaperung"
-fachbegriff: "TODO"
+fachbegriff: "capture of expertise"
 hinsicht: vertrauen
 reihenfolge: 1
-veroeffentlicht: false      # Entwurf: wird nicht gebaut
-im_framework: false
-kurz: "TODO"
-
-effekt:                     # Kachel „Was sich verschlechtert“
-  vorher: "TODO"
-  nachher: "TODO"
-  hinsichten: "TODO"
+veroeffentlicht: true
+im_framework: true
+kurz: >-
+  Jemand ohne Rückbindung an die Fachgemeinschaft besetzt die Brücke zwischen
+  Publikum und Thema und wird als Experte gehört.
 
 minimalpaar:
-  muster:    "TODO [[Markierung]]"
-  gegenform: "TODO [[Markierung]]"
-  hinweis: "TODO"
+  muster:    "Wir sprechen mit Dr. Kessler, [[Experte für Klimafragen]]."
+  gegenform: "Wir sprechen mit Dr. Kessler, [[Ökonom bei einer Stiftung, der nicht zur Klimaforschung publiziert]]."
+  hinweis: >-
+    Erfundene Person, erfundenes Interview. Die Anmoderation entscheidet, als
+    was jemand gehört wird. Die Grafik unten zeigt dasselbe als Konstellation.
 
 mittel:
-  name: "TODO"
-  erklaerung: "TODO"
-  test: "TODO"
+  name: "Autoritätsmarker ohne Deckung"
+  erklaerung: >-
+    Titel, Fachjargon, Institutsnamen und Zuschreibungen wie „Experte für“
+    erzeugen Sachautorität, ohne zu zeigen, in welcher Fachgemeinschaft die
+    Person arbeitet und von wem sie korrigiert werden kann.
+  test: >-
+    Lässt sich nachvollziehen, in welcher Fachgemeinschaft die Person
+    publiziert und wer ihr dort widersprechen würde?
 
-schablone:                  # Stufe „Muster“: was das Muster festlegt
-  inhalt:         { status: offen, text: ["TODO", ""] }
-  vergleichsfall: { status: offen, text: ["TODO", ""] }
-  hinsicht:       { status: offen, text: ["TODO", ""] }
-  urteil:         { status: offen, text: ["TODO", ""] }
-  wirkung:        { status: offen, text: ["TODO", ""] }
+schablone:                  # Stufe „Muster“
+  inhalt:         { status: offen,  text: ["Sprecherposition:", "rückgebunden – an wen?"] }
+  vergleichsfall: { status: muster, text: ["dieselbe Brücke mit", "Rückbindung an die Fachgemeinschaft"] }
+  hinsicht:       { status: muster, text: ["Wem wir glauben", ""] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  wirkung:        { status: muster, text: ["typisch:", "abschotten"] }
 
-# Stellschraube: was | vergleich | hinsicht (nicht fuer_wen). Jede
-# Einschätzung braucht das zugehörige Feld: inhalt | vergleichsfall | hinsicht.
-kippt_an: TODO
-grenzfall_frage: "TODO"
+effekt:
+  vorher: >-
+    Das Publikum hat einen Weg zur Fachgemeinschaft und kann einschätzen, was
+    dort als gesichert gilt.
+  nachher: >-
+    Eine Einzelstimme erscheint als Stand der Forschung. Echten Fachleuten wird
+    künftig weniger geglaubt.
+  hinsichten: "Wem wir glauben"
+
+kippt_an: was
+grenzfall_frage: "An welche Fachgemeinschaft ist die Person zurückgebunden?"
 einschaetzungen:
-  - label: "TODO"
-    inhalt: "TODO"          # Feldname je nach kippt_an
+  - label: "an die Klimaforschung"
+    inhalt: "Die Person publiziert in der Klimaforschung und wird dort diskutiert und korrigiert."
+    urteil: nein
+    begruendung: "Vermittlung: Die Brücke führt tatsächlich zur Fachgemeinschaft."
+    wirkung: keine
+    grafik_zustand: { rueckbindung: klima }
+  - label: "an ein anderes Fach"
+    inhalt: "Eine Physikprofessorin für Halbleiter spricht über Klimamodelle."
     urteil: strittig
-    begruendung: "TODO"
-  - label: "TODO"
-    inhalt: "TODO"
-    urteil: strittig
-    begruendung: "TODO"
+    begruendung: >-
+      Die Expertise ist echt, aber im falschen Fach (epistemic trespassing).
+      Ob das Publikum schlechter dasteht, hängt davon ab, wie weit ihre
+      Methoden hier tragen.
+    wirkung: verschlechtern
+    grafik_zustand: { rueckbindung: anderes_fach }
+  - label: "an keine Fachgemeinschaft"
+    inhalt: "Die Person spricht für eine Stiftung und publiziert nicht in der Klimaforschung."
+    urteil: ja
+    begruendung: "Kaperung: Die Brücke führt ins Leere, wirkt aber wie ein Weg zur Forschung."
+    wirkung: abschotten
+    grafik_zustand: { rueckbindung: keine }
 
 etiketten:
-  wahrheitsstatus: TODO
-  absicht: TODO
+  wahrheitsstatus: unklar
+  absicht: unbekannt
 
-normalfall: "TODO"
-verwandt: []
+normalfall: >-
+  Ohne Vermittlung geht es nicht. Wissenschaftsjournalismus besetzt dieselbe
+  Brückenposition, nur mit Rückbindung an die Fachgemeinschaft.
+verwandt: [meinung-als-tatsache]
 spiegelfall: null
-anschlussfaecher: []
+anschlussfaecher: [Kommunikationswissenschaft, Soziologie, Philosophie]
 literatur:
-  - "TODO: 1–2 Angaben"
+  - "Oreskes, N. & Conway, E. M. (2010). Merchants of Doubt. New York: Bloomsbury."
+  - "Ballantyne, N. (2019). Epistemic Trespassing. Mind 128(510), 367–395."
+  - "Freeman, L. C. (1977). A Set of Measures of Centrality Based on Betweenness. Sociometry 40(1), 35–41."
+
 grafik:
   typ: netz
   hinweis: "Erfundenes Schema, kein empirischer Befund."
+  zustand_aus_einschaetzung: rueckbindung      # die gewählte Einschätzung setzt diesen Zustand
   knoten:
     - { id: p1, gruppe: publikum, x: 10, y: 20 }
     - { id: p2, gruppe: publikum, x: 10, y: 35 }
     - { id: p3, gruppe: publikum, x: 10, y: 50 }
     - { id: p4, gruppe: publikum, x: 10, y: 65 }
     - { id: p5, gruppe: publikum, x: 10, y: 80 }
-    - { id: V,  gruppe: vermittler, x: 45, y: 50, label: "Vermittler" }
-    - { id: TT, gruppe: thinktank,  x: 45, y: 15, label: "Thinktank", nur_wenn: "!rueckbindung" }
-    - { id: W,  gruppe: vermittler2, x: 45, y: 85, label: "Wissenschaftsjournalismus", nur_wenn: zweiter }
-    - { id: e1, gruppe: fach, x: 72, y: 20 }
-    - { id: e2, gruppe: fach, x: 84, y: 14 }
-    - { id: e3, gruppe: fach, x: 90, y: 38 }
-    - { id: e4, gruppe: fach, x: 78, y: 44 }
-    - { id: T,  gruppe: thema, x: 84, y: 80, label: "Thema" }
+    - { id: V,  gruppe: vermittler, x: 42, y: 50, label: "Vermittler" }
+    - { id: TT, gruppe: thinktank, x: 42, y: 14, label: "Stiftung", nur_wenn: "rueckbindung == keine" }
+    - { id: W,  gruppe: vermittler2, x: 42, y: 88, label: "Wissenschaftsjournalismus", nur_wenn: zweiter }
+    - { id: e1, gruppe: fach, x: 70, y: 18 }
+    - { id: e2, gruppe: fach, x: 82, y: 12 }
+    - { id: e3, gruppe: fach, x: 90, y: 34 }
+    - { id: e4, gruppe: fach, x: 76, y: 40, label: "Klimaforschung" }
+    - { id: f1, gruppe: fach_anderes, x: 64, y: 68 }
+    - { id: f2, gruppe: fach_anderes, x: 74, y: 62, label: "Halbleiterphysik" }
+    - { id: T,  gruppe: thema, x: 88, y: 84, label: "Thema: Klima" }
   kanten:
-    - { von: [p1,p2,p3,p4,p5], nach: V }
+    - { von: [p1, p2, p3, p4, p5], nach: V }
     - { von: V, nach: T }
     - { von: e1, nach: e2 }
     - { von: e2, nach: e3 }
     - { von: e3, nach: e4 }
     - { von: e4, nach: e1 }
-    - { von: [e1,e2,e3,e4], nach: T }
-    - { von: V, nach: [e1, e4], nur_wenn: rueckbindung }
-    - { von: TT, nach: V, nur_wenn: "!rueckbindung" }
-    - { von: [p1,p2,p3,p4,p5], nach: W, nur_wenn: zweiter }
+    - { von: [e1, e2, e3, e4], nach: T }
+    - { von: f1, nach: f2 }
+    - { von: V, nach: [e1, e4], nur_wenn: "rueckbindung == klima" }
+    - { von: V, nach: [f1, f2], nur_wenn: "rueckbindung == anderes_fach" }
+    - { von: TT, nach: V, nur_wenn: "rueckbindung == keine" }
+    - { von: [p1, p2, p3, p4, p5], nach: W, nur_wenn: zweiter }
     - { von: W, nach: [T, e4], nur_wenn: zweiter }
   schalter:
-    - { id: rueckbindung, label: "Vermittler ist an die Fachgemeinschaft rückgebunden", start: true }
-    - { id: zweiter, label: "Zweiter, rückgebundener Vermittler", start: false }
+    - { id: zweiter, label: "Zweiter, rückgebundener Vermittler (z. B. Wissenschaftsjournalismus)", start: false }
   kennzahl:
     label: "Kürzeste Wege Publikum → Thema über den Vermittler"
     von_gruppe: publikum
     nach: T
     ueber: V
   urteile:
-    - { wenn: rueckbindung, text: "Vermittlung: Brücke mit Rückbindung", ton: gut }
-    - { wenn: "!rueckbindung && kennzahl >= 75", text: "Kaperung: Brücke ohne Rückbindung", ton: warnung }
+    - { wenn: "rueckbindung == klima", text: "Vermittlung: Brücke mit Rückbindung", ton: gut }
+    - { wenn: "rueckbindung == anderes_fach", text: "Strittig: Rückbindung ans falsche Fach", ton: neutral }
+    - { wenn: "rueckbindung == keine && kennzahl >= 75", text: "Kaperung: Brücke ohne Rückbindung", ton: warnung }
     - { wenn: sonst, text: "Strittig: ohne Rückbindung, aber kein Nadelöhr", ton: neutral }
 ---
 
-TODO: Erläuterungstext.
+Zwischen einem Publikum und einem Fachgebiet stehen fast immer Vermittler:
+Journalistinnen, Lehrer, Sachbuchautoren. Das ist kein Problem, sondern die
+Voraussetzung dafür, dass Wissen überhaupt ankommt. Kaperung beginnt dort, wo
+jemand diese Brückenposition besetzt, ohne mit der Fachgemeinschaft auf der
+anderen Seite verbunden zu sein. Das Publikum glaubt, über die Brücke zur
+Forschung zu gelangen, und gelangt doch nur zu einer Einzelstimme.
+
+In der Sprache der Netzwerkanalyse: Der Vermittler hat eine hohe
+Betweenness-Zentralität zwischen Publikum und Thema. Das allein unterscheidet
+ihn aber nicht von guter Wissenschaftskommunikation. Entscheidend ist die
+Rückbindung: Wird die Person von der Fachgemeinschaft zitiert, diskutiert und
+korrigiert? Die Kennzahl in der Grafik ist eine vereinfachte Betweenness. Sie
+zählt nur die kürzesten Wege vom Publikum zum Thema und nicht die Wege zwischen
+allen Knotenpaaren.
+
+Ein Sonderfall ist die echte Expertin im falschen Fach (*epistemic
+trespassing*): Sie ist gut eingebunden, nur nicht dort, wo die Frage
+verhandelt wird. Kaperung dient oft einem verwandten Ziel, dem gezielten
+Herstellen von Zweifel. Das Phänomen ist besonders für die Klimadebatte gut
+untersucht.
