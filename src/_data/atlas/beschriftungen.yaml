@@ -1,0 +1,58 @@
+# Feste Beschriftungen der Atlas-Seiten: Überschriften, Knöpfe, Legenden.
+# Inhalte stehen in begriffsmodell.yaml und in atlas/muster/*.md.
+# Im Template verfügbar als `atlas.beschriftungen`.
+
+uebersicht:
+  link: "← Zur Übersicht"
+  noch_keine_karten: "Noch keine Karten veröffentlicht."
+  nicht_schwerpunkt: "nicht Schwerpunkt"
+
+karte:
+  minimalpaar: "Minimalpaar"
+  muster: "Muster"
+  gegenform: "Gegenform"
+  mittel: "Sprachliches Mittel"
+  test: "Test"
+  schablone: "Was das Muster festlegt"
+  vier_fragen: "Die vier Prüffragen"
+  grenzfall: "Grenzfall"
+  kippt_an: "Kippt an der Frage"
+  offene_frage: "Offene Frage"
+  wirkung: "Wirkung"
+  etiketten: "Etiketten"
+  etiketten_hinweis: "Etiketten beschreiben den Inhalt. Sie sind keine Bedingung für Desinformation."
+  normalfall: "Normal, weil"
+  verwandt: "Verwandt"
+  spiegelfall: "Spiegelfall"
+  in_vorbereitung: "in Vorbereitung"
+  anschlussfaecher: "Anschlussfächer"
+  literatur: "Literatur"
+  mehr: "Erläuterung"
+
+einschaetzung:
+  schalter: "Einschätzung wählen"
+  publikum: "Publikum"
+  urteil: "Desinformation?"
+  begruendung: "Begründung"
+  wirkung: "Wirkung"
+  keine_wirkung: "keine"
+
+schablone:
+  mitte: "Einschätzung"
+  legende: "Legende"
+  felder:            # die sechs Felder der Schablone (im Code angelegt)
+    inhalt: "Inhalt"
+    publikum: "Publikum"
+    vergleichsfall: "Vergleichsfall"
+    hinsicht: "Hinsicht"
+    urteil: "Urteil"
+    wirkung: "Wirkung"
+  status:
+    offen: "offen"
+    muster: "durch Muster festgelegt"
+    belegt: "durch Beispiel belegt"
+    fehlt: "fehlt"
+
+etiketten:
+  wahrheitsstatus: "Wahrheitsstatus"
+  absicht: "Absicht"

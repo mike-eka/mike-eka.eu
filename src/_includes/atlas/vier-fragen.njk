@@ -1,0 +1,19 @@
+{#
+  Die vier Prüffragen. Mit `antworten` (vier_fragen einer Karte) steht unter
+  jeder Frage die Antwort der Karte, sonst die allgemeine Erklärung.
+
+  pruefragen: atlas.begriffsmodell.pruefragen
+  antworten:  { was, fuer_wen, vergleich, hinsicht } oder leer
+  kipptAn:    id der Frage, an der der Grenzfall kippt (wird hervorgehoben)
+  kippLabel:  Beschriftung der Hervorhebung
+#}
+{% macro vierFragen(pruefragen, antworten, kipptAn, kippLabel) %}
+<dl class="atlas-vier-fragen">
+  {% for q in pruefragen %}
+  <div class="atlas-frage{% if q.id == kipptAn %} ist-kipppunkt{% endif %}">
+    <dt>{{ q.frage }}{% if q.id == kipptAn and kippLabel %} <span class="atlas-kipp-marke">{{ kippLabel }}</span>{% endif %}</dt>
+    <dd>{{ antworten[q.id] if antworten else q.erklaerung }}</dd>
+  </div>
+  {% endfor %}
+</dl>
+{% endmacro %}

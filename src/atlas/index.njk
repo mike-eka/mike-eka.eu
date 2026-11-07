@@ -1,0 +1,32 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ atlas.begriffsmodell.titel }}"
+  description: "{{ atlas.begriffsmodell.untertitel }}"
+---
+{#- Vorläufig: nur die Liste. Die Landkarte (D3) folgt in Schritt 2; diese
+    Liste bleibt dann als Fallback ohne JS und für Screenreader. -#}
+{%- set bm = atlas.begriffsmodell -%}
+{%- set b = atlas.beschriftungen -%}
+<article class="atlas atlas-uebersicht">
+  <h1 class="page-title">{{ bm.titel }}</h1>
+  <p class="atlas-untertitel">{{ bm.untertitel }}</p>
+  <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+
+  <ul class="atlas-hinsichten">
+    {% for h in bm.hinsichten %}
+    {%- set karten = collections.atlasMuster | musterInHinsicht(h.id) -%}
+    <li id="hinsicht-{{ h.id }}" class="{% if not h.schwerpunkt %}ist-nebensache{% endif %}">
+      <span class="atlas-hinsicht__name">{{ h.name }}</span>
+      {% if not h.schwerpunkt %}<span class="atlas-hinweis">({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %})</span>{% endif %}
+      {% if karten.length %}
+      <ul>
+        {% for k in karten %}<li><a href="{{ k.url }}">{{ k.data.titel }}</a></li>{% endfor %}
+      </ul>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if not collections.atlasMuster.length %}<p class="empty-note">{{ b.uebersicht.noch_keine_karten }}</p>{% endif %}
+</article>

@@ -1,0 +1,136 @@
+titel: "Leise Muster"
+untertitel: "Desinformation jenseits von wahr und falsch"   # Titel noch nicht final
+kernsatz: >-
+  Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
+  für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
+  verschlechtert.
+
+pruefragen:
+  - id: was
+    frage: "Was genau ist der Inhalt?"
+    feld: inhalt
+    erklaerung: >-
+      Eine einzelne Aussage, oder erst eine Auswahl, ein Paar von Aussagen,
+      eine Abfolge oder die Position eines Sprechers. Manches ist erst
+      zusammen problematisch.
+  - id: fuer_wen
+    frage: "Für wen?"
+    feld: publikum
+    erklaerung: >-
+      Welches Publikum, und wie viele dort betroffen sein müssen. Derselbe
+      Satz kann für die einen harmlos sein und für die anderen nicht.
+  - id: vergleich
+    frage: "Im Vergleich wozu?"
+    feld: vergleichsfall
+    erklaerung: >-
+      Mit der Lage vorher, ohne den Inhalt oder mit einer anderen
+      Formulierung. Ohne Vergleich lässt sich nicht sagen, ob etwas
+      schlechter wird.
+  - id: hinsicht
+    frage: "In welcher Hinsicht?"
+    feld: hinsicht
+    erklaerung: >-
+      Was genau schlechter wird. Faktenchecks prüfen nur eine dieser
+      Hinsichten.
+
+hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
+  - id: glauben
+    name: "Was wir glauben"
+    leitfrage: "Was glauben wir?"
+    schwerpunkt: false
+    hinweis: "Das klassische Feld der Faktenchecks"
+  - id: achten
+    name: "Worauf wir achten"
+    leitfrage: "Worauf achten wir?"
+    schwerpunkt: true
+  - id: vertrauen
+    name: "Wem wir glauben"
+    leitfrage: "Wem glauben wir?"
+    schwerpunkt: true
+  - id: begruenden
+    name: "Warum wir glauben"
+    leitfrage: "Warum glauben wir es?"
+    schwerpunkt: true
+  - id: rand
+    name: "Am Rand"
+    leitfrage: "Glauben wir es überhaupt?"
+    schwerpunkt: true
+    rand: true
+
+inhaltstypen: [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
+
+vergleichsfaelle:
+  - { id: vorher,      name: "vorher" }
+  - { id: ohne,        name: "ohne den Inhalt" }
+  - { id: alternative, name: "andere Formulierung (Minimalpaar)" }
+
+wirkungen:
+  - { id: verschlechtern, name: "verschlechtern", erklaerung: "Es wird schlechter als vorher." }
+  - { id: festhalten,     name: "festhalten",     erklaerung: "Es bleibt schlecht, obwohl es besser geworden wäre." }
+  - { id: abschotten,     name: "abschotten",     erklaerung: "Man lernt künftig schwerer dazu." }
+
+urteile:
+  - { id: ja,       name: "ja" }
+  - { id: nein,     name: "nein" }
+  - { id: strittig, name: "strittig" }
+
+etiketten:
+  wahrheitsstatus: [wahr, falsch, unklar, "nicht wahrheitsfähig"]
+  absicht: [vorhanden, "nicht vorhanden", unbekannt]
+
+anschlussfaecher:      # aus der Ausschreibung
+  - Journalismus
+  - Kommunikationswissenschaft
+  - Linguistik
+  - Medienwissenschaft
+  - Philosophie
+  - Politikwissenschaft
+  - Psychologie
+  - Rechtswissenschaft
+  - Soziologie
+
+schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
+  muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
+  nachbar: einschuechterung        # id eines Nachbarn
+
+schablone_leer:        # Texte der leeren Schablone
+  inhalt:         ["Aussage, Auswahl, Paar …", "Etiketten: wahr? absichtlich?"]
+  publikum:       ["wer genau?", "und wie viele?"]
+  vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
+  urteil:         ["ja · nein · strittig", ""]
+  hinsicht:       ["Was · Worauf · Wem ·", "Warum wir glauben"]
+  wirkung:        ["verschlechtern ·", "festhalten · abschotten"]
+
+nachbarn:
+  - id: einschuechterung
+    name: "Einschüchterung von Forschenden"
+    hinsicht: vertrauen
+    beschreibung: >-
+      Forschende ziehen sich aus der Öffentlichkeit zurück. Eine gute Quelle
+      verschwindet, ohne dass ein Inhalt verbreitet wurde.
+    schablone:         # für die Stufe „Nachbar“ der großen Schablone
+      inhalt:         { status: fehlt,  text: ["kein Inhalt", "Einschüchterung ist eine Handlung"] }
+      publikum:       { status: belegt, text: ["Öffentlichkeit", ""] }
+      vergleichsfall: { status: belegt, text: ["ohne Einschüchterung", ""] }
+      hinsicht:       { status: belegt, text: ["Wem wir glauben", ""] }
+      urteil:         { status: fehlt,  text: ["keine Einschätzung", "außerhalb der Definition"] }
+      wirkung:        { status: belegt, text: ["festhalten", ""] }
+  - id: erschoepfung
+    name: "Erschöpfung und Nachrichtenmüdigkeit"
+    hinsicht: achten
+    beschreibung: "TODO"
+  - id: fehlende-daten
+    name: "Entfernte oder nicht erhobene Daten"
+    hinsicht: glauben
+    beschreibung: "TODO"
+
+beziehungen:           # für Schema (Anhang) und JSON-LD
+  - { id: betrifft,           label: "betrifft",           von: Einschaetzung,  nach: Inhalt }
+  - { id: giltFuer,           label: "gilt für",           von: Einschaetzung,  nach: Publikum }
+  - { id: verglichenMit,      label: "verglichen mit",     von: Einschaetzung,  nach: Vergleichsfall }
+  - { id: inHinsicht,         label: "in Hinsicht",        von: Einschaetzung,  nach: Hinsicht }
+  - { id: istBeispielFuer,    label: "ist Beispiel für",   von: Inhalt,         nach: Muster }
+  - { id: nutzt,              label: "nutzt",              von: Muster,         nach: SprachlichesMittel }
+  - { id: betrifftVorAllem,   label: "betrifft vor allem", von: Muster,         nach: Hinsicht }
+  - { id: andereFormulierung, label: "andere Formulierung",von: Vergleichsfall, nach: Inhalt }
+  - { id: schadetIn,          label: "schadet in",         von: Nachbar,        nach: Hinsicht }

@@ -1,4 +1,9 @@
+const atlasPlugin = require("./config/atlas.js");
+
 module.exports = function (eleventyConfig) {
+  // Atlas (src/atlas/): YAML data, collections and filters.
+  eleventyConfig.addPlugin(atlasPlugin);
+
   // Static assets, copied as-is into the output.
   eleventyConfig.addPassthroughCopy("src/css");
   eleventyConfig.addPassthroughCopy("src/fonts");

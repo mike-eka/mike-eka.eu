@@ -1,0 +1,46 @@
+{#
+  Schablone einer Einschätzung: sechs Felder als CSS-Raster (kein SVG, damit
+  lange Texte umbrechen). Die sechs Felder sind bewusst im Code angelegt.
+
+  felder: { inhalt: { status, text }, publikum: …, vergleichsfall: …,
+            hinsicht: …, urteil: …, wirkung: … }
+          status: offen | muster | belegt | fehlt (fehlend = offen)
+          text:   Liste von Zeilen (leere Zeilen werden ausgelassen) oder Text
+  b:      atlas.beschriftungen.schablone
+#}
+
+{% macro feld(id, f, b) %}
+  {%- set status = (f.status if f and f.status else "offen") -%}
+  {%- set roh = (f.text if f and f.text else []) -%}
+  {%- set zeilen = ([roh] if roh is string else (roh | select)) -%}
+  <div class="atlas-feld atlas-feld--{{ id }} ist-{{ status }}">
+    <span class="atlas-feld__name">{{ b.felder[id] }}</span>
+    <span class="atlas-feld__text">{% for zeile in zeilen %}{{ zeile }}{% if not loop.last %}<br>{% endif %}{% endfor %}</span>
+    <span class="visually-hidden">({{ b.status[status] }})</span>
+  </div>
+{% endmacro %}
+
+{% macro schablone(felder, b) %}
+{%- set genutzt = felder | schablonenStatus -%}
+<figure class="atlas-schablone">
+  <div class="atlas-schablone__raster">
+    {{ feld("inhalt", felder.inhalt, b) }}
+    {{ feld("publikum", felder.publikum, b) }}
+    <div class="atlas-schablone__mitte">
+      <span class="atlas-schablone__mitte-titel">{{ b.mitte }}</span>
+      {{ feld("urteil", felder.urteil, b) }}
+      {{ feld("wirkung", felder.wirkung, b) }}
+    </div>
+    {{ feld("vergleichsfall", felder.vergleichsfall, b) }}
+    {{ feld("hinsicht", felder.hinsicht, b) }}
+  </div>
+  <figcaption>
+    <span class="visually-hidden">{{ b.legende }}:</span>
+    <ul class="atlas-legende">
+      {% for key, label in b.status %}{% if key in genutzt %}
+      <li><span class="atlas-legende__probe ist-{{ key }}" aria-hidden="true"></span>{{ label }}</li>
+      {% endif %}{% endfor %}
+    </ul>
+  </figcaption>
+</figure>
+{% endmacro %}

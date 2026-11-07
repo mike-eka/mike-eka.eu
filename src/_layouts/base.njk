@@ -8,6 +8,9 @@
   {% if description %}<meta name="description" content="{{ description }}">{% endif %}
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/style.css">
+  {# Optional per-page/section extras, e.g. `styles: ["/css/atlas.css"]`. #}
+  {% for href in styles %}<link rel="stylesheet" href="{{ href }}">
+  {% endfor %}
 </head>
 
 <body>
@@ -75,6 +78,8 @@
     layoutMenu();
     window.addEventListener('resize', layoutMenu);
   </script>
+  {% for src in scripts %}<script src="{{ src }}"></script>
+  {% endfor %}
 
 </body>
 

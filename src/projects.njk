@@ -12,7 +12,7 @@ section: projects
   {% for project in projects %}
   <div class="project-card">
     <span class="project-kind">{{ project.data.kind }}</span>
-    <h2><a href="{{ project.url }}">{{ project.data.title }}</a></h2>
+    <h2><a href="{{ project.data.link or project.url }}">{{ project.data.title }}</a></h2>
     <p>{{ project.data.summary }}</p>
   </div>
   {% endfor %}

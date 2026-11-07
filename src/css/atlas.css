@@ -1,0 +1,442 @@
+/* Atlas (src/atlas/). Loaded only on Atlas pages, after style.css.
+   All colours are variables here; change them in this block only. */
+:root {
+    --atlas-grund: #fffaf0;            /* page background (as in style.css) */
+    --atlas-linie: #e5ddcf;            /* thin lines, neutral borders */
+    --atlas-gedaempft: #7a7267;        /* secondary text */
+    --atlas-kern: #bf5748;             /* accent 1: lines, "by pattern", "yes" */
+    --atlas-kern-text: #a3453a;        /* accent 1 for text (contrast ≥ 4.5:1) */
+    --atlas-hinsicht: #4f6d7a;         /* accent 2: "by example", "no", focus */
+    --atlas-hinsicht-flaeche: #eef2f1; /* light fill for accent 2 */
+    --atlas-offen: #7a7267;            /* open fields, "contested" */
+    --atlas-mark: var(--atlas-kern-text); /* highlights in the minimal pair */
+}
+
+/* ---- Helpers ---- */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.atlas {
+    line-height: 1.6;
+    overflow-wrap: break-word;
+}
+
+.atlas :focus-visible {
+    outline: 2px solid var(--atlas-hinsicht);
+    outline-offset: 2px;
+}
+
+.atlas h2 {
+    font-size: 1.05rem;
+    margin: 0 0 0.75rem;
+}
+
+.atlas-abschnitt {
+    margin-top: 2.5rem;
+}
+
+.atlas-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-hinweis {
+    font-size: 0.85rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-entwurf {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-werte {
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.atlas-werte > div {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.75rem;
+}
+
+.atlas-werte dt {
+    color: var(--atlas-gedaempft);
+    overflow-wrap: normal;
+}
+
+.atlas-werte dd {
+    margin: 0;
+}
+
+.atlas-liste-schlicht {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ---- Card header ---- */
+.atlas-karte__kopf h1 {
+    margin-bottom: 0.1rem;
+}
+
+.atlas-fachbegriff {
+    margin: 0 0 0.75rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--atlas-hinsicht);
+    color: var(--atlas-hinsicht);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+}
+
+.atlas-badge:hover {
+    color: var(--atlas-hinsicht);
+    background: var(--atlas-hinsicht-flaeche);
+    font-weight: normal;
+}
+
+.atlas-kurz {
+    font-size: 1.1rem;
+    margin: 1rem 0 0;
+}
+
+/* ---- Minimal pair ---- */
+.atlas-paar {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.atlas-paar__zeile {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+}
+
+.atlas-paar dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-paar dd {
+    margin: 0;
+    font-size: 1.15rem;
+}
+
+.atlas mark {
+    background: none;
+    color: var(--atlas-mark);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+/* ---- Means + test ---- */
+.atlas-mittel__name {
+    font-weight: 500;
+    margin: 0;
+}
+
+.atlas-test,
+.atlas-offene-frage {
+    border-left: 1px solid var(--atlas-linie);
+    padding-left: 1rem;
+    margin-top: 1rem;
+}
+
+.atlas-test p,
+.atlas-offene-frage p {
+    margin: 0.2rem 0 0;
+}
+
+/* ---- Schablone (six fields) ---- */
+.atlas-schablone {
+    margin: 0;
+}
+
+.atlas-schablone__raster {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "inhalt publikum"
+        "mitte mitte"
+        "vergleichsfall hinsicht";
+    gap: 0.75rem;
+}
+
+.atlas-feld--inhalt { grid-area: inhalt; }
+.atlas-feld--publikum { grid-area: publikum; }
+.atlas-feld--vergleichsfall { grid-area: vergleichsfall; }
+.atlas-feld--hinsicht { grid-area: hinsicht; }
+
+.atlas-schablone__mitte {
+    grid-area: mitte;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    border: 1px solid var(--atlas-kern);
+    border-radius: 6px;
+    padding: 0.75rem;
+}
+
+.atlas-schablone__mitte-titel {
+    grid-column: 1 / -1;
+    font-weight: 500;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-feld {
+    min-width: 0;
+    border: 1px solid var(--atlas-linie);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.4;
+}
+
+.atlas-feld__name {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+    margin-bottom: 0.2rem;
+}
+
+/* Status: shown by line style and fill, not by colour alone. */
+.atlas-schablone .ist-muster { border: 1px solid var(--atlas-kern); }
+.atlas-schablone .ist-belegt { border: 1px solid var(--atlas-hinsicht); background: var(--atlas-hinsicht-flaeche); }
+.atlas-schablone .ist-offen { border: 1px dashed var(--atlas-offen); }
+.atlas-schablone .ist-offen .atlas-feld__text { color: var(--atlas-gedaempft); font-style: italic; }
+.atlas-schablone .ist-fehlt { border: 1px dotted var(--atlas-offen); }
+.atlas-schablone .ist-fehlt .atlas-feld__text { color: var(--atlas-gedaempft); }
+
+.atlas-legende {
+    list-style: none;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-legende__probe {
+    display: inline-block;
+    width: 1.1rem;
+    height: 0.75rem;
+    border-radius: 3px;
+    margin-right: 0.4rem;
+    vertical-align: -0.05rem;
+}
+
+@media (max-width: 480px) {
+    .atlas-schablone__raster {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "inhalt"
+            "publikum"
+            "mitte"
+            "vergleichsfall"
+            "hinsicht";
+    }
+
+    .atlas-schablone__mitte {
+        grid-template-columns: 1fr;
+    }
+
+    .atlas-paar__zeile,
+    .atlas-werte > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+/* ---- Four questions ---- */
+.atlas-vier-fragen {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.atlas-frage dt {
+    font-weight: 500;
+}
+
+.atlas-frage dd {
+    margin: 0;
+}
+
+.atlas-frage.ist-kipppunkt {
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 0.75rem;
+}
+
+.atlas-kipp-marke {
+    font-size: 0.75rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-kern-text);
+    margin-left: 0.4rem;
+}
+
+/* ---- Borderline case switch ---- */
+.atlas-kippt {
+    margin: 0 0 1rem;
+}
+
+.atlas-schalter:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.atlas-schalter button {
+    background: transparent;
+    color: inherit;
+    border: 1px solid var(--atlas-linie);
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+}
+
+.atlas-schalter button:hover {
+    border-color: var(--atlas-gedaempft);
+}
+
+.atlas-schalter button[aria-pressed="true"] {
+    border-color: var(--atlas-kern);
+    color: var(--atlas-kern-text);
+    background: #fbefe9;
+}
+
+.atlas-einschaetzungen__liste {
+    display: grid;
+    gap: 1rem;
+}
+
+.atlas-einschaetzung {
+    border-left: 3px solid var(--atlas-offen);
+    padding: 0.25rem 0 0.25rem 1rem;
+}
+
+.atlas-einschaetzung.ist-ja { border-left-color: var(--atlas-kern); }
+.atlas-einschaetzung.ist-nein { border-left-color: var(--atlas-hinsicht); }
+.atlas-einschaetzung.ist-strittig { border-left-style: dashed; }
+
+.atlas-einschaetzung__titel {
+    font-size: 1rem;
+    margin: 0 0 0.4rem;
+}
+
+.atlas-einschaetzung__urteil dd {
+    font-weight: 500;
+}
+
+/* With JS, the buttons name the case, so the heading is only for screen readers. */
+.atlas-einschaetzungen.ist-aktiv .atlas-einschaetzung__titel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---- Effect, labels, normal case ---- */
+.atlas-eckdaten {
+    margin-top: 2.5rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.atlas-eckdatum p {
+    margin: 0;
+}
+
+.atlas-eckdatum .atlas-hinweis {
+    margin-top: 0.4rem;
+}
+
+/* ---- Related, disciplines, literature ---- */
+.atlas-bezuege p {
+    margin: 0 0 0.75rem;
+}
+
+.atlas-faecher {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.atlas-faecher li {
+    border: 1px solid var(--atlas-linie);
+    border-radius: 999px;
+    padding: 0.1rem 0.7rem;
+    font-size: 0.85rem;
+}
+
+.atlas-literatur {
+    padding-left: 1.2rem;
+}
+
+/* ---- Overview (list fallback) ---- */
+.atlas-untertitel {
+    margin-top: -0.5rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-kernsatz {
+    font-size: 1.1rem;
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 1rem;
+}
+
+.atlas-hinsichten {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+}
+
+.atlas-hinsichten > li.ist-nebensache {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-hinsicht__name {
+    font-weight: 500;
+}
+
+.atlas-hinsichten ul {
+    margin: 0.3rem 0 0;
+    padding-left: 1.2rem;
+}
