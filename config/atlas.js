@@ -2,6 +2,23 @@
 // via addPlugin. Holds no content: all texts live in src/_data/atlas/*.yaml
 // and src/atlas/muster/*.md.
 const yaml = require("js-yaml");
+const netzLogik = require("../src/js/atlas/netz-logik.js");
+
+const GRAFIK_TYPEN = ["netz", "balken"];
+
+// States of a network graphic coupled to the assessments: one per assessment
+// (key = its position, as in the template switch), with its grafik_zustand.
+function netzZustaende(grafik, einschaetzungen) {
+  const key = grafik && grafik.zustand_aus_einschaetzung;
+  return (einschaetzungen || []).map((e, i) => ({
+    key: String(i + 1),
+    label: e.label,
+    werte: key && e.grafik_zustand ? { [key]: e.grafik_zustand[key] } : {},
+  }));
+}
+
+// Without [[…]] marks, for comparing list entries.
+const ohneMarken = (s) => String(s).replace(/\[\[|\]\]/g, "").trim();
 
 const MUSTER_GLOB = "./src/atlas/muster/*.md";
 
@@ -62,6 +79,44 @@ function pruefeAtlas(items) {
           }
         });
       }
+    }
+  }
+
+  // Graphics: known type; for netz the coupling and every condition.
+  for (const item of items) {
+    const g = item.data.grafik;
+    if (!g) continue;
+    const datei = item.inputPath;
+    if (!GRAFIK_TYPEN.includes(g.typ)) {
+      warn(`${datei}: grafik.typ "${g.typ}" unbekannt (erlaubt: ${GRAFIK_TYPEN.join(", ")})`);
+      continue;
+    }
+    if (g.typ === "netz") {
+      const key = g.zustand_aus_einschaetzung;
+      const bekannt = new Set(["kennzahl", ...(g.schalter || []).map((s) => s.id), ...(key ? [key] : [])]);
+      if (key) {
+        (item.data.einschaetzungen || []).forEach((e, i) => {
+          if (!e.grafik_zustand || e.grafik_zustand[key] == null) {
+            warn(`${datei}: Einschätzung ${i + 1} ("${e.label}") hat kein grafik_zustand.${key}`);
+          }
+        });
+      }
+      const pruefe = (bedingung, wo) => {
+        const { namen, fehler } = netzLogik.analysiere(bedingung);
+        fehler.forEach((t) => warn(`${datei}: ${wo}: Bedingung "${t}" nicht lesbar`));
+        namen.filter((n) => !bekannt.has(n)).forEach((n) => warn(`${datei}: ${wo}: unbekannter Name "${n}" in "${bedingung}"`));
+      };
+      (g.knoten || []).forEach((k) => pruefe(k.nur_wenn, `Knoten ${k.id}`));
+      (g.kanten || []).forEach((k, i) => pruefe(k.nur_wenn, `Kante ${i + 1}`));
+      (g.urteile || []).forEach((u, i) => pruefe(u.wenn, `Urteil ${i + 1}`));
+    }
+    if (g.typ === "balken") {
+      const masse = (g.masse || []).map((m) => m.id);
+      (g.themen || []).forEach((t) => {
+        ["berichterstattung", ...masse].forEach((m) => {
+          if (typeof t[m] !== "number") warn(`${datei}: Thema "${t.name}" hat keinen Zahlenwert für "${m}"`);
+        });
+      });
     }
   }
 
@@ -136,6 +191,56 @@ module.exports = function atlasPlugin(eleventyConfig) {
       nachbarn: (bm.nachbarn || []).map(({ id, name, hinsicht }) => ({ id, name, hinsicht })),
     };
     return JSON.stringify(daten).replace(/</g, "\\u003c");
+  });
+
+  // True if either argument is a list (minimal pair as a selection of items).
+  eleventyConfig.addFilter("istListe", (a, b) => Array.isArray(a) || Array.isArray(b));
+
+  // Minimal pair as lists: rows aligned across both versions, comparing
+  // entries without [[…]] marks. A row has `muster` and/or `gegenform`;
+  // a missing side marks an entry that only one version has.
+  eleventyConfig.addFilter("paarZeilen", (muster, gegenform) => {
+    const a = Array.isArray(muster) ? muster : muster == null ? [] : [muster];
+    const b = Array.isArray(gegenform) ? gegenform : gegenform == null ? [] : [gegenform];
+    const zeilen = [];
+    let i = 0, j = 0;
+    while (i < a.length || j < b.length) {
+      if (i < a.length && j < b.length && ohneMarken(a[i]) === ohneMarken(b[j])) {
+        zeilen.push({ muster: a[i++], gegenform: b[j++] });
+      } else if (i < a.length && !b.slice(j).some((x) => ohneMarken(x) === ohneMarken(a[i]))) {
+        zeilen.push({ muster: a[i++], gegenform: null });
+      } else {
+        zeilen.push({ muster: null, gegenform: b[j++] });
+      }
+    }
+    return zeilen;
+  });
+
+  // Data for a graphic (netz.js / balken.js), JSON safe inside <script>.
+  eleventyConfig.addFilter("grafikDaten", (grafik, einschaetzungen, texte) => {
+    const daten = { grafik, texte: texte || {} };
+    if (grafik && grafik.typ === "netz") daten.zustaende = netzZustaende(grafik, einschaetzungen);
+    return JSON.stringify(daten).replace(/</g, "\\u003c");
+  });
+
+  // No-JS table for a network graphic: every assessment × every combination
+  // of the graphic's own switches, with key figure and verdict.
+  eleventyConfig.addFilter("netzTabelle", (grafik, einschaetzungen) => {
+    const schalter = (grafik && grafik.schalter) || [];
+    const zustaende = netzZustaende(grafik, einschaetzungen);
+    const basis = zustaende.length ? zustaende : [{ key: "", label: "", werte: {} }];
+    const kombis = [];
+    for (let n = 0; n < 1 << schalter.length; n++) {
+      kombis.push(Object.fromEntries(schalter.map((s, i) => [s.id, Boolean(n & (1 << i))])));
+    }
+    const zeilen = [];
+    basis.forEach((z) =>
+      kombis.forEach((k) => {
+        const r = netzLogik.auswerten(grafik, { ...z.werte, ...k });
+        zeilen.push({ label: z.label, schalter: k, kennzahl: r.kennzahl, urteil: r.urteil });
+      })
+    );
+    return zeilen;
   });
 
   // Shift headings in rendered Markdown one level down (h2 -> h3 …), so a

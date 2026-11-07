@@ -50,6 +50,9 @@ karte:
   minimalpaar_frage: "Gefragt"
   antwort_muster: "Antwort im Muster"
   antwort_gegenform: "Gegenform"
+  # nur wenn muster/gegenform Listen sind:
+  paar_zusatz: "+ zusätzlich"    # Eintrag, den nur diese Fassung hat
+  paar_fehlt: "fehlt hier"       # Lücke, wo die andere Fassung einen Eintrag mehr hat
   analogie: "Wo die Analogie bricht"
   analogie_merkmal: "Merkmal"
   analogie_art:         # steht als Wort in jeder Zeile der Tabelle
@@ -96,6 +99,20 @@ schablone:
     muster: "durch Muster festgelegt"
     belegt: "durch Beispiel belegt"
     fehlt: "fehlt"
+
+grafik:                 # Grafiken auf den Karten (netz.js, balken.js)
+  titel:
+    netz: "Die Konstellation"
+    balken: "Berichterstattung im Vergleich"
+  daten: "Die Daten als Tabelle"
+  einschaetzung: "Einschätzung"
+  urteil: "Urteil"
+  thema: "Thema"
+  ja: "ja"
+  nein: "nein"
+  mass_waehlen: "Vergleichsmaß wählen"
+  netz_alt: "Netzdiagramm"
+  balken_alt: "Balkendiagramm"
 
 etiketten:
   wahrheitsstatus: "Wahrheitsstatus"

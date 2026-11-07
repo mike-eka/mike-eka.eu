@@ -26,7 +26,11 @@
       panels.forEach(function (p) {
         p.hidden = p.getAttribute("data-panel") !== key;
       });
+      // Others (e.g. a graphic coupled to the assessments) can follow along.
+      root.dispatchEvent(new CustomEvent("atlas:einschaetzung", { bubbles: true, detail: { key: key } }));
     }
+    // ... and switch from outside (e.g. the graphic's own buttons).
+    root.atlasZeige = zeige;
 
     knoepfe.forEach(function (k, i) {
       k.addEventListener("click", function () {
