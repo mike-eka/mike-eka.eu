@@ -18,7 +18,7 @@ eleventyComputed:
 
 {#- Große Schablone: welche Karte und welcher Nachbar (schablone_stufen) -#}
 {%- set stufen = bm.schablone_stufen or {} -%}
-{%- set mk = collections.atlasMusterAlle | musterNachSlug(stufen.muster) -%}
+{%- set mk = collections.atlasMusterSichtbar | musterNachSlug(stufen.muster) -%}
 {%- set nb = bm.nachbarn | nachId(stufen.nachbar) -%}
 {%- set kipp = (bm.pruefragen | nachId(mk.data.kippt_an)) if mk else null -%}
 {%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}

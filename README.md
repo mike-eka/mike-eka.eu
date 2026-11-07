@@ -11,6 +11,10 @@ Personal site, built with [Eleventy](https://www.11ty.dev/). Plain HTML/Nunjucks
 - `src/embeds/` — standalone, self-contained HTML files (e.g. a p5.js sketch or D3 chart) that a project page can embed in an iframe. Copied to the site as-is, not templated.
 - `src/css/style.css` — all styling. `src/fonts/` — the Sono font.
 
+## Atlas
+
+The Atlas under `/atlas/` has its own guide: see [README-atlas.md](README-atlas.md) (in German) for how to change content, and run `npm run check:atlas` before merging to `main`.
+
 ## Local development
 
 ```

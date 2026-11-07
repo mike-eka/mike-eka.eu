@@ -9,7 +9,7 @@ layout: base.njk
 {%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
 
 {%- macro musterLink(slug) -%}
-  {%- set m = collections.atlasMusterAlle | musterNachSlug(slug) -%}
+  {%- set m = collections.atlasMusterSichtbar | musterNachSlug(slug) -%}
   {%- if m and m.data.veroeffentlicht -%}<a href="{{ m.url }}">{{ m.data.titel }}</a>
   {%- elif m -%}{{ m.data.titel }} <span class="atlas-entwurf">({{ b.karte.in_vorbereitung }})</span>
   {%- else -%}{{ slug }}{%- endif -%}
@@ -276,14 +276,17 @@ layout: base.njk
     </section>
     {% endif %}
 
-    {% if (verwandt and verwandt.length) or spiegelfall %}
+    {#- Nur sichtbare Karten (Entwürfe nur bei entwuerfe_anzeigen: true) -#}
+    {%- set verwandtSichtbar = verwandt | nurSichtbar(collections.atlasMusterSichtbar) -%}
+    {%- set spiegelSichtbar = spiegelfall | nurSichtbar(collections.atlasMusterSichtbar) -%}
+    {% if verwandtSichtbar.length or spiegelSichtbar.length %}
     <section class="atlas-kachel atlas-kachel--still atlas-bezuege" aria-labelledby="verwandt">
       <h2 id="verwandt">{{ b.karte.verwandt }}</h2>
-      {% if verwandt and verwandt.length %}
-      <p>{% for slug in verwandt %}{{ musterLink(slug) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
+      {% if verwandtSichtbar.length %}
+      <p>{% for slug in verwandtSichtbar %}{{ musterLink(slug) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
       {% endif %}
-      {% if spiegelfall %}
-      <p><span class="atlas-label">{{ b.karte.spiegelfall }}</span> {{ musterLink(spiegelfall) }}</p>
+      {% if spiegelSichtbar.length %}
+      <p><span class="atlas-label">{{ b.karte.spiegelfall }}</span> {{ musterLink(spiegelSichtbar[0]) }}</p>
       {% endif %}
     </section>
     {% endif %}

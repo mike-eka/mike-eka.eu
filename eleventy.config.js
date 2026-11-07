@@ -11,6 +11,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/favicon.ico");
   eleventyConfig.addPassthroughCopy("src/**/projects/**/*.{js,png,jpg,jpeg,svg,gif,mp3,wav}");
   eleventyConfig.addPassthroughCopy("src/embeds");
+  // Embeds are standalone files: copy them as they are, but don't also
+  // render them as templates (which produced /embeds/<name>/index.html).
+  eleventyConfig.ignores.add("src/embeds/**");
   eleventyConfig.addPassthroughCopy({ "src/CNAME": "CNAME" });
 
   // Third-party libraries, self-hosted from node_modules (no CDN requests).

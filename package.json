@@ -5,7 +5,8 @@
   "description": "Personal website of Mike Eka",
   "scripts": {
     "start": "eleventy --serve",
-    "build": "eleventy"
+    "build": "eleventy",
+    "check:atlas": "node scripts/check-atlas.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.0.0",

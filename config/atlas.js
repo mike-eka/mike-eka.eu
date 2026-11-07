@@ -144,6 +144,13 @@ module.exports = function atlasPlugin(eleventyConfig) {
     pruefeAtlas(items);
     return items;
   });
+  // What readers may see: published cards, plus drafts ("in Vorbereitung")
+  // unless begriffsmodell.yaml sets `entwuerfe_anzeigen: false`.
+  eleventyConfig.addCollection("atlasMusterSichtbar", (api) => {
+    const items = sortiereMuster(api.getFilteredByGlob(MUSTER_GLOB));
+    const zeigen = items[0]?.data.atlas?.begriffsmodell?.entwuerfe_anzeigen !== false;
+    return zeigen ? items : items.filter((item) => item.data.veroeffentlicht === true);
+  });
   eleventyConfig.addCollection("atlasMuster", (api) =>
     sortiereMuster(api.getFilteredByGlob(MUSTER_GLOB).filter((item) => item.data.veroeffentlicht === true))
   );
@@ -161,6 +168,13 @@ module.exports = function atlasPlugin(eleventyConfig) {
   eleventyConfig.addFilter("musterNachSlug", (items, slug) =>
     (items || []).find((item) => item.page.fileSlug === slug)
   );
+
+  // Keep only the slugs of cards that are visible (see atlasMusterSichtbar),
+  // so hidden drafts leave no trace in "verwandt" / "spiegelfall".
+  eleventyConfig.addFilter("nurSichtbar", (slugs, sichtbar) => {
+    const da = new Set((sichtbar || []).map((item) => item.page.fileSlug));
+    return [].concat(slugs || []).filter((s) => s && da.has(s));
+  });
 
   // Cards of one hinsicht, keeping collection order.
   eleventyConfig.addFilter("musterInHinsicht", (items, hinsichtId) =>

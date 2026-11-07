@@ -4,6 +4,11 @@ kernsatz: >-
   Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
   für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
   verschlechtert.
+# Entwürfe (Karten mit veroeffentlicht: false) als „in Vorbereitung“ zeigen?
+# false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste, nicht bei
+# „verwandt“ oder „Spiegelfall“. Gebaut werden Entwürfe in keinem Fall.
+entwuerfe_anzeigen: true
+
 # Ein Absatz Haltung für die Übersicht
 haltung: >-
   Dieser Atlas sammelt Muster, die in Faktenchecks selten vorkommen, weil
