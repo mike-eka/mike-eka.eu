@@ -689,7 +689,180 @@ main.atlas-wide {
     }
 }
 
-/* ---- Overview (list fallback) ---- */
+/* ---- Overview ---- */
+.atlas.atlas-uebersicht {
+    max-width: 62rem;
+}
+
+.atlas-uebersicht__kopf,
+.atlas-struktur {
+    max-width: 42rem;
+}
+
+.atlas-haltung {
+    margin-top: 1rem;
+}
+
+/* Map (landkarte.js). SVG text inherits Sono; colours from the variables. */
+.atlas-landkarte {
+    margin: 2rem 0 2.5rem;
+}
+
+.atlas-landkarte__flaeche svg {
+    display: block;
+    overflow: visible;
+}
+
+.atlas-landkarte figcaption {
+    margin-top: 0.5rem;
+}
+
+.lk-text, .lk-titel, .lk-klein, .lk-frage-text, .lk-muster-text, .lk-band-text, .lk-nachbar-text, .lk-grenze-text {
+    fill: var(--atlas-text);
+}
+
+.lk-titel { font-weight: bold; }
+.lk-klein, .lk-band-text, .lk-grenze-text { fill: var(--atlas-gedaempft); }
+.lk-grenze-text { letter-spacing: 0.04em; }
+
+/* Spokes cross the audience band; a halo in the band colour keeps its text legible. */
+.lk-band-text {
+    paint-order: stroke;
+    stroke: var(--atlas-kachel-ruhig);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+}
+
+.lk-grenze {
+    fill: none;
+    stroke: var(--atlas-offen);
+    stroke-width: 1.25;
+    stroke-dasharray: 7 5;
+}
+
+.lk-band {
+    fill: var(--atlas-kachel-ruhig);
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+}
+
+.lk-kern {
+    fill: var(--atlas-kachel-effekt);
+    stroke: var(--atlas-kern);
+    stroke-width: 1.5;
+}
+
+.lk-speiche {
+    stroke: var(--atlas-kern);
+    stroke-width: 1.5;
+}
+
+.lk-frage-box {
+    fill: var(--atlas-feld);
+    stroke: var(--atlas-kern);
+    stroke-width: 1;
+}
+
+.lk-frage-text { font-weight: bold; }
+
+.lk-verbindung {
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+}
+
+.lk-hinsicht-box {
+    fill: var(--atlas-kachel-kern);
+    stroke: none;
+}
+
+.lk-hinsicht.ist-nebensache .lk-hinsicht-box { fill: var(--atlas-kachel-still); }
+.lk-hinsicht.ist-nebensache .lk-titel { fill: var(--atlas-gedaempft); }
+.lk-hinsicht.ist-rand .lk-hinsicht-box {
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+    stroke-dasharray: 5 4;
+}
+
+.lk-pille {
+    fill: var(--atlas-feld);
+    stroke: var(--atlas-kern);
+    stroke-width: 1;
+}
+
+.lk-muster.ist-entwurf .lk-pille {
+    fill: transparent;
+    stroke: var(--atlas-offen);
+    stroke-dasharray: 4 3;
+}
+
+.lk-muster.ist-entwurf .lk-muster-text { fill: var(--atlas-gedaempft); }
+
+/* Links in the map: no bold-on-hover (it would overflow the pills). */
+.atlas-landkarte a.lk-link:hover,
+.atlas-landkarte a.lk-link:focus {
+    font-weight: normal;
+}
+
+.atlas-landkarte a.lk-link:hover .lk-pille,
+.atlas-landkarte a.lk-link:focus-visible .lk-pille {
+    fill: var(--atlas-knopf-an);
+    stroke-width: 2;
+}
+
+.atlas-landkarte a.lk-link:hover .lk-muster-text {
+    fill: var(--atlas-kern-text);
+    text-decoration: underline;
+}
+
+.atlas-landkarte a.lk-link:focus {
+    outline: none;
+}
+
+.atlas-landkarte a.lk-link:focus-visible .lk-pille {
+    stroke: var(--atlas-hinsicht);
+    stroke-width: 3;
+}
+
+.lk-nachbar-box {
+    fill: transparent;
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+}
+
+.lk-schadet {
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+}
+
+/* List fallback */
+.atlas-struktur h2 {
+    margin-top: 0;
+}
+
+.atlas-struktur__bereich {
+    font-size: 0.95rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.atlas-baum {
+    padding-left: 1.2rem;
+    margin: 0;
+}
+
+.atlas-baum > li {
+    margin-bottom: 0.75rem;
+}
+
+.atlas-baum__knoten {
+    font-weight: 500;
+}
+
+.atlas-baum__art {
+    color: var(--atlas-gedaempft);
+}
+
 .atlas-untertitel {
     margin-top: -0.5rem;
     color: var(--atlas-gedaempft);

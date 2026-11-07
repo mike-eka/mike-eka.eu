@@ -6,6 +6,18 @@ uebersicht:
   link: "← Zur Übersicht"
   noch_keine_karten: "Noch keine Karten veröffentlicht."
   nicht_schwerpunkt: "nicht Schwerpunkt"
+  in_vorbereitung: "in Vorbereitung"
+  landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte. Dieselbe Struktur steht darunter als Liste."
+  liste_titel: "Die Struktur als Liste"
+  einschaetzung: "Einschätzung"
+  einschaetzung_zusatz: "Urteil · Wirkung"
+  pruefragen: "Prüffragen"
+  rahmen: "Rahmen"                      # Kennzeichnung der Frage mit art: rahmen
+  hinsichten: "Hinsichten"
+  reichweite: "Reichweite der Re:DIS-Definition"
+  nachbarn: "Nachbarn: Schaden ohne Inhalt"
+  nachbarn_hinweis: "außerhalb der Definition"
+  schadet_in: "schadet in"              # Nachbar → Hinsicht (Liste)
 
 karte:
   schablone: "Was das Muster festlegt"

@@ -1,32 +1,72 @@
 ---
 layout: base.njk
+scripts: ["/js/vendor/d3.min.js", "/js/atlas/landkarte.js"]
 eleventyComputed:
   title: "{{ atlas.begriffsmodell.titel }}"
   description: "{{ atlas.begriffsmodell.untertitel }}"
 ---
-{#- Vorläufig: nur die Liste. Die Landkarte (D3) folgt in Schritt 2; diese
-    Liste bleibt dann als Fallback ohne JS und für Screenreader. -#}
+{#- Übersicht: Landkarte (D3, nur mit JS) und dieselbe Struktur als
+    verschachtelte Liste (immer da: ohne JS, für Screenreader, zum Drucken). -#}
 {%- set bm = atlas.begriffsmodell -%}
 {%- set b = atlas.beschriftungen -%}
+{%- set alle = collections.atlasMusterAlle -%}
 <article class="atlas atlas-uebersicht">
-  <h1 class="page-title">{{ bm.titel }}</h1>
-  <p class="atlas-untertitel">{{ bm.untertitel }}</p>
-  <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+  <header class="atlas-uebersicht__kopf">
+    <h1 class="page-title">{{ bm.titel }}</h1>
+    <p class="atlas-untertitel">{{ bm.untertitel }}</p>
+    <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+    {% if bm.haltung %}<p class="atlas-haltung">{{ bm.haltung }}</p>{% endif %}
+  </header>
 
-  <ul class="atlas-hinsichten">
-    {% for h in bm.hinsichten %}
-    {%- set karten = collections.atlasMuster | musterInHinsicht(h.id) -%}
-    <li id="hinsicht-{{ h.id }}" class="{% if not h.schwerpunkt %}ist-nebensache{% endif %}">
-      <span class="atlas-hinsicht__name">{{ h.name }}</span>
-      {% if not h.schwerpunkt %}<span class="atlas-hinweis">({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %})</span>{% endif %}
-      {% if karten.length %}
-      <ul>
-        {% for k in karten %}<li><a href="{{ k.url }}">{{ k.data.titel }}</a></li>{% endfor %}
-      </ul>
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
+  <figure class="atlas-landkarte" data-landkarte="atlas-landkarte-daten" hidden>
+    <div class="atlas-landkarte__flaeche"></div>
+    <figcaption class="atlas-hinweis" id="atlas-landkarte-hinweis">{{ b.uebersicht.landkarte_hinweis }}</figcaption>
+  </figure>
+  <script type="application/json" id="atlas-landkarte-daten">{{ bm | landkarteDaten(b, alle) | safe }}</script>
 
-  {% if not collections.atlasMuster.length %}<p class="empty-note">{{ b.uebersicht.noch_keine_karten }}</p>{% endif %}
+  <section class="atlas-struktur" aria-labelledby="struktur-titel">
+    <h2 id="struktur-titel">{{ b.uebersicht.liste_titel }}</h2>
+
+    <h3 class="atlas-struktur__bereich">{{ b.uebersicht.reichweite }}</h3>
+    <ul class="atlas-baum">
+      <li>
+        <span class="atlas-baum__knoten">{{ b.uebersicht.einschaetzung }}</span>
+        <span class="atlas-hinweis">({{ b.uebersicht.einschaetzung_zusatz }})</span>
+        <ul>
+          {% for q in bm.pruefragen %}
+          <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ b.uebersicht.rahmen }}:</span> {% endif %}{{ q.frage }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li>
+        <span class="atlas-baum__knoten">{{ b.uebersicht.hinsichten }}</span>
+        <ul class="atlas-hinsichten">
+          {% for h in bm.hinsichten %}
+          {%- set karten = alle | musterInHinsicht(h.id) -%}
+          <li id="hinsicht-{{ h.id }}" class="{% if h.schwerpunkt == false %}ist-nebensache{% endif %}">
+            <span class="atlas-hinsicht__name">{{ h.name }}</span>
+            <span class="atlas-hinweis">– {{ h.leitfrage }}{% if h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>
+            {% if karten.length %}
+            <ul>
+              {% for k in karten %}
+              <li>{% if k.data.veroeffentlicht %}<a href="{{ k.url }}">{{ k.data.titel }}</a>{% else %}{{ k.data.titel }} <span class="atlas-entwurf">({{ b.uebersicht.in_vorbereitung }})</span>{% endif %}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+
+    {% if bm.nachbarn and bm.nachbarn.length %}
+    <h3 class="atlas-struktur__bereich">{{ b.uebersicht.nachbarn }} <span class="atlas-hinweis">({{ b.uebersicht.nachbarn_hinweis }})</span></h3>
+    <ul class="atlas-baum">
+      {% for n in bm.nachbarn %}
+      {%- set nh = bm.hinsichten | nachId(n.hinsicht) -%}
+      <li>{{ n.name }}{% if nh %} <span class="atlas-hinweis">– {{ b.uebersicht.schadet_in }}: {{ nh.name }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
 </article>

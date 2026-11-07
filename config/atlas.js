@@ -110,6 +110,34 @@ module.exports = function atlasPlugin(eleventyConfig) {
     (items || []).filter((item) => item.data.hinsicht === hinsichtId)
   );
 
+  // Data for the overview map (landkarte.js), from the same sources as the
+  // list fallback. Returned as JSON that is safe inside <script>.
+  eleventyConfig.addFilter("landkarteDaten", (bm, b, alleMuster) => {
+    const daten = {
+      texte: {
+        ...b.uebersicht,
+        publikum: b.schablone?.felder?.publikum?.name,
+        publikum_verweis: b.schablone?.publikum_verweis,
+      },
+      pruefragen: (bm.pruefragen || []).map(({ id, art, frage }) => ({ id, art, frage })),
+      hinsichten: (bm.hinsichten || []).map((h) => ({
+        id: h.id,
+        name: h.name,
+        leitfrage: h.leitfrage,
+        schwerpunkt: h.schwerpunkt !== false,
+        rand: h.rand === true,
+        muster: (alleMuster || [])
+          .filter((item) => item.data.hinsicht === h.id)
+          .map((item) => ({
+            titel: item.data.titel,
+            url: item.data.veroeffentlicht === true ? item.url : null,
+          })),
+      })),
+      nachbarn: (bm.nachbarn || []).map(({ id, name, hinsicht }) => ({ id, name, hinsicht })),
+    };
+    return JSON.stringify(daten).replace(/</g, "\\u003c");
+  });
+
   // Statuses used in a schablone (for its legend); a field without status is "offen".
   eleventyConfig.addFilter("schablonenStatus", (felder) => [
     ...new Set(Object.values(felder || {}).map((f) => (f && f.status) || "offen")),

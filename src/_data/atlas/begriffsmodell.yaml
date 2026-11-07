@@ -4,6 +4,8 @@ kernsatz: >-
   Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
   für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
   verschlechtert.
+# Ein Absatz Haltung für die Übersicht (Werkzeug, Gesprächsangebot)
+haltung: "TODO: ein Absatz Haltung (Werkzeug, Gesprächsangebot, keine Gegentheorie)."
 
 # art: muster  – ein Muster kann diese Frage festlegen oder offenlassen;
 #                nur diese Fragen sind als `kippt_an` (Stellschraube) erlaubt.
