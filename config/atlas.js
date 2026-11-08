@@ -65,9 +65,23 @@ function pruefeAtlas(items) {
   const musterFragen = fragen.filter((q) => q.art === "muster");
   const warn = (msg) => console.warn(`[atlas] ${msg}`);
 
+  const wirkungsIds = (bm.wirkungen || []).map((w) => w.id);
   for (const item of items) {
     const { kippt_an: kipp, einschaetzungen, veroeffentlicht } = item.data;
     const datei = item.inputPath;
+
+    // Verdict and effect: "nein" means no effect; effects must be known ids.
+    (einschaetzungen || []).forEach((e, i) => {
+      if (!e) return;
+      const wirkungen = [].concat(e.wirkung == null ? [] : e.wirkung).filter((w) => !istTodo(w));
+      const echte = wirkungen.filter((w) => w !== "keine");
+      if (e.urteil === "nein" && echte.length) {
+        warn(`${datei}: Einschätzung ${i + 1} ("${e.label}") hat urteil: nein, aber wirkung: ${echte.join(", ")} (bei nein gibt es keine Wirkung; erwartet: keine)`);
+      }
+      echte.filter((w) => !wirkungsIds.includes(w)).forEach((w) =>
+        warn(`${datei}: Einschätzung ${i + 1} ("${e.label}") hat unbekannte wirkung "${w}" (erlaubt: ${wirkungsIds.join(", ")}, keine)`));
+    });
+
     if (!istTodo(kipp)) {
       const frage = fragen.find((q) => q.id === kipp);
       if (frage && frage.art === "rahmen") {
@@ -127,9 +141,6 @@ function pruefeAtlas(items) {
     const karte = items.find((item) => item.page.fileSlug === stufen.muster);
     if (!karte) warn(`schablone_stufen.muster: Karte "${stufen.muster}" gibt es nicht`);
     else if (!(karte.data.einschaetzungen || []).length) warn(`schablone_stufen.muster: Karte "${stufen.muster}" hat keine einschaetzungen`);
-  }
-  if (stufen.nachbar && !(bm.nachbarn || []).some((n) => n.id === stufen.nachbar)) {
-    warn(`schablone_stufen.nachbar: Nachbar "${stufen.nachbar}" gibt es nicht`);
   }
 }
 
@@ -204,7 +215,9 @@ module.exports = function atlasPlugin(eleventyConfig) {
             url: item.data.veroeffentlicht === true ? item.url : null,
           })),
       })),
-      nachbarn: (bm.nachbarn || []).map(({ id, name, hinsicht }) => ({ id, name, hinsicht })),
+      // value ranges of the assessment's two properties
+      urteile: (bm.urteile || []).map((u) => u.name),
+      wirkungen: (bm.wirkungen || []).map((w) => w.name),
     };
     return JSON.stringify(daten).replace(/</g, "\\u003c");
   });
@@ -283,8 +296,12 @@ module.exports = function atlasPlugin(eleventyConfig) {
     const u = (bm.urteile || []).find((x) => x.id === e.urteil);
     felder.urteil = { status: "belegt", text: [u ? u.name : e.urteil, e.begruendung].filter(Boolean) };
     if (e.wirkung) {
-      const w = (bm.wirkungen || []).find((x) => x.id === e.wirkung);
-      felder.wirkung = { status: "belegt", text: [w ? w.name : e.wirkung === "keine" ? keineLabel : e.wirkung] };
+      // one effect or a list of effects
+      const namen = [].concat(e.wirkung).map((id) => {
+        const w = (bm.wirkungen || []).find((x) => x.id === id);
+        return w ? w.name : id === "keine" ? keineLabel : id;
+      });
+      felder.wirkung = { status: "belegt", text: [namen.join(" · ")] };
     }
     return felder;
   });
@@ -308,6 +325,9 @@ module.exports = function atlasPlugin(eleventyConfig) {
   // Distinct values of one key across a list, dropping empty ones,
   // e.g. einschaetzungen | eindeutig("wirkung").
   eleventyConfig.addFilter("eindeutig", (liste, key) => [
-    ...new Set((liste || []).map((x) => x && x[key]).filter((v) => v != null && v !== "")),
+    ...new Set((liste || []).flatMap((x) => [].concat(x ? x[key] : [])).filter((v) => v != null && v !== "")),
   ]);
+
+  // A value as a list ("a" -> ["a"], null -> []), e.g. for wirkung.
+  eleventyConfig.addFilter("alsListe", (x) => (x == null || x === "" ? [] : [].concat(x)));
 };

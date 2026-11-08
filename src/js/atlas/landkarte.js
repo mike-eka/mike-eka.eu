@@ -4,11 +4,11 @@
 // below carries the same structure.
 //
 // Layout (top to bottom):
-//   dashed boundary "Reichweite der Re:DIS-Definition"
-//     spokes: the pruefragen with art "muster" around the assessment
-//     the assessment, framed by a band for the audience (art "rahmen")
-//     the hinsichten as columns, each with its cards (any number, wrapped)
-//   outside: the neighbours, under the hinsicht they harm (dotted link)
+//   spokes: the pruefragen with art "muster" around the assessment
+//   the assessment with the value ranges of its two properties (verdict,
+//   effect; from begriffsmodell.yaml), framed by a band for the audience
+//   (art "rahmen")
+//   the hinsichten as columns, each with its cards (any number, wrapped)
 //
 // Wide (>= 720 px): spokes on an arc, hinsichten side by side.
 // Narrow: spokes in a row above the assessment, hinsichten stacked.
@@ -25,9 +25,9 @@
   var d3 = window.d3;
   var T = daten.texte || {};
 
-  var GROESSE = { text: 13, klein: 11, titel: 14 };
+  var GROESSE = { text: 13, klein: 11, titel: 14, wert: 12 };
   var ZEILE = 1.35;
-  var RAND = 14;          // margin inside the boundary
+  var RAND = 14;          // outer margin
   var PAD = 10;           // padding inside boxes
   var ABSTAND = 12;       // gap between boxes
 
@@ -98,20 +98,26 @@
     var spokes = daten.pruefragen.filter(function (q) { return q.art === "muster"; });
     var rahmenFrage = daten.pruefragen.filter(function (q) { return q.art === "rahmen"; })[0];
 
-    // -- boundary label
     var y = 6;
-    var grenzeOben = y;
-    y += schreibe(ebeneFlaechen, [T.reichweite || ""], RAND, y + 8, GROESSE.klein, "lk-grenze-text") + 22;
 
     // -- the assessment with its audience band
     var cx = W / 2;
-    var rahmenB = Math.min(breit ? 320 : W - 2 * RAND, 340);
+    var rahmenB = Math.min(breit ? 440 : W - 2 * RAND, 460);
     var bandOben = 28;   // room for the band label
     var bandSeite = 12;
     var innenB = rahmenB - 2 * bandSeite;
     var innenTitel = umbrechen(T.einschaetzung, innenB - 2 * PAD, GROESSE.titel);
-    var innenZusatz = umbrechen(T.einschaetzung_zusatz, innenB - 2 * PAD, GROESSE.klein);
-    var innenH = 2 * PAD + hoehe(innenTitel, GROESSE.titel) + 4 + hoehe(innenZusatz, GROESSE.klein);
+    // value ranges: "Urteil: ja · nein · strittig", "Wirkung: … (keine, wenn …)"
+    var textB = innenB - 2 * PAD;
+    var werte = [
+      { zeilen: umbrechen((T.urteil || "") + ": " + (daten.urteile || []).join(" · "), textB, GROESSE.wert), groesse: GROESSE.wert, klasse: "lk-wert" },
+      { zeilen: umbrechen((T.wirkung || "") + ": " + (daten.wirkungen || []).join(" · "), textB, GROESSE.wert), groesse: GROESSE.wert, klasse: "lk-wert" },
+    ];
+    if (T.wirkung_zusatz) {
+      werte.push({ zeilen: umbrechen("(" + T.wirkung_zusatz + ")", textB, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein" });
+    }
+    var werteH = werte.reduce(function (s, w) { return s + hoehe(w.zeilen, w.groesse) + 2; }, 0);
+    var innenH = 2 * PAD + hoehe(innenTitel, GROESSE.titel) + 6 + werteH;
     var bandText = umbrechen(
       (rahmenFrage ? rahmenFrage.frage + " · " : "") + (T.publikum || "") + ": " + (T.publikum_verweis || ""),
       rahmenB - 2 * bandSeite, GROESSE.klein
@@ -179,8 +185,10 @@
     gInnen.append("rect").attr("class", "lk-kern")
       .attr("x", innenX).attr("y", innenY).attr("width", innenB).attr("height", innenH).attr("rx", 10);
     var ty = innenY + PAD;
-    ty += schreibe(gInnen, innenTitel, cx, ty, GROESSE.titel, "lk-titel", "middle") + 4;
-    schreibe(gInnen, innenZusatz, cx, ty, GROESSE.klein, "lk-klein", "middle");
+    ty += schreibe(gInnen, innenTitel, cx, ty, GROESSE.titel, "lk-titel", "middle") + 6;
+    werte.forEach(function (w) {
+      ty += schreibe(gInnen, w.zeilen, cx, ty, w.groesse, w.klasse, "middle") + 2;
+    });
 
     // spoke boxes
     spokeBoxen.forEach(function (s) {
@@ -271,48 +279,7 @@
     });
     y = breit ? spalteY + spaltenInfo[0].inhaltH : y - ABSTAND;
 
-    // -- the boundary of the Re:DIS definition
-    var grenzeUnten = y + 14;
-    ebeneLinien.append("rect").attr("class", "lk-grenze")
-      .attr("x", 3).attr("y", grenzeOben).attr("width", W - 6).attr("height", grenzeUnten - grenzeOben)
-      .attr("rx", 18);
-    y = grenzeUnten + 18;
-
-    // -- neighbours outside, under the hinsicht they harm
-    var nachbarn = daten.nachbarn || [];
-    if (nachbarn.length) {
-      y += schreibe(ebeneFlaechen,
-        umbrechen((T.nachbarn || "") + " · " + (T.nachbarn_hinweis || ""), W - 2 * RAND, GROESSE.klein),
-        RAND, y, GROESSE.klein, "lk-klein") + 8;
-      var nachbarTop = y;
-      var stapel = {}; // next free y per column
-      nachbarn.forEach(function (nb) {
-        var idx = hs.map(function (h) { return h.id; }).indexOf(nb.hinsicht);
-        var spalte = breit && idx >= 0 ? idx : 0;
-        var x = breit ? spaltenX(spalte) : RAND;
-        var bB = breit ? spB : innenBreite;
-        var zeilen = umbrechen(nb.name, bB - 2 * PAD, GROESSE.text);
-        var hinsicht = idx >= 0 ? hs[idx].name : "";
-        var zusatz = breit ? [] : umbrechen("→ " + hinsicht, bB - 2 * PAD, GROESSE.klein);
-        var h = hoehe(zeilen, GROESSE.text) + hoehe(zusatz, GROESSE.klein) + 2 * 8;
-        var top = breit ? (stapel[spalte] || nachbarTop) : y;
-        var g = ebeneFlaechen.append("g").attr("class", "lk-nachbar");
-        g.append("rect").attr("class", "lk-nachbar-box")
-          .attr("x", x).attr("y", top).attr("width", bB).attr("height", h).attr("rx", 8);
-        var ty3 = top + 8;
-        ty3 += schreibe(g, zeilen, x + PAD, ty3, GROESSE.text, "lk-nachbar-text");
-        if (zusatz.length) schreibe(g, zusatz, x + PAD, ty3, GROESSE.klein, "lk-klein");
-        if (breit && idx >= 0 && !stapel[spalte]) {
-          // dotted link to the hinsicht it harms, crossing the boundary
-          var sp = spaltenInfo[idx];
-          ebeneLinien.append("line").attr("class", "lk-schadet")
-            .attr("x1", x + bB / 2).attr("y1", top).attr("x2", x + bB / 2).attr("y2", sp.top + sp.inhaltH);
-        }
-        if (breit) stapel[spalte] = top + h + 6;
-        else y = top + h + 6;
-      });
-      if (breit) y = d3.max(Object.keys(stapel).map(function (k) { return stapel[k]; }));
-    }
+    y += 8;
 
     svg.attr("height", Math.ceil(y + 4)).attr("viewBox", "0 0 " + W + " " + Math.ceil(y + 4));
   }

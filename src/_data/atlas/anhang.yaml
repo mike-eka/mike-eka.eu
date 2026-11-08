@@ -47,6 +47,17 @@ anmerkungen:
       und welche Hinsicht betroffen ist, bis auf eine Stelle. An dieser
       offenen Stelle entscheidet sich das Urteil. Ein Beispiel belegt alle
       Stellen.
+  - titel: "Urteil und Wirkung"
+    text: >-
+      Die Einschätzung ist ein eigener Knoten, an dem Inhalt, Publikum,
+      Vergleichsfall und Hinsicht als Rollen hängen, ähnlich dem
+      Ereignisargument in der Ereignissemantik. Urteil und Wirkung sind
+      Eigenschaften dieser Einschätzung: Das Urteil sagt, ob die
+      Erkenntnislage schlechter wird, die Wirkung, in welcher Verlaufsform –
+      jetzt schlechter (verschlechtern), nicht besser, obwohl sie es könnte
+      (festhalten), oder künftig schwerer zu verbessern (abschotten). Lautet
+      das Urteil nein, gibt es keine Wirkung; eine Einschätzung kann mehrere
+      Wirkungen haben.
 offene_stellen:
   - "Welcher Maßstab hinter „schlechter“ steht, ist selbst eine Entscheidung."
   - "Wird eine Hinsicht besser und eine andere schlechter, gibt es keine einfache Gesamtbilanz."

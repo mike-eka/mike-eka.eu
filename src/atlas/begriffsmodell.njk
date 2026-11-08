@@ -16,10 +16,9 @@ eleventyComputed:
 {%- set pa = bm.publikum_abschnitt -%}
 {%- set anker = pa.anker or "fuer-wen" -%}
 
-{#- Große Schablone: welche Karte und welcher Nachbar (schablone_stufen) -#}
+{#- Große Schablone: welche Karte (schablone_stufen.muster) -#}
 {%- set stufen = bm.schablone_stufen or {} -%}
 {%- set mk = collections.atlasMusterSichtbar | musterNachSlug(stufen.muster) -%}
-{%- set nb = bm.nachbarn | nachId(stufen.nachbar) -%}
 {%- set kipp = (bm.pruefragen | nachId(mk.data.kippt_an)) if mk else null -%}
 {%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
 
@@ -102,9 +101,6 @@ eleventyComputed:
           <button type="button" data-ziel="beispiel-{{ loop.index }}" aria-controls="stufe-beispiel-{{ loop.index }}" aria-pressed="false">{{ e.label }}</button>
           {% endfor %}
           {% endif %}
-          {% if nb and nb.schablone %}
-          <button type="button" data-ziel="nachbar" aria-controls="stufe-nachbar" aria-pressed="false">{{ bb.stufe_nachbar }}</button>
-          {% endif %}
         </div>
 
         {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", "", b, anker, pa) }}
@@ -118,10 +114,6 @@ eleventyComputed:
                  kippFeld, mk.data.grenzfall_frage | escape, b, anker, pa) }}
         {% endfor %}
         {% endif %}
-
-        {% if nb and nb.schablone %}
-        {{ stufe("nachbar", bb.stufe_nachbar + ": " + nb.name, nb.schablone, "", nb.beschreibung | escape, b, anker, pa) }}
-        {% endif %}
       </div>
     </section>
 
@@ -134,13 +126,6 @@ eleventyComputed:
           <a class="atlas-grenzfall__titel" href="{{ k.url }}">{{ k.data.titel }}</a>
           {% if kq %}<span class="atlas-hinweis">{{ bb.kippt_an }}: {{ kq.frage }}</span>{% endif %}
           {% if k.data.grenzfall_frage %}<span class="atlas-grenzfall__frage">{{ k.data.grenzfall_frage }}</span>{% endif %}
-        </li>
-        {% endif %}{% endfor %}
-        {% for n in bm.nachbarn %}{% if n.im_framework %}
-        <li class="ist-nachbar">
-          <span class="atlas-grenzfall__titel">{{ n.name }}</span>
-          <span class="atlas-hinweis">{{ bb.nachbar_ausserhalb }}</span>
-          {% if n.beschreibung %}<span class="atlas-grenzfall__frage">{{ n.beschreibung }}</span>{% endif %}
         </li>
         {% endif %}{% endfor %}
       </ul>

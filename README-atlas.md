@@ -15,7 +15,7 @@ npm run check:atlas   # Prüfung vor dem Merge nach main (siehe unten)
 
 | Datei | Inhalt |
 |---|---|
-| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Urteile, Etiketten, Nachbarn, Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
+| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Urteile, Etiketten, Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
 | `src/_data/atlas/beschriftungen.yaml` | alle festen Beschriftungen: Überschriften, Knöpfe, Legenden, Navigation |
 | `src/_data/atlas/ueber.yaml`, `anhang.yaml`, `en.yaml` | Texte der Seiten Über, Anhang und der englischen Kurzfassung |
 | `src/atlas/muster/*.md` | eine Datei pro Musterkarte (Kopfdaten + Fließtext) |
@@ -68,13 +68,16 @@ einschaetzungen:
     vergleichsfall: "…"                     # Feld je nach kippt_an: inhalt | vergleichsfall | hinsicht
     urteil: ja                              # ja | nein | strittig
     begruendung: "…"
-    wirkung: festhalten                     # optional: verschlechtern | festhalten | abschotten | keine
+    wirkung: festhalten                     # optional: verschlechtern | festhalten | abschotten | keine,
+                                            # auch mehrere: [verschlechtern, abschotten]
 ```
 
 - Beliebig viele Einschätzungen sind möglich; jede wird ein Knopf.
 - Trägt mindestens eine Einschätzung `wirkung`, schaltet auch das Wirkungsfeld mit.
+- Lautet das Urteil `nein`, gibt es keine Wirkung: `wirkung: keine` (oder weglassen).
+  Der Build warnt, wenn ein `nein` eine Wirkung trägt.
 - Welche Karte die große Schablone auf der Begriffsmodell-Seite zeigt, steht in
-  `begriffsmodell.yaml` unter `schablone_stufen.muster` (und `.nachbar`).
+  `begriffsmodell.yaml` unter `schablone_stufen.muster`.
 - Der Build warnt, wenn `kippt_an` falsch ist oder einer Einschätzung das passende Feld fehlt.
 
 ### Text ändern
@@ -133,24 +136,6 @@ fehlenden Werten.
   Dann erscheinen Entwürfe nirgends – nicht in Landkarte und Liste, nicht bei
   „verwandt“ oder „Spiegelfall“ – und es bleibt kein leerer Platz.
 - Entwürfe stehen nie in Handout, englischer Seite, `atlas.json` oder `atlas.jsonld`.
-
-### Nachbarn hinzufügen
-
-In `begriffsmodell.yaml` unter `nachbarn`:
-
-```yaml
-  - id: mein-nachbar
-    name: "Name des Nachbarn"
-    hinsicht: achten           # in welcher Hinsicht er schadet
-    beschreibung: >-
-      Ein bis zwei Sätze.
-    im_framework: true         # optional: in der Liste der Grenzfälle zeigen
-```
-
-Er erscheint in der Landkarte außerhalb der Re:DIS-Grenze, in der Liste, im JSON-LD
-und – mit `im_framework: true` – bei den Grenzfällen. Soll er die Nachbar-Stufe der
-großen Schablone sein, braucht er zusätzlich `schablone` (wie bei `einschuechterung`)
-und muss in `schablone_stufen.nachbar` eingetragen werden.
 
 ## Hinweise
 

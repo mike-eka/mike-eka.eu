@@ -162,7 +162,6 @@ anschlussfaecher:      # aus der Ausschreibung
 schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
   muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
                                    # (jede füllt das Feld der Stellschraube `kippt_an` und das Urteil)
-  nachbar: einschuechterung        # id eines Nachbarn
 
 schablone_leer:        # Texte der leeren Schablone
   inhalt:         ["Aussage, Auswahl, Paar …", "Etiketten: wahr? absichtlich?"]
@@ -171,30 +170,6 @@ schablone_leer:        # Texte der leeren Schablone
   urteil:         ["ja · nein · strittig", ""]
   hinsicht:       ["Was · Worauf · Wem ·", "Warum wir glauben"]
   wirkung:        ["verschlechtern ·", "festhalten · abschotten"]
-
-nachbarn:
-  - id: einschuechterung
-    name: "Einschüchterung von Forschenden"
-    hinsicht: vertrauen
-    im_framework: true   # erscheint in der Liste der Grenzfälle (Begriffsmodell-Seite)
-    beschreibung: >-
-      Forschende ziehen sich aus der Öffentlichkeit zurück. Eine gute Quelle
-      verschwindet, ohne dass ein Inhalt verbreitet wurde.
-    schablone:         # für die Stufe „Nachbar“ der großen Schablone
-      inhalt:         { status: fehlt,  text: ["kein Inhalt", "Einschüchterung ist eine Handlung"] }
-      publikum:       { status: belegt, text: ["Öffentlichkeit", ""] }
-      vergleichsfall: { status: belegt, text: ["ohne Einschüchterung", ""] }
-      hinsicht:       { status: belegt, text: ["Wem wir glauben", ""] }
-      urteil:         { status: fehlt,  text: ["keine Einschätzung", "außerhalb der Definition"] }
-      wirkung:        { status: belegt, text: ["festhalten", ""] }
-  - id: erschoepfung
-    name: "Erschöpfung und Nachrichtenmüdigkeit"
-    hinsicht: achten
-    beschreibung: "TODO"
-  - id: fehlende-daten
-    name: "Entfernte oder nicht erhobene Daten"
-    hinsicht: glauben
-    beschreibung: "TODO"
 
 beziehungen:           # für Schema (Anhang) und JSON-LD
   - { id: betrifft,           label: "betrifft",           von: Einschaetzung,  nach: Inhalt }
@@ -205,4 +180,3 @@ beziehungen:           # für Schema (Anhang) und JSON-LD
   - { id: nutzt,              label: "nutzt",              von: Muster,         nach: SprachlichesMittel }
   - { id: betrifftVorAllem,   label: "betrifft vor allem", von: Muster,         nach: Hinsicht }
   - { id: andereFormulierung, label: "andere Formulierung",von: Vergleichsfall, nach: Inhalt }
-  - { id: schadetIn,          label: "schadet in",         von: Nachbar,        nach: Hinsicht }

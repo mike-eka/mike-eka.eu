@@ -34,11 +34,14 @@ eleventyComputed:
   <section class="atlas-struktur" aria-labelledby="struktur-titel">
     <h2 id="struktur-titel">{{ b.uebersicht.liste_titel }}</h2>
 
-    <h3 class="atlas-struktur__bereich">{{ b.uebersicht.reichweite }}</h3>
     <ul class="atlas-baum">
       <li>
         <span class="atlas-baum__knoten">{{ b.uebersicht.einschaetzung }}</span>
-        <span class="atlas-hinweis">({{ b.uebersicht.einschaetzung_zusatz }})</span>
+        {#- Wertebereiche der beiden Eigenschaften (aus urteile / wirkungen) -#}
+        <dl class="atlas-wertebereich">
+          <div><dt>{{ b.uebersicht.urteil }}</dt><dd>{% for u in bm.urteile %}{{ u.name }}{% if not loop.last %} · {% endif %}{% endfor %}</dd></div>
+          <div><dt>{{ b.uebersicht.wirkung }}</dt><dd>{% for w in bm.wirkungen %}{{ w.name }}{% if not loop.last %} · {% endif %}{% endfor %}{% if b.uebersicht.wirkung_zusatz %} <span class="atlas-hinweis">({{ b.uebersicht.wirkung_zusatz }})</span>{% endif %}</dd></div>
+        </dl>
         <ul>
           {% for q in bm.pruefragen %}
           <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ b.uebersicht.rahmen }}:</span> {% endif %}{{ q.frage }}</li>
@@ -65,15 +68,5 @@ eleventyComputed:
         </ul>
       </li>
     </ul>
-
-    {% if bm.nachbarn and bm.nachbarn.length %}
-    <h3 class="atlas-struktur__bereich">{{ b.uebersicht.nachbarn }} <span class="atlas-hinweis">({{ b.uebersicht.nachbarn_hinweis }})</span></h3>
-    <ul class="atlas-baum">
-      {% for n in bm.nachbarn %}
-      {%- set nh = bm.hinsichten | nachId(n.hinsicht) -%}
-      <li>{{ n.name }}{% if nh %} <span class="atlas-hinweis">– {{ b.uebersicht.schadet_in }}: {{ nh.name }}</span>{% endif %}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
   </section>
 </article>

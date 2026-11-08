@@ -27,7 +27,7 @@ function atlasJson(bm, alle) {
   const basis = seitenUrl();
   const modell = {};
   ["titel", "untertitel", "kernsatz", "haltung", "pruefragen", "publikum_abschnitt", "hinsichten",
-    "inhaltstypen", "vergleichsfaelle", "wirkungen", "urteile", "etiketten", "nachbarn", "beziehungen"]
+    "inhaltstypen", "vergleichsfaelle", "wirkungen", "urteile", "etiketten", "beziehungen"]
     .forEach((k) => { if (bm[k] !== undefined) modell[k] = bm[k]; });
   return {
     quelle: basis + "/atlas/",
@@ -98,15 +98,6 @@ function atlasJsonLd(bm, alle, b) {
   };
   const zeilen = (f) => (f && f.text ? [].concat(f.text).filter(Boolean).join(" ") : undefined);
 
-  // neighbours (harm without content)
-  (bm.nachbarn || []).forEach((n) => graph.push({
-    "@id": id("nachbarn", n.id),
-    "@type": "atlas:Nachbar",
-    "rdfs:label": n.name,
-    ...(n.beschreibung && n.beschreibung !== "TODO" ? { "skos:definition": n.beschreibung } : {}),
-    "atlas:schadetIn": { "@id": id("hinsichten", n.hinsicht) },
-  }));
-
   // published cards and their assessments
   veroeffentlicht(alle).forEach((item) => {
     const d = item.data;
@@ -147,7 +138,12 @@ function atlasJsonLd(bm, alle, b) {
         ...(vergleichText ? { "atlas:verglichenMit": { "@type": "atlas:Vergleichsfall", "atlas:text": vergleichText } } : {}),
         "atlas:inHinsicht": hinsicht,
         ...(e.urteil ? { "atlas:urteil": { "@id": id("urteile", e.urteil) } } : {}),
-        ...(e.wirkung && e.wirkung !== "keine" ? { "atlas:wirkung": { "@id": id("wirkungen", e.wirkung) } } : {}),
+        ...(() => {
+          const ws = [].concat(e.wirkung || []).filter((w) => w !== "keine");
+          if (!ws.length) return {};
+          const refs = ws.map((w) => ({ "@id": id("wirkungen", w) }));
+          return { "atlas:wirkung": refs.length === 1 ? refs[0] : refs };
+        })(),
         ...(e.begruendung ? { "atlas:begruendung": e.begruendung } : {}),
       };
       graph.push(knoten);

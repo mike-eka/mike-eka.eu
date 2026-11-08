@@ -10,14 +10,13 @@ uebersicht:
   landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte. Dieselbe Struktur steht darunter als Liste."
   liste_titel: "Die Struktur als Liste"
   einschaetzung: "Einschätzung"
-  einschaetzung_zusatz: "Urteil · Wirkung"
+  # Wertebereiche der Einschätzung (Werte aus begriffsmodell.yaml: urteile, wirkungen)
+  urteil: "Urteil"
+  wirkung: "Wirkung"
+  wirkung_zusatz: "keine, wenn das Urteil nein lautet"
   pruefragen: "Prüffragen"
   rahmen: "Rahmen"                      # Kennzeichnung der Frage mit art: rahmen
   hinsichten: "Hinsichten"
-  reichweite: "Reichweite der Re:DIS-Definition"
-  nachbarn: "Nachbarn: Schaden ohne Inhalt"
-  nachbarn_hinweis: "außerhalb der Definition"
-  schadet_in: "schadet in"              # Nachbar → Hinsicht (Liste)
   navigation:                           # Links unter Kernsatz und Haltung
     - { label: "Begriffsmodell", url: "/atlas/begriffsmodell/" }
     - { label: "Formaler Anhang", url: "/atlas/anhang/" }
@@ -51,11 +50,9 @@ anhang:                                 # Seite /atlas/anhang/
     Hinsicht: "Hinsicht"
     Muster: "Muster"
     SprachlichesMittel: "Sprachliches Mittel"
-    Nachbar: "Nachbar"
   eigenschaften:                        # Eigenschaften in den Kästen des Schemas
     Einschaetzung: ["Urteil · Wirkung"]
     Inhalt: ["Etiketten: Wahrheit · Absicht"]
-    Nachbar: ["außerhalb der Definition"]
   rahmen: "Rahmen jeder Einschätzung"
 
 handout:                                # Seite /atlas/handout/ (A4)
@@ -79,11 +76,9 @@ begriffsmodell:                         # Seite /atlas/begriffsmodell/
   stufe_leer: "leer"
   stufe_muster: "Muster"
   stufe_beispiel: "Beispiel"
-  stufe_nachbar: "Nachbar"
   zur_karte: "Zur Karte"
   grenzfaelle: "Grenzfälle"
   kippt_an: "kippt an"
-  nachbar_ausserhalb: "Nachbar, außerhalb der Definition"
 
 karte:
   schablone: "Was das Muster festlegt"
@@ -139,12 +134,11 @@ schablone:
     urteil:         { name: "Urteil" }
     wirkung:        { name: "Wirkung" }
   # Status der Felder: für Screenreader und für weitere Legenden-Einträge
-  # (belegt / fehlt erscheinen erst in der großen Schablone)
+  # (belegt erscheint erst in der großen Schablone)
   status:
     offen: "offen"
     muster: "durch Muster festgelegt"
     belegt: "durch Beispiel belegt"
-    fehlt: "fehlt"
 
 grafik:                 # Grafiken auf den Karten (netz.js, balken.js)
   titel:

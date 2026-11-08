@@ -49,8 +49,10 @@ eleventyComputed:
       </ul>
     </section>
     {% endif %}
+  </div>
 
-    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="schema">
+  {# Schema in einer eigenen, breiten Kachel (etwa Originalgröße statt verkleinert) #}
+  <section class="atlas-kachel atlas-kachel--kern atlas-kachel--breit" aria-labelledby="schema">
       <h2 id="schema">{{ ba.schema }}</h2>
       <figure class="atlas-schema-figur">
         {# Auf schmalen Bildschirmen seitlich scrollbar statt unlesbar klein #}
@@ -67,8 +69,9 @@ eleventyComputed:
           {% endfor %}
         </ul>
       </details>
-    </section>
+  </section>
 
+  <div class="atlas-kacheln">
     {% if a.modell %}
     <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="modell">
       <h2 id="modell">{{ ba.modell }}</h2>

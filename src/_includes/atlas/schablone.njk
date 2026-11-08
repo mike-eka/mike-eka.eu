@@ -6,7 +6,7 @@
     Mitte:   urteil, wirkung
 
   felder: { inhalt|vergleichsfall|hinsicht|urteil|wirkung|publikum: { status, text } }
-          status: offen | muster | belegt | fehlt (fehlend = offen)
+          status: offen | muster | belegt (fehlend = offen)
           text:   Liste von Zeilen (leere werden ausgelassen) oder Text
   b:      atlas.beschriftungen.schablone
   o:      Optionen
@@ -54,14 +54,21 @@
 {%- endmacro %}
 
 {# Wirkung einer Einschätzung; ohne `wirkung` der Text des Musters (f). #}
+{#- wirkung may be one id or a list of ids (several effects) -#}
 {% macro wirkungText(e, f, b, o) -%}
-  {%- set w = o.wirkungen | nachId(e.wirkung) -%}
-  {%- if w -%}
-    <strong class="atlas-variante__urteil">{{ w.name }}</strong> <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
-  {%- elif e.wirkung == "keine" -%}
-    <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
-  {%- elif e.wirkung -%}
-    <strong class="atlas-variante__urteil">{{ e.wirkung }}</strong>
+  {%- set ws = e.wirkung | alsListe -%}
+  {%- if ws.length -%}
+    {%- for id in ws -%}
+      {%- set w = o.wirkungen | nachId(id) -%}
+      {%- if not loop.first %}<br>{% endif -%}
+      {%- if w -%}
+        <strong class="atlas-variante__urteil">{{ w.name }}</strong> <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
+      {%- elif id == "keine" -%}
+        <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
+      {%- else -%}
+        <strong class="atlas-variante__urteil">{{ id }}</strong>
+      {%- endif -%}
+    {%- endfor -%}
   {%- else -%}
     <span class="atlas-variante__begruendung">{{ zeilen(f) }}</span>
   {%- endif -%}
@@ -171,7 +178,7 @@
 <figure class="atlas-schablone"{% if o.einschaetzungen and o.einschaetzungen.length %} data-atlas-schalter{% endif %}>
   <figcaption class="atlas-legende">
     <span>{{ b.legende }}</span>
-    {% for key in ["belegt", "fehlt"] %}{% if key in genutzt %}
+    {% for key in ["belegt"] %}{% if key in genutzt %}
     <span class="atlas-legende__eintrag"><span class="atlas-legende__probe ist-{{ key }}" aria-hidden="true"></span>{{ b.status[key] }}</span>
     {% endif %}{% endfor %}
   </figcaption>

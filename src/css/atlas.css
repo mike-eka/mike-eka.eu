@@ -283,8 +283,6 @@ main.atlas-wide {
 .atlas-schablone .ist-belegt { border: 1px solid var(--atlas-hinsicht); background: var(--atlas-hinsicht-flaeche); }
 .atlas-schablone .ist-offen { border: 1px dashed var(--atlas-offen); }
 .atlas-schablone .ist-offen > .atlas-feld__text { color: var(--atlas-gedaempft); font-style: italic; }
-.atlas-schablone .ist-fehlt { border: 1px dotted var(--atlas-offen); }
-.atlas-schablone .ist-fehlt > .atlas-feld__text { color: var(--atlas-gedaempft); }
 
 /* The adjusting screw: where the borderline case turns. Full width. */
 .atlas-schablone .ist-stellschraube {
@@ -1094,10 +1092,6 @@ main.atlas-wide {
     padding: 0.5rem 0.75rem;
 }
 
-.atlas-grenzfaelle li.ist-nachbar {
-    border-left: 3px dotted var(--atlas-offen);
-}
-
 .atlas-grenzfall__titel {
     font-weight: 500;
     margin-right: 0.4rem;
@@ -1173,19 +1167,13 @@ main.atlas-wide {
 .atlas-schema .sc-rahmen-text { font-size: 11px; fill: var(--atlas-gedaempft); }
 .sc-box rect { fill: var(--atlas-feld); stroke: var(--atlas-kern); stroke-width: 1.25; }
 .sc-box.ist-mitte rect { fill: var(--atlas-kachel-effekt); stroke-width: 2; }
-.sc-box.ist-nachbar rect { stroke: var(--atlas-offen); stroke-dasharray: 2 3; }
 .sc-box-titel { font-weight: bold; }
 .atlas-schema .sc-box-eigenschaft { font-size: 11px; fill: var(--atlas-gedaempft); }
-.sc-kante { stroke: var(--atlas-gedaempft); stroke-width: 1.25; }
-.sc-kante.ist-nachbar { stroke-dasharray: 2 3; }
+.sc-kante { fill: none; stroke: var(--atlas-gedaempft); stroke-width: 1.25; }
 .sc-pfeil { fill: var(--atlas-gedaempft); }
 .atlas-schema .sc-kante-text {
     font-size: 11px;
     fill: var(--atlas-kern-text);
-    paint-order: stroke;
-    stroke: var(--atlas-feld);
-    stroke-width: 4px;
-    stroke-linejoin: round;
 }
 
 .atlas-downloads li {
@@ -1401,13 +1389,12 @@ main.atlas-wide {
     margin-top: 0.5rem;
 }
 
-.lk-text, .lk-titel, .lk-klein, .lk-frage-text, .lk-muster-text, .lk-band-text, .lk-nachbar-text, .lk-grenze-text {
+.lk-text, .lk-titel, .lk-klein, .lk-wert, .lk-frage-text, .lk-muster-text, .lk-band-text {
     fill: var(--atlas-text);
 }
 
 .lk-titel { font-weight: bold; }
-.lk-klein, .lk-band-text, .lk-grenze-text { fill: var(--atlas-gedaempft); }
-.lk-grenze-text { letter-spacing: 0.04em; }
+.lk-klein, .lk-band-text { fill: var(--atlas-gedaempft); }
 
 /* Spokes cross the audience band; a halo in the band colour keeps its text legible. */
 .lk-band-text {
@@ -1415,13 +1402,6 @@ main.atlas-wide {
     stroke: var(--atlas-kachel-ruhig);
     stroke-width: 5px;
     stroke-linejoin: round;
-}
-
-.lk-grenze {
-    fill: none;
-    stroke: var(--atlas-offen);
-    stroke-width: 1.25;
-    stroke-dasharray: 7 5;
 }
 
 .lk-band {
@@ -1507,20 +1487,34 @@ main.atlas-wide {
     stroke-width: 3;
 }
 
-.lk-nachbar-box {
-    fill: transparent;
-    stroke: var(--atlas-offen);
-    stroke-width: 1;
-    stroke-dasharray: 2 3;
-}
-
-.lk-schadet {
-    stroke: var(--atlas-offen);
-    stroke-width: 1;
-    stroke-dasharray: 2 3;
-}
-
 /* List fallback */
+.atlas-wertebereich {
+    margin: 0.3rem 0 0.4rem;
+    display: grid;
+    gap: 0.15rem;
+}
+
+.atlas-wertebereich > div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 0.5rem;
+}
+
+.atlas-wertebereich dt {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-wertebereich dd {
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .atlas-wertebereich > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
 .atlas-struktur h2 {
     margin-top: 0;
 }
@@ -1578,14 +1572,6 @@ main.atlas-wide {
     padding-left: 1.2rem;
 }
 
-/* Schema: frame labels sit above the edges with a halo in the frame colour. */
-.atlas-schema .sc-halo-rahmen {
-    paint-order: stroke;
-    stroke: var(--atlas-kachel-ruhig);
-    stroke-width: 5px;
-    stroke-linejoin: round;
-}
-
 /* Schema on narrow screens: keep a legible minimum width and scroll inside
    the figure (the page itself never scrolls sideways). */
 .atlas-schema-rolle {
@@ -1595,6 +1581,41 @@ main.atlas-wide {
 
 @media (max-width: 640px) {
     .atlas-schema-rolle .atlas-schema {
-        min-width: 620px;
+        min-width: 940px; /* 1:1 with the viewBox */
     }
+}
+
+@media print {
+    /* Schema: fit the page width, no scrolling box */
+    .atlas-schema-rolle {
+        overflow: visible;
+    }
+
+    .atlas-schema-rolle .atlas-schema {
+        min-width: 0;
+    }
+}
+
+/* Anhang: the schema gets a wide tile of its own (about its natural size on
+   wide screens instead of being scaled down); the other tiles keep the
+   normal reading width. */
+.atlas.atlas-anhang {
+    max-width: 62rem;
+}
+
+.atlas-anhang > .back-link,
+.atlas-anhang > .atlas-karte__kopf,
+.atlas-anhang > .atlas-kacheln {
+    max-width: 46rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.atlas-anhang > .back-link {
+    display: block;
+}
+
+.atlas-kachel.atlas-kachel--breit {
+    width: 100%;
+    margin: 1.25rem 0;
 }
