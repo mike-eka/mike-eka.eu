@@ -148,6 +148,15 @@ fehlenden Werten.
 - Impressum und Datenschutz: Platzhalter stehen in `[ECKIGEN KLAMMERN]`. Jeder Build
   meldet, wie viele noch offen sind. `platzhalter: true` erst entfernen, wenn alle ersetzt sind.
 
+- **Drucken:** Alle Atlas-Seiten haben ein Druck-CSS (in `atlas.css`, Abschnitt
+  „Print“): ohne Menü, Sprachschalter und Footer, oben Seitentitel und Adresse
+  (`druckkopf: true`, für das Handout abgeschaltet), Kacheln untereinander;
+  interaktive Teile erscheinen wie ohne JavaScript, das Schema im Anhang auf einer
+  Querformatseite.
+- **Wertebereiche** von Urteil und Wirkung (Übersicht, Anhang) kommen aus `urteile`
+  und `wirkungen` in `begriffsmodell.yaml`; der Zusatz „keine, wenn …“ aus
+  `beschriftungen.yaml → uebersicht.wirkung_zusatz`.
+
 ## Prüfung vor dem Merge nach main
 
 ```

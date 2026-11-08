@@ -88,7 +88,7 @@ einschaetzungen:
       Man glaubt es aus dem falschen Grund und hält den Staat für einen großen
       Haushalt. Alle weiteren Schlüsse stehen damit auf einer falschen
       Grundlage.
-    wirkung: verschlechtern
+    wirkung: [verschlechtern, abschotten]
 
 etiketten:
   wahrheitsstatus: unklar

@@ -10,6 +10,11 @@ eleventyComputed:
 {%- set bm = atlas.begriffsmodell -%}
 {%- set b = atlas.beschriftungen -%}
 {%- set ba = b.anhang -%}
+{#- Wertebereiche von Urteil und Wirkung (aus urteile / wirkungen) -#}
+{%- set wb = bm | wertebereiche(b) -%}
+{%- set wbUrteil = wb.urteil.label + ": " + wb.urteil.werte -%}
+{%- set wbWirkung = wb.wirkung.label + ": " + wb.wirkung.werte -%}
+{%- set wbZusatz = ("(" + wb.wirkung.zusatz + ")") if wb.wirkung.zusatz else "" -%}
 <article class="atlas atlas-anhang">
   <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
   <header class="atlas-karte__kopf">
@@ -27,6 +32,9 @@ eleventyComputed:
         {% for z in a.legende %}
         <div><dt>{{ z.zeichen }}</dt><dd>{{ z.text }}</dd></div>
         {% endfor %}
+        {#- Eigenschaften der Einschätzung mit ihren Wertebereichen -#}
+        <div class="ist-eigenschaft"><dt>{{ wb.urteil.label }}</dt><dd>{{ wb.urteil.werte }}</dd></div>
+        <div class="ist-eigenschaft"><dt>{{ wb.wirkung.label }}</dt><dd>{{ wb.wirkung.werte }}{% if wbZusatz %} <span class="atlas-hinweis">{{ wbZusatz }}</span>{% endif %}</dd></div>
       </dl>
       {% endif %}
     </section>
@@ -57,7 +65,7 @@ eleventyComputed:
       <figure class="atlas-schema-figur">
         {# Auf schmalen Bildschirmen seitlich scrollbar statt unlesbar klein #}
         <div class="atlas-schema-rolle" tabindex="0" role="region" aria-label="{{ ba.schema }}">
-          {{ bm.beziehungen | schemaSvg(ba, ba.schema) | safe }}
+          {{ bm.beziehungen | schemaSvg(ba, ba.schema, { Einschaetzung: [wbUrteil, wbWirkung, wbZusatz] | select }) | safe }}
         </div>
         <figcaption class="atlas-hinweis">{{ ba.schema_hinweis }}</figcaption>
       </figure>
@@ -67,6 +75,8 @@ eleventyComputed:
           {% for r in bm.beziehungen %}
           <li>{{ ba.klassen[r.von] or r.von }} → <em>{{ r.label }}</em> → {{ ba.klassen[r.nach] or r.nach }}</li>
           {% endfor %}
+          <li>{{ ba.klassen.Einschaetzung or "Einschaetzung" }} · {{ wbUrteil }}</li>
+          <li>{{ ba.klassen.Einschaetzung or "Einschaetzung" }} · {{ wbWirkung }}{% if wbZusatz %} {{ wbZusatz }}{% endif %}</li>
         </ul>
       </details>
   </section>

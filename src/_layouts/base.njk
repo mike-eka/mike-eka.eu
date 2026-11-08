@@ -38,6 +38,11 @@
     <div class="item"><a href="{{ prefix }}/projects/" class="{% if section == 'projects' %}current{% endif %}">{{ i18n[locale].projects }}</a></div>
   </div>
 
+  {# Print only (pages with `druckkopf: true`, e.g. the Atlas): title and address #}
+  {% if druckkopf %}
+  <div class="druck-kopf" aria-hidden="true"><strong>{{ title or "Mike Eka" }}</strong> · Mike Eka<br>{{ page.url | absoluteUrl }}</div>
+  {% endif %}
+
   <main{% if mainClass %} class="{{ mainClass }}"{% endif %}>
     {{ content | safe }}
   </main>

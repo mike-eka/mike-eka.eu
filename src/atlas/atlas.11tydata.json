@@ -1,6 +1,11 @@
 {
   "alternateUrl": "/en/atlas/",
   "mainClass": "atlas-wide",
-  "styles": ["/css/atlas.css"],
-  "scripts": ["/js/atlas/atlas.js"]
+  "styles": [
+    "/css/atlas.css"
+  ],
+  "scripts": [
+    "/js/atlas/atlas.js"
+  ],
+  "druckkopf": true
 }

@@ -18,8 +18,10 @@
 const esc = (s) =>
   String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-const W = 940;
+const W = 1100;
 const BOX_W = 210;
+// wider boxes for classes with long property lines (value ranges)
+const BREITE = { Einschaetzung: 360 };
 const BOX_H = 40;
 const PROP_H = 15;
 const RAHMEN = "Publikum";
@@ -30,12 +32,12 @@ const RAHMEN_UNTEN = 50;   // … below (room for the frame's two label lines)
 const LABEL_ABSTAND = 8;   // gap between a line and its label
 
 const POSITION = {
-  Vergleichsfall: [470, 56],
-  Inhalt: [115, 260],
-  Einschaetzung: [470, 260],
-  Hinsicht: [825, 260],
-  Muster: [115, 450],
-  SprachlichesMittel: [115, 600],
+  Vergleichsfall: [550, 56],
+  Inhalt: [115, 280],
+  Einschaetzung: [550, 280],
+  Hinsicht: [985, 280],
+  Muster: [115, 480],
+  SprachlichesMittel: [115, 630],
 };
 
 function boxHoehe(eigenschaften) {
@@ -86,9 +88,12 @@ function route(a, b, rahmen) {
   };
 }
 
-module.exports = function schemaSvg(beziehungen, texte, titel) {
+// zusatzEigenschaften: { Klasse: ["Zeile", …] } replaces the box properties
+// from beschriftungen for that class (used for the value ranges of the
+// assessment, which come from begriffsmodell.yaml).
+module.exports = function schemaSvg(beziehungen, texte, titel, zusatzEigenschaften) {
   const klassenNamen = (texte && texte.klassen) || {};
-  const eigenschaften = (texte && texte.eigenschaften) || {};
+  const eigenschaften = { ...((texte && texte.eigenschaften) || {}), ...(zusatzEigenschaften || {}) };
   const name = (k) => klassenNamen[k] || k;
 
   // classes in order of appearance
@@ -100,8 +105,8 @@ module.exports = function schemaSvg(beziehungen, texte, titel) {
   let extra = 0;
   klassen.filter((k) => k !== RAHMEN).forEach((k) => {
     let p = POSITION[k];
-    if (!p) { p = [115 + (extra % 3) * 355, 760 + Math.floor(extra / 3) * 100]; extra++; }
-    boxen[k] = { k, x: p[0], y: p[1], w: BOX_W, h: boxHoehe(eigenschaften[k]) };
+    if (!p) { p = [115 + (extra % 3) * 435, 790 + Math.floor(extra / 3) * 100]; extra++; }
+    boxen[k] = { k, x: p[0], y: p[1], w: BREITE[k] || BOX_W, h: boxHoehe(eigenschaften[k]) };
   });
   const H = Math.ceil(Math.max(...Object.values(boxen).map((b) => unten(b))) + 30);
 
@@ -121,7 +126,10 @@ module.exports = function schemaSvg(beziehungen, texte, titel) {
   teile.push(
     `<svg class="atlas-schema" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="schema-titel schema-desc" xmlns="http://www.w3.org/2000/svg">`,
     `<title id="schema-titel">${esc(titel || "Schema")}</title>`,
-    `<desc id="schema-desc">${esc((beziehungen || []).map((r) => `${name(r.von)} ${r.label} ${name(r.nach)}`).join(". "))}.</desc>`,
+    `<desc id="schema-desc">${esc([
+      ...(beziehungen || []).map((r) => `${name(r.von)} ${r.label} ${name(r.nach)}`),
+      ...Object.entries(eigenschaften).filter(([k]) => klassen.includes(k)).map(([k, zeilen]) => `${name(k)}: ${zeilen.join("; ")}`),
+    ].join(". "))}.</desc>`,
     `<defs><marker id="schema-pfeil" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="sc-pfeil"/></marker></defs>`
   );
 

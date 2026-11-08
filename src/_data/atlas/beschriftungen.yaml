@@ -51,7 +51,8 @@ anhang:                                 # Seite /atlas/anhang/
     Muster: "Muster"
     SprachlichesMittel: "Sprachliches Mittel"
   eigenschaften:                        # Eigenschaften in den Kästen des Schemas
-    Einschaetzung: ["Urteil · Wirkung"]
+    # (Einschätzung: Urteil und Wirkung mit ihren Wertebereichen aus urteile /
+    # wirkungen in begriffsmodell.yaml – nicht hier eintragen)
     Inhalt: ["Etiketten: Wahrheit · Absicht"]
   rahmen: "Rahmen jeder Einschätzung"
 

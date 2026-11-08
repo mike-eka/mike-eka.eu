@@ -223,7 +223,22 @@ module.exports = function atlasPlugin(eleventyConfig) {
   });
 
   // Step 5: schema SVG (Anhang), JSON / JSON-LD exports, build month (Handout).
-  eleventyConfig.addFilter("schemaSvg", (beziehungen, texte, titel) => schemaSvg(beziehungen, texte, titel));
+  eleventyConfig.addFilter("schemaSvg", (beziehungen, texte, titel, zusatzEigenschaften) =>
+    schemaSvg(beziehungen, texte, titel, zusatzEigenschaften));
+
+  // Value ranges of the assessment's two properties, from begriffsmodell.yaml
+  // (urteile, wirkungen); labels from beschriftungen.yaml → uebersicht.
+  // { urteil: { label, werte }, wirkung: { label, werte, zusatz } }
+  eleventyConfig.addFilter("wertebereiche", (bm, b) => {
+    const u = (b && b.uebersicht) || {};
+    return {
+      urteil: { label: u.urteil, werte: (bm.urteile || []).map((x) => x.name).join(" · ") },
+      wirkung: { label: u.wirkung, werte: (bm.wirkungen || []).map((x) => x.name).join(" · "), zusatz: u.wirkung_zusatz },
+    };
+  });
+
+  // Absolute address of a page (site URL from src/CNAME), e.g. for print headers.
+  eleventyConfig.addFilter("absoluteUrl", (url) => atlasExport.seitenUrl() + (url || "/"));
   eleventyConfig.addFilter("atlasJson", (bm, alle) => JSON.stringify(atlasExport.atlasJson(bm, alle), null, 2));
   eleventyConfig.addFilter("atlasJsonLd", (bm, alle, b) => JSON.stringify(atlasExport.atlasJsonLd(bm, alle, b), null, 2));
   eleventyConfig.addFilter("monatJahr", () =>

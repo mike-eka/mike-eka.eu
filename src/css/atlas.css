@@ -1136,7 +1136,7 @@ main.atlas-wide {
 
 .atlas-zeichen > div {
     display: grid;
-    grid-template-columns: 2rem 1fr;
+    grid-template-columns: 5.5rem 1fr;
     gap: 0.6rem;
 }
 
@@ -1581,7 +1581,7 @@ main.atlas-wide {
 
 @media (max-width: 640px) {
     .atlas-schema-rolle .atlas-schema {
-        min-width: 940px; /* 1:1 with the viewBox */
+        min-width: 1100px; /* 1:1 with the viewBox */
     }
 }
 
@@ -1600,7 +1600,7 @@ main.atlas-wide {
    wide screens instead of being scaled down); the other tiles keep the
    normal reading width. */
 .atlas.atlas-anhang {
-    max-width: 62rem;
+    max-width: 72rem;
 }
 
 .atlas-anhang > .back-link,
@@ -1618,4 +1618,163 @@ main.atlas-wide {
 .atlas-kachel.atlas-kachel--breit {
     width: 100%;
     margin: 1.25rem 0;
+}
+
+/* ---- Print header (base.njk, pages with druckkopf: true) ---- */
+.druck-kopf {
+    display: none;
+}
+
+/* ---- Print: all Atlas pages ----
+   No site menu, language toggle or footer; title and address at the top;
+   tiles full width one below the other, kept whole where possible;
+   interactive parts in their no-JS form. The Handout keeps its own rules. */
+@media print {
+    body:has(.atlas) {
+        background: #fff;
+        padding: 0;
+    }
+
+    body:has(.atlas) > h1,
+    body:has(.atlas) #menu,
+    body:has(.atlas) .lang-toggle,
+    body:has(.atlas) > footer,
+    .atlas .back-link,
+    .atlas-seitennav {
+        display: none !important;
+    }
+
+    .druck-kopf {
+        display: block;
+        font-size: 9pt;
+        line-height: 1.4;
+        color: #444;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 4pt;
+        margin-bottom: 12pt;
+    }
+
+    body:has(.atlas) main {
+        margin: 0;
+        max-width: none;
+    }
+
+    .atlas,
+    .atlas.atlas-uebersicht,
+    .atlas.atlas-anhang,
+    .atlas-anhang > .atlas-karte__kopf,
+    .atlas-anhang > .atlas-kacheln,
+    .atlas-uebersicht__kopf,
+    .atlas-struktur {
+        max-width: none;
+    }
+
+    .atlas * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* tiles: no zigzag, full width, kept whole where they fit on a page */
+    .atlas-kacheln {
+        gap: 10pt;
+    }
+
+    .atlas-kachel,
+    .atlas-kachel:nth-child(odd),
+    .atlas-kachel:nth-child(even) {
+        width: 100% !important;
+        align-self: stretch;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .atlas h2,
+    .atlas h3 {
+        break-after: avoid;
+    }
+
+    /* tiles longer than a page (template, big template, body text) may
+       break; their building blocks stay whole instead */
+    .atlas-kachel[aria-labelledby="schablone"],
+    .atlas-kachel.atlas-fliesstext {
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    .atlas-feld:not(.ist-stellschraube),
+    .atlas-einschaetzung,
+    .atlas-stufe,
+    .atlas-schablone__mitte,
+    .atlas-analogie__tabelle tr,
+    .atlas-tabelle tr {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* data tables: fit the tile width (hyphenate rather than cut words) */
+    .atlas-tabelle {
+        font-size: 8pt;
+    }
+
+    .atlas-tabelle th,
+    .atlas-tabelle td {
+        padding: 3pt 4pt;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        overflow-wrap: break-word;
+    }
+
+    /* interactive parts → their no-JS form */
+    .atlas [data-nur-js],
+    .atlas .atlas-schalter,
+    .atlas-landkarte,
+    .atlas-grafik__flaeche,
+    .atlas-grafik__steuerung,
+    .atlas-grafik__ergebnis {
+        display: none !important;
+    }
+
+    .atlas [data-ohne-js],
+    .atlas .atlas-stufe[data-panel] {
+        display: block !important;
+    }
+
+    .atlas-stufen.ist-aktiv .atlas-stufe + .atlas-stufe {
+        margin-top: 1.2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--atlas-linie);
+    }
+
+    /* data tables of the graphics: open (atlas.js also opens them before printing) */
+    .atlas-grafik__daten[data-grafik-tabelle]::details-content {
+        content-visibility: visible;
+        display: block;
+    }
+
+    .atlas-grafik__daten summary {
+        display: none;
+    }
+
+    /* the wide schema gets a landscape page of its own, sized to fit it */
+    .atlas-kachel.atlas-kachel--breit {
+        page: atlas-quer;
+        break-before: page;
+        padding: 10pt 14pt;
+    }
+
+    .atlas-kachel--breit .atlas-schema {
+        width: 100%;
+        max-height: 150mm;
+    }
+}
+
+@page atlas-quer {
+    size: A4 landscape;
+    margin: 12mm;
+}
+
+@media (max-width: 480px) {
+    .atlas-zeichen > div {
+        grid-template-columns: 4.6rem 1fr;
+    }
 }

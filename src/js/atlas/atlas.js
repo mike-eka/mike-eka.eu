@@ -66,4 +66,18 @@
   }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-atlas-schalter]"), initSchalter);
+
+  // Print: show the data tables of the graphics (folded away by the graphic
+  // scripts) as in the no-JS version, and fold them again afterwards.
+  var geoeffnet = [];
+  window.addEventListener("beforeprint", function () {
+    geoeffnet = Array.prototype.filter.call(document.querySelectorAll("details[data-grafik-tabelle]"), function (d) {
+      return !d.open;
+    });
+    geoeffnet.forEach(function (d) { d.open = true; });
+  });
+  window.addEventListener("afterprint", function () {
+    geoeffnet.forEach(function (d) { d.open = false; });
+    geoeffnet = [];
+  });
 })();
