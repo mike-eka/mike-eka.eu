@@ -4,8 +4,8 @@
 
 uebersicht:
   link: "← Zur Übersicht"
-  noch_keine_karten: "Noch keine Karten veröffentlicht."
   nicht_schwerpunkt: "nicht Schwerpunkt"
+  leer_zusatz: "nicht Gegenstand dieses Atlas"   # Hinsicht ohne Schwerpunkt und ohne Muster
   in_vorbereitung: "in Vorbereitung"
   landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte. Dieselbe Struktur steht darunter als Liste."
   liste_titel: "Die Struktur als Liste"
@@ -53,7 +53,7 @@ anhang:                                 # Seite /atlas/anhang/
   eigenschaften:                        # Eigenschaften in den Kästen des Schemas
     # (Einschätzung: Urteil und Wirkung mit ihren Wertebereichen aus urteile /
     # wirkungen in begriffsmodell.yaml – nicht hier eintragen)
-    Inhalt: ["Etiketten: Wahrheit · Absicht"]
+    Inhalt: ["Etiketten: Wahrheitsstatus · Absicht"]
   rahmen: "Rahmen jeder Einschätzung"
 
 handout:                                # Seite /atlas/handout/ (A4)
@@ -71,7 +71,6 @@ begriffsmodell:                         # Seite /atlas/begriffsmodell/
   beispiel: "Beispiel"
   wirkungen: "Wirkungen"
   etiketten: "Etiketten"
-  etiketten_werte: "Werte"
   schablone: "Die Schablone"
   schablone_schalter: "Stufe wählen"
   stufe_leer: "leer"
@@ -79,18 +78,18 @@ begriffsmodell:                         # Seite /atlas/begriffsmodell/
   stufe_beispiel: "Beispiel"
   zur_karte: "Zur Karte"
   grenzfaelle: "Grenzfälle"
-  kippt_an: "kippt an"
+  kippt_an: "Stellschraube"
 
 karte:
   schablone: "Was das Muster festlegt"
   effekt: "Was sich verschlechtert"
   effekt_vorher: "Vorher"
   effekt_nachher: "Nachher"
-  effekt_hinsichten: "In Hinsicht"
+  effekt_hinsichten: "Betroffene Hinsichten"   # die erste ist die Haupt-Hinsicht (fett)
   minimalpaar: "Minimalpaar"
   # nur wenn minimalpaar.frage gesetzt ist:
   minimalpaar_frage: "Gefragt"
-  antwort_muster: "Antwort im Muster"
+  antwort_muster: "Antwort mit dem Muster"
   antwort_gegenform: "Gegenform"
   # nur wenn muster/gegenform Listen sind:
   paar_zusatz: "+ zusätzlich"    # Eintrag, den nur diese Fassung hat
@@ -101,7 +100,7 @@ karte:
   analogie_art:         # steht als Wort in jeder Zeile der Tabelle
     passt: "passt"
     bricht: "bricht"
-  muster: "Muster"
+  muster: "Mit dem Muster"
   gegenform: "Gegenform"
   mittel: "Sprachliches Mittel"
   test: "Test"

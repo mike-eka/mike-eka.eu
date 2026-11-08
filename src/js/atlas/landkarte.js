@@ -213,7 +213,12 @@
       var kopf = [];
       kopf.push({ zeilen: umbrechen(h.name, spB - 2 * PAD, GROESSE.text), groesse: GROESSE.text, klasse: "lk-titel" });
       kopf.push({ zeilen: umbrechen(h.leitfrage, spB - 2 * PAD, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein" });
-      if (!h.schwerpunkt) {
+      var leer = !h.schwerpunkt && !h.muster.length;
+      if (leer) {
+        // deliberately empty: say why instead of drawing an empty box
+        var grund = [h.hinweis, T.leer_zusatz].filter(Boolean).join(" – ");
+        kopf.push({ zeilen: umbrechen(grund, spB - 2 * PAD, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein lk-leer-text" });
+      } else if (!h.schwerpunkt) {
         kopf.push({ zeilen: umbrechen("(" + (T.nicht_schwerpunkt || "") + ")", spB - 2 * PAD, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein" });
       }
       var kopfH = kopf.reduce(function (s, k) { return s + hoehe(k.zeilen, k.groesse) + 2; }, 0);
@@ -223,11 +228,12 @@
         return { m: m, zeilen: zeilen, zusatz: zusatz, h: hoehe(zeilen, GROESSE.text) + hoehe(zusatz, GROESSE.klein) + 2 * 7 };
       });
       var inhaltH = PAD + kopfH + 6 + pillen.reduce(function (s, p) { return s + p.h + 6; }, 0) + PAD - 6;
-      return { h: h, kopf: kopf, kopfH: kopfH, pillen: pillen, inhaltH: Math.max(inhaltH, 60) };
+      return { h: h, kopf: kopf, kopfH: kopfH, pillen: pillen, leer: leer, inhaltH: leer ? inhaltH : Math.max(inhaltH, 60) };
     });
     if (breit) {
+      // equal heights for the columns with patterns; an empty one keeps its text height
       var gleich = d3.max(spaltenInfo, function (s) { return s.inhaltH; });
-      spaltenInfo.forEach(function (s) { s.inhaltH = gleich; });
+      spaltenInfo.forEach(function (s) { if (!s.leer) s.inhaltH = gleich; });
     }
 
     // connector from the assessment to the hinsichten
@@ -253,7 +259,7 @@
           .attr("x1", cx).attr("y1", busY).attr("x2", cx).attr("y2", top);
         busY = top + s.inhaltH;
       }
-      var klassen = "lk-hinsicht" + (s.h.schwerpunkt ? "" : " ist-nebensache");
+      var klassen = "lk-hinsicht" + (s.h.schwerpunkt ? "" : " ist-nebensache") + (s.leer ? " ist-leer" : "");
       var g = ebeneFlaechen.append("g").attr("class", klassen);
       g.append("rect").attr("class", "lk-hinsicht-box")
         .attr("x", x).attr("y", top).attr("width", spB).attr("height", s.inhaltH).attr("rx", 12);
@@ -277,7 +283,7 @@
       });
       if (!breit) y = top + s.inhaltH + ABSTAND;
     });
-    y = breit ? spalteY + spaltenInfo[0].inhaltH : y - ABSTAND;
+    y = breit ? spalteY + d3.max(spaltenInfo, function (s) { return s.inhaltH; }) : y - ABSTAND;
 
     y += 8;
 

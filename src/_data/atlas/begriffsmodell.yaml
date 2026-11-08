@@ -15,8 +15,8 @@ haltung: >-
   sobald man sie einmal kennt. Dieser Atlas sammelt Muster, die in Faktenchecks selten vorkommen, weil
   sie ohne falsche Behauptung auskommen. Er orientiert sich an der
   Arbeitsdefinition des DFG-Schwerpunktprogramms „Rethinking
-  Disinformation“ (Re:DIS), nach der Desinformation „jede Form öffentlich
-  verbreiteter Inhalte“ ist, „die die Erkenntnissituation der Empfänger
+  Disinformation“ (Re:DIS). Nach ihr ist Desinformation „jede Form öffentlich
+  verbreiteter Inhalte“, „die die Erkenntnissituation der Empfänger
   verschlechtert“, unabhängig vom Wahrheitsgehalt und von der Absicht der
   Verfasser. Der Atlas ist ein Arbeitsstand und ein Gesprächsangebot: Die
   Beispiele sind erfunden, die Einordnungen lassen sich bestreiten, und
@@ -160,7 +160,7 @@ schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmode
                                    # (jede füllt das Feld der Stellschraube `kippt_an` und das Urteil)
 
 schablone_leer:        # Texte der leeren Schablone
-  inhalt:         ["Aussage, Auswahl, Paar …", "Etiketten: wahr? absichtlich?"]
+  inhalt:         ["Aussage, Auswahl, Paar …", "Etiketten: Wahrheitsstatus? Absicht?"]
   publikum:       ["wer genau?", "und wie viele?"]
   vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
   urteil:         ["ja · nein · strittig", ""]

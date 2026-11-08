@@ -56,7 +56,9 @@ layout: base.njk
         </div>
       </div>
       {% if effekt.hinsichten %}
-      <p class="atlas-effekt__hinsichten"><span class="atlas-label">{{ b.karte.effekt_hinsichten }}</span> {{ effekt.hinsichten }}</p>
+      {#- Die erste genannte Hinsicht ist die Haupt-Hinsicht der Karte (fett) -#}
+      <p class="atlas-effekt__hinsichten"><span class="atlas-label">{{ b.karte.effekt_hinsichten }}</span>
+        {% for teil in effekt.hinsichten | hinsichtenTeile %}{% if loop.first %}<strong>{{ teil }}</strong>{% else %} · {{ teil }}{% endif %}{% endfor %}</p>
       {% endif %}
     </section>
     {% endif %}

@@ -28,10 +28,10 @@ mittel:
   test: "Passt als Erwiderung „Das stimmt nicht“ oder „Das sehe ich anders“?"
 
 schablone:                  # Stufe „Muster“: was das Muster festlegt
-  inhalt:         { status: muster, text: ["Aussage: eine Wertung,", "die wie eine Tatsache klingt"] }
+  inhalt:         { status: offen,  text: ["Aussage: eine Wertung,", "die wie eine Tatsache klingt"] }
   vergleichsfall: { status: muster, text: ["dieselbe Aussage mit", "Einstellungsmarker"] }
   hinsicht:       { status: muster, text: ["Wem wir glauben", ""] }
-  urteil:         { status: offen,  text: ["offen", ""] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
   wirkung:        { status: muster, text: ["typisch:", "verschlechtern"] }
 
 # Stellschraube: was | vergleich | hinsicht (nicht fuer_wen – das Publikum
@@ -44,10 +44,12 @@ einschaetzungen:
     inhalt: "Tempo 30 verlängert die Fahrzeiten und macht unsere Innenstädte kaputt."
     urteil: ja
     begruendung: "Der prüfbare Teil leiht der Wertung seine Autorität; sie wirkt wie eine weitere Tatsache."
+    wirkung: [verschlechtern, festhalten]
   - label: "nur der Tatsachenanteil"
     inhalt: "Tempo 30 verlängert die Fahrzeiten."
     urteil: nein
     begruendung: "Eine prüfbare Tatsachenbehauptung, gegebenenfalls sogar wahr."
+    wirkung: keine
 
 etiketten:
   wahrheitsstatus: unklar
@@ -64,6 +66,20 @@ literatur:
 grafik: null                # oder: netz / balken (siehe 3.3)
 ---
 
-Längerer Erläuterungstext in Markdown. Hinweis Rechtswissenschaft: Das
-Äußerungsrecht unterscheidet ebenfalls zwischen Tatsachenbehauptung und
-Werturteil (Formulierung vor Veröffentlichung fachlich prüfen).
+Politische Rede ist voller Werturteile, und das ist in Ordnung. Zum Muster
+wird ein Werturteil erst, wenn es in der Form einer Tatsachenbehauptung
+auftritt: ohne „ich halte … für“, ohne „meiner Ansicht nach“, als schlichter
+Aussagesatz. Wer so spricht, legt sich nicht ausdrücklich fest, und wer
+zuhört, überhört leicht, dass hier eine Einschätzung vorliegt und keine
+Feststellung.
+
+Besonders wirksam ist das, wenn Tatsache und Wertung in einem Satz verbunden
+sind. Der prüfbare Teil – die längeren Fahrzeiten – lässt sich bestätigen und
+leiht der Wertung seine Glaubwürdigkeit. Hinzu kommt die Autorität des Amtes:
+Was eine Ministerin sagt, klingt nach Sachkenntnis, auch wenn es eine
+politische Position ist.
+
+Die Unterscheidung ist nicht nur sprachlich. Auch das Äußerungsrecht trennt
+Tatsachenbehauptungen, die sich beweisen lassen, von Werturteilen und ordnet
+gemischte Äußerungen danach ein, was in ihnen überwiegt. Genau an dieser
+Grenze setzt der Grenzfall dieser Karte an.

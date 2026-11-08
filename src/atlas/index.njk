@@ -55,7 +55,8 @@ eleventyComputed:
           {%- set karten = alle | musterInHinsicht(h.id) -%}
           <li id="hinsicht-{{ h.id }}" class="{% if h.schwerpunkt == false %}ist-nebensache{% endif %}">
             <span class="atlas-hinsicht__name">{{ h.name }}</span>
-            <span class="atlas-hinweis">– {{ h.leitfrage }}{% if h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>
+            {%- set leer = (h.schwerpunkt == false and not karten.length) -%}
+            <span class="atlas-hinweis">– {{ h.leitfrage }}{% if leer %} {{ [h.hinweis, b.uebersicht.leer_zusatz] | select | join(" – ") }}{% elif h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>
             {% if karten.length %}
             <ul>
               {% for k in karten %}

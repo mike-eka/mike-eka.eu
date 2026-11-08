@@ -206,6 +206,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
         id: h.id,
         name: h.name,
         leitfrage: h.leitfrage,
+        hinweis: h.hinweis,
         schwerpunkt: h.schwerpunkt !== false,
         muster: (alleMuster || [])
           .filter((item) => item.data.hinsicht === h.id)
@@ -244,6 +245,11 @@ module.exports = function atlasPlugin(eleventyConfig) {
   eleventyConfig.addFilter("atlasJsonLd", (bm, alle, b) => JSON.stringify(atlasExport.atlasJsonLd(bm, alle, b), null, 2));
   eleventyConfig.addFilter("monatJahr", () =>
     new Date().toLocaleDateString("de-DE", { month: "long", year: "numeric" })
+  );
+
+  // "Wem wir glauben · Worauf wir achten" -> ["Wem wir glauben", "Worauf wir achten"]
+  eleventyConfig.addFilter("hinsichtenTeile", (text) =>
+    String(text || "").split("·").map((s) => s.trim()).filter(Boolean)
   );
 
   // True if either argument is a list (minimal pair as a selection of items).

@@ -34,7 +34,7 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
    (`/atlas/muster/mein-muster/`) und ist die `id` für `verwandt`, `spiegelfall` und
    `schablone_stufen`.
 2. In den Kopfdaten anpassen:
-   - `titel`, `fachbegriff` (erscheint auf der englischen Seite), `kurz`
+   - `titel`, `fachbegriff` (ein englischer Fachbegriff; erscheint auf der englischen Seite), `kurz`
    - `hinsicht`: eine `id` aus `hinsichten` in `begriffsmodell.yaml`
      (`glauben`, `achten`, `vertrauen`, `begruenden`)
    - `reihenfolge`: Position innerhalb der Hinsicht (kleinere Zahl = weiter oben)
@@ -50,8 +50,8 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
 Varianten im Minimalpaar:
 - Markierungen: `[[so]]` wird hervorgehoben.
 - `minimalpaar.frage`: eine Frage über dem Paar; die Fassungen heißen dann
-  „Antwort im Muster“ und „Gegenform“. Mit `frage_label` (z. B. `"Ausgangslage"`)
-  ersetzt du das Label „Gefragt“; die Fassungen heißen dann „Muster“ und „Gegenform“.
+  „Antwort mit dem Muster“ und „Gegenform“. Mit `frage_label` (z. B. `"Ausgangslage"`)
+  ersetzt du das Label „Gefragt“; die Fassungen heißen dann „Mit dem Muster“ und „Gegenform“.
 - `muster` und `gegenform` dürfen Listen sein (eine Auswahl von Meldungen). Die Zeilen
   werden automatisch ausgerichtet und markiert: Einträge, die nur eine Fassung hat
   („+ zusätzlich“, gegenüber „fehlt hier“), und Einträge, die an derselben Stelle in

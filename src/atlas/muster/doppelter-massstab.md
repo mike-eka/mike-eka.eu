@@ -30,7 +30,7 @@ mittel:
   erklaerung: >-
     Dieselbe Sorge wird einmal als Verantwortung gerahmt („unsere Kinder“)
     und einmal gar nicht erwähnt. Stattdessen rücken Wertwörter wie
-    „Bevormundung“ die zweite Frage in einen anderen Rahmen (Frame), in dem der
+    „Bevormundung“ die zweite Frage in einen anderen Deutungsrahmen (Frame), in dem der
     Maßstab nicht mehr vorkommt.
   test: >-
     Welcher Maßstab wird bei der ersten Sache angelegt? Erfüllt die zweite
@@ -94,7 +94,7 @@ grafik: null
 ---
 
 Ein doppelter Maßstab ist schwer zu bemerken, weil keine einzelne Aussage
-falsch ist. Der Schaden entsteht erst aus dem Verhältnis zweier Aussagen:
+falsch ist. Der Schaden entsteht erst aus dem Verhältnis zweier Aussagen.
 Ein Maßstab, hier die Belastung kommender Generationen, wird bei der einen
 Frage ausdrücklich beansprucht und bei einer anderen nicht einmal erwähnt,
 obwohl auch sie diesen Maßstab berührt. Wer beide Aussagen hört, schließt

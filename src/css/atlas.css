@@ -1447,6 +1447,9 @@ main.atlas-wide {
 
 .lk-hinsicht.ist-nebensache .lk-hinsicht-box { fill: var(--atlas-kachel-still); }
 .lk-hinsicht.ist-nebensache .lk-titel { fill: var(--atlas-gedaempft); }
+/* deliberately empty hinsicht: text only, no (empty) box */
+.lk-hinsicht.ist-leer .lk-hinsicht-box { fill: none; stroke: none; }
+.lk-leer-text { font-style: italic; }
 .lk-pille {
     fill: var(--atlas-feld);
     stroke: var(--atlas-kern);
@@ -1581,7 +1584,7 @@ main.atlas-wide {
 
 @media (max-width: 640px) {
     .atlas-schema-rolle .atlas-schema {
-        min-width: 1100px; /* 1:1 with the viewBox */
+        min-width: 1140px; /* 1:1 with the viewBox */
     }
 }
 
@@ -1684,8 +1687,15 @@ main.atlas-wide {
     .atlas-kachel:nth-child(even) {
         width: 100% !important;
         align-self: stretch;
-        break-inside: avoid;
-        page-break-inside: avoid;
+        /* tiles flow across pages; only small units below stay whole */
+        break-inside: auto;
+        page-break-inside: auto;
+    }
+
+    .atlas p,
+    .atlas li {
+        orphans: 3;
+        widows: 3;
     }
 
     .atlas h2,
@@ -1693,17 +1703,8 @@ main.atlas-wide {
         break-after: avoid;
     }
 
-    /* tiles longer than a page (template, big template, body text) may
-       break; their building blocks stay whole instead */
-    .atlas-kachel[aria-labelledby="schablone"],
-    .atlas-kachel.atlas-fliesstext {
-        break-inside: auto;
-        page-break-inside: auto;
-    }
-
     .atlas-feld:not(.ist-stellschraube),
     .atlas-einschaetzung,
-    .atlas-stufe,
     .atlas-schablone__mitte,
     .atlas-analogie__tabelle tr,
     .atlas-tabelle tr {
@@ -1777,4 +1778,13 @@ main.atlas-wide {
     .atlas-zeichen > div {
         grid-template-columns: 4.6rem 1fr;
     }
+}
+
+/* compact verdicts in the verdict field (no-JS version and print) */
+.atlas-urteile-kurz {
+    margin-top: 0.3rem;
+}
+
+.atlas-urteil-kurz {
+    white-space: normal;
 }

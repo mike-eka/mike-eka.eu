@@ -127,6 +127,13 @@
     {{ kopf("urteil", b, "", o.ebene) }}
     {% if mitVarianten %}
       <p class="atlas-feld__hinweis">{{ b.urteil_hinweis }}</p>
+      {#- ohne JS (und im Druck): die Urteile aller Einschätzungen kompakt -#}
+      <p class="atlas-feld__text atlas-urteile-kurz" data-ohne-js>
+        {%- for e in o.einschaetzungen -%}
+        {%- set u = o.urteile | nachId(e.urteil) -%}
+        {% if not loop.first %} · {% endif %}<span class="atlas-urteil-kurz">{{ e.label }}: <strong>{{ u.name if u else e.urteil }}</strong></span>
+        {%- endfor -%}
+      </p>
       <ul class="atlas-varianten" aria-live="polite" data-nur-js hidden>
         {% for e in o.einschaetzungen %}
         <li class="atlas-variante" id="{{ o.prefix }}-urteil-{{ loop.index }}" data-panel="{{ loop.index }}">

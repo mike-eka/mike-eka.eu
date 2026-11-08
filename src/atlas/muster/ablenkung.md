@@ -1,6 +1,6 @@
 ---
 titel: "Ablenkung"
-fachbegriff: "question shifting / distraction"
+fachbegriff: "question shifting"
 hinsicht: achten
 reihenfolge: 1
 veroeffentlicht: true

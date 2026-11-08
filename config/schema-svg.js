@@ -18,10 +18,10 @@
 const esc = (s) =>
   String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-const W = 1100;
+const W = 1140;
 const BOX_W = 210;
 // wider boxes for classes with long property lines (value ranges)
-const BREITE = { Einschaetzung: 360 };
+const BREITE = { Einschaetzung: 360, Inhalt: 260 };
 const BOX_H = 40;
 const PROP_H = 15;
 const RAHMEN = "Publikum";
@@ -32,12 +32,12 @@ const RAHMEN_UNTEN = 50;   // … below (room for the frame's two label lines)
 const LABEL_ABSTAND = 8;   // gap between a line and its label
 
 const POSITION = {
-  Vergleichsfall: [550, 56],
-  Inhalt: [115, 280],
-  Einschaetzung: [550, 280],
-  Hinsicht: [985, 280],
-  Muster: [115, 480],
-  SprachlichesMittel: [115, 630],
+  Vergleichsfall: [570, 56],
+  Inhalt: [140, 280],
+  Einschaetzung: [570, 280],
+  Hinsicht: [1025, 280],
+  Muster: [140, 480],
+  SprachlichesMittel: [140, 630],
 };
 
 function boxHoehe(eigenschaften) {

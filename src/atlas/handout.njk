@@ -40,7 +40,8 @@ druckkopf: false     # eigenes Blatt mit Fußzeile, eine A4-Seite
         {%- set karten = collections.atlasMuster | musterInHinsicht(h.id) -%}
         <section class="atlas-handout__hinsicht{% if h.schwerpunkt == false %} ist-nebensache{% endif %}" aria-labelledby="h-{{ h.id }}">
           <h3 id="h-{{ h.id }}">{{ h.name }} <span class="atlas-hinweis">– {{ h.leitfrage }}</span></h3>
-          {% if h.schwerpunkt == false and h.hinweis %}<p class="atlas-hinweis">{{ b.uebersicht.nicht_schwerpunkt }}: {{ h.hinweis }}</p>{% endif %}
+          {% if h.schwerpunkt == false and not karten.length %}<p class="atlas-hinweis">{{ [h.hinweis, b.uebersicht.leer_zusatz] | select | join(" – ") }}</p>
+          {% elif h.schwerpunkt == false and h.hinweis %}<p class="atlas-hinweis">{{ b.uebersicht.nicht_schwerpunkt }}: {{ h.hinweis }}</p>{% endif %}
           {% for k in karten %}
           <p class="atlas-handout__muster"><strong>{{ k.data.titel }}.</strong> {{ k.data.kurz }}</p>
           {% endfor %}

@@ -1,6 +1,6 @@
 ---
 titel: "Gewichtung & Auslassung"
-fachbegriff: "selective salience / omission"
+fachbegriff: "selective salience"
 hinsicht: achten
 reihenfolge: 2
 veroeffentlicht: true
@@ -136,6 +136,6 @@ falsch ist.
 
 Die Auswahl von Themen ist Kern der Pressefreiheit. Gerade deshalb ist dieser
 Fall für die Frage aufschlussreich, welche Desinformation eine liberale
-Demokratie hinnehmen muss: Hier entsteht ein Schaden, für den es kaum einen
+Demokratie hinnehmen muss. Hier entsteht ein Schaden, für den es kaum einen
 Verantwortlichen gibt und den man kaum regeln könnte, ohne in die
 Auswahlfreiheit der Redaktionen einzugreifen.
