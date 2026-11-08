@@ -2,37 +2,26 @@
 layout: base.njk
 title: Impressum
 alternateUrl: /en/
-# Platzhalter stehen in [eckigen Klammern] und werden hervorgehoben.
-# Solange `platzhalter: true` gesetzt ist oder noch Platzhalter übrig sind,
-# meldet jeder Build einen Hinweis. `platzhalter: true` erst entfernen,
-# wenn alle Platzhalter ersetzt sind.
-platzhalter: true
 ---
 <h1 class="page-title">Impressum</h1>
 
-{% if platzhalter %}
-<p class="platzhalter-hinweis" role="note"><strong>Entwurf:</strong> Die markierten Stellen sind Platzhalter und werden vor der Veröffentlichung ersetzt.</p>
-{% endif %}
-
-{% filter platzhalter %}
 <h2>Angaben gemäß § 5 DDG</h2>
 <p>
-  [VOLLSTÄNDIGER BÜRGERLICHER NAME]<br>
-  [STRASSE HAUSNUMMER]<br>
-  [PLZ ORT]<br>
+  Mike Berger<br>
+  Endersstraße 3b<br>
+  04177 Leipzig<br>
   Deutschland
 </p>
 
 <h2>Kontakt</h2>
 <p>
-  E-Mail: [E-MAIL-ADRESSE]<br>
-  [OPTIONAL: Telefon]
+  E-Mail: mike [punkt] berger [at] posteo [punkt] de
 </p>
 
 <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
 <p>
-  [VOLLSTÄNDIGER BÜRGERLICHER NAME]<br>
-  [STRASSE HAUSNUMMER]<br>
-  [PLZ ORT]
+  Mike Berger<br>
+  Endersstraße 3b<br>
+  04177 Leipzig<br>
+  Deutschland
 </p>
-{% endfilter %}

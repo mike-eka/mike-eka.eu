@@ -37,15 +37,17 @@ module.exports = function (eleventyConfig) {
     collectionApi.getFilteredByTag("project").sort((a, b) => a.data.title.localeCompare(b.data.title))
   );
 
-  // Placeholders like "[E-MAIL-ADRESSE]" in the legal pages. Text wrapped in
-  // {% filter platzhalter %}…{% endfilter %} gets every [ … ] highlighted.
+  // Placeholders like "[E-MAIL-ADRESSE]" or "[PRÜFEN: …]" in the legal pages:
+  // square brackets starting with capitals (as check:atlas counts them), so
+  // ordinary brackets like "mike [at] posteo" are left alone. Text wrapped in
+  // {% filter platzhalter %}…{% endfilter %} gets every placeholder highlighted.
   // Every build then warns about (a) pages still marked `platzhalter: true`
   // and (b) every page whose output still contains a highlighted
   // placeholder, with the count -- so nothing reaches main unnoticed.
   // Nunjucks-only, so the result can be marked safe (a {% filter %} block
   // can't be piped through `| safe`).
   eleventyConfig.addNunjucksFilter("platzhalter", function (html) {
-    const markiert = String(html).replace(/\[([^\[\]<>]+)\]/g, '<mark class="platzhalter">[$1]</mark>');
+    const markiert = String(html).replace(/\[([A-ZÄÖÜ][A-ZÄÖÜ-]*[A-ZÄÖÜ][^\[\]<>]*)\]/g, '<mark class="platzhalter">[$1]</mark>');
     return this.env.getFilter("safe")(markiert);
   });
 
