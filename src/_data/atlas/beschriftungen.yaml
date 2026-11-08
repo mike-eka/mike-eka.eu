@@ -95,6 +95,7 @@ karte:
   # nur wenn muster/gegenform Listen sind:
   paar_zusatz: "+ zusätzlich"    # Eintrag, den nur diese Fassung hat
   paar_fehlt: "fehlt hier"       # Lücke, wo die andere Fassung einen Eintrag mehr hat
+  paar_getauscht: "↔ ausgetauscht"  # Eintrag an derselben Stelle, in beiden Fassungen verschieden
   analogie: "Wo die Analogie bricht"
   analogie_merkmal: "Merkmal"
   analogie_art:         # steht als Wort in jeder Zeile der Tabelle

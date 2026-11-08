@@ -578,6 +578,12 @@ main.atlas-wide {
     color: var(--atlas-kern-text);
 }
 
+/* replaced entry: the same row differs in both versions */
+.atlas-paar-liste li.ist-getauscht {
+    border: 2px dashed var(--atlas-kern);
+    background: var(--atlas-knopf-an);
+}
+
 .atlas-paar-liste li.ist-luecke {
     background: transparent;
     border: 1px dashed var(--atlas-offen);

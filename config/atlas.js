@@ -249,16 +249,23 @@ module.exports = function atlasPlugin(eleventyConfig) {
   eleventyConfig.addFilter("istListe", (a, b) => Array.isArray(a) || Array.isArray(b));
 
   // Minimal pair as lists: rows aligned across both versions, comparing
-  // entries without [[…]] marks. A row has `muster` and/or `gegenform`;
-  // a missing side marks an entry that only one version has.
+  // entries without [[…]] marks. A row has `muster` and/or `gegenform`:
+  // - both equal: an unchanged entry
+  // - both different (`getauscht: true`): the entry was replaced at this
+  //   position (neither text occurs later in the other list)
+  // - one side missing: an entry only one version has
   eleventyConfig.addFilter("paarZeilen", (muster, gegenform) => {
     const a = Array.isArray(muster) ? muster : muster == null ? [] : [muster];
     const b = Array.isArray(gegenform) ? gegenform : gegenform == null ? [] : [gegenform];
     const zeilen = [];
     let i = 0, j = 0;
     while (i < a.length || j < b.length) {
+      const kommtSpaeterInB = i < a.length && b.slice(j).some((x) => ohneMarken(x) === ohneMarken(a[i]));
+      const kommtSpaeterInA = j < b.length && a.slice(i).some((x) => ohneMarken(x) === ohneMarken(b[j]));
       if (i < a.length && j < b.length && ohneMarken(a[i]) === ohneMarken(b[j])) {
         zeilen.push({ muster: a[i++], gegenform: b[j++] });
+      } else if (i < a.length && j < b.length && !kommtSpaeterInB && !kommtSpaeterInA) {
+        zeilen.push({ muster: a[i++], gegenform: b[j++], getauscht: true });
       } else if (i < a.length && !b.slice(j).some((x) => ohneMarken(x) === ohneMarken(a[i]))) {
         zeilen.push({ muster: a[i++], gegenform: null });
       } else {

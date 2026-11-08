@@ -88,7 +88,11 @@ layout: base.njk
           <ul>
             {% for z in zeilen %}
             {% if z[seite[0]] %}
+            {%- if z.getauscht %}
+            <li class="ist-getauscht"><span class="atlas-paar__marke">{{ b.karte.paar_getauscht }}</span> {{ z[seite[0]] | markiere | safe }}</li>
+            {%- else %}
             <li{% if not z[seite[1]] %} class="ist-einzeln"{% endif %}>{% if not z[seite[1]] %}<span class="atlas-paar__marke">{{ b.karte.paar_zusatz }}</span> {% endif %}{{ z[seite[0]] | markiere | safe }}</li>
+            {%- endif %}
             {% else %}
             <li class="ist-luecke"><span class="atlas-paar__luecke">{{ b.karte.paar_fehlt }}</span></li>
             {% endif %}

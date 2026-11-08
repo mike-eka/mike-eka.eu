@@ -1,5 +1,5 @@
-titel: "Leise Muster"
-untertitel: "Desinformation jenseits von wahr und falsch"   # Titel noch nicht final
+titel: "Lautleise Muster"
+untertitel: "Desinformation jenseits von wahr und falsch"
 kernsatz: >-
   Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
   für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
@@ -11,7 +11,8 @@ entwuerfe_anzeigen: true
 
 # Ein Absatz Haltung für die Übersicht
 haltung: >-
-  Dieser Atlas sammelt Muster, die in Faktenchecks selten vorkommen, weil
+  Lautleise heißen diese Muster, weil sie leise wirken und laut werden,
+  sobald man sie einmal kennt. Dieser Atlas sammelt Muster, die in Faktenchecks selten vorkommen, weil
   sie ohne falsche Behauptung auskommen. Er orientiert sich an der
   Arbeitsdefinition des DFG-Schwerpunktprogramms „Rethinking
   Disinformation“ (Re:DIS), nach der Desinformation „jede Form öffentlich

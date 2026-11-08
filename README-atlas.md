@@ -52,8 +52,10 @@ Varianten im Minimalpaar:
 - `minimalpaar.frage`: eine Frage über dem Paar; die Fassungen heißen dann
   „Antwort im Muster“ und „Gegenform“. Mit `frage_label` (z. B. `"Ausgangslage"`)
   ersetzt du das Label „Gefragt“; die Fassungen heißen dann „Muster“ und „Gegenform“.
-- `muster` und `gegenform` dürfen Listen sein (eine Auswahl von Meldungen). Einträge,
-  die nur eine Fassung hat, werden automatisch markiert.
+- `muster` und `gegenform` dürfen Listen sein (eine Auswahl von Meldungen). Die Zeilen
+  werden automatisch ausgerichtet und markiert: Einträge, die nur eine Fassung hat
+  („+ zusätzlich“, gegenüber „fehlt hier“), und Einträge, die an derselben Stelle in
+  beiden Fassungen verschieden sind („↔ ausgetauscht“).
 - `minimalpaar: null` lässt die Kachel weg (z. B. wenn die Karte `analogie` nutzt).
 
 ### Grenzfall ändern oder hinzufügen
