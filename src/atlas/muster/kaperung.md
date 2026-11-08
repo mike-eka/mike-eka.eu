@@ -117,7 +117,7 @@ grafik:
     - { von: [p1, p2, p3, p4, p5], nach: W, nur_wenn: zweiter }
     - { von: W, nach: [T, e4], nur_wenn: zweiter }
   schalter:
-    - { id: zweiter, label: "Zweiter, rückgebundener Vermittler (z. B. Wissenschaftsjournalismus)", start: false }
+    - { id: zweiter, label: "Zweiter, rückgebundener Vermittler (z. B. Wissenschaftsjournalismus)", start: false }
   kennzahl:
     label: "Kürzeste Wege Publikum → Thema über den Vermittler"
     von_gruppe: publikum

@@ -1447,12 +1447,6 @@ main.atlas-wide {
 
 .lk-hinsicht.ist-nebensache .lk-hinsicht-box { fill: var(--atlas-kachel-still); }
 .lk-hinsicht.ist-nebensache .lk-titel { fill: var(--atlas-gedaempft); }
-.lk-hinsicht.ist-rand .lk-hinsicht-box {
-    stroke: var(--atlas-offen);
-    stroke-width: 1;
-    stroke-dasharray: 5 4;
-}
-
 .lk-pille {
     fill: var(--atlas-feld);
     stroke: var(--atlas-kern);

@@ -207,7 +207,6 @@ module.exports = function atlasPlugin(eleventyConfig) {
         name: h.name,
         leitfrage: h.leitfrage,
         schwerpunkt: h.schwerpunkt !== false,
-        rand: h.rand === true,
         muster: (alleMuster || [])
           .filter((item) => item.data.hinsicht === h.id)
           .map((item) => ({
@@ -219,6 +218,8 @@ module.exports = function atlasPlugin(eleventyConfig) {
       urteile: (bm.urteile || []).map((u) => u.name),
       wirkungen: (bm.wirkungen || []).map((w) => w.name),
     };
+    // the "in Vorbereitung" label only travels along when a draft is shown
+    if (!daten.hinsichten.some((h) => h.muster.some((m) => !m.url))) delete daten.texte.in_vorbereitung;
     return JSON.stringify(daten).replace(/</g, "\\u003c");
   });
 

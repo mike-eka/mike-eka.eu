@@ -36,7 +36,7 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
 2. In den Kopfdaten anpassen:
    - `titel`, `fachbegriff` (erscheint auf der englischen Seite), `kurz`
    - `hinsicht`: eine `id` aus `hinsichten` in `begriffsmodell.yaml`
-     (`glauben`, `achten`, `vertrauen`, `begruenden`, `rand`)
+     (`glauben`, `achten`, `vertrauen`, `begruenden`)
    - `reihenfolge`: Position innerhalb der Hinsicht (kleinere Zahl = weiter oben)
    - `veroeffentlicht: false`, solange die Karte ein Entwurf ist
    - `im_framework: true`, wenn sie in der Liste der Grenzfälle erscheinen soll

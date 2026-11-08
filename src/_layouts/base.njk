@@ -18,7 +18,7 @@
   {% set prefix = "/en" if locale == "en" else "" %}
   {# A page without a translation can set `alternateUrl` in its data to choose
      where the language toggle points; otherwise it's derived from the URL. #}
-  {% set otherUrl = alternateUrl if alternateUrl else (page.url | otherLocaleUrl(locale)) %}
+  {% set otherUrl = alternateUrl if alternateUrl else (page.url | otherLocaleUrl(locale, collections.all)) %}
 
   <div class="lang-toggle">
     {% if locale == "de" %}

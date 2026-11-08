@@ -122,11 +122,6 @@ hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
     name: "Warum wir glauben"
     leitfrage: "Warum glauben wir es?"
     schwerpunkt: true
-  - id: rand
-    name: "Am Rand"
-    leitfrage: "Glauben wir es überhaupt?"
-    schwerpunkt: true
-    rand: true
 
 inhaltstypen: [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
 

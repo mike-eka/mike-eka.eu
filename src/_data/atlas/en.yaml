@@ -25,7 +25,6 @@ hinsichten:
   achten: "What we attend to"
   vertrauen: "Whom we trust"
   begruenden: "Why we believe"
-  rand: "Do we believe it at all?"
 muster_hinweis: "The individual pattern cards are available in German."
 
 # Fixed labels of the English page (added in step 5, not from texte-schritt5.yaml)

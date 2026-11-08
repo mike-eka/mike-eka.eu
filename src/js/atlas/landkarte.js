@@ -253,7 +253,7 @@
           .attr("x1", cx).attr("y1", busY).attr("x2", cx).attr("y2", top);
         busY = top + s.inhaltH;
       }
-      var klassen = "lk-hinsicht" + (s.h.schwerpunkt ? "" : " ist-nebensache") + (s.h.rand ? " ist-rand" : "");
+      var klassen = "lk-hinsicht" + (s.h.schwerpunkt ? "" : " ist-nebensache");
       var g = ebeneFlaechen.append("g").attr("class", klassen);
       g.append("rect").attr("class", "lk-hinsicht-box")
         .attr("x", x).attr("y", top).attr("width", spB).attr("height", s.inhaltH).attr("rx", 12);

@@ -94,16 +94,18 @@ module.exports = function (eleventyConfig) {
     (items || []).filter((item) => (item.data.locale || "de") === locale)
   );
 
-  // Computes the URL of the other-language version of the current page,
-  // assuming the same page exists at the same path under /en/ (or without
-  // it). If a specific post/project hasn't been translated yet, this will
-  // point at a URL that doesn't exist -- that's expected until you add a
-  // matching file under src/en/ (or src/) with the same file name.
-  eleventyConfig.addFilter("otherLocaleUrl", (url, locale) => {
-    if (locale === "en") {
-      return url.replace(/^\/en\//, "/").replace(/^\/en$/, "/");
-    }
-    return "/en" + url;
+  // Computes the URL of the other-language version of the current page: the
+  // same path under /en/ (or without it). If that page doesn't exist (e.g. a
+  // post that hasn't been translated yet), it falls back to the other
+  // language's start page (/en/ or /), so the toggle never leads nowhere.
+  // `alle` is collections.all, used to check which URLs exist.
+  eleventyConfig.addFilter("otherLocaleUrl", (url, locale, alle) => {
+    const ziel = locale === "en"
+      ? url.replace(/^\/en\//, "/").replace(/^\/en$/, "/")
+      : "/en" + url;
+    if (!alle) return ziel;
+    const gibt = (alle || []).some((item) => item.url === ziel);
+    return gibt ? ziel : locale === "en" ? "/" : "/en/";
   });
 
   return {

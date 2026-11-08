@@ -59,7 +59,8 @@ verwandt: [kaperung]
 spiegelfall: null
 anschlussfaecher: [Linguistik, Rechtswissenschaft, Kommunikationswissenschaft]
 literatur:
-  - "TODO: 1–2 Angaben"
+  - "Kölbel, M. (2004). Faultless Disagreement. Proceedings of the Aristotelian Society 104(1), 53–73."
+  - "Lasersohn, P. (2005). Context Dependence, Disagreement, and Predicates of Personal Taste. Linguistics and Philosophy 28(6), 643–686."
 grafik: null                # oder: netz / balken (siehe 3.3)
 ---
 
