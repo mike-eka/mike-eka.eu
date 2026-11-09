@@ -1388,13 +1388,6 @@ main.atlas-wide {
 .lk-titel { font-weight: bold; }
 .lk-klein, .lk-band-text { fill: var(--atlas-gedaempft); }
 
-/* Spokes cross the audience band; a halo in the band colour keeps its text legible. */
-.lk-band-text {
-    paint-order: stroke;
-    stroke: var(--atlas-kachel-ruhig);
-    stroke-width: 5px;
-    stroke-linejoin: round;
-}
 
 .lk-band {
     fill: var(--atlas-kachel-ruhig);

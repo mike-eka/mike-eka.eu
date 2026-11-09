@@ -7,11 +7,14 @@
 //   spokes: the pruefragen with art "muster" around the assessment
 //   the assessment with the value ranges of its two properties (verdict,
 //   effect; from begriffsmodell.yaml), framed by a band for the audience
-//   (art "rahmen")
+//   (art "rahmen"). The band's text sits in its lower part: the spokes
+//   enter from above and from the sides, so no line ever crosses it.
 //   the hinsichten as columns, each with its cards (any number, wrapped)
 //
-// Wide (>= 720 px): spokes on an arc, hinsichten side by side.
-// Narrow: spokes in a row above the assessment, hinsichten stacked.
+// Wide (when every spoke box gets at least SPEICHE_MIN px): spokes on an
+// arc, hinsichten side by side. Narrow: spokes in a row above the
+// assessment (stacked when a row would make them narrower than
+// SPEICHE_ZEILE_MIN), hinsichten stacked.
 // All colours come from atlas.css (classes lk-*).
 (function () {
   "use strict";
@@ -30,6 +33,9 @@
   var RAND = 14;          // outer margin
   var PAD = 10;           // padding inside boxes
   var ABSTAND = 12;       // gap between boxes
+  var RAHMEN_BREIT = 440; // width of the audience frame in the wide layout
+  var SPEICHE_MIN = 150;  // narrowest spoke box on the arc
+  var SPEICHE_ZEILE_MIN = 100; // narrowest spoke box side by side (narrow layout)
 
   figur.hidden = false;
 
@@ -47,15 +53,26 @@
     var max = Math.max(4, Math.floor(breitePx / (zeichenProPx * groesse)));
     var zeilen = [];
     var aktuell = "";
+    // tokens: words, and parts of a word after an existing hyphen
+    // ("Pseudo-" + "Erklärung"), which may end a line without a space
+    var teile = [];
     String(text || "").split(/\s+/).filter(Boolean).forEach(function (wort) {
-      while (wort.length > max) { // hard-split very long words
-        if (aktuell) { zeilen.push(aktuell); aktuell = ""; }
+      var stuecke = wort.split("-");
+      stuecke.forEach(function (t, i) {
+        var stueck = i < stuecke.length - 1 ? t + "-" : t;
+        if (stueck) teile.push({ t: stueck, leim: i > 0 });
+      });
+    });
+    teile.forEach(function (teil) {
+      var wort = teil.t;
+      var trenner = teil.leim ? "" : " ";
+      if (aktuell && (aktuell + trenner + wort).length <= max) { aktuell += trenner + wort; return; }
+      if (aktuell) { zeilen.push(aktuell); aktuell = ""; }
+      while (wort.length > max) { // hard-split only what still does not fit
         zeilen.push(wort.slice(0, max - 1) + "-");
         wort = wort.slice(max - 1);
       }
-      if (!aktuell) aktuell = wort;
-      else if ((aktuell + " " + wort).length <= max) aktuell += " " + wort;
-      else { zeilen.push(aktuell); aktuell = wort; }
+      aktuell = wort;
     });
     if (aktuell) zeilen.push(aktuell);
     return zeilen;
@@ -79,7 +96,7 @@
   function zeichne() {
     var W = Math.floor(flaeche.clientWidth);
     if (!W) return;
-    var breit = W >= 720;
+    var breit = (W - 2 * RAND - RAHMEN_BREIT - 80) / 2 >= SPEICHE_MIN;
 
     d3.select(flaeche).selectAll("*").remove();
     var svg = d3.select(flaeche).append("svg")
@@ -102,9 +119,9 @@
 
     // -- the assessment with its audience band
     var cx = W / 2;
-    var rahmenB = Math.min(breit ? 440 : W - 2 * RAND, 460);
-    var bandOben = 28;   // room for the band label
+    var rahmenB = Math.min(breit ? RAHMEN_BREIT : W - 2 * RAND, 460);
     var bandSeite = 12;
+    var bandOben = bandSeite;   // the label goes below the assessment (bandUnten)
     var innenB = rahmenB - 2 * bandSeite;
     var innenTitel = umbrechen(T.einschaetzung, innenB - 2 * PAD, GROESSE.titel);
     // value ranges: "Urteil: ja · nein · strittig", "Wirkung: … (keine, wenn …)"
@@ -122,16 +139,21 @@
       (rahmenFrage ? rahmenFrage.frage + " " : "") + (T.publikum_rahmen || ""),
       rahmenB - 2 * bandSeite, GROESSE.klein
     );
-    bandOben = Math.max(bandOben, hoehe(bandText, GROESSE.klein) + 10);
-    var rahmenH = bandOben + innenH + bandSeite;
+    var bandUnten = Math.max(28, hoehe(bandText, GROESSE.klein) + 12);
+    var rahmenH = bandOben + innenH + bandUnten;
 
     // -- spokes (only the questions a pattern can fix)
     var n = spokes.length;
     var spokeB, spokeBoxen = [];
+    var gestapelt = false; // narrow layout: one spoke box per row
     if (breit) {
       spokeB = Math.min(230, (W - 2 * RAND - rahmenB - 80) / 2);
     } else {
       spokeB = n ? (W - 2 * RAND - (n - 1) * 8) / n : 0;
+      if (n > 1 && spokeB < SPEICHE_ZEILE_MIN) {
+        gestapelt = true;
+        spokeB = Math.min(W - 2 * RAND, 320);
+      }
     }
     spokes.forEach(function (q) {
       var zeilen = umbrechen(q.frage, spokeB - 2 * PAD, GROESSE.text);
@@ -141,17 +163,29 @@
 
     var rahmenY; // top of the frame
     if (breit) {
-      // arc from left (180°) over the top to right (0°)
+      // arc from left (180°) over the top to right (0°), centred on the
+      // assessment box: side spokes run level into it, the others from above
       var rx = rahmenB / 2 + spokeB / 2 + 34;
-      var ry = rahmenH / 2 + maxSpokeH / 2 + 26;
+      var ry = bandOben + innenH / 2 + maxSpokeH / 2 + 26;
       var cy = y + maxSpokeH + ry - maxSpokeH / 2; // top spoke touches y
       spokeBoxen.forEach(function (s, i) {
         var a = n === 1 ? Math.PI / 2 : Math.PI - i * Math.PI / (n - 1);
         s.cx = cx + rx * Math.cos(a);
         s.cy = cy - ry * Math.sin(a);
       });
-      rahmenY = cy - rahmenH / 2;
-      y = Math.max(cy + rahmenH / 2, d3.max(spokeBoxen, function (s) { return s.cy + s.h / 2; }) || 0);
+      rahmenY = cy - bandOben - innenH / 2;
+      y = Math.max(rahmenY + rahmenH, d3.max(spokeBoxen, function (s) { return s.cy + s.h / 2; }) || 0);
+    } else if (gestapelt) {
+      // one below the other, centred; their spokes run straight down
+      // (hidden under the boxes below) into the assessment
+      var sy = y;
+      spokeBoxen.forEach(function (s) {
+        s.cx = cx;
+        s.cy = sy + s.h / 2;
+        sy += s.h + 8;
+      });
+      rahmenY = sy - 8 + 28;
+      y = rahmenY + rahmenH;
     } else {
       spokeBoxen.forEach(function (s, i) {
         s.cx = RAND + spokeB / 2 + i * (spokeB + 8);
@@ -171,9 +205,9 @@
     gRahmen.append("rect").attr("class", "lk-band")
       .attr("x", rahmenX).attr("y", rahmenY).attr("width", rahmenB).attr("height", rahmenH)
       .attr("rx", 16);
-    // band label on the top layer (with a halo, see atlas.css), above the spokes
+    // band label below the assessment, where no spoke runs
     schreibe(ebeneFlaechen.append("g").attr("class", "lk-publikum-text"),
-      bandText, cx, rahmenY + 5, GROESSE.klein, "lk-band-text", "middle");
+      bandText, cx, innenY + innenH + 6, GROESSE.klein, "lk-band-text", "middle");
 
     // spokes: from each question into the assessment
     spokeBoxen.forEach(function (s) {
