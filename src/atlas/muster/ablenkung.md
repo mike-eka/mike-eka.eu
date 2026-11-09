@@ -41,7 +41,7 @@ effekt:
     Man hat etwas gehört, das wie eine Antwort klingt. Die eigentliche Frage
     gilt als behandelt und wird nicht weiter gestellt, oft auch nicht von
     denen, deren Aufgabe das wäre.
-  hinsichten: "Worauf wir achten"
+  hinsichten: [achten]
 
 kippt_an: vergleich
 grenzfall_frage: "Womit vergleicht man: mit einer echten Antwort oder mit gar keiner?"

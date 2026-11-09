@@ -996,11 +996,6 @@ main.atlas-wide {
     font-weight: bold;
 }
 
-.atlas-pruefrage .atlas-feld__name {
-    color: var(--atlas-gedaempft);
-    margin-left: 0.3rem;
-}
-
 .atlas-pruefrage dd,
 .atlas-optionen dd {
     margin: 0;
@@ -1062,8 +1057,11 @@ main.atlas-wide {
     font-size: 0.9rem;
 }
 
-.atlas-stufe__zusatz a {
+/* the pattern stage's heading links to its card */
+.atlas-stufe__titel a {
+    color: inherit;
     text-decoration: underline;
+    text-underline-offset: 0.15em;
 }
 
 .atlas-grenzfaelle {
@@ -1084,6 +1082,11 @@ main.atlas-wide {
 .atlas-grenzfall__titel {
     font-weight: 500;
     margin-right: 0.4rem;
+}
+
+/* Stellschraube as a small label after the title (no second question) */
+.atlas-grenzfaelle .atlas-stellschraube-etikett {
+    margin-left: 0;
 }
 
 .atlas-grenzfall__frage {

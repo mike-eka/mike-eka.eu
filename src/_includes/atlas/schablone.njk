@@ -16,7 +16,7 @@
     urteile:          begriffsmodell.urteile (Namen der Urteile)
     wirkungen:        begriffsmodell.wirkungen (Namen und Erklärungen)
     prefix:           eindeutiger Präfix für IDs
-    publikumLink, publikumLinkText: Verweis auf den Abschnitt „Für wen?“
+    publikumLink:     Ziel von „Mehr dazu“ (Abschnitt „Für wen?“)
 
   Zwei Darstellungen der Einschätzungen:
     ohne JS ([data-ohne-js]): in der Stellschraube eine Liste, gruppiert nach
@@ -191,10 +191,10 @@
   </figcaption>
   <div class="atlas-rahmen">
     <p class="atlas-rahmen__band">
-      <span class="atlas-feld__frage">{{ b.felder.publikum.frage }}</span><span aria-hidden="true"> · </span><span class="atlas-feld__name">{{ b.felder.publikum.name }}</span>:
+      <span class="atlas-feld__frage">{{ b.felder.publikum.frage }}</span>
       {%- set publikumText %}{{ zeilen(felder.publikum) }}{% endset %}
-      {% if publikumText | trim %}{{ publikumText | trim | safe }} – {% endif %}{{ b.publikum_verweis }}
-      {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ o.publikumLinkText }}</a>{% endif %}
+      {% if publikumText | trim %}{{ publikumText | trim | safe }} – {% endif %}{{ b.publikum_rahmen }}
+      {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ b.publikum_mehr }}</a>{% endif %}
     </p>
     <div class="atlas-schablone__raster">
       {{ frageFeld("inhalt", felder.inhalt, b, o, felder.wirkung) }}

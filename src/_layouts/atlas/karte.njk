@@ -213,10 +213,11 @@ layout: base.njk
           <p>{{ effekt.nachher }}</p>
         </div>
       </div>
-      {% if effekt.hinsichten %}
-      {#- Die erste genannte Hinsicht ist die Haupt-Hinsicht der Karte (fett) -#}
-      <p class="atlas-effekt__hinsichten"><span class="atlas-label">{{ b.karte.effekt_hinsichten }}</span>
-        {% for teil in effekt.hinsichten | hinsichtenTeile %}{% if loop.first %}<strong>{{ teil }}</strong>{% else %} · {{ teil }}{% endif %}{% endfor %}</p>
+      {#- Weitere betroffene Hinsichten; die Haupt-Hinsicht steht schon im Badge -#}
+      {%- set weitere = effekt.hinsichten | weitereHinsichten(hinsicht, bm.hinsichten) -%}
+      {% if weitere.length %}
+      <p class="atlas-effekt__hinsichten"><span class="atlas-label">{{ b.karte.effekt_weitere }}</span>
+        {% for w in weitere %}<a href="/atlas/#hinsicht-{{ w.id }}">{{ w.name }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
       {% endif %}
     </section>
     {% endif %}
@@ -232,8 +233,7 @@ layout: base.njk
         urteile: bm.urteile,
         wirkungen: bm.wirkungen,
         prefix: "schablone",
-        publikumLink: "/atlas/begriffsmodell/#" + bm.publikum_abschnitt.anker,
-        publikumLinkText: bm.publikum_abschnitt.titel
+        publikumLink: "/atlas/begriffsmodell/#" + bm.publikum_abschnitt.anker
       }) }}
     </section>
     {% endif %}
@@ -249,18 +249,6 @@ layout: base.njk
         <p>{{ mittel.test }}</p>
       </div>
       {% endif %}
-    </section>
-    {% endif %}
-
-    {%- set wirkungsIds = einschaetzungen | eindeutig("wirkung") -%}
-    {% if wirkungsIds.length %}
-    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="wirkung">
-      <h2 id="wirkung">{{ b.karte.wirkung }}</h2>
-      <ul class="atlas-liste-schlicht">
-        {% for id in wirkungsIds %}{% set w = bm.wirkungen | nachId(id) %}{% if w %}
-        <li><strong>{{ w.name }}</strong>: {{ w.erklaerung }}</li>
-        {% endif %}{% endfor %}
-      </ul>
     </section>
     {% endif %}
 

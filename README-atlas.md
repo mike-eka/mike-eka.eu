@@ -45,6 +45,10 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
    `verwandt`, `spiegelfall`, `literatur`, optional `grafik`.
    Darunter, nach dem zweiten `---`, der Fließtext in Markdown (`## Zwischenüberschrift`
    wird automatisch eine Ebene tiefer gesetzt).
+   `effekt.hinsichten` ist eine Liste von Hinsicht-IDs, z. B. `[vertrauen, achten]`.
+   Die Haupt-Hinsicht (`hinsicht`) steht schon im Badge; die übrigen erscheinen unter
+   „Betrifft außerdem:“ (bei keiner weiteren entfällt die Zeile). Unbekannte IDs
+   meldet der Build.
 4. Wenn die Karte fertig ist: `veroeffentlicht: true`.
 
 Varianten im Minimalpaar:
@@ -76,6 +80,8 @@ einschaetzungen:
 
 - Beliebig viele Einschätzungen sind möglich; jede wird ein Knopf.
 - Trägt mindestens eine Einschätzung `wirkung`, schaltet auch das Wirkungsfeld mit.
+  Die Wirkung steht nur dort (Name und Erklärung aus `wirkungen` in `begriffsmodell.yaml`),
+  nicht in einer eigenen Kachel.
 - Lautet das Urteil `nein`, gibt es keine Wirkung: `wirkung: keine` (oder weglassen).
   Der Build warnt, wenn ein `nein` eine Wirkung trägt.
 - Welche Karte die große Schablone auf der Begriffsmodell-Seite zeigt, steht in

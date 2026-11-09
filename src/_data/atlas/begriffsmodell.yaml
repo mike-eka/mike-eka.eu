@@ -131,9 +131,9 @@ vergleichsfaelle:
   - { id: alternative, name: "andere Formulierung (Minimalpaar)" }
 
 wirkungen:
-  - { id: verschlechtern, name: "verschlechtern", erklaerung: "Es wird schlechter als vorher." }
-  - { id: festhalten,     name: "festhalten",     erklaerung: "Es bleibt schlecht, obwohl es besser geworden wäre." }
-  - { id: abschotten,     name: "abschotten",     erklaerung: "Man lernt künftig schwerer dazu." }
+  - { id: verschlechtern, name: "verschlechtern", erklaerung: "Die Erkenntnislage ist danach schlechter als vorher: Man glaubt etwas Falsches, ist sich zu sicher oder versteht weniger." }
+  - { id: festhalten,     name: "festhalten",     erklaerung: "Eine Verbesserung bleibt aus: Eine offene oder falsche Sicht bleibt bestehen, obwohl sie sich hätte klären können." }
+  - { id: abschotten,     name: "abschotten",     erklaerung: "Künftiges Dazulernen wird schwerer: Verlässliche Quellen und Gegenargumente kommen schlechter an." }
 
 urteile:
   - { id: ja,       name: "ja" }

@@ -4,13 +4,12 @@
   steht nicht hier, sondern im Abschnitt „Für wen?“.
 
   pruefragen: atlas.begriffsmodell.pruefragen
-  b:          atlas.beschriftungen.schablone (Feldnamen)
 #}
-{% macro pruefragen(liste, b) %}
+{% macro pruefragen(liste) %}
 <dl class="atlas-pruefragen">
   {% for q in liste %}{% if q.art == "muster" %}
   <div class="atlas-pruefrage">
-    <dt><span class="atlas-pruefrage__frage">{{ q.frage }}</span>{% if b.felder[q.feld] %} <span class="atlas-feld__name">{{ b.felder[q.feld].name }}</span>{% endif %}</dt>
+    <dt><span class="atlas-pruefrage__frage">{{ q.frage }}</span></dt>
     <dd>{{ q.erklaerung }}</dd>
   </div>
   {% endif %}{% endfor %}

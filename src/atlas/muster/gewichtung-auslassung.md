@@ -53,7 +53,7 @@ effekt:
   nachher: >-
     Die Frage scheint beantwortet: Was legal ist und nicht berichtet wird,
     gilt als unproblematisch.
-  hinsichten: "Worauf wir achten · Was wir glauben"
+  hinsichten: [achten, glauben]
 
 kippt_an: vergleich
 grenzfall_frage: "Nach welchem Maß wäre die Auswahl richtig gewichtet?"

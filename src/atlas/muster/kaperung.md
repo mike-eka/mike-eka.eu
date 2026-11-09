@@ -40,7 +40,7 @@ effekt:
   nachher: >-
     Eine Einzelstimme erscheint als Stand der Forschung. Echten Fachleuten wird
     künftig weniger geglaubt.
-  hinsichten: "Wem wir glauben"
+  hinsichten: [vertrauen]
 
 kippt_an: was
 grenzfall_frage: "An welche Fachgemeinschaft ist die Person zurückgebunden?"

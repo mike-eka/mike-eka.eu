@@ -69,7 +69,7 @@ effekt:
   nachher: >-
     Man glaubt, den Grund zu verstehen, und die Frage scheint erledigt. Das
     Gefühl, etwas verstanden zu haben, ersetzt das Verstehen.
-  hinsichten: "Warum wir glauben · Worauf wir achten"
+  hinsichten: [begruenden, achten]
 
 kippt_an: hinsicht
 grenzfall_frage: "Zählt nur, was man glaubt, oder auch, warum man es glaubt?"

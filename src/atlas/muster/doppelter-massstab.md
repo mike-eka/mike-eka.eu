@@ -50,7 +50,7 @@ effekt:
   nachher: >-
     Der Maßstab scheint nur für Schulden zu gelten. Klimaschutz erscheint als
     Geschmacksfrage statt als Frage derselben Verantwortung für die Zukunft.
-  hinsichten: "Warum wir glauben · Was wir glauben"
+  hinsichten: [begruenden, glauben]
 
 kippt_an: was
 grenzfall_frage: "Ist eine einzelne Aussage der Inhalt, oder das Paar?"

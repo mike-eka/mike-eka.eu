@@ -11,7 +11,7 @@ kurz: >-
 effekt:                     # Kachel „Was sich verschlechtert“
   vorher: "Ob Tempo 30 den Innenstädten schadet, ist eine offene Frage. Man wägt Gründe ab."
   nachher: "Die Frage gilt als entschieden. Man ist sich sicherer, als die Belege erlauben, und fragt nicht mehr nach Gründen."
-  hinsichten: "Wem wir glauben · Worauf wir achten"
+  hinsichten: [vertrauen, achten]
 
 minimalpaar:
   muster:    "Tempo 30 [[macht]] unsere Innenstädte [[kaputt]]."

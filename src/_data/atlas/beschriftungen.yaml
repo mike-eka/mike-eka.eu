@@ -7,7 +7,7 @@ uebersicht:
   nicht_schwerpunkt: "nicht Schwerpunkt"
   leer_zusatz: "nicht Gegenstand dieses Atlas"   # Hinsicht ohne Schwerpunkt und ohne Muster
   in_vorbereitung: "in Vorbereitung"
-  landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte. Dieselbe Struktur steht darunter als Liste."
+  landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte."
   liste_titel: "Die Struktur als Liste"
   einschaetzung: "Einschätzung"
   # Wertebereiche der Einschätzung (Werte aus begriffsmodell.yaml: urteile, wirkungen)
@@ -76,7 +76,6 @@ begriffsmodell:                         # Seite /atlas/begriffsmodell/
   stufe_leer: "leer"
   stufe_muster: "Muster"
   stufe_beispiel: "Beispiel"
-  zur_karte: "Zur Karte"
   grenzfaelle: "Grenzfälle"
   kippt_an: "Stellschraube"
 
@@ -85,7 +84,7 @@ karte:
   effekt: "Was sich verschlechtert"
   effekt_vorher: "Vorher"
   effekt_nachher: "Nachher"
-  effekt_hinsichten: "Betroffene Hinsichten"   # die erste ist die Haupt-Hinsicht (fett)
+  effekt_weitere: "Betrifft außerdem:"   # weitere Hinsichten aus effekt.hinsichten (ohne die Haupt-Hinsicht)
   minimalpaar: "Minimalpaar"
   # nur wenn minimalpaar.frage gesetzt ist:
   minimalpaar_frage: "Gefragt"
@@ -104,7 +103,6 @@ karte:
   gegenform: "Gegenform"
   mittel: "Sprachliches Mittel"
   test: "Test"
-  wirkung: "Wirkung"
   etiketten: "Etiketten"
   etiketten_hinweis: "Etiketten beschreiben den Inhalt. Sie sind keine Bedingung für Desinformation."
   normalfall: "Normal, weil"
@@ -123,9 +121,10 @@ schablone:
   schalter: "Einschätzung wählen"
   urteil_hinweis: "ergibt sich aus der Stellschraube"
   wirkung_keine: "keine"   # Einschätzung mit `wirkung: keine`
-  # Rahmen „Publikum“ um die Schablone; der Link führt zu
-  # begriffsmodell.publikum_abschnitt (Linktext = dessen Titel)
-  publikum_verweis: "Rahmen jeder Einschätzung, kein Merkmal des Musters."
+  # Rahmen „Publikum“ um die Schablone (auch in der Landkarte); „Mehr dazu“
+  # führt zu begriffsmodell.publikum_abschnitt
+  publikum_rahmen: "Das Publikum ist der Rahmen jeder Einschätzung, kein Merkmal des Musters."
+  publikum_mehr: "Mehr dazu"
   felder:            # die Felder der Schablone (im Code angelegt)
     inhalt:         { frage: "Was?", name: "Inhalt" }
     publikum:       { frage: "Für wen?", name: "Publikum" }

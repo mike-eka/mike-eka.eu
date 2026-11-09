@@ -119,7 +119,7 @@
     var werteH = werte.reduce(function (s, w) { return s + hoehe(w.zeilen, w.groesse) + 2; }, 0);
     var innenH = 2 * PAD + hoehe(innenTitel, GROESSE.titel) + 6 + werteH;
     var bandText = umbrechen(
-      (rahmenFrage ? rahmenFrage.frage + " · " : "") + (T.publikum || "") + ": " + (T.publikum_verweis || ""),
+      (rahmenFrage ? rahmenFrage.frage + " " : "") + (T.publikum_rahmen || ""),
       rahmenB - 2 * bandSeite, GROESSE.klein
     );
     bandOben = Math.max(bandOben, hoehe(bandText, GROESSE.klein) + 10);

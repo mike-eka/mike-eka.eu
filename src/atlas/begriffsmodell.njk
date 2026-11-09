@@ -22,16 +22,15 @@ eleventyComputed:
 {%- set kipp = (bm.pruefragen | nachId(mk.data.kippt_an)) if mk else null -%}
 {%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
 
-{%- macro stufe(key, titel, felder, kippFeld, zusatz, b, anker, pa) -%}
+{%- macro stufe(key, titel, felder, kippFeld, zusatz, b, anker, link) -%}
 <div class="atlas-stufe" id="stufe-{{ key }}" data-panel="{{ key }}">
-  <h3 class="atlas-stufe__titel">{{ titel }}</h3>
+  <h3 class="atlas-stufe__titel">{% if link %}<a href="{{ link }}">{{ titel }}</a>{% else %}{{ titel }}{% endif %}</h3>
   {% if zusatz %}<p class="atlas-stufe__zusatz">{{ zusatz | safe }}</p>{% endif %}
   {{ schablonenRaster(felder, b.schablone, {
     kippFeld: kippFeld,
     prefix: "stufe-" + key,
     ebene: 4,
-    publikumLink: "#" + anker,
-    publikumLinkText: pa.titel
+    publikumLink: "#" + anker
   }) }}
 </div>
 {%- endmacro -%}
@@ -47,7 +46,7 @@ eleventyComputed:
   <div class="atlas-kacheln">
     <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="pruefragen">
       <h2 id="pruefragen">{{ bb.pruefragen }}</h2>
-      {{ pruefragen(bm.pruefragen, b.schablone) }}
+      {{ pruefragen(bm.pruefragen) }}
     </section>
 
     <section class="atlas-kachel atlas-kachel--ruhig atlas-fuer-wen" id="{{ anker }}" aria-labelledby="{{ anker }}-titel">
@@ -103,15 +102,16 @@ eleventyComputed:
           {% endif %}
         </div>
 
-        {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", "", b, anker, pa) }}
+        {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", "", b, anker) }}
 
         {% if mk %}
-        {%- set kartenLink -%}{% if mk.data.veroeffentlicht %}<a href="{{ mk.url }}">{{ bb.zur_karte }}: {{ mk.data.titel }}</a>{% endif %}{%- endset -%}
-        {{ stufe("muster", bb.stufe_muster + ": " + mk.data.titel, mk.data.schablone, kippFeld, kartenLink, b, anker, pa) }}
+        {#- Die Überschrift ist selbst der Link auf die Karte (nur veröffentlicht) -#}
+        {{ stufe("muster", bb.stufe_muster + ": " + mk.data.titel, mk.data.schablone, kippFeld, "", b, anker,
+                 mk.url if mk.data.veroeffentlicht else "") }}
         {% for e in mk.data.einschaetzungen %}
         {{ stufe("beispiel-" + loop.index, bb.stufe_beispiel + ": " + e.label,
                  mk.data.schablone | einschaetzungsStufe(e, kippFeld, bm, b.schablone.wirkung_keine),
-                 kippFeld, mk.data.grenzfall_frage | escape, b, anker, pa) }}
+                 kippFeld, mk.data.grenzfall_frage | escape, b, anker) }}
         {% endfor %}
         {% endif %}
       </div>
@@ -124,7 +124,7 @@ eleventyComputed:
         {%- set kq = bm.pruefragen | nachId(k.data.kippt_an) -%}
         <li>
           <a class="atlas-grenzfall__titel" href="{{ k.url }}">{{ k.data.titel }}</a>
-          {% if kq %}<span class="atlas-hinweis">{{ bb.kippt_an }}: {{ kq.frage }}</span>{% endif %}
+          {% if kq and b.schablone.felder[kq.feld] %}<span class="atlas-stellschraube-etikett">{{ bb.kippt_an }} · {{ b.schablone.felder[kq.feld].name }}</span>{% endif %}
           {% if k.data.grenzfall_frage %}<span class="atlas-grenzfall__frage">{{ k.data.grenzfall_frage }}</span>{% endif %}
         </li>
         {% endif %}{% endfor %}

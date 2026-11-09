@@ -66,9 +66,20 @@ function pruefeAtlas(items) {
   const warn = (msg) => console.warn(`[atlas] ${msg}`);
 
   const wirkungsIds = (bm.wirkungen || []).map((w) => w.id);
+  const hinsichtIds = (bm.hinsichten || []).map((h) => h.id);
   for (const item of items) {
-    const { kippt_an: kipp, einschaetzungen, veroeffentlicht } = item.data;
+    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt } = item.data;
     const datei = item.inputPath;
+
+    // effekt.hinsichten: a list of hinsicht ids
+    if (effekt && effekt.hinsichten != null) {
+      if (!Array.isArray(effekt.hinsichten)) {
+        warn(`${datei}: effekt.hinsichten muss eine Liste von Hinsicht-IDs sein, z. B. [vertrauen, achten] (erlaubt: ${hinsichtIds.join(", ")})`);
+      } else {
+        effekt.hinsichten.filter((id) => !hinsichtIds.includes(id)).forEach((id) =>
+          warn(`${datei}: effekt.hinsichten enthält die unbekannte Hinsicht "${id}" (erlaubt: ${hinsichtIds.join(", ")})`));
+      }
+    }
 
     // Verdict and effect: "nein" means no effect; effects must be known ids.
     (einschaetzungen || []).forEach((e, i) => {
@@ -198,8 +209,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
     const daten = {
       texte: {
         ...b.uebersicht,
-        publikum: b.schablone?.felder?.publikum?.name,
-        publikum_verweis: b.schablone?.publikum_verweis,
+        publikum_rahmen: b.schablone?.publikum_rahmen,
       },
       pruefragen: (bm.pruefragen || []).map(({ id, art, frage }) => ({ id, art, frage })),
       hinsichten: (bm.hinsichten || []).map((h) => ({
@@ -248,8 +258,13 @@ module.exports = function atlasPlugin(eleventyConfig) {
   );
 
   // "Wem wir glauben · Worauf wir achten" -> ["Wem wir glauben", "Worauf wir achten"]
-  eleventyConfig.addFilter("hinsichtenTeile", (text) =>
-    String(text || "").split("·").map((s) => s.trim()).filter(Boolean)
+  // effekt.hinsichten (list of hinsicht ids) without the card's main hinsicht,
+  // as hinsicht objects; unknown ids are skipped (the build warns about them).
+  eleventyConfig.addFilter("weitereHinsichten", (ids, haupt, hinsichten) =>
+    [].concat(ids || [])
+      .filter((id) => id !== haupt)
+      .map((id) => (hinsichten || []).find((h) => h.id === id))
+      .filter(Boolean)
   );
 
   // True if either argument is a list (minimal pair as a selection of items).
