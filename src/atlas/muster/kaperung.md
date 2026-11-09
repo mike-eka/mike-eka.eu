@@ -76,7 +76,6 @@ normalfall: >-
   Brückenposition, nur mit Rückbindung an die Fachgemeinschaft.
 verwandt: [meinung-als-tatsache]
 spiegelfall: null
-anschlussfaecher: [Kommunikationswissenschaft, Soziologie, Philosophie]
 literatur:
   - "Oreskes, N. & Conway, E. M. (2010). Merchants of Doubt. New York: Bloomsbury."
   - "Ballantyne, N. (2019). Epistemic Trespassing. Mind 128(510), 367–395."

@@ -89,7 +89,6 @@ normalfall: >-
   sie stillschweigend eine offene Frage beantwortet.
 verwandt: [ablenkung]
 spiegelfall: null
-anschlussfaecher: [Journalismus, Kommunikationswissenschaft, Rechtswissenschaft, Politikwissenschaft]
 literatur:
   - "McCombs, M. E. & Shaw, D. L. (1972). The agenda-setting function of mass media. Public Opinion Quarterly 36(2), 176–187."
   - "Entman, R. M. (1993). Framing: Toward clarification of a fractured paradigm. Journal of Communication 43(4), 51–58."

@@ -87,7 +87,6 @@ normalfall: >-
   beansprucht und an anderer Stelle stillschweigend fallengelassen wird.
 verwandt: [pseudo-erklaerung]
 spiegelfall: ablenkung
-anschlussfaecher: [Philosophie, Politikwissenschaft, Linguistik]
 literatur:
   - "Fillmore, C. J. (1982). Frame semantics. In The Linguistic Society of Korea (Hg.), Linguistics in the Morning Calm, 111–137. Seoul: Hanshin."
 grafik: null

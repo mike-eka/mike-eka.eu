@@ -205,7 +205,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
       hinsichten: (bm.hinsichten || []).map((h) => ({
         id: h.id,
         name: h.name,
-        leitfrage: h.leitfrage,
+        erklaerung: h.erklaerung,
         hinweis: h.hinweis,
         schwerpunkt: h.schwerpunkt !== false,
         muster: (alleMuster || [])

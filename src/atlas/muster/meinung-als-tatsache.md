@@ -59,7 +59,6 @@ normalfall: >-
   Politische Rede ist positionell, und die meisten Zuhörenden wissen das.
 verwandt: [kaperung]
 spiegelfall: null
-anschlussfaecher: [Linguistik, Rechtswissenschaft, Kommunikationswissenschaft]
 literatur:
   - "Kölbel, M. (2004). Faultless Disagreement. Proceedings of the Aristotelian Society 104(1), 53–73."
   - "Lasersohn, P. (2005). Context Dependence, Disagreement, and Predicates of Personal Taste. Linguistics and Philosophy 28(6), 643–686."

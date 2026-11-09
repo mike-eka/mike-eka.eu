@@ -950,26 +950,9 @@ main.atlas-wide {
     margin: 0.2rem 0 0;
 }
 
-/* ---- Related, disciplines, literature ---- */
+/* ---- Related, literature ---- */
 .atlas-bezuege p {
     margin: 0 0 0.5rem;
-}
-
-.atlas-faecher {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-}
-
-.atlas-faecher li {
-    background: var(--atlas-feld);
-    border: 1px solid var(--atlas-linie);
-    border-radius: 999px;
-    padding: 0.1rem 0.7rem;
-    font-size: 0.85rem;
 }
 
 .atlas-literatur {

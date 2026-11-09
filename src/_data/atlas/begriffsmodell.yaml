@@ -107,20 +107,20 @@ publikum_abschnitt:
 hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
   - id: glauben
     name: "Was wir glauben"
-    leitfrage: "Was glauben wir?"
+    erklaerung: "Welche Aussagen wir für wahr halten und wie sicher wir uns dabei sind."
     schwerpunkt: false
     hinweis: "Das klassische Feld der Faktenchecks"
   - id: achten
     name: "Worauf wir achten"
-    leitfrage: "Worauf achten wir?"
+    erklaerung: "Welche Fragen unsere Aufmerksamkeit bekommen und welche als erledigt gelten."
     schwerpunkt: true
   - id: vertrauen
     name: "Wem wir glauben"
-    leitfrage: "Wem glauben wir?"
+    erklaerung: "Welchen Quellen wir Sachkenntnis zutrauen und ob das zu ihrer Verlässlichkeit passt."
     schwerpunkt: true
   - id: begruenden
     name: "Warum wir glauben"
-    leitfrage: "Warum glauben wir es?"
+    erklaerung: "Aus welchen Gründen und nach welchen Maßstäben wir etwas für richtig halten."
     schwerpunkt: true
 
 inhaltstypen: [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
@@ -143,17 +143,6 @@ urteile:
 etiketten:
   wahrheitsstatus: [wahr, falsch, unklar, "nicht wahrheitsfähig"]
   absicht: [vorhanden, "nicht vorhanden", unbekannt]
-
-anschlussfaecher:      # aus der Ausschreibung
-  - Journalismus
-  - Kommunikationswissenschaft
-  - Linguistik
-  - Medienwissenschaft
-  - Philosophie
-  - Politikwissenschaft
-  - Psychologie
-  - Rechtswissenschaft
-  - Soziologie
 
 schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
   muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen

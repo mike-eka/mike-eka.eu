@@ -33,8 +33,9 @@ eleventyComputed:
       {% for h in bm.hinsichten %}
       {%- set karten = collections.atlasMuster | musterInHinsicht(h.id) -%}
       <li class="{% if h.schwerpunkt == false %}ist-nebensache{% endif %}">
-        <span class="atlas-hinsicht__name">{{ en.hinsichten[h.id] or h.name }}</span>
-        {% if h.schwerpunkt == false %}<span class="atlas-hinweis">({{ eb.nicht_schwerpunkt }})</span>{% endif %}
+        {%- set eh = en.hinsichten[h.id] %}
+        <span class="atlas-hinsicht__name">{{ eh.name or h.name }}</span>
+        <span class="atlas-hinweis">{% if eh.erklaerung %}– {{ eh.erklaerung }}{% endif %}{% if h.schwerpunkt == false %} ({{ eb.nicht_schwerpunkt }}){% endif %}</span>
         {% if karten.length %}
         <ul>
           {% for k in karten %}

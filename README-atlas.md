@@ -42,7 +42,7 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
    - `im_framework: true`, wenn sie in der Liste der Grenzfälle erscheinen soll
 3. Inhalte: `effekt`, `minimalpaar` (oder `analogie`), `mittel`, `schablone`,
    `kippt_an`, `grenzfall_frage`, `einschaetzungen`, `etiketten`, `normalfall`,
-   `verwandt`, `spiegelfall`, `anschlussfaecher`, `literatur`, optional `grafik`.
+   `verwandt`, `spiegelfall`, `literatur`, optional `grafik`.
    Darunter, nach dem zweiten `---`, der Fließtext in Markdown (`## Zwischenüberschrift`
    wird automatisch eine Ebene tiefer gesetzt).
 4. Wenn die Karte fertig ist: `veroeffentlicht: true`.
@@ -86,6 +86,9 @@ einschaetzungen:
 
 - Text einer Karte: in `src/atlas/muster/<datei>.md`.
 - Kernsatz, Haltung, Prüffragen, „Für wen?“, Hinsichten usw.: `begriffsmodell.yaml`.
+- Hinsichten: `name` und `erklaerung` (ein Satz, was die Hinsicht umfasst; erscheint
+  in Landkarte, Liste und Handout) unter `hinsichten` in `begriffsmodell.yaml`;
+  englisch in `en.yaml` unter `hinsichten.<id>.name` / `.erklaerung`.
 - Über, Anhang, Englisch: `ueber.yaml`, `anhang.yaml`, `en.yaml`.
 - Längere Texte stehen in YAML als Block:
   ```yaml

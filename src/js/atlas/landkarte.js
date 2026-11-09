@@ -212,7 +212,7 @@
     var spaltenInfo = hs.map(function (h) {
       var kopf = [];
       kopf.push({ zeilen: umbrechen(h.name, spB - 2 * PAD, GROESSE.text), groesse: GROESSE.text, klasse: "lk-titel" });
-      kopf.push({ zeilen: umbrechen(h.leitfrage, spB - 2 * PAD, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein" });
+      kopf.push({ zeilen: umbrechen(h.erklaerung, spB - 2 * PAD, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein" });
       var leer = !h.schwerpunkt && !h.muster.length;
       if (leer) {
         // deliberately empty: say why instead of drawing an empty box

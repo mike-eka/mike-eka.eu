@@ -21,10 +21,18 @@ fragen:
   hinsicht: "In which respect?"
   fuer_wen: "For whom? The frame of every assessment."
 hinsichten:
-  glauben: "What we believe"
-  achten: "What we attend to"
-  vertrauen: "Whom we trust"
-  begruenden: "Why we believe"
+  glauben:
+    name: "What we believe"
+    erklaerung: "Which statements we take to be true, and how certain we are."
+  achten:
+    name: "What we attend to"
+    erklaerung: "Which questions get our attention, and which are treated as settled."
+  vertrauen:
+    name: "Whom we trust"
+    erklaerung: "Whom we credit with expertise, and whether that trust matches their reliability."
+  begruenden:
+    name: "Why we believe"
+    erklaerung: "On what grounds and by which standards we take something to be right."
 muster_hinweis: "The individual pattern cards are available in German."
 
 # Fixed labels of the English page (added in step 5, not from texte-schritt5.yaml)

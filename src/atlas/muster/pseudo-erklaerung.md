@@ -100,7 +100,6 @@ normalfall: >-
   sich unterscheiden.
 verwandt: [meinung-als-tatsache]
 spiegelfall: null
-anschlussfaecher: [Linguistik, Psychologie, Philosophie]
 literatur:
   - "Lakoff, G. & Johnson, M. (1980). Metaphors We Live By. Chicago: University of Chicago Press."
   - "Rozenblit, L. & Keil, F. (2002). The misunderstood limits of folk science: an illusion of explanatory depth. Cognitive Science 26(5), 521–562."

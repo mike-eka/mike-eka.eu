@@ -72,7 +72,6 @@ normalfall: >-
   auftritt.
 verwandt: [gewichtung-auslassung]
 spiegelfall: doppelter-massstab
-anschlussfaecher: [Linguistik, Politikwissenschaft, Journalismus]
 literatur:
   - "Roberts, C. (2012). Information structure in discourse: Towards an integrated formal theory of pragmatics. Semantics and Pragmatics 5(6), 1–69."
   - "Grice, H. P. (1975). Logic and conversation. In P. Cole & J. L. Morgan (Hg.), Syntax and Semantics 3: Speech Acts, 41–58. New York: Academic Press."

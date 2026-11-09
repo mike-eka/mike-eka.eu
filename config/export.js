@@ -18,7 +18,7 @@ function seitenUrl() {
 const MUSTER_FELDER = [
   "titel", "fachbegriff", "hinsicht", "reihenfolge", "kurz", "effekt", "minimalpaar", "analogie",
   "mittel", "schablone", "kippt_an", "grenzfall_frage", "einschaetzungen", "etiketten",
-  "normalfall", "verwandt", "spiegelfall", "anschlussfaecher", "literatur", "grafik",
+  "normalfall", "verwandt", "spiegelfall", "literatur", "grafik",
 ];
 
 const veroeffentlicht = (alle) => (alle || []).filter((i) => i.data.veroeffentlicht === true);
@@ -84,7 +84,7 @@ function atlasJsonLd(bm, alle, b) {
     }));
   };
   schema("pruefragen", "Prüffragen", (bm.pruefragen || []).map((q) => ({ id: q.id, name: q.frage, definition: q.erklaerung })));
-  schema("hinsichten", "Hinsichten", (bm.hinsichten || []).map((h) => ({ id: h.id, name: h.name, definition: h.leitfrage })));
+  schema("hinsichten", "Hinsichten", (bm.hinsichten || []).map((h) => ({ id: h.id, name: h.name, definition: h.erklaerung })));
   schema("wirkungen", "Wirkungen", (bm.wirkungen || []).map((w) => ({ id: w.id, name: w.name, definition: w.erklaerung })));
   schema("urteile", "Urteile", (bm.urteile || []).map((u) => ({ id: u.id, name: u.name })));
   schema("vergleichsfaelle", "Vergleichsfälle", (bm.vergleichsfaelle || []).map((v) => ({ id: v.id, name: v.name })));
