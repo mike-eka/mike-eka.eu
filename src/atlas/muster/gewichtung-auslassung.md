@@ -32,7 +32,7 @@ fall:                       # realer Fall statt Minimalpaar
         Ordensfrauen in El Salvador. Zusammen erhielten sie in der New York
         Times etwa halb so viel Raum wie Popiełuszko, 8 Titelseiten und keinen
         Leitartikel.
-  quelle: "Herman & Chomsky (1988), Kapitel 2, Tabelle 2-1"
+  quelle: "Herman & Chomsky (1988)"
   hinweis: >-
     Zahlen nach Herman und Chomsky, gemessen in der New York Times. Die
     Studie ist einflussreich und umstritten: Kritiker haben andere Gründe für
