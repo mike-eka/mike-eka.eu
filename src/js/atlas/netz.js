@@ -84,14 +84,13 @@
     // a greater distance from the node only a little. Label widths are
     // measured in the page's font.
     var OBEN = 9, UNTEN = 3, RAND_L = 2;   // 11px text: ascent/descent around the baseline, margin
-    var breiten = {};
+    // measured on every drawing (no cache): before the web font has loaded
+    // a fallback font gives other widths, see the redraw on fonts.ready below
     function labelBreite(text) {
-      if (breiten[text] == null) {
-        var t = svg.append("text").attr("class", "nk-label").text(text);
-        breiten[text] = t.node().getComputedTextLength() || text.length * 6.6;
-        t.remove();
-      }
-      return breiten[text];
+      var t = svg.append("text").attr("class", "nk-label").text(text);
+      var b = t.node().getComputedTextLength() || text.length * 6.6;
+      t.remove();
+      return b;
     }
     function kandidatenFuer(x, y, r, b) {
       var liste = [];
@@ -263,6 +262,10 @@
 
     if (window.ResizeObserver) {
       new ResizeObserver(function () { if (groesse()) aktualisiere(); }).observe(flaeche);
+    }
+    // once the page's font is in, place the labels again with its widths
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { aktualisiere(); });
     }
   }
 })();
