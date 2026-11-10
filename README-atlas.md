@@ -127,6 +127,9 @@ einschaetzungen:
   ```
   Bei Anführungszeichen im Text die typografischen „…“ verwenden oder den Text in
   `"…"` setzen und innere `"` vermeiden.
+- Zitierte Sätze (`inhalt` einer Einschätzung, `minimalpaar.muster`/`gegenform`,
+  `minimalpaar.frage` ohne `frage_label`, `analogie.aussage`) ohne eigene
+  Anführungszeichen schreiben: Die Seite setzt sie selbst. Der Build warnt sonst.
 
 ### Beschriftung ändern
 

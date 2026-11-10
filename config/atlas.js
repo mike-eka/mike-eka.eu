@@ -80,6 +80,24 @@ function pruefeAtlas(items) {
     const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt, verzerrungen } = item.data;
     const datei = item.inputPath;
 
+    // Values the template itself sets in quotation marks (<q>) must not bring
+    // their own: einschaetzungen[].inhalt, minimalpaar.muster / gegenform (as
+    // single sentences), minimalpaar.frage (without frage_label), analogie.aussage.
+    {
+      const { minimalpaar: mp, analogie } = item.data;
+      const zitiert = [];
+      (einschaetzungen || []).forEach((e, i) => e && zitiert.push([`einschaetzungen ${i + 1} (inhalt)`, e.inhalt]));
+      if (mp) {
+        if (!Array.isArray(mp.muster) && !Array.isArray(mp.gegenform)) {
+          zitiert.push(["minimalpaar.muster", mp.muster], ["minimalpaar.gegenform", mp.gegenform]);
+        }
+        if (!mp.frage_label) zitiert.push(["minimalpaar.frage", mp.frage]);
+      }
+      if (analogie) zitiert.push(["analogie.aussage", analogie.aussage]);
+      zitiert.filter(([, v]) => typeof v === "string" && /^\s*[„“]/.test(v)).forEach(([wo]) =>
+        warn(`${datei}: ${wo} beginnt mit einem Anführungszeichen; die Seite setzt selbst welche (bitte im Text weglassen)`));
+    }
+
     // verzerrungen: a list of { name, text } (tile "Verzerrungen, die das Muster begünstigen")
     if (!Array.isArray(verzerrungen) || !verzerrungen.length) {
       warn(`${datei}: verzerrungen fehlt (Liste mit name und text)`);

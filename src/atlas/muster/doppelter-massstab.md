@@ -56,7 +56,7 @@ kippt_an: was
 grenzfall_frage: "Ist eine einzelne Aussage der Inhalt, oder das Paar?"
 einschaetzungen:
   - label: "nur die Aussage zur Schuldenbremse"
-    inhalt: "„Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen.“"
+    inhalt: "Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen."
     urteil: nein
     begruendung: >-
       Für sich genommen eine vertretbare Position mit nachvollziehbarer
