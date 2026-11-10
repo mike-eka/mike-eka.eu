@@ -6,6 +6,9 @@ module.exports = {
   de: {
     blog: "Blog",
     bio: "Bio",
+    publikationen: "Publikationen",
+    publikationenUrl: "/publikationen/",
+    dissertation: "Dissertation",
     sprache: "Sprache",
     polit: "Polit",
     projects: "Projects",
@@ -20,6 +23,9 @@ module.exports = {
   en: {
     blog: "Blog",
     bio: "Bio",
+    publikationen: "Publications",
+    publikationenUrl: "/en/publications/",
+    dissertation: "Dissertation",
     sprache: "Language",
     polit: "Politics",
     projects: "Projects",

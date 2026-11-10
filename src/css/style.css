@@ -558,6 +558,30 @@ article.post p {
     text-decoration: underline;
 }
 
+/* ---- Publications (one reference per entry, hanging indent) ---- */
+.pub-abschnitt h2 {
+    font-size: 1.15rem;
+    margin: 2rem 0 0.75rem;
+}
+
+.pub-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-width: 40rem;
+}
+
+.pub-list li {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+    text-indent: -1.5rem;
+    line-height: 1.55;
+}
+
+.pub-list a {
+    text-decoration: underline;
+}
+
 footer {
     margin-top: 4rem;
     padding-top: 1.5rem;

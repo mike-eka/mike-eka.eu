@@ -99,6 +99,18 @@ module.exports = function (eleventyConfig) {
   // post that hasn't been translated yet), it falls back to the other
   // language's start page (/en/ or /), so the toggle never leads nowhere.
   // `alle` is collections.all, used to check which URLs exist.
+  // Publications: splits the field `in` ("Hrsg. (eds.), Sammelband (Reihe)")
+  // into the editors part, the volume title (set in italics) and a series in
+  // brackets at the end (kept upright).
+  eleventyConfig.addFilter("inTeile", (text) => {
+    const s = String(text || "");
+    const m = /^(.*?\(eds?\.\),\s*)(.*)$/.exec(s);
+    const vor = m ? m[1] : "";
+    const rest = m ? m[2] : s;
+    const r = /^(.*\S)\s+(\([^()]*\))$/.exec(rest);
+    return r ? { vor, titel: r[1], reihe: r[2] } : { vor, titel: rest, reihe: "" };
+  });
+
   eleventyConfig.addFilter("otherLocaleUrl", (url, locale, alle) => {
     const ziel = locale === "en"
       ? url.replace(/^\/en\//, "/").replace(/^\/en$/, "/")

@@ -1,0 +1,22 @@
+{#- Publikationen (DE und EN): die Abschnitte aus src/_data/publikationen.yaml,
+    je Eintrag eine Literaturangabe, der Titel ist der Link:
+    Autoren. Jahr. Titel [Video]. In Hrsg. (eds.), *Sammelband* (Reihe), Seiten. Ort: Verlag.
+    Dissertation: Autoren. Jahr. Titel. Dissertation, Hochschule. Verlag. -#}
+{%- macro angabe(e) -%}
+  {{ e.autoren }}. {{ e.jahr }}. <a href="{{ e.url }}" target="_blank" rel="noopener">{{ e.titel }}</a>
+  {%- if e.art == "video" %} [Video]{% endif %}.
+  {%- if e.art == "dissertation" %} {{ i18n[locale].dissertation }}{% if e.hochschule %}, {{ e.hochschule }}{% endif %}.{% endif %}
+  {%- if e.in %}{% set q = e.in | inTeile %} In {{ q.vor }}<em>{{ q.titel }}</em>{% if q.reihe %} {{ q.reihe }}{% endif %}{% if e.seiten %}, {{ e.seiten }}{% endif %}.{% endif %}
+  {%- if e.verlag %} {% if e.ort %}{{ e.ort }}: {% endif %}{{ e.verlag }}.{% endif %}
+{%- endmacro -%}
+
+{% for a in publikationen.abschnitte %}
+<section class="pub-abschnitt" aria-labelledby="pub-{{ a.id }}">
+  <h2 id="pub-{{ a.id }}">{{ a.titel[locale] }}</h2>
+  <ul class="pub-list">
+    {% for e in a.eintraege %}
+    <li>{{ angabe(e) }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}

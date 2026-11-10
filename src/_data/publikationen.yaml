@@ -1,0 +1,60 @@
+# Publikationen – neue Einträge einfach oben im passenden Abschnitt einfügen.
+# Felder: autoren, jahr, titel, in (optional), seiten (optional),
+#         ort (optional), verlag, art (optional: video | dissertation),
+#         hochschule (bei art: dissertation), url
+# Im Feld `in` wird nach „(eds.), “ bzw. „(ed.), “ der Titel des Sammelbands
+# kursiv gesetzt; eine Reihe in Klammern am Ende bleibt gerade.
+abschnitte:
+  - id: linguistik
+    titel: { de: "Linguistik", en: "Linguistics" }
+    eintraege:
+      - autoren: "Berger, Mike"
+        jahr: 2024
+        titel: "Restriction Against Non-finite Transitivity Glottotheque"
+        art: video
+        verlag: "Zenodo"
+        url: "https://zenodo.org/records/10524969"
+
+      - autoren: "Berger, Mike"
+        jahr: 2023
+        titel: "Complex Transitivity Restrictions in Grammar"
+        art: dissertation
+        hochschule: "Universität Leipzig"
+        verlag: "LingBuzz"
+        url: "https://ling.auf.net/lingbuzz/009495"
+
+      - autoren: "Berger, Mike"
+        jahr: 2021
+        titel: "Valence Matching in Saliba"
+        in: "D. K. E. Reisinger & Marianne Huijsmans (eds.), Proceedings of the 37th West Coast Conference on Formal Linguistics"
+        seiten: "89–97"
+        ort: "Somerville, MA"
+        verlag: "Cascadilla Proceedings Project"
+        url: "https://www.lingref.com/cpp/wccfl/37/paper3518.pdf"
+
+      - autoren: "Lee, Hyunjung & Mike Berger"
+        jahr: 2021
+        titel: "On the obligatory versus no control split in Korean"
+        in: "Anne Mucha, Jutta M. Hartmann & Beata Trawiński (eds.), Non-canonical Control in a Cross-linguistic Perspective (Linguistik Aktuell/Linguistics Today 270)"
+        seiten: "107–136"
+        ort: "Amsterdam"
+        verlag: "John Benjamins"
+        url: "https://www.degruyterbrill.com/document/doi/10.1075/la.270.04lee/pdf?licenseType=open-access"
+
+      - autoren: "Berger, Mike"
+        jahr: 2019
+        titel: "Indonesian Crossed Control: Expanding the Typology of Restructuring"
+        in: "Richard Stockwell, Maura O'Leary, Zhongshi Xu & Z. L. Zhou (eds.), Proceedings of the 36th West Coast Conference on Formal Linguistics"
+        seiten: "61–70"
+        ort: "Somerville, MA"
+        verlag: "Cascadilla Proceedings Project"
+        url: "https://www.lingref.com/cpp/wccfl/36/paper3447.pdf"
+
+  - id: desinformation
+    titel: { de: "Desinformation", en: "Disinformation" }
+    eintraege:
+      - autoren: "Berger, Mike & Cassian Cassens"
+        jahr: 2026
+        titel: "Wahr oder falsch reicht nicht: Neue Mittel gegen Desinformation"
+        verlag: "Zenodo"
+        url: "https://zenodo.org/records/18407709"
