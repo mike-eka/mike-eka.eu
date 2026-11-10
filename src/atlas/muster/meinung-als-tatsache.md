@@ -62,7 +62,14 @@ verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstig
 literatur:
   - "Kölbel, M. (2004). Faultless Disagreement. Proceedings of the Aristotelian Society 104(1), 53–73."
   - "Lasersohn, P. (2005). Context Dependence, Disagreement, and Predicates of Personal Taste. Linguistics and Philosophy 28(6), 643–686."
-grafik: null                # oder: netz / balken (siehe 3.3)
+grafik:
+  typ: illustration
+  motiv: sprechblase
+  titel: "Eine Meinung im Gewand einer Tatsache"
+  text: "Tempo 30 macht unsere Innenstädte kaputt."
+  knopf: "Genauer hinsehen"
+  vorher: "Eine Sprechblase: So klingt eine Feststellung."
+  nachher: "Eigentlich eine Gedankenblase: eine Meinung, gesprochen wie eine Tatsache."
 ---
 
 Politische Rede ist voller Werturteile, und das ist in Ordnung. Zum Muster

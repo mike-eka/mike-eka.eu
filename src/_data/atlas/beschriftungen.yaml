@@ -81,6 +81,7 @@ karte:
   effekt: "Was sich verschlechtert"
   effekt_vorher: "Vorher"
   effekt_nachher: "Nachher"
+  fall_quelle: "Quelle"                 # realer Fall (Feld `fall`)
   effekt_weitere: "Betrifft außerdem:"   # weitere Hinsichten aus effekt.hinsichten (ohne die Haupt-Hinsicht)
   grenzfall: "Grenzfall"
   schalter: "Einschätzung wählen"       # Knopfgruppe im Grenzfall und in der Grafik
@@ -136,10 +137,16 @@ schablone:
     muster: "durch Muster festgelegt"
     belegt: "durch Beispiel belegt"
 
-grafik:                 # Grafiken auf den Karten (netz.js, balken.js)
-  titel:
+grafik:                 # Grafiken auf den Karten (netz.js, balken.js, illustration.js)
+  titel:                # wenn die Karte unter grafik.titel keinen eigenen Titel hat
     netz: "Die Konstellation"
     balken: "Berichterstattung im Vergleich"
+    illustration: "Illustration"
+  # Illustrationen: Bezeichnung der beiden Bildunterschriften ohne JS und im Druck
+  zustand_vorher: "Zunächst"
+  zustand_nachher: "Aufgedeckt"
+  # Balken: Hinweis über der Tabelle, wenn Themen absolute Zahlen haben
+  absolut_hinweis: "Anteile in Prozent, in Klammern die absoluten Zahlen."
   daten: "Die Daten als Tabelle"
   einschaetzung: "Einschätzung"
   urteil: "Urteil"

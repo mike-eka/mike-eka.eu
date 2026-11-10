@@ -103,7 +103,19 @@ verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstig
 literatur:
   - "Lakoff, G. & Johnson, M. (1980). Metaphors We Live By. Chicago: University of Chicago Press."
   - "Rozenblit, L. & Keil, F. (2002). The misunderstood limits of folk science: an illusion of explanatory depth. Cognitive Science 26(5), 521–562."
-grafik: null
+grafik:
+  typ: illustration
+  motiv: formel
+  titel: "Sieht aus wie eine Herleitung"
+  zeilen:
+    - { text: "Haushalt: ∀t ≤ T: Einnahmen(t) ≥ Ausgaben(t)" }
+    - { text: "Staat ≈ Haushalt", fehler: "Hier bricht die Analogie." }
+    - { text: "⇒ Staat: ∀t: Einnahmen(t) ≥ Ausgaben(t)", fehler: "Ein Staat hat kein Lebensende T." }
+    - { text: "Σ Schulden → 0   ∫ Wohlstand dt ↑   √Stabilität" }
+    - { text: "5 + 3 = 6", fehler: "Sieht aus wie Rechnen, ist keins." }
+  knopf: "Nachrechnen"
+  vorher: "Formeln wirken wie eine Begründung."
+  nachher: "Beim Nachrechnen zeigt sich: Der entscheidende Schritt ist keine Rechnung, sondern eine Behauptung."
 ---
 
 Pseudo-Erklärungen behaupten oft nichts Falsches. Dass ein Haushalt nicht

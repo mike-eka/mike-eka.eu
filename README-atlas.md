@@ -70,6 +70,18 @@ Varianten im Minimalpaar:
   beiden Fassungen verschieden sind („↔ ausgetauscht“).
 - `minimalpaar: null` lässt die Kachel weg (z. B. wenn die Karte `analogie` nutzt).
 
+Realer Fall statt Minimalpaar (z. B. Gewichtung & Auslassung): `minimalpaar: null` und
+```yaml
+fall:
+  titel: "…"
+  einleitung: "…"
+  seiten:                      # zwei Seiten, nebeneinander (schmal untereinander)
+    - { titel: "…", text: "…" }
+    - { titel: "…", text: "…" }
+  quelle: "…"
+  hinweis: "…"
+```
+
 ### Grenzfall ändern oder hinzufügen
 
 Die Kachel „Grenzfall“ zeigt die Frage (`grenzfall_frage`), einen Knopf je Einschätzung
@@ -134,7 +146,8 @@ für Linien 3:1 (z. B. mit einem Kontrastrechner prüfen).
 
 ### Grafikdaten ändern
 
-Grafiken stehen im Feld `grafik` einer Karte. Zwei Typen gibt es:
+Grafiken stehen im Feld `grafik` einer Karte, direkt nach dem Beispiel. `titel` ist die
+Überschrift der Kachel (sonst die aus `beschriftungen.yaml → grafik.titel`). Drei Typen gibt es:
 
 - **`typ: netz`** (Kaperung): `knoten` (Koordinaten 0–100, `gruppe`, optional `label`),
   `kanten` (`von`/`nach`, auch als Liste), Bedingungen in `nur_wenn`, eigene `schalter`,
@@ -143,12 +156,30 @@ Grafiken stehen im Feld `grafik` einer Karte. Zwei Typen gibt es:
   wie `kennzahl >= 75`, und `sonst` als letztes Urteil.
   Kopplung an die Einschätzungen: `zustand_aus_einschaetzung: rueckbindung` und in jeder
   Einschätzung `grafik_zustand: { rueckbindung: klima }`.
-- **`typ: balken`** (Gewichtung): `reihe_a`, `masse` (Schalter), `themen` mit einem
-  Zahlenwert für `berichterstattung` und für jedes Maß.
+- **`typ: balken`** (Gewichtung): `reihe_a: { feld, label }` ist die feste Vergleichsreihe,
+  `masse` die Maße, zwischen denen der Schalter wechselt; `themen` mit einem Zahlenwert (in
+  Prozent) für `reihe_a.feld` und für jedes Maß, optional `absolut: { feld: Zahl, … }` –
+  die absoluten Zahlen stehen dann in Klammern in der Tabelle, im Tooltip und in der
+  Textalternative.
+- **`typ: illustration`**: eine ruhige Zeichnung mit genau einem Knopf, der den Trick
+  aufdeckt. Immer: `motiv`, `titel`, `knopf` (Text des Knopfs), `vorher` und `nachher`
+  (die beiden Bildunterschriften; sie sind auch die Textalternative). Je nach Motiv:
+  - `motiv: sprechblase` – `text` (der Satz in der Blase); aufgedeckt wird sie zur
+    Gedankenblase.
+  - `motiv: formel` – `zeilen`: Liste von `{ text, fehler }`; Zeilen mit `fehler` werden
+    beim Aufdecken unterstrichen, die Anmerkung steht daneben (schmal: darunter).
+  - `motiv: massstab` – `links` und `rechts` je `{ gegenstand, blase, blase_gross, lineal }`,
+    `marke`; aufgedeckt steht das Lineal auch rechts.
+  - `motiv: weiche` – `start`, `ziel_umgeleitet`, `ziel_eigentlich`; aufgedeckt stellt sich
+    die Weiche um.
+  Die Zeichnung entsteht beim Build (`config/illustration.js`) in zwei Formaten (quer,
+  schmal hochkant). Ohne JavaScript und im Druck zeigt sie den aufgedeckten Zustand mit
+  beiden Bildunterschriften. Bei „Bewegung reduzieren“ schaltet sie ohne Animation um.
 
-Der `hinweis` erscheint direkt unter der Grafik. Ohne JavaScript zeigt die Karte die
-Daten als Tabelle. Der Build warnt bei unbekannten Namen, unlesbaren Bedingungen oder
-fehlenden Werten.
+Bei `netz` und `balken` erscheint der `hinweis` direkt unter der Grafik, und ohne
+JavaScript zeigt die Karte die Daten als Tabelle. Der Build warnt bei unbekannten Namen,
+unlesbaren Bedingungen, fehlenden Werten, unbekanntem `motiv` oder fehlenden Feldern
+einer Illustration.
 
 ### Entwurf verbergen und Entwürfe insgesamt ausblenden
 
@@ -200,6 +231,7 @@ Nur wenn alles grün ist (Exit-Code 0), nach `main` mergen.
 ## Grenzen (bewusst)
 
 Im Code angelegt sind die Felder der Schablone (Inhalt, Vergleichsfall, Hinsicht,
-Urteil, Wirkung; Publikum als Rahmen) und die beiden Grafiktypen `netz` und `balken`.
-Eine neue Prüffrage, ein weiteres Schablonenfeld oder ein neuer Grafiktyp braucht eine
+Urteil, Wirkung; Publikum als Rahmen), die Grafiktypen `netz`, `balken` und
+`illustration` und deren vier Motive. Eine neue Prüffrage, ein weiteres Schablonenfeld,
+ein neuer Grafiktyp oder ein neues Motiv braucht eine
 Codeänderung.

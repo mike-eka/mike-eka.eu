@@ -6,7 +6,16 @@ const netzLogik = require("../src/js/atlas/netz-logik.js");
 const schemaSvg = require("./schema-svg.js");
 const atlasExport = require("./export.js");
 
-const GRAFIK_TYPEN = ["netz", "balken"];
+const GRAFIK_TYPEN = ["netz", "balken", "illustration"];
+const { illustration, MOTIVE, PFLICHT } = require("./illustration");
+
+// Fixed series of a bar graphic: reihe_a { feld, label }; an older plain
+// label means the field "berichterstattung".
+const reiheA = (g) => {
+  const ra = g && g.reihe_a;
+  if (ra && typeof ra === "object") return { feld: ra.feld || "berichterstattung", label: ra.label || "" };
+  return { feld: "berichterstattung", label: ra || "" };
+};
 
 // States of a network graphic coupled to the assessments: one per assessment
 // (key = its position, as in the template switch), with its grafik_zustand.
@@ -149,10 +158,19 @@ function pruefeAtlas(items) {
     if (g.typ === "balken") {
       const masse = (g.masse || []).map((m) => m.id);
       (g.themen || []).forEach((t) => {
-        ["berichterstattung", ...masse].forEach((m) => {
+        [reiheA(g).feld, ...masse].forEach((m) => {
           if (typeof t[m] !== "number") warn(`${datei}: Thema "${t.name}" hat keinen Zahlenwert für "${m}"`);
         });
       });
+    }
+    if (g.typ === "illustration") {
+      if (!MOTIVE.includes(g.motiv)) {
+        warn(`${datei}: grafik.motiv "${g.motiv}" unbekannt (erlaubt: ${MOTIVE.join(", ")})`);
+      } else {
+        ["titel", "knopf", "vorher", "nachher", ...PFLICHT[g.motiv]].forEach((f) => {
+          if (g[f] == null || g[f] === "") warn(`${datei}: grafik (${g.motiv}) braucht das Feld "${f}"`);
+        });
+      }
     }
   }
 
@@ -300,9 +318,20 @@ module.exports = function atlasPlugin(eleventyConfig) {
   });
 
   // Data for a graphic (netz.js / balken.js), JSON safe inside <script>.
+  // Illustration (grafik.typ: illustration) as finished figure markup.
+  eleventyConfig.addFilter("illustration", (grafik, texte) => illustration(grafik, texte));
+
+  // Bar graphics: the fixed series, and whether any topic has absolute values.
+  eleventyConfig.addFilter("reiheA", (grafik) => reiheA(grafik));
+  eleventyConfig.addFilter("hatAbsolut", (grafik) => ((grafik && grafik.themen) || []).some((t) => t && t.absolut));
+
+  // A number in German notation (1183 -> "1.183").
+  eleventyConfig.addFilter("zahl", (n) => (typeof n === "number" ? n.toLocaleString("de-DE") : n));
+
   eleventyConfig.addFilter("grafikDaten", (grafik, einschaetzungen, texte) => {
     const daten = { grafik, texte: texte || {} };
     if (grafik && grafik.typ === "netz") daten.zustaende = netzZustaende(grafik, einschaetzungen);
+    if (grafik && grafik.typ === "balken") daten.reihe_a = reiheA(grafik);
     return JSON.stringify(daten).replace(/</g, "\\u003c");
   });
 

@@ -76,7 +76,16 @@ literatur:
   - "Roberts, C. (2012). Information structure in discourse: Towards an integrated formal theory of pragmatics. Semantics and Pragmatics 5(6), 1–69."
   - "Grice, H. P. (1975). Logic and conversation. In P. Cole & J. L. Morgan (Hg.), Syntax and Semantics 3: Speech Acts, 41–58. New York: Academic Press."
   - "Clayman, S. & Heritage, J. (2002). The News Interview: Journalists and Public Figures on the Air. Cambridge: Cambridge University Press."
-grafik: null
+grafik:
+  typ: illustration
+  motiv: weiche
+  titel: "Die Frage wird umgeleitet"
+  start: "Warum wird die Sanierung verschoben?"
+  ziel_umgeleitet: "Drei Turnhallen eröffnet"
+  ziel_eigentlich: "Der Grund für die Verschiebung"
+  knopf: "Nachhaken"
+  vorher: "Die Weiche lenkt die Frage auf ein anderes Gleis."
+  nachher: "Wer nachhakt, stellt die Weiche zurück, und die Frage erreicht ihr Ziel."
 ---
 
 Ablenkung funktioniert, weil wir im Gespräch annehmen, dass jede Äußerung

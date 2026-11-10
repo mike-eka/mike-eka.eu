@@ -24,6 +24,27 @@ layout: base.njk
   </header>
 
   <div class="atlas-kacheln">
+    {#- Optional: ein realer Fall an der Stelle des Minimalpaars: titel,
+        einleitung, zwei seiten (titel, text) nebeneinander, quelle, hinweis -#}
+    {% if fall %}
+    <section class="atlas-kachel atlas-kachel--ruhig atlas-fall" aria-labelledby="fall">
+      <h2 id="fall">{{ fall.titel }}</h2>
+      {% if fall.einleitung %}<p class="atlas-fall__einleitung">{{ fall.einleitung }}</p>{% endif %}
+      {% if fall.seiten and fall.seiten.length %}
+      <div class="atlas-fall__seiten">
+        {% for s in fall.seiten %}
+        <section class="atlas-fall__seite" aria-labelledby="fall-seite-{{ loop.index }}">
+          <h3 id="fall-seite-{{ loop.index }}">{{ s.titel }}</h3>
+          <p>{{ s.text }}</p>
+        </section>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if fall.quelle %}<p class="atlas-fall__quelle"><span class="atlas-label">{{ b.karte.fall_quelle }}</span> {{ fall.quelle }}</p>{% endif %}
+      {% if fall.hinweis %}<p class="atlas-hinweis">{{ fall.hinweis }}</p>{% endif %}
+    </section>
+    {% endif %}
+
     {% if minimalpaar %}
     <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="minimalpaar">
       <h2 id="minimalpaar">{{ b.karte.minimalpaar }}</h2>
@@ -113,11 +134,20 @@ layout: base.njk
     </section>
     {% endif %}
 
-    {# Grafik (grafik.typ: netz | balken), direkt unter Minimalpaar/Analogie #}
+    {#- Grafik (grafik.typ: netz | balken | illustration), direkt unter dem
+        Beispiel (Fall, Minimalpaar oder Analogie) -#}
     {% if grafik and grafik.typ %}
     {%- set gb = b.grafik -%}
     <section class="atlas-kachel atlas-kachel--kern atlas-grafik" aria-labelledby="grafik-titel" data-grafik-kachel>
-      <h2 id="grafik-titel">{{ gb.titel[grafik.typ] }}</h2>
+      <h2 id="grafik-titel">{{ grafik.titel or gb.titel[grafik.typ] }}</h2>
+      {% if grafik.typ == "illustration" %}
+      {#- Statisches SVG im aufgedeckten Zustand (ohne JS, Druck);
+          illustration.js zeigt zuerst den Zustand vorher und deckt per Knopf auf -#}
+      <div class="atlas-schalter atlas-illustration__steuerung" data-nur-js hidden>
+        <button type="button" data-illustration-knopf aria-pressed="false">{{ grafik.knopf }}</button>
+      </div>
+      {{ grafik | illustration(gb) | safe }}
+      {% else %}
       <div class="atlas-grafik__steuerung" data-nur-js hidden>
         {% if grafik.typ == "netz" %}
           {% if grafik.zustand_aus_einschaetzung and einschaetzungen and einschaetzungen.length %}
@@ -174,11 +204,16 @@ layout: base.njk
           </tbody>
         </table>
         {% elif grafik.typ == "balken" %}
+        {#- feste Reihe (reihe_a: feld, label) und die Maße; in Klammern die
+            absoluten Zahlen aus `absolut`, wenn vorhanden -#}
+        {%- set ra = grafik | reiheA -%}
+        {%- set mitAbsolut = grafik | hatAbsolut -%}
         <table class="atlas-tabelle">
+          {% if mitAbsolut %}<caption class="atlas-hinweis">{{ gb.absolut_hinweis }}</caption>{% endif %}
           <thead>
             <tr>
               <th scope="col">{{ gb.thema }}</th>
-              <th scope="col">{{ grafik.reihe_a }}</th>
+              <th scope="col">{{ ra.label }}</th>
               {% for m in grafik.masse %}<th scope="col">{{ m.label }}</th>{% endfor %}
             </tr>
           </thead>
@@ -186,8 +221,10 @@ layout: base.njk
             {% for th in grafik.themen %}
             <tr>
               <th scope="row">{{ th.name }}</th>
-              <td data-label="{{ grafik.reihe_a }}">{{ th.berichterstattung }} %</td>
-              {% for m in grafik.masse %}<td data-label="{{ m.label }}">{{ th[m.id] }} %</td>{% endfor %}
+              {% for spalte in [ra].concat(grafik.masse) %}
+              {%- set feld = spalte.feld or spalte.id -%}
+              <td data-label="{{ spalte.label }}">{{ th[feld] }} %{% if th.absolut and th.absolut[feld] != null %} ({{ th.absolut[feld] | zahl }}){% endif %}</td>
+              {% endfor %}
             </tr>
             {% endfor %}
           </tbody>
@@ -195,6 +232,7 @@ layout: base.njk
         {% endif %}
       </details>
       <script type="application/json" id="grafik-daten">{{ grafik | grafikDaten(einschaetzungen, gb) | safe }}</script>
+      {% endif %}
     </section>
     {% endif %}
 
@@ -314,7 +352,9 @@ layout: base.njk
     {% endif %}
   </div>
 </article>
-{% if grafik and grafik.typ %}
+{% if grafik and grafik.typ == "illustration" %}
+<script src="/js/atlas/illustration.js" defer></script>
+{% elif grafik and grafik.typ %}
 <script src="/js/vendor/d3.min.js" defer></script>
 {% if grafik.typ == "netz" %}<script src="/js/atlas/netz-logik.js" defer></script>{% endif %}
 <script src="/js/atlas/{{ grafik.typ }}.js" defer></script>

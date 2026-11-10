@@ -338,8 +338,9 @@ main.atlas-wide {
     margin: 0 0 0.3rem;
 }
 
+/* wide enough for the longest field name ("Vergleichsfall") */
 .atlas-einschaetzung .atlas-werte > div {
-    grid-template-columns: 7rem 1fr;
+    grid-template-columns: 9.5rem 1fr;
 }
 
 .atlas-einschaetzung .atlas-variante__urteil {
@@ -862,6 +863,11 @@ main.atlas-wide {
     vertical-align: top;
     padding: 0.35rem 0.5rem;
     border-bottom: 1px solid var(--atlas-linie);
+    /* long words in the headers (e.g. "Wissenschaftsjournalismus") would
+       otherwise make the table wider than its tile */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    overflow-wrap: anywhere;
 }
 
 .atlas-tabelle thead th {
@@ -1071,6 +1077,147 @@ main.atlas-wide {
         grid-template-columns: 1fr;
         gap: 0;
     }
+}
+
+/* ---- Real case (card field `fall`), in place of the minimal pair ---- */
+.atlas-fall__einleitung {
+    margin: 0 0 0.9rem;
+}
+
+.atlas-fall__seiten {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.atlas-fall__seite {
+    min-width: 0;
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+}
+
+.atlas-fall__seite h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.35rem;
+}
+
+.atlas-fall__seite p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.atlas-fall__quelle {
+    margin: 0.9rem 0 0.3rem;
+    font-size: 0.9rem;
+}
+
+.atlas-fall__quelle .atlas-label {
+    display: inline;
+    margin-right: 0.4rem;
+}
+
+@media (max-width: 640px) {
+    .atlas-fall__seiten {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Illustrations (grafik.typ: illustration; config/illustration.js) ----
+   Default = revealed (no JS, print). On screen, .ist-zu shows the state
+   before; transitions are soft and switched off for reduced motion. */
+.atlas-illustration {
+    margin: 0;
+}
+
+.il-bild {
+    display: flex;
+    justify-content: center;
+}
+
+.il-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.il-hoch { display: none; }
+
+@media (max-width: 640px) {
+    .il-quer { display: none; }
+    .il-hoch { display: block; }
+}
+
+.il-svg text { font-family: inherit; fill: var(--atlas-text); }
+.il-anmerkung { fill: var(--atlas-kern-text); font-style: italic; }
+.il-legende { fill: var(--atlas-gedaempft); }
+
+.il-blase { fill: var(--atlas-feld); stroke: var(--atlas-offen); stroke-width: 1.3; stroke-linejoin: round; }
+.il-tafel { fill: var(--atlas-feld); stroke: var(--atlas-linie); stroke-width: 1.2; }
+.il-strich { fill: none; stroke: var(--atlas-kern); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s ease; }
+.il-gegenstand { fill: var(--atlas-kachel-still); stroke: var(--atlas-offen); stroke-width: 1.2; }
+.il-boden { stroke: var(--atlas-offen); stroke-width: 1.2; }
+.il-marke { stroke: var(--atlas-kern); stroke-width: 1.5; stroke-dasharray: 6 4; }
+.il-lineal { fill: var(--atlas-feld); stroke: var(--atlas-kern); stroke-width: 1.2; }
+.il-lineal-strich { stroke: var(--atlas-kern); stroke-width: 1; }
+.il-wachsen { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.7s ease, opacity 0.4s ease; }
+.il-start, .il-ziel { fill: var(--atlas-feld); stroke: var(--atlas-offen); stroke-width: 1.2; transition: stroke 0.5s ease; }
+.il-ziel-zu { stroke-dasharray: 4 4; }
+.il-schwellen { fill: none; stroke: var(--atlas-linie); stroke-width: 9; stroke-dasharray: 2 6; }
+.il-schiene { fill: none; stroke: var(--atlas-text); stroke-width: 1.5; stroke-linejoin: round; transition: stroke 0.5s ease; }
+.il-schiene.il-ast-zu { stroke: var(--atlas-offen); stroke-dasharray: 4 4; }
+.il-pfad { fill: none; stroke: none; }
+.il-zunge { stroke: var(--atlas-kern); stroke-width: 3; stroke-linecap: round; transform: rotate(var(--auf)); transition: transform 0.6s ease; }
+.il-weiche-punkt { fill: var(--atlas-kern); }
+.il-zug-wagen { fill: var(--atlas-kern); }
+.il-zug-rad { fill: var(--atlas-text); }
+.il-zug-fahrt { display: none; }
+
+.il-nur-vorher { opacity: 0; }
+.il-nur-vorher,
+.il-nur-nachher { transition: opacity 0.6s ease; }
+.il-kreis { transform-box: fill-box; transform-origin: center; transition: opacity 0.4s ease, transform 0.4s ease; }
+.il-kreis-2 { transition-delay: 0.12s; }
+.il-kreis-3 { transition-delay: 0.24s; }
+
+.il-unterschriften {
+    margin-top: 0.6rem;
+}
+
+.il-unterschrift {
+    margin: 0 0 0.3rem;
+}
+
+.il-zustand {
+    font-weight: 500;
+    color: var(--atlas-kern-text);
+}
+
+@media screen {
+    .ist-zu .il-nur-vorher { opacity: 1; }
+    .ist-zu .il-nur-nachher { opacity: 0; }
+    .ist-zu .il-kreis { transform: scale(0.2); }
+    .ist-zu .il-strich { stroke-dashoffset: 1; }
+    .ist-zu .il-wachsen { transform: scaleY(0); }
+    .ist-zu .il-zunge { transform: rotate(var(--zu)); }
+    .ist-zu .il-schiene.il-ast-zu { stroke: var(--atlas-text); stroke-dasharray: none; }
+    .ist-zu .il-schiene.il-ast-auf { stroke: var(--atlas-offen); stroke-dasharray: 4 4; }
+    .ist-zu .il-ziel-zu { stroke-dasharray: none; }
+    .ist-zu .il-ziel-auf { stroke-dasharray: 4 4; }
+    .ist-faehrt .il-zug-halt { opacity: 0 !important; transition: none; }
+    .ist-faehrt .il-zug-fahrt { display: inline; }
+
+    /* with JS only the caption of the current state, without its label */
+    .ist-js .il-zustand { display: none; }
+    .ist-js.ist-zu .il-unterschrift-nachher,
+    .ist-js:not(.ist-zu) .il-unterschrift-vorher { display: none; }
+}
+
+.ohne-uebergang * { transition: none !important; }
+
+@media (prefers-reduced-motion: reduce), print {
+    .atlas-illustration * { transition: none !important; }
 }
 
 /* ---- Anhang ---- */
@@ -1654,7 +1801,9 @@ main.atlas-wide {
     .atlas-einschaetzung,
     .atlas-schablone__mitte,
     .atlas-analogie__tabelle tr,
-    .atlas-tabelle tr {
+    .atlas-tabelle tr,
+    .atlas-fall__seite,
+    .atlas-illustration {
         break-inside: avoid;
         page-break-inside: avoid;
     }

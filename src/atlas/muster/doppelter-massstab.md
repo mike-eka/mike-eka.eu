@@ -89,7 +89,16 @@ verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstig
     text: "Wir beurteilen die eigene Seite milder als die andere und merken es selten."
 literatur:
   - "Fillmore, C. J. (1982). Frame semantics. In The Linguistic Society of Korea (Hg.), Linguistics in the Morning Calm, 111–137. Seoul: Hanshin."
-grafik: null
+grafik:
+  typ: illustration
+  motiv: massstab
+  titel: "Ein Maßstab, einmal angelegt"
+  links:  { gegenstand: "Schulden", blase: "Verantwortung für unsere Kinder!", blase_gross: true, lineal: true }
+  rechts: { gegenstand: "Klima",    blase: "Bevormundung",                  blase_gross: false, lineal: false }
+  marke: "belastet kommende Generationen"
+  knopf: "Gleichen Maßstab anlegen"
+  vorher: "Nur an eine Sache wird der Maßstab angelegt."
+  nachher: "Mit demselben Maßstab erreichen beide dieselbe Marke."
 ---
 
 Keine der beiden Aussagen ist für sich falsch. Der Schaden entsteht aus

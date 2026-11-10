@@ -16,7 +16,7 @@ function seitenUrl() {
 }
 
 const MUSTER_FELDER = [
-  "titel", "fachbegriff", "hinsicht", "reihenfolge", "kurz", "effekt", "minimalpaar", "analogie",
+  "titel", "fachbegriff", "hinsicht", "reihenfolge", "kurz", "effekt", "fall", "minimalpaar", "analogie",
   "mittel", "schablone", "kippt_an", "grenzfall_frage", "einschaetzungen",
   "normalfall", "verzerrungen", "literatur", "grafik",
 ];
