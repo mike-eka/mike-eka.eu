@@ -3,8 +3,9 @@ layout: base.njk
 eleventyComputed:
   title: "{{ atlas.anhang.titel }}"
 ---
-{#- Formaler Anhang: Definition, Zeichen, Anmerkungen, offene Stellen, Schema
-    (statisches SVG aus begriffsmodell.yaml → beziehungen), Modell, Download.
+{#- Formaler Anhang: Definition mit Zeichen, Schema (statisches SVG aus
+    begriffsmodell.yaml → beziehungen; im Druck auf eigener Querformatseite),
+    Anmerkungen, offene Stellen, Modell, Download.
     Texte aus src/_data/atlas/anhang.yaml. -#}
 {%- set a = atlas.anhang -%}
 {%- set bm = atlas.begriffsmodell -%}
@@ -38,28 +39,10 @@ eleventyComputed:
       </dl>
       {% endif %}
     </section>
-
-    {% if a.anmerkungen and a.anmerkungen.length %}
-    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="anmerkungen">
-      <h2 id="anmerkungen">{{ ba.anmerkungen }}</h2>
-      {% for m in a.anmerkungen %}
-      <h3 class="atlas-unterkopf">{{ m.titel }}</h3>
-      <p>{{ m.text }}</p>
-      {% endfor %}
-    </section>
-    {% endif %}
-
-    {% if a.offene_stellen and a.offene_stellen.length %}
-    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="offene-stellen">
-      <h2 id="offene-stellen">{{ ba.offene_stellen }}</h2>
-      <ul class="atlas-literatur">
-        {% for s in a.offene_stellen %}<li>{{ s }}</li>{% endfor %}
-      </ul>
-    </section>
-    {% endif %}
   </div>
 
-  {# Schema in einer eigenen, breiten Kachel (etwa Originalgröße statt verkleinert) #}
+  {# Schema direkt nach der Definition, in einer eigenen, breiten Kachel
+     (etwa Originalgröße statt verkleinert) #}
   <section class="atlas-kachel atlas-kachel--kern atlas-kachel--breit" aria-labelledby="schema">
       <h2 id="schema">{{ ba.schema }}</h2>
       <figure class="atlas-schema-figur">
@@ -82,6 +65,24 @@ eleventyComputed:
   </section>
 
   <div class="atlas-kacheln">
+    {% if a.anmerkungen and a.anmerkungen.length %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="anmerkungen">
+      <h2 id="anmerkungen">{{ ba.anmerkungen }}</h2>
+      {% for m in a.anmerkungen %}
+      <h3 class="atlas-unterkopf">{{ m.titel }}</h3>
+      <p>{{ m.text }}</p>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if a.offene_stellen and a.offene_stellen.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="offene-stellen">
+      <h2 id="offene-stellen">{{ ba.offene_stellen }}</h2>
+      <ul class="atlas-literatur">
+        {% for s in a.offene_stellen %}<li>{{ s }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
     {% if a.modell %}
     <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="modell">
       <h2 id="modell">{{ ba.modell }}</h2>

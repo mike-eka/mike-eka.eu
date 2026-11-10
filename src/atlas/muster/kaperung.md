@@ -11,7 +11,7 @@ kurz: >-
 
 minimalpaar:
   muster:    "Wir sprechen mit Dr. Kessler, [[Experte für Klimafragen]]."
-  gegenform: "Wir sprechen mit Dr. Kessler, [[Ökonom bei einer Stiftung, der nicht zur Klimaforschung publiziert]]."
+  gegenform: "Wir sprechen mit Dr. Kessler, [[Ökonom bei einem Thinktank, der nicht zur Klimaforschung publiziert]]."
   hinweis: >-
     Erfundene Person, erfundenes Interview. Die Anmoderation entscheidet, als
     was jemand gehört wird. Die Grafik unten zeigt dasselbe als Konstellation.
@@ -52,7 +52,7 @@ einschaetzungen:
     wirkung: keine
     grafik_zustand: { rueckbindung: klima }
   - label: "an ein anderes Fach"
-    inhalt: "Eine Physikprofessorin für Halbleiter spricht über Klimamodelle."
+    inhalt: "Eine Geologin, die zur Erdgeschichte forscht, beurteilt aktuelle Klimamodelle."
     urteil: strittig
     begruendung: >-
       Die Expertise ist echt, aber im falschen Fach (epistemic trespassing).
@@ -61,7 +61,7 @@ einschaetzungen:
     wirkung: verschlechtern
     grafik_zustand: { rueckbindung: anderes_fach }
   - label: "an keine Fachgemeinschaft"
-    inhalt: "Die Person spricht für eine Stiftung und publiziert nicht in der Klimaforschung."
+    inhalt: "Die Person spricht für einen Thinktank und publiziert nicht in der Klimaforschung."
     urteil: ja
     begruendung: "Kaperung: Die Brücke führt ins Leere, wirkt aber wie ein Weg zur Forschung."
     wirkung: abschotten
@@ -92,14 +92,14 @@ grafik:
     - { id: p4, gruppe: publikum, x: 10, y: 65 }
     - { id: p5, gruppe: publikum, x: 10, y: 80 }
     - { id: V,  gruppe: vermittler, x: 42, y: 50, label: "Vermittler" }
-    - { id: TT, gruppe: thinktank, x: 42, y: 14, label: "Stiftung", nur_wenn: "rueckbindung == keine" }
+    - { id: TT, gruppe: thinktank, x: 42, y: 14, label: "Thinktank", nur_wenn: "rueckbindung == keine" }
     - { id: W,  gruppe: vermittler2, x: 42, y: 88, label: "Wissenschaftsjournalismus", nur_wenn: zweiter }
     - { id: e1, gruppe: fach, x: 70, y: 18 }
     - { id: e2, gruppe: fach, x: 82, y: 12 }
     - { id: e3, gruppe: fach, x: 90, y: 34 }
     - { id: e4, gruppe: fach, x: 76, y: 40, label: "Klimaforschung" }
     - { id: f1, gruppe: fach_anderes, x: 64, y: 68 }
-    - { id: f2, gruppe: fach_anderes, x: 74, y: 62, label: "Halbleiterphysik" }
+    - { id: f2, gruppe: fach_anderes, x: 74, y: 62, label: "Geologie" }
     - { id: T,  gruppe: thema, x: 88, y: 84, label: "Thema: Klima" }
   kanten:
     - { von: [p1, p2, p3, p4, p5], nach: V }
@@ -139,4 +139,6 @@ beginnt, wenn jemand diese Brückenposition besetzt, ohne mit der
 Fachgemeinschaft auf der anderen Seite verbunden zu sein. Netzwerkanalytisch
 gesprochen ist die Betweenness dieselbe wie bei guter
 Wissenschaftskommunikation. Entscheidend ist die Rückbindung: ob die Person
-von der Fachgemeinschaft zitiert, diskutiert und korrigiert wird.
+von der Fachgemeinschaft zitiert, diskutiert und korrigiert wird. Häufig sind
+es Thinktanks, die auf diese Weise Zweifel am menschengemachten Klimawandel
+verbreiten (Oreskes & Conway 2010).

@@ -79,7 +79,39 @@
       return { publikum: 5, fach: 6, fach_anderes: 6, vermittler: 10, vermittler2: 8, thinktank: 8, thema: 11 }[gruppe] || 6;
     }
     // ---- label placement ----
-    var ZEICHEN = 6.6, ZEILE_H = 12, ABSTAND_L = 7; // 11px Sono: ~6.6px per character
+    // Candidates around each node: 16 directions × 3 distances. Each one is
+    // scored; crossing an edge, covering a node or another label is expensive,
+    // a greater distance from the node only a little. Label widths are
+    // measured in the page's font.
+    var OBEN = 9, UNTEN = 3, RAND_L = 2;   // 11px text: ascent/descent around the baseline, margin
+    var breiten = {};
+    function labelBreite(text) {
+      if (breiten[text] == null) {
+        var t = svg.append("text").attr("class", "nk-label").text(text);
+        breiten[text] = t.node().getComputedTextLength() || text.length * 6.6;
+        t.remove();
+      }
+      return breiten[text];
+    }
+    function kandidatenFuer(x, y, r, b) {
+      var liste = [];
+      // further away only if needed; a label must stay nearest to its own
+      // node (see the score in beschriftungsPlaetze)
+      [r + 5, r + 12, r + 20, r + 30, r + 42].forEach(function (d, di) {
+        for (var i = 0; i < 16; i++) {
+          // start right, then left, above, below, then the diagonals
+          var winkel = [0, 180, 270, 90, 315, 225, 45, 135, 337.5, 202.5, 292.5, 247.5, 22.5, 157.5, 67.5, 112.5][i] * Math.PI / 180;
+          var cx = Math.cos(winkel), cy = Math.sin(winkel);
+          var px_ = x + d * cx, py_ = y + d * cy;
+          var anker = cx > 0.3 ? "start" : cx < -0.3 ? "end" : "middle";
+          var basis = cy > 0.3 ? py_ + OBEN : cy < -0.3 ? py_ - UNTEN : py_ + 4;
+          var x1 = anker === "start" ? px_ : anker === "end" ? px_ - b : px_ - b / 2;
+          liste.push({ x: px_, y: basis, anker: anker, rang: di * 2 + i * 0.05,
+            box: { x1: x1 - RAND_L, x2: x1 + b + RAND_L, y1: basis - OBEN - RAND_L, y2: basis + UNTEN + RAND_L } });
+        }
+      });
+      return liste;
+    }
 
     function schneidet(a, b, r) { // segment a–b intersects rectangle r?
       var innen = function (p) { return p.x >= r.x1 && p.x <= r.x2 && p.y >= r.y1 && p.y <= r.y2; };
@@ -96,50 +128,63 @@
       return kanten.some(function (k) { return kreuz(a, b, k[0], k[1]); });
     }
     function ueberlappt(r, s) { return r.x1 < s.x2 && r.x2 > s.x1 && r.y1 < s.y2 && r.y2 > s.y1; }
+    function abstandZurBox(x, y, b) { // from a point to the nearest point of a box
+      var dx = Math.max(b.x1 - x, 0, x - b.x2), dy = Math.max(b.y1 - y, 0, y - b.y2);
+      return Math.hypot(dx, dy);
+    }
 
+    // First every candidate gets its fixed cost (bounds, edges, nodes); then
+    // the labels are placed one by one, longest first, and finally each one
+    // is placed again knowing where all the others are.
     function beschriftungsPlaetze(netz, pos) {
-      var plaetze = {}, belegt = [];
       var punkte = netz.knoten.map(function (k) { return { id: k.id, x: px(k), y: py(k), r: radius(k.gruppe) }; });
-      netz.knoten.filter(function (k) { return k.label; }).forEach(function (k) {
-        var x = px(k), y = py(k), r = radius(k.gruppe), b = k.label.length * ZEICHEN;
-        var kandidaten = [
-          { x: x + r + ABSTAND_L, y: y + 4, anker: "start", box: { x1: x + r + ABSTAND_L - 2, x2: x + r + ABSTAND_L + b + 2, y1: y - ZEILE_H / 2 - 2, y2: y + ZEILE_H / 2 + 2 } },
-          { x: x - r - ABSTAND_L, y: y + 4, anker: "end", box: { x1: x - r - ABSTAND_L - b - 2, x2: x - r - ABSTAND_L + 2, y1: y - ZEILE_H / 2 - 2, y2: y + ZEILE_H / 2 + 2 } },
-          { x: x, y: y - r - 6, anker: "middle", box: { x1: x - b / 2 - 2, x2: x + b / 2 + 2, y1: y - r - 6 - ZEILE_H, y2: y - r - 3 } },
-          { x: x, y: y + r + 14, anker: "middle", box: { x1: x - b / 2 - 2, x2: x + b / 2 + 2, y1: y + r + 3, y2: y + r + 16 } },
-          // diagonal: lets a label move off an edge that arrives from the side
-          { x: x - r - 9, y: y - r - 4, anker: "end", box: { x1: x - r - 9 - b - 2, x2: x - r - 7, y1: y - r - 4 - ZEILE_H, y2: y - r - 1 } },
-          { x: x + r + 9, y: y - r - 4, anker: "start", box: { x1: x + r + 7, x2: x + r + 9 + b + 2, y1: y - r - 4 - ZEILE_H, y2: y - r - 1 } },
-          { x: x - r - 9, y: y + r + 13, anker: "end", box: { x1: x - r - 9 - b - 2, x2: x - r - 7, y1: y + r + 1, y2: y + r + 15 } },
-          { x: x + r + 9, y: y + r + 13, anker: "start", box: { x1: x + r + 7, x2: x + r + 9 + b + 2, y1: y + r + 1, y2: y + r + 15 } },
-        ];
-        var bester = null;
-        kandidaten.forEach(function (c, i) {
-          var s = i * 0.1; // slight preference for the order above
-          if (c.box.x1 < 0 || c.box.x2 > W || c.box.y1 < 0 || c.box.y2 > H) s += 50;
+      var labels = netz.knoten.filter(function (k) { return k.label; }).map(function (k) {
+        var x = px(k), y = py(k), r = radius(k.gruppe), b = labelBreite(k.label);
+        var kandidaten = kandidatenFuer(x, y, r, b);
+        kandidaten.forEach(function (c) {
+          var s = c.rang; // slight preference for close and for the order above
+          if (c.box.x1 < 0 || c.box.x2 > W || c.box.y1 < 0 || c.box.y2 > H) s += 100;
           netz.kanten.forEach(function (e) {
             var a = { x: px(pos[e.von]), y: py(pos[e.von]) }, z = { x: px(pos[e.nach]), y: py(pos[e.nach]) };
             if (e.von === k.id || e.nach === k.id) {
-              // own edge: only count it from just outside the node, since
+              // own edge: count it from the circle's rim outwards, since
               // every spot next to the node touches it at the centre
               var innen = e.von === k.id ? a : z, aussen = e.von === k.id ? z : a;
-              var len = Math.hypot(aussen.x - innen.x, aussen.y - innen.y) || 1, t = Math.min(1, (r + 6) / len);
+              var len = Math.hypot(aussen.x - innen.x, aussen.y - innen.y) || 1, t = Math.min(1, (r + 1) / len);
               var start = { x: innen.x + (aussen.x - innen.x) * t, y: innen.y + (aussen.y - innen.y) * t };
-              if (schneidet(start, aussen, c.box)) s += 3;
+              if (schneidet(start, aussen, c.box)) s += 20;
               return;
             }
-            if (schneidet(a, z, c.box)) s += 3;
+            if (schneidet(a, z, c.box)) s += 20;
           });
           punkte.forEach(function (p) {
             if (p.id === k.id) return;
-            if (ueberlappt(c.box, { x1: p.x - p.r, x2: p.x + p.r, y1: p.y - p.r, y2: p.y + p.r })) s += 6;
+            if (ueberlappt(c.box, { x1: p.x - p.r - 1, x2: p.x + p.r + 1, y1: p.y - p.r - 1, y2: p.y + p.r + 1 })) s += 30;
           });
-          belegt.forEach(function (bx) { if (ueberlappt(c.box, bx)) s += 10; });
+          // own node: a label must not touch its circle either
+          if (ueberlappt(c.box, { x1: x - r - 1, x2: x + r + 1, y1: y - r - 1, y2: y + r + 1 })) s += 30;
+          // association: the label's nearest node must be its own
+          var eigen = abstandZurBox(x, y, c.box);
+          punkte.forEach(function (p) {
+            if (p.id !== k.id && abstandZurBox(p.x, p.y, c.box) < eigen) s += 25;
+          });
+          c.fest = s;
+        });
+        return { id: k.id, b: b, kandidaten: kandidaten, wahl: null };
+      });
+      function waehle(l, andere) {
+        var bester = null;
+        l.kandidaten.forEach(function (c) {
+          var s = c.fest;
+          andere.forEach(function (o) { if (o !== l && o.wahl && ueberlappt(c.box, o.wahl.box)) s += 40; });
           if (!bester || s < bester.s) bester = { s: s, c: c };
         });
-        plaetze[k.id] = bester.c;
-        belegt.push(bester.c.box);
-      });
+        l.wahl = bester.c;
+      }
+      labels.slice().sort(function (p, q) { return q.b - p.b; }).forEach(function (l) { waehle(l, labels); });
+      for (var runde = 0; runde < 3; runde++) labels.forEach(function (l) { waehle(l, labels); });
+      var plaetze = {};
+      labels.forEach(function (l) { plaetze[l.id] = l.wahl; });
       return plaetze;
     }
 
@@ -205,7 +250,7 @@
       var w = Math.floor(flaeche.clientWidth);
       if (!w || w === W) return false;
       W = w;
-      H = Math.round(W < 520 ? W * 1.2 : W * 0.6); // taller on narrow screens: more room between labels
+      H = Math.round(W < 520 ? W * 1.45 : W * 0.6); // taller on narrow screens: more room between labels
       svg.attr("width", W).attr("height", H).attr("viewBox", "0 0 " + W + " " + H);
       return true;
     }
