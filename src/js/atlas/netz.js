@@ -6,8 +6,8 @@
 //
 // Coupling: `grafik.zustand_aus_einschaetzung` names a state key (e.g.
 // rueckbindung); each assessment sets it via its `grafik_zustand`. The
-// graphic follows the template's switch (event "atlas:einschaetzung") and
-// its own buttons switch the template too. Own switches (`grafik.schalter`)
+// graphic follows the switch of the "Grenzfall" tile (event
+// "atlas:einschaetzung") and its own buttons switch that tile too. Own switches (`grafik.schalter`)
 // are checkboxes.
 (function () {
   "use strict";
@@ -24,7 +24,7 @@
     var g = daten.grafik, T = daten.texte || {};
     var key = g.zustand_aus_einschaetzung;
     var zustaende = daten.zustaende || [];
-    var schablone = document.querySelector(".atlas-schablone[data-atlas-schalter]");
+    var schablone = document.querySelector("[data-grenzfall][data-atlas-schalter]"); // the card's borderline case
 
     // state: own switches + the coupled key
     var zustand = {};

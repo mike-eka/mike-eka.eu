@@ -30,7 +30,7 @@ schablone:                  # Stufe „Muster“
   inhalt:         { status: offen,  text: ["Sprecherposition:", "rückgebunden – an wen?"] }
   vergleichsfall: { status: muster, text: ["dieselbe Brücke mit", "Rückbindung an die Fachgemeinschaft"] }
   hinsicht:       { status: muster, text: ["Wem wir glauben", ""] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
   wirkung:        { status: muster, text: ["typisch:", "abschotten"] }
 
 effekt:
@@ -67,15 +67,15 @@ einschaetzungen:
     wirkung: abschotten
     grafik_zustand: { rueckbindung: keine }
 
-etiketten:
-  wahrheitsstatus: unklar
-  absicht: unbekannt
 
 normalfall: >-
   Ohne Vermittlung geht es nicht. Wissenschaftsjournalismus besetzt dieselbe
   Brückenposition, nur mit Rückbindung an die Fachgemeinschaft.
-verwandt: [meinung-als-tatsache]
-spiegelfall: null
+verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+  - name: "Autoritätsheuristik"
+    text: "Titel, Fachsprache und Institutsnamen genügen oft, um jemandem Sachkenntnis zuzutrauen."
+  - name: "Halo-Effekt"
+    text: "Wer in einem Bereich kompetent wirkt, dem trauen wir auch in anderen Bereichen Urteilskraft zu."
 literatur:
   - "Oreskes, N. & Conway, E. M. (2010). Merchants of Doubt. New York: Bloomsbury."
   - "Ballantyne, N. (2019). Epistemic Trespassing. Mind 128(510), 367–395."
@@ -133,23 +133,10 @@ grafik:
     - { wenn: sonst, text: "Strittig: ohne Rückbindung, aber kein Nadelöhr", ton: neutral }
 ---
 
-Zwischen einem Publikum und einem Fachgebiet stehen fast immer Vermittler:
-Journalistinnen, Lehrer, Sachbuchautoren. Das ist kein Problem, sondern die
-Voraussetzung dafür, dass Wissen überhaupt ankommt. Kaperung beginnt dort, wo
-jemand diese Brückenposition besetzt, ohne mit der Fachgemeinschaft auf der
-anderen Seite verbunden zu sein. Das Publikum glaubt, über die Brücke zur
-Forschung zu gelangen, und gelangt doch nur zu einer Einzelstimme.
-
-In der Sprache der Netzwerkanalyse: Der Vermittler hat eine hohe
-Betweenness-Zentralität zwischen Publikum und Thema. Das allein unterscheidet
-ihn aber nicht von guter Wissenschaftskommunikation. Entscheidend ist die
-Rückbindung: Wird die Person von der Fachgemeinschaft zitiert, diskutiert und
-korrigiert? Die Kennzahl in der Grafik ist eine vereinfachte Betweenness. Sie
-zählt nur die kürzesten Wege vom Publikum zum Thema und nicht die Wege zwischen
-allen Knotenpaaren.
-
-Ein Sonderfall ist die echte Expertin im falschen Fach (*epistemic
-trespassing*): Sie ist gut eingebunden, nur nicht dort, wo die Frage
-verhandelt wird. Kaperung dient oft einem verwandten Ziel, dem gezielten
-Herstellen von Zweifel. Das Phänomen ist besonders für die Klimadebatte gut
-untersucht.
+Zwischen Publikum und Forschung stehen fast immer Vermittler. Das ist kein
+Problem, sondern die Voraussetzung dafür, dass Wissen ankommt. Kaperung
+beginnt, wenn jemand diese Brückenposition besetzt, ohne mit der
+Fachgemeinschaft auf der anderen Seite verbunden zu sein. Netzwerkanalytisch
+gesprochen ist die Betweenness dieselbe wie bei guter
+Wissenschaftskommunikation. Entscheidend ist die Rückbindung: ob die Person
+von der Fachgemeinschaft zitiert, diskutiert und korrigiert wird.

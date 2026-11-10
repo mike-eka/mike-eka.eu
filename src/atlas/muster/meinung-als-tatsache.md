@@ -31,10 +31,10 @@ schablone:                  # Stufe „Muster“: was das Muster festlegt
   inhalt:         { status: offen,  text: ["Aussage: eine Wertung,", "die wie eine Tatsache klingt"] }
   vergleichsfall: { status: muster, text: ["dieselbe Aussage mit", "Einstellungsmarker"] }
   hinsicht:       { status: muster, text: ["Wem wir glauben", ""] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
   wirkung:        { status: muster, text: ["typisch:", "verschlechtern"] }
 
-# Stellschraube: was | vergleich | hinsicht (nicht fuer_wen – das Publikum
+# kippt_an (Grenzfall): was | vergleich | hinsicht (nicht fuer_wen – das Publikum
 # ist Rahmen jeder Einschätzung). Jede Einschätzung füllt das zugehörige
 # Feld (hier: inhalt) und das Urteil.
 kippt_an: was
@@ -51,14 +51,14 @@ einschaetzungen:
     begruendung: "Eine prüfbare Tatsachenbehauptung, gegebenenfalls sogar wahr."
     wirkung: keine
 
-etiketten:
-  wahrheitsstatus: unklar
-  absicht: unbekannt
 
 normalfall: >-
   Politische Rede ist positionell, und die meisten Zuhörenden wissen das.
-verwandt: [kaperung]
-spiegelfall: null
+verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+  - name: "Autoritätsheuristik"
+    text: "Was eine Person mit Amt sagt, klingt nach Sachkenntnis, auch wenn es eine Position ist."
+  - name: "Wahrheitseffekt durch Wiederholung"
+    text: "Oft gehörte Sätze erscheinen glaubwürdiger, auch wenn sie nur Wertungen sind."
 literatur:
   - "Kölbel, M. (2004). Faultless Disagreement. Proceedings of the Aristotelian Society 104(1), 53–73."
   - "Lasersohn, P. (2005). Context Dependence, Disagreement, and Predicates of Personal Taste. Linguistics and Philosophy 28(6), 643–686."
@@ -66,19 +66,8 @@ grafik: null                # oder: netz / balken (siehe 3.3)
 ---
 
 Politische Rede ist voller Werturteile, und das ist in Ordnung. Zum Muster
-wird ein Werturteil erst, wenn es in der Form einer Tatsachenbehauptung
-auftritt: ohne „ich halte … für“, ohne „meiner Ansicht nach“, als schlichter
-Aussagesatz. Wer so spricht, legt sich nicht ausdrücklich fest, und wer
-zuhört, überhört leicht, dass hier eine Einschätzung vorliegt und keine
-Feststellung.
-
-Besonders wirksam ist das, wenn Tatsache und Wertung in einem Satz verbunden
-sind. Der prüfbare Teil – die längeren Fahrzeiten – lässt sich bestätigen und
-leiht der Wertung seine Glaubwürdigkeit. Hinzu kommt die Autorität des Amtes:
-Was eine Ministerin sagt, klingt nach Sachkenntnis, auch wenn es eine
-politische Position ist.
-
-Die Unterscheidung ist nicht nur sprachlich. Auch das Äußerungsrecht trennt
-Tatsachenbehauptungen, die sich beweisen lassen, von Werturteilen und ordnet
-gemischte Äußerungen danach ein, was in ihnen überwiegt. Genau an dieser
-Grenze setzt der Grenzfall dieser Karte an.
+wird ein Werturteil erst, wenn es als schlichter Aussagesatz auftritt, ohne
+„ich halte … für“. Besonders wirksam ist das, wenn Tatsache und Wertung
+verbunden sind: Der prüfbare Teil leiht der Wertung seine Glaubwürdigkeit.
+Auch das Äußerungsrecht trennt Tatsachenbehauptungen von Werturteilen und
+ordnet gemischte Äußerungen danach ein, was in ihnen überwiegt.

@@ -15,7 +15,7 @@ npm run check:atlas   # Prüfung vor dem Merge nach main (siehe unten)
 
 | Datei | Inhalt |
 |---|---|
-| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Urteile, Etiketten, Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
+| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Urteile, „Was die Definition offenlässt“ (`offen_gelassen`), Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
 | `src/_data/atlas/beschriftungen.yaml` | alle festen Beschriftungen: Überschriften, Knöpfe, Legenden, Navigation |
 | `src/_data/atlas/ueber.yaml`, `anhang.yaml`, `en.yaml` | Texte der Seiten Über, Anhang und der englischen Kurzfassung |
 | `src/atlas/muster/*.md` | eine Datei pro Musterkarte (Kopfdaten + Fließtext) |
@@ -31,8 +31,7 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
 
 1. Eine bestehende Karte kopieren, z. B. `src/atlas/muster/meinung-als-tatsache.md` →
    `src/atlas/muster/mein-muster.md`. Der Dateiname wird zur Adresse
-   (`/atlas/muster/mein-muster/`) und ist die `id` für `verwandt`, `spiegelfall` und
-   `schablone_stufen`.
+   (`/atlas/muster/mein-muster/`) und ist die `id` für `schablone_stufen`.
 2. In den Kopfdaten anpassen:
    - `titel`, `fachbegriff` (ein englischer Fachbegriff; erscheint auf der englischen Seite), `kurz`
    - `hinsicht`: eine `id` aus `hinsichten` in `begriffsmodell.yaml`
@@ -41,10 +40,19 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
    - `veroeffentlicht: false`, solange die Karte ein Entwurf ist
    - `im_framework: true`, wenn sie in der Liste der Grenzfälle erscheinen soll
 3. Inhalte: `effekt`, `minimalpaar` (oder `analogie`), `mittel`, `schablone`,
-   `kippt_an`, `grenzfall_frage`, `einschaetzungen`, `etiketten`, `normalfall`,
-   `verwandt`, `spiegelfall`, `literatur`, optional `grafik`.
-   Darunter, nach dem zweiten `---`, der Fließtext in Markdown (`## Zwischenüberschrift`
-   wird automatisch eine Ebene tiefer gesetzt).
+   `kippt_an`, `grenzfall_frage`, `einschaetzungen`, `normalfall`, `verzerrungen`,
+   `literatur`, optional `grafik`.
+   Darunter, nach dem zweiten `---`, der Fließtext in Markdown (kurz, ohne
+   Zwischenüberschriften).
+   Aufbau der Karte: Kopf → Minimalpaar bzw. Analogie (ggf. Grafik) → Was sich
+   verschlechtert → Grenzfall → Einordnung → Sprachliches Mittel → Normal, weil →
+   Verzerrungen → Fließtext → Literatur.
+   `schablone` liefert die Kachel „Einordnung“ (Zeilen Inhalt, Vergleich, Hinsicht,
+   Wirkung aus `inhalt`, `vergleichsfall`, `hinsicht`, `wirkung`) und die Stufe
+   „Muster“ der großen Schablone; dort steuert `status` die Darstellung
+   (`muster` = farbig, `offen` = gestrichelt).
+   `verzerrungen` ist eine Liste mit `name` und `text`, z. B.
+   `- { name: "Halo-Effekt", text: "…" }`. Fehlt sie, meldet der Build das.
    `effekt.hinsichten` ist eine Liste von Hinsicht-IDs, z. B. `[vertrauen, achten]`.
    Die Haupt-Hinsicht (`hinsicht`) steht schon im Badge; die übrigen erscheinen unter
    „Betrifft außerdem:“ (bei keiner weiteren entfällt die Zeile). Unbekannte IDs
@@ -64,7 +72,10 @@ Varianten im Minimalpaar:
 
 ### Grenzfall ändern oder hinzufügen
 
-Ein Grenzfall besteht aus der Stellschraube und den Einschätzungen der Karte:
+Die Kachel „Grenzfall“ zeigt die Frage (`grenzfall_frage`), einen Knopf je Einschätzung
+und darunter Wert, Urteil mit Begründung und Wirkung der gewählten Einschätzung (ohne
+JavaScript und im Druck alle untereinander). `kippt_an` sagt, welches Feld die
+Einschätzungen füllen; es erscheint nicht als eigener Begriff.
 
 ```yaml
 kippt_an: vergleich          # was | vergleich | hinsicht  (nie fuer_wen: das Publikum ist Rahmen)
@@ -79,9 +90,8 @@ einschaetzungen:
 ```
 
 - Beliebig viele Einschätzungen sind möglich; jede wird ein Knopf.
-- Trägt mindestens eine Einschätzung `wirkung`, schaltet auch das Wirkungsfeld mit.
-  Die Wirkung steht nur dort (Name und Erklärung aus `wirkungen` in `begriffsmodell.yaml`),
-  nicht in einer eigenen Kachel.
+- Die Wirkung erscheint mit Name und Erklärung (aus `wirkungen` in `begriffsmodell.yaml`);
+  ohne `wirkung` steht dort der Text aus `schablone.wirkung`.
 - Lautet das Urteil `nein`, gibt es keine Wirkung: `wirkung: keine` (oder weglassen).
   Der Build warnt, wenn ein `nein` eine Wirkung trägt.
 - Welche Karte die große Schablone auf der Begriffsmodell-Seite zeigt, steht in
@@ -91,7 +101,8 @@ einschaetzungen:
 ### Text ändern
 
 - Text einer Karte: in `src/atlas/muster/<datei>.md`.
-- Kernsatz, Haltung, Prüffragen, „Für wen?“, Hinsichten usw.: `begriffsmodell.yaml`.
+- Kernsatz, Haltung, Prüffragen, „Für wen?“, Hinsichten, „Was die Definition
+  offenlässt“ usw.: `begriffsmodell.yaml`.
 - Hinsichten: `name` und `erklaerung` (ein Satz, was die Hinsicht umfasst; erscheint
   in Landkarte, Liste und Handout) unter `hinsichten` in `begriffsmodell.yaml`;
   englisch in `en.yaml` unter `hinsichten.<id>.name` / `.erklaerung`.
@@ -144,8 +155,8 @@ fehlenden Werten.
 - Eine Karte verbergen: `veroeffentlicht: false`. Sie wird nicht gebaut und erscheint
   in Landkarte und Liste als „in Vorbereitung“, ohne Link.
 - Alle Entwürfe ausblenden: in `begriffsmodell.yaml` `entwuerfe_anzeigen: false`.
-  Dann erscheinen Entwürfe nirgends – nicht in Landkarte und Liste, nicht bei
-  „verwandt“ oder „Spiegelfall“ – und es bleibt kein leerer Platz.
+  Dann erscheinen Entwürfe nirgends – nicht in Landkarte und Liste – und es bleibt
+  kein leerer Platz.
 - Entwürfe stehen nie in Handout, englischer Seite, `atlas.json` oder `atlas.jsonld`.
 
 ## Hinweise

@@ -59,7 +59,7 @@ schablone:                  # Stufe „Muster“
   inhalt:         { status: muster, text: ["Argument:", "eine Analogie als Begründung"] }
   vergleichsfall: { status: muster, text: ["vorher:", "die Frage gilt als offen"] }
   hinsicht:       { status: offen,  text: ["Was wir glauben –", "oder warum wir glauben?"] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
   wirkung:        { status: muster, text: ["typisch:", "verschlechtern, abschotten"] }
 
 effekt:
@@ -90,34 +90,26 @@ einschaetzungen:
       Grundlage.
     wirkung: [verschlechtern, abschotten]
 
-etiketten:
-  wahrheitsstatus: unklar
-  absicht: unbekannt
 
 normalfall: >-
   Analogien sind ein Grundwerkzeug des Erklärens. Problematisch werden sie
   erst, wenn die Schlussfolgerung an der Stelle hängt, an der Quelle und Ziel
   sich unterscheiden.
-verwandt: [meinung-als-tatsache]
-spiegelfall: null
+verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+  - name: "Illusion des Erklärungsverständnisses"
+    text: "Wir überschätzen, wie gut wir einen Zusammenhang verstehen, besonders wenn er vertraut klingt."
+  - name: "Verarbeitungsflüssigkeit"
+    text: "Was sich leicht denken lässt, etwa ein Vergleich mit dem eigenen Haushalt, wirkt eher wahr."
 literatur:
   - "Lakoff, G. & Johnson, M. (1980). Metaphors We Live By. Chicago: University of Chicago Press."
   - "Rozenblit, L. & Keil, F. (2002). The misunderstood limits of folk science: an illusion of explanatory depth. Cognitive Science 26(5), 521–562."
 grafik: null
 ---
 
-Pseudo-Erklärungen sind schwer zu fassen, weil sie oft nichts Falsches
-behaupten. Dass ein Haushalt nicht dauerhaft mehr ausgeben kann, als er
-einnimmt, stimmt. Falsch ist nur der Schritt vom Haushalt zum Staat. Gerade
-deshalb laufen Faktenchecks hier ins Leere: Es gibt keine einzelne Behauptung,
-die sich als falsch markieren ließe.
-
-Der Schaden liegt im Verstehen. Wer die Analogie übernimmt, glaubt einen
-Zusammenhang zu kennen, den es so nicht gibt, und hört auf, nach dem
-tatsächlichen Mechanismus zu fragen. Die Forschung zur Illusion des
-Erklärungsverständnisses zeigt, dass Menschen ihr eigenes Verstehen ohnehin
-leicht überschätzen. Eine eingängige Analogie verstärkt das.
-
-Deshalb ist auch der Grenzfall dieser Karte besonders: Selbst wenn die
-Schlussfolgerung richtig wäre, stünde man schlechter da, denn man wüsste
-nicht, warum sie richtig ist.
+Pseudo-Erklärungen behaupten oft nichts Falsches. Dass ein Haushalt nicht
+dauerhaft mehr ausgeben kann, als er einnimmt, stimmt; falsch ist nur der
+Schritt vom Haushalt zum Staat. Deshalb laufen Faktenchecks hier ins Leere.
+Der Schaden liegt im Verstehen: Wer die Analogie übernimmt, glaubt einen
+Zusammenhang zu kennen, den es so nicht gibt, und fragt nicht mehr nach dem
+tatsächlichen Mechanismus – selbst dann, wenn die Schlussfolgerung zufällig
+stimmt.

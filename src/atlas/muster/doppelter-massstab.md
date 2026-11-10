@@ -40,7 +40,7 @@ schablone:                  # Stufe „Muster“
   inhalt:         { status: offen,  text: ["eine einzelne Aussage –", "oder das Paar?"] }
   vergleichsfall: { status: muster, text: ["ein Paar, das an beide", "denselben Maßstab anlegt"] }
   hinsicht:       { status: muster, text: ["Warum wir glauben", "· Was wir glauben"] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
   wirkung:        { status: muster, text: ["typisch:", "verschlechtern"] }
 
 effekt:
@@ -77,46 +77,26 @@ einschaetzungen:
       Unterschied trägt, ist dann eine Sachfrage, über die man streiten kann.
     wirkung: keine
 
-etiketten:
-  wahrheitsstatus: "nicht wahrheitsfähig"
-  absicht: unbekannt
 
 normalfall: >-
   Niemand wendet alle Maßstäbe überall gleich an, und Fälle unterscheiden sich
   oft tatsächlich. Problematisch wird es, wenn ein Maßstab ausdrücklich
   beansprucht und an anderer Stelle stillschweigend fallengelassen wird.
-verwandt: [pseudo-erklaerung]
-spiegelfall: ablenkung
+verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+  - name: "Motiviertes Denken"
+    text: "Wir prüfen streng, was unserer Sicht widerspricht, und nachsichtig, was sie stützt."
+  - name: "Eigengruppen-Bevorzugung"
+    text: "Wir beurteilen die eigene Seite milder als die andere und merken es selten."
 literatur:
   - "Fillmore, C. J. (1982). Frame semantics. In The Linguistic Society of Korea (Hg.), Linguistics in the Morning Calm, 111–137. Seoul: Hanshin."
 grafik: null
 ---
 
-Ein doppelter Maßstab ist schwer zu bemerken, weil keine einzelne Aussage
-falsch ist. Der Schaden entsteht erst aus dem Verhältnis zweier Aussagen.
-Ein Maßstab, hier die Belastung kommender Generationen, wird bei der einen
-Frage ausdrücklich beansprucht und bei einer anderen nicht einmal erwähnt,
-obwohl auch sie diesen Maßstab berührt. Wer beide Aussagen hört, schließt
-leicht, dass der Maßstab beim Klima nicht gilt, und ordnet die zweite Frage
-anders ein, als er es mit demselben Maßstab täte.
-
-Damit das sichtbar wird, nennt die Karte Maßstab und Merkmal ausdrücklich.
-Maßstab: Was heute beschlossen wird, soll kommende Generationen nicht
-belasten. Merkmal: Sowohl Schulden als auch unterlassener Klimaschutz
-verschieben Kosten in die Zukunft. Wer meint, dass die beiden Fälle sich im
-entscheidenden Punkt unterscheiden, kann genau hier widersprechen. Darum
-steht der dritte Fall in der Stellschraube.
-
-## Spiegelbeispiel
-
-Dasselbe Muster gibt es in umgekehrter Richtung. Eine erfundene Politikerin
-fordert mehr Klimaschutz „für die Generationen nach uns“ und sagt in
-derselben Debatte, neue Schulden spielten für die Zukunft keine Rolle.
-Auch hier wird derselbe Maßstab einmal beansprucht und einmal fallengelassen.
-
-## Spiegelfall
-
-Die Gegenfrage „Und was ist mit …?“ kann einen doppelten Maßstab aufdecken.
-Sie kann aber auch nur von der gestellten Frage ablenken. Ob sie prüft oder
-ablenkt, entscheidet sich daran, ob die ursprüngliche Frage danach noch
-beantwortet wird.
+Keine der beiden Aussagen ist für sich falsch. Der Schaden entsteht aus
+ihrem Verhältnis: Der Maßstab – was heute beschlossen wird, soll kommende
+Generationen nicht belasten – wird bei den Schulden beansprucht und beim
+Klima nicht erwähnt, obwohl beide Kosten in die Zukunft verschieben. Wer
+meint, die Fälle unterschieden sich im entscheidenden Punkt, kann genau hier
+widersprechen. Das Muster gibt es in jeder Richtung: Wer Klimaschutz „für
+die Generationen nach uns“ fordert und neue Schulden für bedeutungslos
+erklärt, macht denselben Fehler.

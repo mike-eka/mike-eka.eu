@@ -1,19 +1,18 @@
 ---
 layout: base.njk
 ---
-{%- from "atlas/schablone.njk" import schablone as schablonenRaster -%}
+{#- Musterkarte. Reihenfolge: Kopf → Beispiel (Minimalpaar bzw. Analogie,
+    ggf. Grafik) → Was sich verschlechtert → Grenzfall → Einordnung →
+    Sprachliches Mittel → Normal, weil → Verzerrungen → Fließtext → Literatur.
+    Alle Texte aus der Karte und aus beschriftungen.yaml. -#}
+{%- from "atlas/schablone.njk" import urteilText, wirkungText, wert -%}
 {%- set bm = atlas.begriffsmodell -%}
 {%- set b = atlas.beschriftungen -%}
 {%- set h = bm.hinsichten | nachId(hinsicht) -%}
+{#- kippt_an: welches Feld die Einschätzungen des Grenzfalls füllen -#}
 {%- set kipp = bm.pruefragen | nachId(kippt_an) -%}
 {%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
-
-{%- macro musterLink(slug) -%}
-  {%- set m = collections.atlasMusterSichtbar | musterNachSlug(slug) -%}
-  {%- if m and m.data.veroeffentlicht -%}<a href="{{ m.url }}">{{ m.data.titel }}</a>
-  {%- elif m -%}{{ m.data.titel }} <span class="atlas-entwurf">({{ b.karte.in_vorbereitung }})</span>
-  {%- else -%}{{ slug }}{%- endif -%}
-{%- endmacro -%}
+{%- set eOpt = { urteile: bm.urteile, wirkungen: bm.wirkungen } -%}
 
 <article class="atlas atlas-karte">
   <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
@@ -122,7 +121,7 @@ layout: base.njk
       <div class="atlas-grafik__steuerung" data-nur-js hidden>
         {% if grafik.typ == "netz" %}
           {% if grafik.zustand_aus_einschaetzung and einschaetzungen and einschaetzungen.length %}
-          <div class="atlas-schalter" role="group" aria-label="{{ b.schablone.schalter }}">
+          <div class="atlas-schalter" role="group" aria-label="{{ b.karte.schalter }}">
             {% for e in einschaetzungen %}<button type="button" data-grafik-einschaetzung="{{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>{% endfor %}
           </div>
           {% endif %}
@@ -222,19 +221,48 @@ layout: base.njk
     </section>
     {% endif %}
 
-    {#- Formale Einordnung erst nach dem konkreten Beispiel -#}
+    {#- Grenzfall: Frage, ein Knopf je Einschätzung, darunter Wert, Urteil mit
+        Begründung und Wirkung der gewählten. Ohne JS (und im Druck) alle
+        Einschätzungen untereinander, je mit Überschrift. atlas.js schaltet
+        um; die Grafik der Kaperung koppelt sich über [data-grenzfall]. -#}
+    {% if einschaetzungen and einschaetzungen.length %}
+    <section class="atlas-kachel atlas-kachel--ruhig atlas-grenzfall" aria-labelledby="grenzfall" data-grenzfall data-atlas-schalter>
+      <h2 id="grenzfall">{{ b.karte.grenzfall }}</h2>
+      {% if grenzfall_frage %}<p class="atlas-grenzfrage">{{ grenzfall_frage }}</p>{% endif %}
+      <div class="atlas-schalter" role="group" aria-label="{{ b.karte.schalter }}" data-nur-js hidden>
+        {% for e in einschaetzungen %}
+        <button type="button" data-ziel="{{ loop.index }}" aria-controls="grenzfall-{{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
+        {% endfor %}
+      </div>
+      <div class="atlas-einschaetzungen" aria-live="polite">
+        {% for e in einschaetzungen %}
+        <section class="atlas-einschaetzung" id="grenzfall-{{ loop.index }}" data-panel="{{ loop.index }}" aria-labelledby="grenzfall-titel-{{ loop.index }}">
+          <h3 class="atlas-einschaetzung__titel" id="grenzfall-titel-{{ loop.index }}" data-ohne-js>{{ e.label }}</h3>
+          <dl class="atlas-werte">
+            {% if kippFeld and e[kippFeld] %}<div><dt>{{ b.schablone.felder[kippFeld].name }}</dt><dd>{{ wert(kippFeld, e) }}</dd></div>{% endif %}
+            <div><dt>{{ b.schablone.felder.urteil.name }}</dt><dd>{{ urteilText(e, eOpt) }}</dd></div>
+            <div><dt>{{ b.schablone.felder.wirkung.name }}</dt><dd>{{ wirkungText(e, schablone.wirkung, b.schablone, eOpt) }}</dd></div>
+          </dl>
+        </section>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {#- Einordnung: was das Muster festlegt, als vier Zeilen aus `schablone`
+        (ohne Feldstatus); dazu der Rahmen „Für wen?“ -#}
     {% if schablone %}
-    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="schablone">
-      <h2 id="schablone">{{ b.karte.schablone }}</h2>
-      {{ schablonenRaster(schablone, b.schablone, {
-        kippFeld: kippFeld,
-        einschaetzungen: einschaetzungen,
-        grenzfallFrage: grenzfall_frage,
-        urteile: bm.urteile,
-        wirkungen: bm.wirkungen,
-        prefix: "schablone",
-        publikumLink: "/atlas/begriffsmodell/#" + bm.publikum_abschnitt.anker
-      }) }}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="einordnung">
+      <h2 id="einordnung">{{ b.karte.einordnung }}</h2>
+      <dl class="atlas-werte atlas-einordnung">
+        {% for id, label in b.karte.einordnung_zeilen %}{% if schablone[id] %}
+        <div><dt>{{ label }}</dt><dd>{{ schablone[id].text | alsListe | select | join(" ") }}</dd></div>
+        {% endif %}{% endfor %}
+      </dl>
+      <p class="atlas-einordnung__publikum">
+        <strong>{{ b.schablone.felder.publikum.frage }}</strong> {{ b.schablone.publikum_rahmen }}
+        <a href="/atlas/begriffsmodell/#{{ bm.publikum_abschnitt.anker }}">{{ b.schablone.publikum_mehr }}</a>
+      </p>
     </section>
     {% endif %}
 
@@ -252,18 +280,6 @@ layout: base.njk
     </section>
     {% endif %}
 
-    {% if etiketten %}
-    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="etiketten">
-      <h2 id="etiketten">{{ b.karte.etiketten }}</h2>
-      <dl class="atlas-werte">
-        {% for key, wert in etiketten %}
-        <div><dt>{{ b.etiketten[key] or key }}</dt><dd>{{ wert }}</dd></div>
-        {% endfor %}
-      </dl>
-      <p class="atlas-hinweis">{{ b.karte.etiketten_hinweis }}</p>
-    </section>
-    {% endif %}
-
     {% if normalfall %}
     <section class="atlas-kachel atlas-kachel--still" aria-labelledby="normalfall">
       <h2 id="normalfall">{{ b.karte.normalfall }}</h2>
@@ -271,26 +287,11 @@ layout: base.njk
     </section>
     {% endif %}
 
-    {#- Nur sichtbare Karten (Entwürfe nur bei entwuerfe_anzeigen: true) -#}
-    {%- set verwandtSichtbar = verwandt | nurSichtbar(collections.atlasMusterSichtbar) -%}
-    {%- set spiegelSichtbar = spiegelfall | nurSichtbar(collections.atlasMusterSichtbar) -%}
-    {% if verwandtSichtbar.length or spiegelSichtbar.length %}
-    <section class="atlas-kachel atlas-kachel--still atlas-bezuege" aria-labelledby="verwandt">
-      <h2 id="verwandt">{{ b.karte.verwandt }}</h2>
-      {% if verwandtSichtbar.length %}
-      <p>{% for slug in verwandtSichtbar %}{{ musterLink(slug) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>
-      {% endif %}
-      {% if spiegelSichtbar.length %}
-      <p><span class="atlas-label">{{ b.karte.spiegelfall }}</span> {{ musterLink(spiegelSichtbar[0]) }}</p>
-      {% endif %}
-    </section>
-    {% endif %}
-
-    {% if literatur and literatur.length %}
-    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="literatur">
-      <h2 id="literatur">{{ b.karte.literatur }}</h2>
-      <ul class="atlas-literatur">
-        {% for eintrag in literatur %}<li>{{ eintrag }}</li>{% endfor %}
+    {% if verzerrungen and verzerrungen.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="verzerrungen">
+      <h2 id="verzerrungen">{{ b.karte.verzerrungen }}</h2>
+      <ul class="atlas-liste-schlicht atlas-verzerrungen">
+        {% for v in verzerrungen %}<li><strong>{{ v.name }}</strong>: {{ v.text }}</li>{% endfor %}
       </ul>
     </section>
     {% endif %}
@@ -300,6 +301,15 @@ layout: base.njk
       <h2 id="erlaeuterung">{{ b.karte.mehr }}</h2>
       {# Überschriften im Fließtext eine Ebene unter die Kachel-Überschrift (h2 → h3) #}
       {{ content | ueberschriftenTiefer | safe }}
+    </section>
+    {% endif %}
+
+    {% if literatur and literatur.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="literatur">
+      <h2 id="literatur">{{ b.karte.literatur }}</h2>
+      <ul class="atlas-literatur">
+        {% for eintrag in literatur %}<li>{{ eintrag }}</li>{% endfor %}
+      </ul>
     </section>
     {% endif %}
   </div>

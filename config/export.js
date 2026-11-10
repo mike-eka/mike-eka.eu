@@ -17,8 +17,8 @@ function seitenUrl() {
 
 const MUSTER_FELDER = [
   "titel", "fachbegriff", "hinsicht", "reihenfolge", "kurz", "effekt", "minimalpaar", "analogie",
-  "mittel", "schablone", "kippt_an", "grenzfall_frage", "einschaetzungen", "etiketten",
-  "normalfall", "verwandt", "spiegelfall", "literatur", "grafik",
+  "mittel", "schablone", "kippt_an", "grenzfall_frage", "einschaetzungen",
+  "normalfall", "verzerrungen", "literatur", "grafik",
 ];
 
 const veroeffentlicht = (alle) => (alle || []).filter((i) => i.data.veroeffentlicht === true);
@@ -27,7 +27,7 @@ function atlasJson(bm, alle) {
   const basis = seitenUrl();
   const modell = {};
   ["titel", "untertitel", "kernsatz", "haltung", "pruefragen", "publikum_abschnitt", "hinsichten",
-    "inhaltstypen", "vergleichsfaelle", "wirkungen", "urteile", "etiketten", "beziehungen"]
+    "inhaltstypen", "vergleichsfaelle", "wirkungen", "urteile", "offen_gelassen", "beziehungen"]
     .forEach((k) => { if (bm[k] !== undefined) modell[k] = bm[k]; });
   return {
     quelle: basis + "/atlas/",
@@ -89,8 +89,6 @@ function atlasJsonLd(bm, alle, b) {
   schema("urteile", "Urteile", (bm.urteile || []).map((u) => ({ id: u.id, name: u.name })));
   schema("vergleichsfaelle", "Vergleichsfälle", (bm.vergleichsfaelle || []).map((v) => ({ id: v.id, name: v.name })));
   schema("inhaltstypen", "Inhaltstypen", (bm.inhaltstypen || []).map((t) => ({ id: t, name: t })));
-  Object.entries(bm.etiketten || {}).forEach(([k, werte]) =>
-    schema(`etiketten-${k}`, k, (werte || []).map((w) => ({ id: encodeURIComponent(w), name: w }))));
 
   const hinsichtNachText = (text) => {
     const h = (bm.hinsichten || []).find((x) => x.name === text || x.id === text);
@@ -113,9 +111,6 @@ function atlasJsonLd(bm, alle, b) {
     if (d.mittel && d.mittel.name) {
       muster["atlas:nutzt"] = { "@id": url + "#mittel", "@type": "atlas:SprachlichesMittel", "rdfs:label": d.mittel.name, ...(d.mittel.erklaerung ? { "skos:definition": d.mittel.erklaerung } : {}) };
     }
-    const verwandt = [].concat(d.verwandt || [], d.spiegelfall || []);
-    const ziele = veroeffentlicht(alle).filter((x) => verwandt.includes(x.page.fileSlug)).map((x) => ({ "@id": basis + x.url }));
-    if (ziele.length) muster["skos:related"] = ziele;
     graph.push(muster);
 
     const kipp = (bm.pruefragen || []).find((q) => q.id === d.kippt_an);

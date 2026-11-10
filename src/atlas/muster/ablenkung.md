@@ -31,7 +31,7 @@ schablone:                  # Stufe „Muster“
   inhalt:         { status: muster, text: ["Äußerung:", "eine Antwort auf eine andere Frage"] }
   vergleichsfall: { status: offen,  text: ["eine Antwort auf die Frage –", "oder gar keine Antwort?"] }
   hinsicht:       { status: muster, text: ["Worauf wir achten", ""] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "der Stellschraube"] }
+  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
   wirkung:        { status: muster, text: ["typisch:", "festhalten"] }
 
 effekt:
@@ -62,16 +62,16 @@ einschaetzungen:
       geblieben ist.
     wirkung: keine
 
-etiketten:
-  wahrheitsstatus: wahr
-  absicht: unbekannt
 
 normalfall: >-
   Gespräche wechseln ständig das Thema, und manchmal ist die neue Frage
   tatsächlich wichtiger. Problematisch wird es, wenn der Wechsel als Antwort
   auftritt.
-verwandt: [gewichtung-auslassung]
-spiegelfall: doppelter-massstab
+verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+  - name: "Kooperationsannahme"
+    text: "Wir unterstellen, dass eine Antwort zur gestellten Frage passt, und suchen den Zusammenhang selbst."
+  - name: "Begrenzte Aufmerksamkeit"
+    text: "Im Gedächtnis bleibt, dass geantwortet wurde, nicht worauf."
 literatur:
   - "Roberts, C. (2012). Information structure in discourse: Towards an integrated formal theory of pragmatics. Semantics and Pragmatics 5(6), 1–69."
   - "Grice, H. P. (1975). Logic and conversation. In P. Cole & J. L. Morgan (Hg.), Syntax and Semantics 3: Speech Acts, 41–58. New York: Academic Press."
@@ -79,32 +79,11 @@ literatur:
 grafik: null
 ---
 
-Ablenkung funktioniert, weil wir im Gespräch davon ausgehen, dass jede
-Äußerung zur gerade offenen Frage beiträgt. Wer auf „Warum wird verschoben?“
-mit einer Zahl über Turnhallen antwortet, nutzt diese Erwartung: Das Publikum
-sucht unwillkürlich den Zusammenhang, den die Antwort nur behauptet. Am Ende
-hat man etwas Wahres gehört, und die eigentliche Frage ist aus dem Blick.
-
-## Warum es so oft gelingt
-
-Ob eine Ablenkung wirkt, hängt auch davon ab, ob jemand die Frage festhält.
-In Interviews und Talkshows wäre das die Aufgabe der Moderation. Häufig
-geben sich Interviewende aber mit der Ausweichantwort zufrieden, haken
-höchstens einmal nach oder geben dann auf. Für das Publikum entsteht so der
-Eindruck, die Frage sei gestellt und beantwortet worden. Damit wird aus einem
-gescheiterten Versuch, eine Antwort zu bekommen, scheinbar eine erledigte
-Frage.
-
-## Flutung
-
-Eine Spielart der Ablenkung braucht keine Gegenfrage. Viele einzelne
-Meldungen, jede für sich harmlos und oft zutreffend, ziehen die Aufmerksamkeit
-so lange auf andere Themen, bis eine bestimmte Frage niemand mehr stellt.
-Hier liegt der Schaden nicht in einer Äußerung, sondern in der Menge.
-
-## Spiegelfall
-
-Die Gegenfrage „Und was ist mit …?“ ist nicht immer Ablenkung. Sie kann auch
-ein berechtigter Hinweis auf einen doppelten Maßstab sein. Ob sie ablenkt
-oder prüft, entscheidet sich daran, ob die ursprüngliche Frage danach noch
-beantwortet wird.
+Ablenkung funktioniert, weil wir im Gespräch annehmen, dass jede Äußerung
+zur gerade offenen Frage beiträgt. Wer auf „Warum wird verschoben?“ mit
+einer Zahl über Turnhallen antwortet, nutzt diese Erwartung: Das Publikum
+sucht den Zusammenhang, den die Antwort nur behauptet. Ob das gelingt, hängt
+auch davon ab, ob jemand die Frage festhält. In Interviews und Talkshows
+wäre das die Aufgabe der Moderation – oft wird aber höchstens einmal
+nachgehakt. So wird aus einer ausgewichenen Frage scheinbar eine
+beantwortete.

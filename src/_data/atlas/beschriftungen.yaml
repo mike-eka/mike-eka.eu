@@ -53,7 +53,7 @@ anhang:                                 # Seite /atlas/anhang/
   eigenschaften:                        # Eigenschaften in den Kästen des Schemas
     # (Einschätzung: Urteil und Wirkung mit ihren Wertebereichen aus urteile /
     # wirkungen in begriffsmodell.yaml – nicht hier eintragen)
-    Inhalt: ["Etiketten: Wahrheitsstatus · Absicht"]
+    Inhalt: ["Wahrheitsstatus · Absicht"]
   rahmen: "Rahmen jeder Einschätzung"
 
 handout:                                # Seite /atlas/handout/ (A4)
@@ -70,21 +70,26 @@ begriffsmodell:                         # Seite /atlas/begriffsmodell/
   aggregation_optionen: "Mögliche Antworten"
   beispiel: "Beispiel"
   wirkungen: "Wirkungen"
-  etiketten: "Etiketten"
   schablone: "Die Schablone"
   schablone_schalter: "Stufe wählen"
   stufe_leer: "leer"
   stufe_muster: "Muster"
   stufe_beispiel: "Beispiel"
   grenzfaelle: "Grenzfälle"
-  kippt_an: "Stellschraube"
 
 karte:
-  schablone: "Was das Muster festlegt"
   effekt: "Was sich verschlechtert"
   effekt_vorher: "Vorher"
   effekt_nachher: "Nachher"
   effekt_weitere: "Betrifft außerdem:"   # weitere Hinsichten aus effekt.hinsichten (ohne die Haupt-Hinsicht)
+  grenzfall: "Grenzfall"
+  schalter: "Einschätzung wählen"       # Knopfgruppe im Grenzfall und in der Grafik
+  einordnung: "Einordnung"
+  einordnung_zeilen:                    # Zeilen der Einordnung, aus `schablone` der Karte
+    inhalt: "Inhalt"
+    vergleichsfall: "Vergleich"
+    hinsicht: "Hinsicht"
+    wirkung: "Wirkung"
   minimalpaar: "Minimalpaar"
   # nur wenn minimalpaar.frage gesetzt ist:
   minimalpaar_frage: "Gefragt"
@@ -103,12 +108,8 @@ karte:
   gegenform: "Gegenform"
   mittel: "Sprachliches Mittel"
   test: "Test"
-  etiketten: "Etiketten"
-  etiketten_hinweis: "Etiketten beschreiben den Inhalt. Sie sind keine Bedingung für Desinformation."
   normalfall: "Normal, weil"
-  verwandt: "Verwandt"
-  spiegelfall: "Spiegelfall"
-  in_vorbereitung: "in Vorbereitung"
+  verzerrungen: "Verzerrungen, die das Muster begünstigen"
   literatur: "Literatur"
   mehr: "Erläuterung"
 
@@ -116,10 +117,6 @@ schablone:
   mitte: "Einschätzung"
   # Legende über der Schablone
   legende: "Farbig: legt das Muster fest. Gestrichelt: lässt es offen."
-  # Feld, an dem der Grenzfall kippt (`kippt_an`)
-  stellschraube: "Stellschraube"
-  schalter: "Einschätzung wählen"
-  urteil_hinweis: "ergibt sich aus der Stellschraube"
   wirkung_keine: "keine"   # Einschätzung mit `wirkung: keine`
   # Rahmen „Publikum“ um die Schablone (auch in der Landkarte); „Mehr dazu“
   # führt zu begriffsmodell.publikum_abschnitt
@@ -155,6 +152,3 @@ grafik:                 # Grafiken auf den Karten (netz.js, balken.js)
   kennzahl_2_hinweis: "Die erste Zahl bleibt gleich. Das ist der Punkt: Die Brückenposition allein unterscheidet Vermittlung nicht von Kaperung."
   balken_alt: "Balkendiagramm"
 
-etiketten:
-  wahrheitsstatus: "Wahrheitsstatus"
-  absicht: "Absicht"

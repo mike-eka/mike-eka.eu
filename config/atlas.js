@@ -68,8 +68,17 @@ function pruefeAtlas(items) {
   const wirkungsIds = (bm.wirkungen || []).map((w) => w.id);
   const hinsichtIds = (bm.hinsichten || []).map((h) => h.id);
   for (const item of items) {
-    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt } = item.data;
+    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt, verzerrungen } = item.data;
     const datei = item.inputPath;
+
+    // verzerrungen: a list of { name, text } (tile "Verzerrungen, die das Muster begünstigen")
+    if (!Array.isArray(verzerrungen) || !verzerrungen.length) {
+      warn(`${datei}: verzerrungen fehlt (Liste mit name und text)`);
+    } else {
+      verzerrungen.forEach((v, i) => {
+        if (!v || istTodo(v.name) || istTodo(v.text)) warn(`${datei}: verzerrungen ${i + 1} braucht name und text`);
+      });
+    }
 
     // effekt.hinsichten: a list of hinsicht ids
     if (effekt && effekt.hinsichten != null) {
@@ -96,13 +105,13 @@ function pruefeAtlas(items) {
     if (!istTodo(kipp)) {
       const frage = fragen.find((q) => q.id === kipp);
       if (frage && frage.art === "rahmen") {
-        warn(`${datei}: kippt_an "${kipp}" ist Rahmen jeder Einschätzung, keine Stellschraube eines Musters (erlaubt: ${musterFragen.map((q) => q.id).join(", ")})`);
+        warn(`${datei}: kippt_an "${kipp}" ist Rahmen jeder Einschätzung, keine Frage eines Grenzfalls (erlaubt: ${musterFragen.map((q) => q.id).join(", ")})`);
       } else if (!frage || frage.art !== "muster") {
         warn(`${datei}: unbekanntes kippt_an "${kipp}" (erlaubt: ${musterFragen.map((q) => q.id).join(", ")})`);
       } else if (veroeffentlicht === true) {
         (einschaetzungen || []).forEach((e, i) => {
           if (istTodo(e && e[frage.feld])) {
-            warn(`${datei}: Einschätzung ${i + 1} ("${e && e.label}") hat kein Feld "${frage.feld}" für die Stellschraube "${kipp}"`);
+            warn(`${datei}: Einschätzung ${i + 1} ("${e && e.label}") hat kein Feld "${frage.feld}" für den Grenzfall (kippt_an "${kipp}")`);
           }
         });
       }
@@ -190,13 +199,6 @@ module.exports = function atlasPlugin(eleventyConfig) {
   eleventyConfig.addFilter("musterNachSlug", (items, slug) =>
     (items || []).find((item) => item.page.fileSlug === slug)
   );
-
-  // Keep only the slugs of cards that are visible (see atlasMusterSichtbar),
-  // so hidden drafts leave no trace in "verwandt" / "spiegelfall".
-  eleventyConfig.addFilter("nurSichtbar", (slugs, sichtbar) => {
-    const da = new Set((sichtbar || []).map((item) => item.page.fileSlug));
-    return [].concat(slugs || []).filter((s) => s && da.has(s));
-  });
 
   // Cards of one hinsicht, keeping collection order.
   eleventyConfig.addFilter("musterInHinsicht", (items, hinsichtId) =>
@@ -364,12 +366,6 @@ module.exports = function atlasPlugin(eleventyConfig) {
   // Statuses used in a schablone (for its legend); a field without status is "offen".
   eleventyConfig.addFilter("schablonenStatus", (felder) => [
     ...new Set(Object.values(felder || {}).map((f) => (f && f.status) || "offen")),
-  ]);
-
-  // Distinct values of one key across a list, dropping empty ones,
-  // e.g. einschaetzungen | eindeutig("wirkung").
-  eleventyConfig.addFilter("eindeutig", (liste, key) => [
-    ...new Set((liste || []).flatMap((x) => [].concat(x ? x[key] : [])).filter((v) => v != null && v !== "")),
   ]);
 
   // A value as a list ("a" -> ["a"], null -> []), e.g. for wirkung.

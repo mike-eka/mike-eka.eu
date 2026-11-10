@@ -5,8 +5,9 @@ eleventyComputed:
   description: "{{ atlas.begriffsmodell.kernsatz }}"
 ---
 {#- Begriffsmodell: Einleitung, Kernsatz, die drei Prüffragen, das Publikum
-    als Rahmen (Abschnitt „Für wen?“), Wirkungen, Etiketten, die große
-    Schablone mit Stufen und die Liste der Grenzfälle. Alle Texte aus
+    als Rahmen (Abschnitt „Für wen?“), Wirkungen, was die Definition offenlässt
+    (Wahrheit und Absicht), die große Schablone mit Stufen und die Liste der
+    Grenzfälle. Alle Texte aus
     begriffsmodell.yaml, beschriftungen.yaml und den Karten. -#}
 {%- from "atlas/schablone.njk" import schablone as schablonenRaster -%}
 {%- from "atlas/pruefragen.njk" import pruefragen -%}
@@ -19,16 +20,15 @@ eleventyComputed:
 {#- Große Schablone: welche Karte (schablone_stufen.muster) -#}
 {%- set stufen = bm.schablone_stufen or {} -%}
 {%- set mk = collections.atlasMusterSichtbar | musterNachSlug(stufen.muster) -%}
+{#- kippt_an: welches Feld die Beispiel-Stufen füllen -#}
 {%- set kipp = (bm.pruefragen | nachId(mk.data.kippt_an)) if mk else null -%}
 {%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
 
-{%- macro stufe(key, titel, felder, kippFeld, zusatz, b, anker, link) -%}
+{%- macro stufe(key, titel, felder, zusatz, b, anker, link) -%}
 <div class="atlas-stufe" id="stufe-{{ key }}" data-panel="{{ key }}">
   <h3 class="atlas-stufe__titel">{% if link %}<a href="{{ link }}">{{ titel }}</a>{% else %}{{ titel }}{% endif %}</h3>
   {% if zusatz %}<p class="atlas-stufe__zusatz">{{ zusatz | safe }}</p>{% endif %}
   {{ schablonenRaster(felder, b.schablone, {
-    kippFeld: kippFeld,
-    prefix: "stufe-" + key,
     ebene: 4,
     publikumLink: "#" + anker
   }) }}
@@ -79,15 +79,12 @@ eleventyComputed:
       </dl>
     </section>
 
-    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="etiketten">
-      <h2 id="etiketten">{{ bb.etiketten }}</h2>
-      <dl class="atlas-werte">
-        {% for key, werte in bm.etiketten %}
-        <div><dt>{{ b.etiketten[key] or key }}</dt><dd>{{ werte | join(" · ") }}</dd></div>
-        {% endfor %}
-      </dl>
-      <p class="atlas-hinweis">{{ b.karte.etiketten_hinweis }}</p>
+    {% if bm.offen_gelassen %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="offen-gelassen">
+      <h2 id="offen-gelassen">{{ bm.offen_gelassen.titel }}</h2>
+      <p>{{ bm.offen_gelassen.text }}</p>
     </section>
+    {% endif %}
 
     <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="schablone">
       <h2 id="schablone">{{ bb.schablone }}</h2>
@@ -102,16 +99,16 @@ eleventyComputed:
           {% endif %}
         </div>
 
-        {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", "", b, anker) }}
+        {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", b, anker) }}
 
         {% if mk %}
         {#- Die Überschrift ist selbst der Link auf die Karte (nur veröffentlicht) -#}
-        {{ stufe("muster", bb.stufe_muster + ": " + mk.data.titel, mk.data.schablone, kippFeld, "", b, anker,
+        {{ stufe("muster", bb.stufe_muster + ": " + mk.data.titel, mk.data.schablone, "", b, anker,
                  mk.url if mk.data.veroeffentlicht else "") }}
         {% for e in mk.data.einschaetzungen %}
         {{ stufe("beispiel-" + loop.index, bb.stufe_beispiel + ": " + e.label,
                  mk.data.schablone | einschaetzungsStufe(e, kippFeld, bm, b.schablone.wirkung_keine),
-                 kippFeld, mk.data.grenzfall_frage | escape, b, anker) }}
+                 mk.data.grenzfall_frage | escape, b, anker) }}
         {% endfor %}
         {% endif %}
       </div>
@@ -121,10 +118,8 @@ eleventyComputed:
       <h2 id="grenzfaelle">{{ bb.grenzfaelle }}</h2>
       <ul class="atlas-grenzfaelle">
         {% for k in collections.atlasMuster %}{% if k.data.im_framework %}
-        {%- set kq = bm.pruefragen | nachId(k.data.kippt_an) -%}
         <li>
           <a class="atlas-grenzfall__titel" href="{{ k.url }}">{{ k.data.titel }}</a>
-          {% if kq and b.schablone.felder[kq.feld] %}<span class="atlas-stellschraube-etikett">{{ bb.kippt_an }} · {{ b.schablone.felder[kq.feld].name }}</span>{% endif %}
           {% if k.data.grenzfall_frage %}<span class="atlas-grenzfall__frage">{{ k.data.grenzfall_frage }}</span>{% endif %}
         </li>
         {% endif %}{% endfor %}

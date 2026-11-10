@@ -26,7 +26,7 @@
     --atlas-kachel-kern: #fbeee7;      /* Schablone */
     --atlas-kachel-effekt: #f6dfd4;    /* Was sich verschlechtert (strongest) */
     --atlas-kachel-ruhig: #f5efe3;     /* Minimalpaar, Mittel */
-    --atlas-kachel-still: #f1eee7;     /* Etiketten, Normal weil, Verwandt, … */
+    --atlas-kachel-still: #f1eee7;     /* Einordnung, Normal weil, Verzerrungen, … */
     --atlas-feld: #fffdf9;             /* fields inside tiles */
     --atlas-knopf-an: #f8e4db;         /* pressed switch */
 
@@ -271,40 +271,15 @@ main.atlas-wide {
     margin: 0;
 }
 
-.atlas-feld__hinweis {
-    margin: 0 0 0.4rem;
-    font-size: 0.8rem;
-    color: var(--atlas-gedaempft);
-    font-style: italic;
-}
-
 /* Status: "colour = fixed by the pattern, dashed = left open". */
 .atlas-schablone .ist-muster { border: 1px solid var(--atlas-kern); }
 .atlas-schablone .ist-belegt { border: 1px solid var(--atlas-hinsicht); background: var(--atlas-hinsicht-flaeche); }
 .atlas-schablone .ist-offen { border: 1px dashed var(--atlas-offen); }
 .atlas-schablone .ist-offen > .atlas-feld__text { color: var(--atlas-gedaempft); font-style: italic; }
 
-/* The adjusting screw: where the borderline case turns. Full width. */
-.atlas-schablone .ist-stellschraube {
-    grid-column: 1 / -1;
-    border: 2px dashed var(--atlas-kern);
-}
-
-.atlas-stellschraube-etikett {
-    display: inline-block;
-    margin-left: 0.4rem;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--atlas-kern-text);
-    border: 1px solid var(--atlas-kern);
-    border-radius: 999px;
-    padding: 0 0.45rem;
-    vertical-align: 0.05rem;
-}
-
+/* ---- Grenzfall (card) ---- */
 .atlas-grenzfrage {
-    margin: 0.6rem 0 0.5rem;
+    margin: 0 0 0.75rem;
     font-weight: 500;
 }
 
@@ -335,22 +310,6 @@ main.atlas-wide {
     background: var(--atlas-knopf-an);
 }
 
-.atlas-varianten {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: 0.5rem;
-}
-
-.atlas-variante__label {
-    display: block;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--atlas-gedaempft);
-}
-
 .atlas-variante__urteil {
     display: block;
     font-size: 1.05rem;
@@ -360,16 +319,18 @@ main.atlas-wide {
     display: block;
 }
 
-/* Without JS: the assessments grouped one by one inside the screw. */
+/* One assessment: value, verdict with reasons, effect. With JS only the
+   chosen one is shown; without JS (and in print) all, one below the other. */
 .atlas-einschaetzungen {
     display: grid;
     gap: 0.75rem;
-    margin-top: 0.5rem;
 }
 
 .atlas-einschaetzung {
-    border-left: 2px solid var(--atlas-offen);
-    padding-left: 0.75rem;
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
 }
 
 .atlas-einschaetzung__titel {
@@ -384,6 +345,26 @@ main.atlas-wide {
 .atlas-einschaetzung .atlas-variante__urteil {
     display: inline;
     font-size: 1rem;
+}
+
+/* ---- Einordnung (card) ---- */
+.atlas-einordnung > div {
+    grid-template-columns: 7rem 1fr;
+}
+
+.atlas-einordnung__publikum {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+}
+
+.atlas-einordnung__publikum a {
+    text-decoration: underline;
+}
+
+/* ---- Verzerrungen (card) ---- */
+.atlas-verzerrungen {
+    display: grid;
+    gap: 0.5rem;
 }
 
 /* Centre: the assessment with verdict and effect. Full width. */
@@ -402,11 +383,6 @@ main.atlas-wide {
     margin: 0;
     font-weight: 500;
     color: var(--atlas-kern-text);
-}
-
-/* The verdict is neutral: it follows from the screw, the pattern does not set it. */
-.atlas-schablone .ist-neutral {
-    border: 1px solid var(--atlas-neutral);
 }
 
 @media (max-width: 640px) {
@@ -950,11 +926,7 @@ main.atlas-wide {
     margin: 0.2rem 0 0;
 }
 
-/* ---- Related, literature ---- */
-.atlas-bezuege p {
-    margin: 0 0 0.5rem;
-}
-
+/* ---- Literature ---- */
 .atlas-literatur {
     margin: 0;
     padding-left: 1.2rem;
@@ -967,7 +939,8 @@ main.atlas-wide {
 @media (max-width: 480px) {
     .atlas-paar__zeile,
     .atlas-werte > div,
-    .atlas-einschaetzung .atlas-werte > div {
+    .atlas-einschaetzung .atlas-werte > div,
+    .atlas-einordnung > div {
         grid-template-columns: 1fr;
         gap: 0;
     }
@@ -1082,11 +1055,6 @@ main.atlas-wide {
 .atlas-grenzfall__titel {
     font-weight: 500;
     margin-right: 0.4rem;
-}
-
-/* Stellschraube as a small label after the title (no second question) */
-.atlas-grenzfaelle .atlas-stellschraube-etikett {
-    margin-left: 0;
 }
 
 .atlas-grenzfall__frage {
@@ -1682,7 +1650,7 @@ main.atlas-wide {
         break-after: avoid;
     }
 
-    .atlas-feld:not(.ist-stellschraube),
+    .atlas-feld,
     .atlas-einschaetzung,
     .atlas-schablone__mitte,
     .atlas-analogie__tabelle tr,
@@ -1715,7 +1683,8 @@ main.atlas-wide {
     }
 
     .atlas [data-ohne-js],
-    .atlas .atlas-stufe[data-panel] {
+    .atlas .atlas-stufe[data-panel],
+    .atlas-grenzfall [data-panel] {
         display: block !important;
     }
 
@@ -1757,13 +1726,4 @@ main.atlas-wide {
     .atlas-zeichen > div {
         grid-template-columns: 4.6rem 1fr;
     }
-}
-
-/* compact verdicts in the verdict field (no-JS version and print) */
-.atlas-urteile-kurz {
-    margin-top: 0.3rem;
-}
-
-.atlas-urteil-kurz {
-    white-space: normal;
 }

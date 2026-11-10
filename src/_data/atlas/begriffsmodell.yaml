@@ -5,22 +5,17 @@ kernsatz: >-
   für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
   verschlechtert.
 # Entwürfe (Karten mit veroeffentlicht: false) als „in Vorbereitung“ zeigen?
-# false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste, nicht bei
-# „verwandt“ oder „Spiegelfall“. Gebaut werden Entwürfe in keinem Fall.
+# false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste.
+# Gebaut werden Entwürfe in keinem Fall.
 entwuerfe_anzeigen: true
 
 # Ein Absatz Haltung für die Übersicht
 haltung: >-
   Lautleise heißen diese Muster, weil sie leise wirken und laut werden,
-  sobald man sie einmal kennt. Dieser Atlas sammelt Muster, die in Faktenchecks selten vorkommen, weil
-  sie ohne falsche Behauptung auskommen. Er orientiert sich an der
-  Arbeitsdefinition des DFG-Schwerpunktprogramms „Rethinking
-  Disinformation“ (Re:DIS). Nach ihr ist Desinformation „jede Form öffentlich
-  verbreiteter Inhalte“, „die die Erkenntnissituation der Empfänger
-  verschlechtert“, unabhängig vom Wahrheitsgehalt und von der Absicht der
-  Verfasser. Der Atlas ist ein Arbeitsstand und ein Gesprächsangebot: Die
-  Beispiele sind erfunden, die Einordnungen lassen sich bestreiten, und
-  gerade an den Grenzfällen wird es interessant.
+  sobald man sie einmal kennt. Der Atlas sammelt Desinformationsmuster, die
+  ohne falsche Behauptung auskommen, und orientiert sich an der
+  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS. Er ist ein
+  Arbeitsstand und ein Gesprächsangebot.
 
 # Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
 begriffsmodell_einleitung: >-
@@ -33,7 +28,8 @@ begriffsmodell_einleitung: >-
   entscheidet sich das Urteil.
 
 # art: muster  – ein Muster kann diese Frage festlegen oder offenlassen;
-#                nur diese Fragen sind als `kippt_an` (Stellschraube) erlaubt.
+#                nur diese Fragen sind als `kippt_an` (die Frage, an der der
+#                Grenzfall einer Karte offen ist) erlaubt.
 # art: rahmen  – stellt sich bei jeder Einschätzung (Publikum), kein
 #                Merkmal eines Musters.
 pruefragen:
@@ -140,16 +136,21 @@ urteile:
   - { id: nein,     name: "nein" }
   - { id: strittig, name: "strittig" }
 
-etiketten:
-  wahrheitsstatus: [wahr, falsch, unklar, "nicht wahrheitsfähig"]
-  absicht: [vorhanden, "nicht vorhanden", unbekannt]
+# Begriffsmodell-Seite: was die Definition offenlässt
+offen_gelassen:
+  titel: "Was die Definition offenlässt: Wahrheit und Absicht"
+  text: >-
+    Ob ein Inhalt wahr ist und ob jemand täuschen will, spielt für die
+    Re:DIS-Definition keine Rolle. Die vertrauten Begriffe ergeben sich als
+    Sonderfälle: Lüge ist falsch und absichtlich, Fehlinformation falsch ohne
+    Absicht, Irreführung mit Wahrem ist wahr und trotzdem schädlich.
 
 schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
   muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
-                                   # (jede füllt das Feld der Stellschraube `kippt_an` und das Urteil)
+                                   # (jede füllt das Feld aus `kippt_an` und das Urteil)
 
 schablone_leer:        # Texte der leeren Schablone
-  inhalt:         ["Aussage, Auswahl, Paar …", "Etiketten: Wahrheitsstatus? Absicht?"]
+  inhalt:         ["Aussage, Auswahl, Paar …", ""]
   publikum:       ["wer genau?", "und wie viele?"]
   vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
   urteil:         ["ja · nein · strittig", ""]

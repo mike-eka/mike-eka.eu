@@ -1,15 +1,14 @@
 // Atlas: generic switches. Progressive enhancement only — without this script
 // every variant stays visible as a plain list.
 //
-// Markup (see _includes/atlas/schablone.njk):
+// Markup (e.g. the card's „Grenzfall“ tile, the stages of the big template):
 //   [data-atlas-schalter]            container
 //     [data-nur-js][hidden]          shown by this script (incl. the buttons)
 //     [data-ohne-js]                 hidden by this script (no-JS fallback)
 //     .atlas-schalter                button group
 //       button[data-ziel=<key>]      one per variant; aria-pressed marks the start
 //     [data-panel=<key>]             any number of elements per key, anywhere in
-//                                    the container (e.g. the value at the
-//                                    adjusting screw and the verdict)
+//                                    the container
 (function () {
   "use strict";
 
