@@ -1,0 +1,100 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ atlas.anhang.titel }}"
+---
+{#- Formaler Anhang: Definition, Zeichen, Anmerkungen, offene Stellen, Schema
+    (statisches SVG aus begriffsmodell.yaml → beziehungen), Modell, Download.
+    Texte aus src/_data/atlas/anhang.yaml. -#}
+{%- set a = atlas.anhang -%}
+{%- set bm = atlas.begriffsmodell -%}
+{%- set b = atlas.beschriftungen -%}
+{%- set ba = b.anhang -%}
+{#- Wertebereiche von Urteil und Wirkung (aus urteile / wirkungen) -#}
+{%- set wb = bm | wertebereiche(b) -%}
+{%- set wbUrteil = wb.urteil.label + ": " + wb.urteil.werte -%}
+{%- set wbWirkung = wb.wirkung.label + ": " + wb.wirkung.werte -%}
+{%- set wbZusatz = ("(" + wb.wirkung.zusatz + ")") if wb.wirkung.zusatz else "" -%}
+<article class="atlas atlas-anhang">
+  <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
+  <header class="atlas-karte__kopf">
+    <h1>{{ a.titel }}</h1>
+    {% if a.einleitung %}<p class="atlas-kurz">{{ a.einleitung }}</p>{% endif %}
+  </header>
+
+  <div class="atlas-kacheln">
+    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="definition">
+      <h2 id="definition">{{ ba.definition }}</h2>
+      <p class="atlas-definition">{{ a.definition }}</p>
+      {% if a.legende and a.legende.length %}
+      <h3 class="atlas-unterkopf">{{ ba.legende }}</h3>
+      <dl class="atlas-zeichen">
+        {% for z in a.legende %}
+        <div><dt>{{ z.zeichen }}</dt><dd>{{ z.text }}</dd></div>
+        {% endfor %}
+        {#- Eigenschaften der Einschätzung mit ihren Wertebereichen -#}
+        <div class="ist-eigenschaft"><dt>{{ wb.urteil.label }}</dt><dd>{{ wb.urteil.werte }}</dd></div>
+        <div class="ist-eigenschaft"><dt>{{ wb.wirkung.label }}</dt><dd>{{ wb.wirkung.werte }}{% if wbZusatz %} <span class="atlas-hinweis">{{ wbZusatz }}</span>{% endif %}</dd></div>
+      </dl>
+      {% endif %}
+    </section>
+
+    {% if a.anmerkungen and a.anmerkungen.length %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="anmerkungen">
+      <h2 id="anmerkungen">{{ ba.anmerkungen }}</h2>
+      {% for m in a.anmerkungen %}
+      <h3 class="atlas-unterkopf">{{ m.titel }}</h3>
+      <p>{{ m.text }}</p>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if a.offene_stellen and a.offene_stellen.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="offene-stellen">
+      <h2 id="offene-stellen">{{ ba.offene_stellen }}</h2>
+      <ul class="atlas-literatur">
+        {% for s in a.offene_stellen %}<li>{{ s }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+
+  {# Schema in einer eigenen, breiten Kachel (etwa Originalgröße statt verkleinert) #}
+  <section class="atlas-kachel atlas-kachel--kern atlas-kachel--breit" aria-labelledby="schema">
+      <h2 id="schema">{{ ba.schema }}</h2>
+      <figure class="atlas-schema-figur">
+        {# Auf schmalen Bildschirmen seitlich scrollbar statt unlesbar klein #}
+        <div class="atlas-schema-rolle" tabindex="0" role="region" aria-label="{{ ba.schema }}">
+          {{ bm.beziehungen | schemaSvg(ba, ba.schema, { Einschaetzung: [wbUrteil, wbWirkung, wbZusatz] | select }) | safe }}
+        </div>
+        <figcaption class="atlas-hinweis">{{ ba.schema_hinweis }}</figcaption>
+      </figure>
+      <details class="atlas-grafik__daten">
+        <summary>{{ ba.schema_liste }}</summary>
+        <ul class="atlas-literatur">
+          {% for r in bm.beziehungen %}
+          <li>{{ ba.klassen[r.von] or r.von }} → <em>{{ r.label }}</em> → {{ ba.klassen[r.nach] or r.nach }}</li>
+          {% endfor %}
+          <li>{{ ba.klassen.Einschaetzung or "Einschaetzung" }} · {{ wbUrteil }}</li>
+          <li>{{ ba.klassen.Einschaetzung or "Einschaetzung" }} · {{ wbWirkung }}{% if wbZusatz %} {{ wbZusatz }}{% endif %}</li>
+        </ul>
+      </details>
+  </section>
+
+  <div class="atlas-kacheln">
+    {% if a.modell %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="modell">
+      <h2 id="modell">{{ ba.modell }}</h2>
+      <p>{{ a.modell }}</p>
+    </section>
+    {% endif %}
+
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="download">
+      <h2 id="download">{{ ba.download }}</h2>
+      <ul class="atlas-liste-schlicht atlas-downloads">
+        <li><a class="atlas-weiter" href="/atlas/atlas.jsonld" download>{{ a.download }}</a> <span class="atlas-hinweis">(atlas.jsonld)</span></li>
+        <li><a class="atlas-weiter" href="/atlas/atlas.json" download>{{ ba.download_json }}</a> <span class="atlas-hinweis">(atlas.json)</span></li>
+      </ul>
+    </section>
+  </div>
+</article>

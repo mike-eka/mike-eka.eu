@@ -1,0 +1,361 @@
+---
+layout: base.njk
+---
+{#- Musterkarte. Reihenfolge: Kopf → Beispiel (Minimalpaar bzw. Analogie,
+    ggf. Grafik) → Was sich verschlechtert → Grenzfall → Einordnung →
+    Sprachliches Mittel → Normal, weil → Verzerrungen → Fließtext → Literatur.
+    Alle Texte aus der Karte und aus beschriftungen.yaml. -#}
+{%- from "atlas/schablone.njk" import urteilText, wirkungText, wert -%}
+{%- set bm = atlas.begriffsmodell -%}
+{%- set b = atlas.beschriftungen -%}
+{%- set h = bm.hinsichten | nachId(hinsicht) -%}
+{#- kippt_an: welches Feld die Einschätzungen des Grenzfalls füllen -#}
+{%- set kipp = bm.pruefragen | nachId(kippt_an) -%}
+{%- set kippFeld = kipp.feld if (kipp and kipp.art == "muster") else "" -%}
+{%- set eOpt = { urteile: bm.urteile, wirkungen: bm.wirkungen } -%}
+
+<article class="atlas atlas-karte">
+  <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
+  <header class="atlas-karte__kopf">
+    <h1>{{ titel }}</h1>
+    {% if fachbegriff %}<p class="atlas-fachbegriff" lang="en">{{ fachbegriff }}</p>{% endif %}
+    {% if h %}<a class="atlas-badge" href="/atlas/#hinsicht-{{ h.id }}">{{ h.name }}</a>{% endif %}
+    {% if kurz %}<p class="atlas-kurz">{{ kurz }}</p>{% endif %}
+  </header>
+
+  <div class="atlas-kacheln">
+    {#- Optional: ein realer Fall an der Stelle des Minimalpaars: titel,
+        einleitung, zwei seiten (titel, text) nebeneinander, quelle, hinweis -#}
+    {% if fall %}
+    <section class="atlas-kachel atlas-kachel--ruhig atlas-fall" aria-labelledby="fall">
+      <h2 id="fall">{{ fall.titel }}</h2>
+      {% if fall.einleitung %}<p class="atlas-fall__einleitung">{{ fall.einleitung }}</p>{% endif %}
+      {% if fall.seiten and fall.seiten.length %}
+      <div class="atlas-fall__seiten">
+        {% for s in fall.seiten %}
+        <section class="atlas-fall__seite" aria-labelledby="fall-seite-{{ loop.index }}">
+          <h3 id="fall-seite-{{ loop.index }}">{{ s.titel }}</h3>
+          <p>{{ s.text }}</p>
+        </section>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% if fall.quelle %}<p class="atlas-fall__quelle"><span class="atlas-label">{{ b.karte.fall_quelle }}</span> {{ fall.quelle }}</p>{% endif %}
+      {% if fall.hinweis %}<p class="atlas-hinweis">{{ fall.hinweis }}</p>{% endif %}
+    </section>
+    {% endif %}
+
+    {% if minimalpaar %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="minimalpaar">
+      <h2 id="minimalpaar">{{ b.karte.minimalpaar }}</h2>
+      {# Optional: die Frage, auf die beide Fassungen antworten #}
+      {#- Optional: frage (über dem Paar) mit frage_label (ersetzt „Gefragt“; dann
+          heißen die Fassungen nur „Muster“/„Gegenform“). muster/gegenform dürfen
+          Listen sein: dann zwei ausgerichtete Listen; Einträge, die nur eine
+          Fassung hat, sind markiert, die Lücke in der anderen ebenfalls. -#}
+      {%- set mitFrage = minimalpaar.frage -%}
+      {%- set alsAntworten = mitFrage and not minimalpaar.frage_label -%}
+      {%- set labelMuster = b.karte.antwort_muster if alsAntworten else b.karte.muster -%}
+      {%- set labelGegenform = b.karte.antwort_gegenform if alsAntworten else b.karte.gegenform -%}
+      {% if mitFrage %}
+      <p class="atlas-paar__frage">
+        <span class="atlas-label">{{ minimalpaar.frage_label or b.karte.minimalpaar_frage }}</span>
+        {% if minimalpaar.frage_label %}{{ minimalpaar.frage }}{% else %}<q>{{ minimalpaar.frage }}</q>{% endif %}
+      </p>
+      {% endif %}
+      {% if minimalpaar.muster | istListe(minimalpaar.gegenform) %}
+      {%- set zeilen = minimalpaar.muster | paarZeilen(minimalpaar.gegenform) -%}
+      <div class="atlas-paar-listen{% if mitFrage %} atlas-paar--antworten{% endif %}" style="--zeilen: {{ zeilen.length }}">
+        {% for seite in [["muster", "gegenform", labelMuster], ["gegenform", "muster", labelGegenform]] %}
+        <div class="atlas-paar-liste">
+          <h3 class="atlas-paar-liste__titel">{{ seite[2] }}</h3>
+          <ul>
+            {% for z in zeilen %}
+            {% if z[seite[0]] %}
+            {%- if z.getauscht %}
+            <li class="ist-getauscht"><span class="atlas-paar__marke">{{ b.karte.paar_getauscht }}</span> {{ z[seite[0]] | markiere | safe }}</li>
+            {%- else %}
+            <li{% if not z[seite[1]] %} class="ist-einzeln"{% endif %}>{% if not z[seite[1]] %}<span class="atlas-paar__marke">{{ b.karte.paar_zusatz }}</span> {% endif %}{{ z[seite[0]] | markiere | safe }}</li>
+            {%- endif %}
+            {% else %}
+            <li class="ist-luecke"><span class="atlas-paar__luecke">{{ b.karte.paar_fehlt }}</span></li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <dl class="atlas-paar{% if mitFrage %} atlas-paar--antworten{% endif %}">
+        <div class="atlas-paar__zeile">
+          <dt>{{ labelMuster }}</dt>
+          <dd><q>{{ minimalpaar.muster | markiere | safe }}</q></dd>
+        </div>
+        <div class="atlas-paar__zeile">
+          <dt>{{ labelGegenform }}</dt>
+          <dd><q>{{ minimalpaar.gegenform | markiere | safe }}</q></dd>
+        </div>
+      </dl>
+      {% endif %}
+      {% if minimalpaar.hinweis %}<p class="atlas-hinweis">{{ minimalpaar.hinweis }}</p>{% endif %}
+    </section>
+    {% endif %}
+
+    {# Optional: Analogie (z. B. Pseudo-Erklärung), an der Stelle des Minimalpaars #}
+    {% if analogie %}
+    <section class="atlas-kachel atlas-kachel--kern atlas-analogie" aria-labelledby="analogie">
+      <h2 id="analogie">{{ b.karte.analogie }}</h2>
+      {% if analogie.aussage %}<p class="atlas-analogie__aussage"><q>{{ analogie.aussage | markiere | safe }}</q></p>{% endif %}
+      {% if analogie.hinweis %}<p class="atlas-hinweis">{{ analogie.hinweis }}</p>{% endif %}
+      {% if analogie.zeilen and analogie.zeilen.length %}
+      <table class="atlas-analogie__tabelle">
+        <thead>
+          <tr>
+            <th scope="col">{{ b.karte.analogie_merkmal }}</th>
+            <th scope="col">{{ analogie.quelle }}</th>
+            <th scope="col">{{ analogie.ziel }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for z in analogie.zeilen %}
+          <tr class="ist-{{ z.art }}">
+            <th scope="row">
+              <span class="atlas-analogie__merkmal">{{ z.merkmal }}</span>
+              <span class="atlas-analogie__art">{{ b.karte.analogie_art[z.art] or z.art }}</span>
+            </th>
+            <td data-label="{{ analogie.quelle }}">{{ z.quelle }}</td>
+            <td data-label="{{ analogie.ziel }}">{{ z.ziel }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+      {% if analogie.fazit %}<p class="atlas-analogie__fazit">{{ analogie.fazit }}</p>{% endif %}
+    </section>
+    {% endif %}
+
+    {#- Grafik (grafik.typ: netz | balken | illustration), direkt unter dem
+        Beispiel (Fall, Minimalpaar oder Analogie) -#}
+    {% if grafik and grafik.typ %}
+    {%- set gb = b.grafik -%}
+    <section class="atlas-kachel atlas-kachel--kern atlas-grafik" aria-labelledby="grafik-titel" data-grafik-kachel>
+      <h2 id="grafik-titel">{{ grafik.titel or gb.titel[grafik.typ] }}</h2>
+      {% if grafik.typ == "illustration" %}
+      {#- Statisches SVG im aufgedeckten Zustand (ohne JS, Druck);
+          illustration.js zeigt zuerst den Zustand vorher und deckt per Knopf auf -#}
+      <div class="atlas-schalter atlas-illustration__steuerung" data-nur-js hidden>
+        <button type="button" data-illustration-knopf aria-pressed="false">{{ grafik.knopf }}</button>
+      </div>
+      {{ grafik | illustration(gb) | safe }}
+      {% else %}
+      <div class="atlas-grafik__steuerung" data-nur-js hidden>
+        {% if grafik.typ == "netz" %}
+          {% if grafik.zustand_aus_einschaetzung and einschaetzungen and einschaetzungen.length %}
+          <div class="atlas-schalter" role="group" aria-label="{{ b.karte.schalter }}">
+            {% for e in einschaetzungen %}<button type="button" data-grafik-einschaetzung="{{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>{% endfor %}
+          </div>
+          {% endif %}
+          {% for s in grafik.schalter %}
+          <label class="atlas-grafik__schalter"><input type="checkbox" data-grafik-schalter="{{ s.id }}"{% if s.start %} checked{% endif %}> {{ s.label }}</label>
+          {% endfor %}
+        {% elif grafik.typ == "balken" %}
+          <div class="atlas-schalter" role="group" aria-label="{{ gb.mass_waehlen }}">
+            {% for m in grafik.masse %}<button type="button" data-grafik-mass="{{ m.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ m.label }}</button>{% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      <figure class="atlas-grafik__figur">
+        <div class="atlas-grafik__flaeche" data-grafik="{{ grafik.typ }}" data-grafik-daten="grafik-daten" hidden></div>
+        {% if grafik.hinweis %}<figcaption class="atlas-hinweis">{{ grafik.hinweis }}</figcaption>{% endif %}
+      </figure>
+      {% if grafik.typ == "netz" %}
+      <div class="atlas-grafik__ergebnis" data-nur-js hidden aria-live="polite">
+        {% if grafik.kennzahl %}<p data-grafik-kennzahl></p>{% endif %}
+        {% if grafik.kennzahl_2 %}<p data-grafik-kennzahl-2></p>{% endif %}
+        <p class="atlas-grafik__urteil" data-grafik-urteil></p>
+      </div>
+      {% endif %}
+      {% if grafik.typ == "netz" and grafik.kennzahl_2 and gb.kennzahl_2_hinweis %}<p class="atlas-hinweis atlas-grafik__kennzahl-hinweis">{{ gb.kennzahl_2_hinweis }}</p>{% endif %}
+
+      {# Ohne JS (und als Textalternative): die Daten als Tabelle #}
+      <details class="atlas-grafik__daten" open data-grafik-tabelle>
+        <summary>{{ gb.daten }}</summary>
+        {% if grafik.typ == "netz" %}
+        <table class="atlas-tabelle">
+          <thead>
+            <tr>
+              <th scope="col">{{ gb.einschaetzung }}</th>
+              {% for s in grafik.schalter %}<th scope="col">{{ s.label }}</th>{% endfor %}
+              {% if grafik.kennzahl %}<th scope="col">{{ grafik.kennzahl.label }}</th>{% endif %}
+              {% if grafik.kennzahl_2 %}<th scope="col">{{ grafik.kennzahl_2.label }}</th>{% endif %}
+              <th scope="col">{{ gb.urteil }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for z in grafik | netzTabelle(einschaetzungen) %}
+            <tr>
+              <th scope="row">{{ z.label }}</th>
+              {% for s in grafik.schalter %}<td data-label="{{ s.label }}">{{ gb.ja if z.schalter[s.id] else gb.nein }}</td>{% endfor %}
+              {% if grafik.kennzahl %}<td data-label="{{ grafik.kennzahl.label }}">{{ z.kennzahl }} %</td>{% endif %}
+              {% if grafik.kennzahl_2 %}<td data-label="{{ grafik.kennzahl_2.label }}">{{ z.kennzahl_2 }}</td>{% endif %}
+              <td data-label="{{ gb.urteil }}">{{ z.urteil.text if z.urteil else "–" }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% elif grafik.typ == "balken" %}
+        {#- feste Reihe (reihe_a: feld, label) und die Maße; in Klammern die
+            absoluten Zahlen aus `absolut`, wenn vorhanden -#}
+        {%- set ra = grafik | reiheA -%}
+        {%- set mitAbsolut = grafik | hatAbsolut -%}
+        <table class="atlas-tabelle">
+          {% if mitAbsolut %}<caption class="atlas-hinweis">{{ gb.absolut_hinweis }}</caption>{% endif %}
+          <thead>
+            <tr>
+              <th scope="col">{{ gb.thema }}</th>
+              <th scope="col">{{ ra.label }}</th>
+              {% for m in grafik.masse %}<th scope="col">{{ m.label }}</th>{% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for th in grafik.themen %}
+            <tr>
+              <th scope="row">{{ th.name }}</th>
+              {% for spalte in [ra].concat(grafik.masse) %}
+              {%- set feld = spalte.feld or spalte.id -%}
+              <td data-label="{{ spalte.label }}">{{ th[feld] }} %{% if th.absolut and th.absolut[feld] != null %} ({{ th.absolut[feld] | zahl }}){% endif %}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+      </details>
+      <script type="application/json" id="grafik-daten">{{ grafik | grafikDaten(einschaetzungen, gb) | safe }}</script>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if effekt %}
+    <section class="atlas-kachel atlas-kachel--effekt" aria-labelledby="effekt">
+      <h2 id="effekt">{{ b.karte.effekt }}</h2>
+      <div class="atlas-effekt">
+        <div class="atlas-effekt__seite ist-vorher">
+          <span class="atlas-label">{{ b.karte.effekt_vorher }}</span>
+          <p>{{ effekt.vorher }}</p>
+        </div>
+        <span class="atlas-effekt__pfeil" aria-hidden="true">→</span>
+        <div class="atlas-effekt__seite ist-nachher">
+          <span class="atlas-label">{{ b.karte.effekt_nachher }}</span>
+          <p>{{ effekt.nachher }}</p>
+        </div>
+      </div>
+      {#- Weitere betroffene Hinsichten; die Haupt-Hinsicht steht schon im Badge -#}
+      {%- set weitere = effekt.hinsichten | weitereHinsichten(hinsicht, bm.hinsichten) -%}
+      {% if weitere.length %}
+      <p class="atlas-effekt__hinsichten"><span class="atlas-label">{{ b.karte.effekt_weitere }}</span>
+        {% for w in weitere %}<a href="/atlas/#hinsicht-{{ w.id }}">{{ w.name }}</a>{% if not loop.last %} · {% endif %}{% endfor %}</p>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {#- Grenzfall: Frage, ein Knopf je Einschätzung, darunter Wert, Urteil mit
+        Begründung und Wirkung der gewählten. Ohne JS (und im Druck) alle
+        Einschätzungen untereinander, je mit Überschrift. atlas.js schaltet
+        um; die Grafik der Kaperung koppelt sich über [data-grenzfall]. -#}
+    {% if einschaetzungen and einschaetzungen.length %}
+    <section class="atlas-kachel atlas-kachel--ruhig atlas-grenzfall" aria-labelledby="grenzfall" data-grenzfall data-atlas-schalter>
+      <h2 id="grenzfall">{{ b.karte.grenzfall }}</h2>
+      {% if grenzfall_frage %}<p class="atlas-grenzfrage">{{ grenzfall_frage }}</p>{% endif %}
+      <div class="atlas-schalter" role="group" aria-label="{{ b.karte.schalter }}" data-nur-js hidden>
+        {% for e in einschaetzungen %}
+        <button type="button" data-ziel="{{ loop.index }}" aria-controls="grenzfall-{{ loop.index }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ e.label }}</button>
+        {% endfor %}
+      </div>
+      <div class="atlas-einschaetzungen" aria-live="polite">
+        {% for e in einschaetzungen %}
+        <section class="atlas-einschaetzung" id="grenzfall-{{ loop.index }}" data-panel="{{ loop.index }}" aria-labelledby="grenzfall-titel-{{ loop.index }}">
+          <h3 class="atlas-einschaetzung__titel" id="grenzfall-titel-{{ loop.index }}" data-ohne-js>{{ e.label }}</h3>
+          <dl class="atlas-werte">
+            {% if kippFeld and e[kippFeld] %}<div><dt>{{ b.schablone.felder[kippFeld].name }}</dt><dd>{{ wert(kippFeld, e) }}</dd></div>{% endif %}
+            <div><dt>{{ b.schablone.felder.urteil.name }}</dt><dd>{{ urteilText(e, eOpt) }}</dd></div>
+            <div><dt>{{ b.schablone.felder.wirkung.name }}</dt><dd>{{ wirkungText(e, schablone.wirkung, b.schablone, eOpt) }}</dd></div>
+          </dl>
+        </section>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {#- Einordnung: was das Muster festlegt, als vier Zeilen aus `schablone`
+        (ohne Feldstatus); dazu der Rahmen „Für wen?“ -#}
+    {% if schablone %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="einordnung">
+      <h2 id="einordnung">{{ b.karte.einordnung }}</h2>
+      <dl class="atlas-werte atlas-einordnung">
+        {% for id, label in b.karte.einordnung_zeilen %}{% if schablone[id] %}
+        <div><dt>{{ label }}</dt><dd>{{ schablone[id].text | alsListe | select | join(" ") }}</dd></div>
+        {% endif %}{% endfor %}
+      </dl>
+      <p class="atlas-einordnung__publikum">
+        <strong>{{ b.schablone.felder.publikum.frage }}</strong> {{ b.schablone.publikum_rahmen }}
+        <a href="/atlas/begriffsmodell/#{{ bm.publikum_abschnitt.anker }}">{{ b.schablone.publikum_mehr }}</a>
+      </p>
+    </section>
+    {% endif %}
+
+    {% if mittel %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="mittel">
+      <h2 id="mittel">{{ b.karte.mittel }}</h2>
+      <p class="atlas-mittel__name">{{ mittel.name }}</p>
+      {% if mittel.erklaerung %}<p>{{ mittel.erklaerung }}</p>{% endif %}
+      {% if mittel.test %}
+      <div class="atlas-test">
+        <span class="atlas-label">{{ b.karte.test }}</span>
+        <p>{{ mittel.test }}</p>
+      </div>
+      {% endif %}
+    </section>
+    {% endif %}
+
+    {% if normalfall %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="normalfall">
+      <h2 id="normalfall">{{ b.karte.normalfall }}</h2>
+      <p>{{ normalfall }}</p>
+    </section>
+    {% endif %}
+
+    {% if verzerrungen and verzerrungen.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="verzerrungen">
+      <h2 id="verzerrungen">{{ b.karte.verzerrungen }}</h2>
+      <ul class="atlas-liste-schlicht atlas-verzerrungen">
+        {% for v in verzerrungen %}<li><strong>{{ v.name }}</strong>: {{ v.text }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if content | trim %}
+    <section class="atlas-kachel atlas-kachel--still atlas-fliesstext" aria-labelledby="erlaeuterung">
+      <h2 id="erlaeuterung">{{ b.karte.mehr }}</h2>
+      {# Überschriften im Fließtext eine Ebene unter die Kachel-Überschrift (h2 → h3) #}
+      {{ content | ueberschriftenTiefer | safe }}
+    </section>
+    {% endif %}
+
+    {% if literatur and literatur.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="literatur">
+      <h2 id="literatur">{{ b.karte.literatur }}</h2>
+      <ul class="atlas-literatur">
+        {% for eintrag in literatur %}<li>{{ eintrag }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+</article>
+{% if grafik and grafik.typ == "illustration" %}
+<script src="/js/atlas/illustration.js" defer></script>
+{% elif grafik and grafik.typ %}
+<script src="/js/vendor/d3.min.js" defer></script>
+{% if grafik.typ == "netz" %}<script src="/js/atlas/netz-logik.js" defer></script>{% endif %}
+<script src="/js/atlas/{{ grafik.typ }}.js" defer></script>
+{% endif %}

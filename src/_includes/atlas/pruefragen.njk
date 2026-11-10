@@ -1,0 +1,17 @@
+{#
+  Die Prüffragen, die ein Muster festlegen oder offenlassen kann
+  (art: muster), je mit Erklärung. Die Frage mit art: rahmen (Publikum)
+  steht nicht hier, sondern im Abschnitt „Für wen?“.
+
+  pruefragen: atlas.begriffsmodell.pruefragen
+#}
+{% macro pruefragen(liste) %}
+<dl class="atlas-pruefragen">
+  {% for q in liste %}{% if q.art == "muster" %}
+  <div class="atlas-pruefrage">
+    <dt><span class="atlas-pruefrage__frage">{{ q.frage }}</span></dt>
+    <dd>{{ q.erklaerung }}</dd>
+  </div>
+  {% endif %}{% endfor %}
+</dl>
+{% endmacro %}

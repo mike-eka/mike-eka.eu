@@ -1,0 +1,104 @@
+{#
+  Schablone einer Einschätzung als CSS-Raster (kein SVG, damit lange Texte
+  umbrechen); genutzt für die große Schablone auf der Begriffsmodell-Seite.
+  Die Felder sind bewusst im Code angelegt:
+    Rahmen:  publikum (Für wen? – stellt sich bei jeder Einschätzung)
+    Fragen:  inhalt (Was?), vergleichsfall (Im Vergleich wozu?), hinsicht
+    Mitte:   urteil, wirkung
+
+  felder: { inhalt|vergleichsfall|hinsicht|urteil|wirkung|publikum: { status, text } }
+          status: offen | muster | belegt (fehlend = offen)
+          text:   Liste von Zeilen (leere werden ausgelassen) oder Text
+  b:      atlas.beschriftungen.schablone
+  o:      Optionen
+    ebene:            Überschriftenebene der Felder (Standard 3)
+    publikumLink:     Ziel von „Mehr dazu“ (Abschnitt „Für wen?“)
+
+  Außerdem für die Karten (Kachel „Grenzfall“): wert, urteilText, wirkungText.
+#}
+
+{% macro zeilen(f) -%}
+  {%- set roh = (f.text if f and f.text else []) -%}
+  {%- set liste = ([roh] if roh is string else (roh | select)) -%}
+  {%- for zeile in liste %}{{ zeile }}{% if not loop.last %}<br>{% endif %}{% endfor -%}
+{%- endmacro %}
+
+{% macro kopf(id, b, ebene) -%}
+  {%- set h = "h" + (ebene or 3) -%}
+  <{{ h }} class="atlas-feld__kopf">
+    {%- if b.felder[id].frage %}<span class="atlas-feld__frage">{{ b.felder[id].frage }}</span><span class="atlas-feld__trenner" aria-hidden="true"> · </span>{% endif -%}
+    <span class="atlas-feld__name">{{ b.felder[id].name }}</span>
+  </{{ h }}>
+{%- endmacro %}
+
+{# Wert einer Einschätzung im Feld `id` (Inhalt als Zitat) #}
+{% macro wert(id, e) -%}
+  {%- if id == "inhalt" %}<q>{{ e[id] }}</q>{% else %}{{ e[id] }}{% endif -%}
+{%- endmacro %}
+
+{# o: { urteile } aus begriffsmodell.yaml #}
+{% macro urteilText(e, o) -%}
+  {%- set u = o.urteile | nachId(e.urteil) -%}
+  <strong class="atlas-variante__urteil">{{ u.name if u else e.urteil }}</strong>
+  {%- if e.begruendung %} <span class="atlas-variante__begruendung">{{ e.begruendung }}</span>{% endif -%}
+{%- endmacro %}
+
+{# Wirkung einer Einschätzung; ohne `wirkung` der Text des Musters (f).
+   wirkung may be one id or a list of ids (several effects). o: { wirkungen } #}
+{% macro wirkungText(e, f, b, o) -%}
+  {%- set ws = e.wirkung | alsListe -%}
+  {%- if ws.length -%}
+    {%- for id in ws -%}
+      {%- set w = o.wirkungen | nachId(id) -%}
+      {%- if not loop.first %}<br>{% endif -%}
+      {%- if w -%}
+        <strong class="atlas-variante__urteil">{{ w.name }}</strong> <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
+      {%- elif id == "keine" -%}
+        <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
+      {%- else -%}
+        <strong class="atlas-variante__urteil">{{ id }}</strong>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- else -%}
+    <span class="atlas-variante__begruendung">{{ zeilen(f) }}</span>
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro feld(id, f, b, o) %}
+  {%- set status = (f.status if f and f.status else "offen") -%}
+  <div class="atlas-feld atlas-feld--{{ id }} ist-{{ status }}">
+    {{ kopf(id, b, o.ebene) }}
+    <p class="atlas-feld__text">{{ zeilen(f) }}</p>
+    <span class="visually-hidden">({{ b.status[status] }})</span>
+  </div>
+{% endmacro %}
+
+{% macro schablone(felder, b, o) %}
+{%- set genutzt = felder | schablonenStatus -%}
+<figure class="atlas-schablone">
+  <figcaption class="atlas-legende">
+    <span>{{ b.legende }}</span>
+    {% for key in ["belegt"] %}{% if key in genutzt %}
+    <span class="atlas-legende__eintrag"><span class="atlas-legende__probe ist-{{ key }}" aria-hidden="true"></span>{{ b.status[key] }}</span>
+    {% endif %}{% endfor %}
+  </figcaption>
+  <div class="atlas-rahmen">
+    <p class="atlas-rahmen__band">
+      <span class="atlas-feld__frage">{{ b.felder.publikum.frage }}</span>
+      {%- set publikumText %}{{ zeilen(felder.publikum) }}{% endset %}
+      {% if publikumText | trim %}{{ publikumText | trim | safe }} – {% endif %}{{ b.publikum_rahmen }}
+      {% if o.publikumLink %}<a href="{{ o.publikumLink }}">{{ b.publikum_mehr }}</a>{% endif %}
+    </p>
+    <div class="atlas-schablone__raster">
+      {{ feld("inhalt", felder.inhalt, b, o) }}
+      {{ feld("vergleichsfall", felder.vergleichsfall, b, o) }}
+      {{ feld("hinsicht", felder.hinsicht, b, o) }}
+      <div class="atlas-schablone__mitte">
+        <p class="atlas-schablone__mitte-titel">{{ b.mitte }}</p>
+        {{ feld("urteil", felder.urteil, b, o) }}
+        {{ feld("wirkung", felder.wirkung, b, o) }}
+      </div>
+    </div>
+  </div>
+</figure>
+{% endmacro %}

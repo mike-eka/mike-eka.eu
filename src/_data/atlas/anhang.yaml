@@ -1,0 +1,70 @@
+# Texte des formalen Anhangs /atlas/anhang/ (übernommen aus docs/texte-schritt5.yaml).
+# Im Template verfügbar als `atlas.anhang`. Das Schema entsteht aus
+# begriffsmodell.yaml → beziehungen.
+
+titel: "Formaler Anhang"
+einleitung: >-
+  Dieser Anhang fasst das Begriffsmodell knapp und etwas formaler. Er ist für
+  alle gedacht, die wissen wollen, was genau behauptet wird und wo die
+  offenen Stellen liegen.
+definition: >-
+  DIS(i, P, V, H) gilt genau dann, wenn für hinreichend viele Personen in P
+  die Erkenntnislage in Hinsicht H nach i schlechter ist als im
+  Vergleichsfall V.
+legende:
+  - {
+      zeichen: "i",
+      text: "der Inhalt: eine Aussage, ein Argument, eine Auswahl, ein Paar, eine Abfolge oder eine Sprecherposition",
+    }
+  - { zeichen: "P", text: "das Publikum; Rahmen jeder Einschätzung" }
+  - {
+      zeichen: "V",
+      text: "der Vergleichsfall: vorher, ohne den Inhalt oder mit einer anderen Formulierung",
+    }
+  - {
+      zeichen: "H",
+      text: "die Hinsicht: was wir glauben, worauf wir achten, wem wir glauben, warum wir glauben",
+    }
+anmerkungen:
+  - titel: "Die Wahrheit wandert"
+    text: >-
+      Die Definition sieht vom Wahrheitsgehalt des Inhalts ab. Um zu sagen,
+      dass eine Erkenntnislage schlechter wird, braucht man aber einen
+      Maßstab: Wahrheit oder die beste verfügbare Evidenz. Die Wahrheit
+      verschwindet also nicht, sie wandert vom Inhalt in die Bewertung.
+  - titel: "Der Inhalt kann zusammengesetzt sein"
+    text: >-
+      Manche Schäden entstehen erst in der Kombination: in einer Auswahl von
+      Meldungen, einem Paar von Bewertungen oder der Position eines Sprechers
+      in einem Netz. Wer nur einzelne Aussagen prüft, übersieht sie.
+  - titel: "Das Publikum ist Rahmen"
+    text: >-
+      P steht in jeder Einschätzung. Kein Muster legt es fest, deshalb wird
+      es nicht auf den einzelnen Karten verhandelt, sondern einmal für alle.
+  - titel: "Muster als teilweise Belegung"
+    text: >-
+      Ein Muster legt fest, welche Art Inhalt vorliegt, womit verglichen wird
+      und welche Hinsicht betroffen ist, bis auf eine Stelle. An dieser
+      offenen Stelle entscheidet sich das Urteil. Ein Beispiel belegt alle
+      Stellen.
+  - titel: "Urteil und Wirkung"
+    text: >-
+      Die Einschätzung ist ein eigener Knoten, an dem Inhalt, Publikum,
+      Vergleichsfall und Hinsicht als Rollen hängen, ähnlich dem
+      Ereignisargument in der Ereignissemantik. Urteil und Wirkung sind
+      Eigenschaften dieser Einschätzung: Das Urteil sagt, ob die
+      Erkenntnislage schlechter wird. Die Wirkung sagt, in welcher Verlaufsform –
+      jetzt schlechter (verschlechtern), nicht besser, obwohl sie es könnte
+      (festhalten), oder künftig schwerer zu verbessern (abschotten). Lautet
+      das Urteil nein, gibt es keine Wirkung; eine Einschätzung kann mehrere
+      Wirkungen haben.
+offene_stellen:
+  - "Welcher Maßstab hinter „schlechter“ steht, ist selbst eine Entscheidung."
+  - "Wird eine Hinsicht besser und eine andere schlechter, gibt es keine einfache Gesamtbilanz."
+  - "Was „hinreichend viele“ heißt, legt die Definition nicht fest."
+modell: >-
+  Im Sinne der Informationswissenschaft ist das Begriffsmodell eine kleine
+  Ontologie. Zentral ist die Einschätzung als eigener Knoten: Sie verbindet
+  Inhalt, Publikum, Vergleichsfall und Hinsicht und trägt Urteil und Wirkung.
+  Eine Klasse „desinformativer Inhalt“ gibt es darin bewusst nicht.
+download: "Begriffsmodell und Karten als JSON-LD (Vokabular als SKOS-Konzepte)"

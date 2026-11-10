@@ -1,0 +1,73 @@
+---
+layout: base.njk
+scripts: ["/js/vendor/d3.min.js", "/js/atlas/landkarte.js"]
+eleventyComputed:
+  title: "{{ atlas.begriffsmodell.titel }}"
+  description: "{{ atlas.begriffsmodell.untertitel }}"
+---
+{#- Übersicht: Landkarte (D3, nur mit JS) und dieselbe Struktur als
+    verschachtelte Liste (immer da: ohne JS, für Screenreader, zum Drucken). -#}
+{%- set bm = atlas.begriffsmodell -%}
+{%- set b = atlas.beschriftungen -%}
+{%- set alle = collections.atlasMusterSichtbar -%}
+<article class="atlas atlas-uebersicht">
+  <header class="atlas-uebersicht__kopf">
+    <h1 class="page-title">{{ bm.titel }}</h1>
+    <p class="atlas-untertitel">{{ bm.untertitel }}</p>
+    <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+    {% if bm.haltung %}<p class="atlas-haltung">{{ bm.haltung }}</p>{% endif %}
+    <nav class="atlas-seitennav" aria-label="{{ bm.titel }}">
+      <ul>
+        {% for n in b.uebersicht.navigation %}
+        <li><a href="{{ n.url }}"{% if n.lang %} hreflang="{{ n.lang }}" lang="{{ n.lang }}"{% endif %}>{{ n.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+
+  <figure class="atlas-landkarte" data-landkarte="atlas-landkarte-daten" hidden>
+    <div class="atlas-landkarte__flaeche"></div>
+    <figcaption class="atlas-hinweis" id="atlas-landkarte-hinweis">{{ b.uebersicht.landkarte_hinweis }}</figcaption>
+  </figure>
+  <script type="application/json" id="atlas-landkarte-daten">{{ bm | landkarteDaten(b, alle) | safe }}</script>
+
+  <section class="atlas-struktur" aria-labelledby="struktur-titel">
+    <h2 id="struktur-titel">{{ b.uebersicht.liste_titel }}</h2>
+
+    <ul class="atlas-baum">
+      <li>
+        <span class="atlas-baum__knoten">{{ b.uebersicht.einschaetzung }}</span>
+        {#- Wertebereiche der beiden Eigenschaften (aus urteile / wirkungen) -#}
+        <dl class="atlas-wertebereich">
+          <div><dt>{{ b.uebersicht.urteil }}</dt><dd>{% for u in bm.urteile %}{{ u.name }}{% if not loop.last %} · {% endif %}{% endfor %}</dd></div>
+          <div><dt>{{ b.uebersicht.wirkung }}</dt><dd>{% for w in bm.wirkungen %}{{ w.name }}{% if not loop.last %} · {% endif %}{% endfor %}{% if b.uebersicht.wirkung_zusatz %} <span class="atlas-hinweis">({{ b.uebersicht.wirkung_zusatz }})</span>{% endif %}</dd></div>
+        </dl>
+        <ul>
+          {% for q in bm.pruefragen %}
+          <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ b.uebersicht.rahmen }}:</span> {% endif %}{{ q.frage }}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      <li>
+        <span class="atlas-baum__knoten">{{ b.uebersicht.hinsichten }}</span>
+        <ul class="atlas-hinsichten">
+          {% for h in bm.hinsichten %}
+          {%- set karten = alle | musterInHinsicht(h.id) -%}
+          <li id="hinsicht-{{ h.id }}" class="{% if h.schwerpunkt == false %}ist-nebensache{% endif %}">
+            <span class="atlas-hinsicht__name">{{ h.name }}</span>
+            {%- set leer = (h.schwerpunkt == false and not karten.length) %}
+            <span class="atlas-hinweis">– {{ h.erklaerung }}{% if leer %} {{ [h.hinweis, b.uebersicht.leer_zusatz] | select | join(" – ") }}{% elif h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>
+            {% if karten.length %}
+            <ul>
+              {% for k in karten %}
+              <li>{% if k.data.veroeffentlicht %}<a href="{{ k.url }}">{{ k.data.titel }}</a>{% else %}{{ k.data.titel }} <span class="atlas-entwurf">({{ b.uebersicht.in_vorbereitung }})</span>{% endif %}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+    </ul>
+  </section>
+</article>

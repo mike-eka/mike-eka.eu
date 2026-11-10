@@ -1,0 +1,1938 @@
+/* Atlas (src/atlas/). Loaded only on Atlas pages, after style.css.
+   All colours are variables here; change them in this block only.
+   Contrast (WCAG): every text colour below reaches ≥ 4.5:1 on every tile and
+   field tone it is used on; lines and controls ≥ 3:1. */
+:root {
+    /* Page */
+    --atlas-grund: #fffaf0;            /* page background (as in style.css) */
+    --atlas-text: #1f1b16;
+    --atlas-gedaempft: #6b6358;        /* secondary text */
+    --atlas-linie: #e5ddcf;            /* decorative hairlines */
+
+    /* Accent 1 (warm, from #bf5748): fixed by the pattern, core content */
+    --atlas-kern: #bf5748;             /* lines */
+    --atlas-kern-text: #983f35;        /* text */
+    --atlas-mark: var(--atlas-kern-text); /* highlights in the minimal pair */
+
+    /* Accent 2 (cool): hinsicht badge, "by example", focus ring */
+    --atlas-hinsicht: #4f6d7a;
+    --atlas-hinsicht-flaeche: #eef2f1;
+
+    /* Open fields, neutral verdict */
+    --atlas-offen: #8a8175;            /* dashed lines */
+    --atlas-neutral: #9b9183;          /* verdict field line */
+
+    /* Tiles: core content warm, background information quiet */
+    --atlas-kachel-kern: #fbeee7;      /* Schablone */
+    --atlas-kachel-effekt: #f6dfd4;    /* Was sich verschlechtert (strongest) */
+    --atlas-kachel-ruhig: #f5efe3;     /* Minimalpaar, Mittel */
+    --atlas-kachel-still: #f1eee7;     /* Einordnung, Normal weil, Verzerrungen, … */
+    --atlas-feld: #fffdf9;             /* fields inside tiles */
+    --atlas-knopf-an: #f8e4db;         /* pressed switch */
+
+    --atlas-radius: 14px;
+    --atlas-versatz: 1.75rem;          /* zigzag offset on wide screens */
+    --atlas-einzug: 1rem;              /* tile content, indented from its heading */
+}
+
+/* ---- Helpers ---- */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.atlas [hidden] {
+    display: none !important;
+}
+
+/* Atlas pages are wider than the 40rem text column and centred. */
+main.atlas-wide {
+    max-width: none;
+}
+
+.atlas {
+    color: var(--atlas-text);
+    line-height: 1.6;
+    overflow-wrap: break-word;
+    max-width: 46rem;
+    margin: 0 auto;
+}
+
+.atlas :focus-visible {
+    outline: 2px solid var(--atlas-hinsicht);
+    outline-offset: 2px;
+}
+
+.atlas h2 {
+    font-size: 1.05rem;
+    margin: 0 0 0.9rem;
+}
+
+.atlas-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-hinweis {
+    font-size: 0.85rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-entwurf {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-liste-schlicht {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.atlas-werte {
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.atlas-werte > div {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 0.75rem;
+}
+
+.atlas-werte dt {
+    color: var(--atlas-gedaempft);
+    overflow-wrap: normal;
+}
+
+.atlas-werte dd {
+    margin: 0;
+}
+
+/* ---- Card header ---- */
+.atlas-karte__kopf {
+    margin-bottom: 2rem;
+}
+
+.atlas-karte__kopf h1 {
+    margin-bottom: 0.1rem;
+}
+
+.atlas-fachbegriff {
+    margin: 0 0 0.75rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--atlas-hinsicht);
+    color: var(--atlas-hinsicht);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+}
+
+.atlas-badge:hover {
+    color: var(--atlas-hinsicht);
+    background: var(--atlas-hinsicht-flaeche);
+    font-weight: normal;
+}
+
+.atlas-kurz {
+    font-size: 1.15rem;
+    margin: 1rem 0 0;
+}
+
+/* ---- Tiles ---- */
+.atlas-kacheln {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.atlas-kachel {
+    border-radius: var(--atlas-radius);
+    padding: 1.25rem 1.5rem 1.4rem;
+    width: calc(100% - var(--atlas-versatz));
+    box-sizing: border-box;
+}
+
+/* Zigzag: alternately a little to the left and to the right. */
+.atlas-kachel:nth-child(odd) { align-self: flex-start; }
+.atlas-kachel:nth-child(even) { align-self: flex-end; }
+
+.atlas-kachel > :last-child {
+    margin-bottom: 0;
+}
+
+.atlas-kachel--kern { background: var(--atlas-kachel-kern); }
+.atlas-kachel--effekt { background: var(--atlas-kachel-effekt); }
+.atlas-kachel--ruhig { background: var(--atlas-kachel-ruhig); }
+.atlas-kachel--still { background: var(--atlas-kachel-still); }
+
+.atlas-kachel--kern h2,
+.atlas-kachel--effekt h2 {
+    color: var(--atlas-kern-text);
+}
+
+@media (max-width: 640px) {
+    .atlas-kachel {
+        width: 100%;
+        padding: 1rem 1rem 1.1rem;
+    }
+}
+
+/* Tile heading flush left and set off from the content: larger, in the
+   accent colour, with room below. The content is indented by
+   --atlas-einzug: the tile's left padding grows by it, the heading is
+   pulled back, so inner spacing and full-width tables stay intact. */
+.atlas-kachel {
+    padding-left: calc(1.5rem + var(--atlas-einzug));
+}
+
+.atlas-kachel > h2 {
+    margin: 0 0 1rem calc(-1 * var(--atlas-einzug));
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: var(--atlas-kern-text);
+}
+
+@media (max-width: 640px) {
+    :root {
+        --atlas-einzug: 0.5rem;
+    }
+
+    .atlas-kachel {
+        padding-left: calc(1rem + var(--atlas-einzug));
+    }
+}
+
+/* ---- Schablone ---- */
+.atlas-schablone {
+    margin: 0;
+}
+
+.atlas-legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--atlas-gedaempft);
+    margin-bottom: 0.75rem;
+}
+
+.atlas-legende__probe {
+    display: inline-block;
+    width: 1.1rem;
+    height: 0.75rem;
+    border-radius: 3px;
+    margin-right: 0.4rem;
+    vertical-align: -0.05rem;
+}
+
+/* Audience: a narrow frame around the whole template. */
+.atlas-rahmen {
+    border: 1px solid var(--atlas-offen);
+    border-radius: calc(var(--atlas-radius) - 2px);
+    padding: 0.5rem 0.6rem 0.6rem;
+}
+
+.atlas-rahmen__band {
+    margin: 0 0.15rem 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.atlas-rahmen__band a {
+    text-decoration: underline;
+}
+
+.atlas-schablone__raster {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-flow: row dense;
+    gap: 0.6rem;
+}
+
+.atlas-feld {
+    min-width: 0;
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+    line-height: 1.45;
+}
+
+.atlas-feld__kopf {
+    font-size: 0.8rem;
+    font-weight: normal;
+    margin: 0 0 0.3rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-feld__frage {
+    font-weight: bold;
+    color: var(--atlas-text);
+}
+
+.atlas-feld__name {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+}
+
+.atlas-feld__text {
+    margin: 0;
+}
+
+/* Status: "colour = fixed by the pattern, dashed = left open". */
+.atlas-schablone .ist-muster { border: 1px solid var(--atlas-kern); }
+.atlas-schablone .ist-belegt { border: 1px solid var(--atlas-hinsicht); background: var(--atlas-hinsicht-flaeche); }
+.atlas-schablone .ist-offen { border: 1px dashed var(--atlas-offen); }
+.atlas-schablone .ist-offen > .atlas-feld__text { color: var(--atlas-gedaempft); font-style: italic; }
+
+/* ---- Grenzfall (card) ---- */
+.atlas-grenzfrage {
+    margin: 0 0 0.75rem;
+    font-weight: 500;
+}
+
+.atlas-schalter:not([hidden]) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+
+.atlas-schalter button {
+    background: var(--atlas-feld);
+    color: inherit;
+    border: 1px solid var(--atlas-offen);
+    border-radius: 999px;
+    padding: 0.45rem 0.9rem;
+    min-height: 2.5rem;
+    cursor: pointer;
+}
+
+.atlas-schalter button:hover {
+    border-color: var(--atlas-kern);
+}
+
+.atlas-schalter button[aria-pressed="true"] {
+    border-color: var(--atlas-kern);
+    color: var(--atlas-kern-text);
+    background: var(--atlas-knopf-an);
+}
+
+.atlas-variante__urteil {
+    display: block;
+    font-size: 1.05rem;
+}
+
+.atlas-variante__begruendung {
+    display: block;
+}
+
+/* One assessment: value, verdict with reasons, effect. With JS only the
+   chosen one is shown; without JS (and in print) all, one below the other. */
+.atlas-einschaetzungen {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.atlas-einschaetzung {
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+}
+
+.atlas-einschaetzung__titel {
+    font-size: 0.95rem;
+    margin: 0 0 0.3rem;
+}
+
+/* wide enough for the longest field name ("Vergleichsfall") */
+.atlas-einschaetzung .atlas-werte > div {
+    grid-template-columns: 9.5rem 1fr;
+}
+
+.atlas-einschaetzung .atlas-variante__urteil {
+    display: inline;
+    font-size: 1rem;
+}
+
+/* ---- Einordnung (card) ---- */
+.atlas-einordnung > div {
+    grid-template-columns: 7rem 1fr;
+}
+
+.atlas-einordnung__publikum {
+    margin: 0.75rem 0 0;
+    font-size: 0.9rem;
+}
+
+.atlas-einordnung__publikum a {
+    text-decoration: underline;
+}
+
+/* ---- Verzerrungen (card) ---- */
+.atlas-verzerrungen {
+    display: grid;
+    gap: 0.5rem;
+}
+
+/* Centre: the assessment with verdict and effect. Full width. */
+.atlas-schablone__mitte {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 0.6rem;
+    border: 1px solid var(--atlas-kern);
+    border-radius: 10px;
+    padding: 0.6rem;
+}
+
+.atlas-schablone__mitte-titel {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-weight: 500;
+    color: var(--atlas-kern-text);
+}
+
+@media (max-width: 640px) {
+    .atlas-schablone__raster,
+    .atlas-schablone__mitte {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Was sich verschlechtert ---- */
+.atlas-effekt {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.75rem;
+    align-items: stretch;
+}
+
+.atlas-effekt__seite {
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+}
+
+.atlas-effekt__seite p {
+    margin: 0.25rem 0 0;
+}
+
+.atlas-effekt__seite.ist-vorher {
+    border: 1px dashed var(--atlas-offen);
+}
+
+.atlas-effekt__seite.ist-nachher {
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-kern);
+}
+
+.atlas-effekt__seite.ist-nachher .atlas-label {
+    color: var(--atlas-kern-text);
+}
+
+.atlas-effekt__pfeil {
+    align-self: center;
+    font-size: 1.4rem;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-effekt__hinsichten {
+    margin: 0.9rem 0 0;
+}
+
+@media (max-width: 640px) {
+    .atlas-effekt {
+        grid-template-columns: 1fr;
+    }
+
+    .atlas-effekt__pfeil {
+        justify-self: center;
+        transform: rotate(90deg);
+    }
+}
+
+/* ---- Minimal pair ---- */
+.atlas-paar {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.atlas-paar__zeile {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+}
+
+.atlas-paar dt {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-paar dd {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+/* Optional question above the pair; both versions read as answers to it. */
+.atlas-paar__frage {
+    margin: 0 0 0.9rem;
+    font-size: 1.1rem;
+    background: var(--atlas-feld);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+}
+
+.atlas-paar__frage .atlas-label {
+    margin-bottom: 0.15rem;
+}
+
+.atlas-paar--antworten {
+    margin-left: 1.1rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--atlas-linie);
+}
+
+@media (max-width: 480px) {
+    .atlas-paar--antworten {
+        margin-left: 0.4rem;
+        padding-left: 0.75rem;
+    }
+}
+
+/* Minimal pair as two lists (a selection of items). Rows line up across both
+   lists (subgrid); an entry only one version has is marked "+ zusätzlich",
+   the gap in the other version shows "fehlt hier". */
+.atlas-paar-listen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto repeat(var(--zeilen, 1), auto);
+    column-gap: 0.75rem;
+}
+
+.atlas-paar-liste {
+    display: grid;
+    grid-row: span calc(var(--zeilen, 1) + 1);
+    grid-template-rows: subgrid;
+    min-width: 0;
+}
+
+.atlas-paar-liste ul {
+    display: grid;
+    grid-row: span var(--zeilen, 1);
+    grid-template-rows: subgrid;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    row-gap: 0.4rem;
+}
+
+.atlas-paar-liste__titel {
+    font-size: 0.75rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+    margin: 0 0 0.4rem;
+}
+
+.atlas-paar-liste li {
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.atlas-paar-liste li.ist-einzeln {
+    border: 2px solid var(--atlas-kern);
+    background: var(--atlas-knopf-an);
+}
+
+.atlas-paar__marke {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-kern-text);
+}
+
+/* replaced entry: the same row differs in both versions */
+.atlas-paar-liste li.ist-getauscht {
+    border: 2px dashed var(--atlas-kern);
+    background: var(--atlas-knopf-an);
+}
+
+.atlas-paar-liste li.ist-luecke {
+    background: transparent;
+    border: 1px dashed var(--atlas-offen);
+    display: flex;
+    align-items: center;
+}
+
+.atlas-paar__luecke {
+    font-size: 0.75rem;
+    color: var(--atlas-gedaempft);
+    font-style: italic;
+}
+
+@media (max-width: 640px) {
+    .atlas-paar-listen {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        row-gap: 1rem;
+    }
+
+    .atlas-paar-liste,
+    .atlas-paar-liste ul {
+        grid-row: auto;
+        grid-template-rows: none;
+    }
+}
+
+.atlas mark {
+    background: none;
+    color: var(--atlas-mark);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+/* ---- Analogy (where it breaks) ---- */
+.atlas-analogie__aussage {
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem;
+}
+
+.atlas-analogie__tabelle {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.35rem;
+    margin: 1rem 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.atlas-analogie__tabelle thead th {
+    text-align: left;
+    font-weight: normal;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--atlas-gedaempft);
+    padding: 0 0.6rem;
+}
+
+.atlas-analogie__tabelle tbody th,
+.atlas-analogie__tabelle td {
+    text-align: left;
+    vertical-align: top;
+    background: var(--atlas-feld);
+    padding: 0.5rem 0.6rem;
+}
+
+.atlas-analogie__tabelle tbody th {
+    font-weight: normal;
+    width: 9rem;
+    border-radius: 8px 0 0 8px;
+    border-left: 3px solid var(--atlas-linie);
+}
+
+.atlas-analogie__tabelle td:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.atlas-analogie__merkmal {
+    display: block;
+    font-weight: 500;
+}
+
+.atlas-analogie__art {
+    display: inline-block;
+    margin-top: 0.25rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: 1px solid var(--atlas-offen);
+    border-radius: 999px;
+    padding: 0 0.45rem;
+    color: var(--atlas-gedaempft);
+}
+
+/* Breaking rows stand out: accent edge, tint, filled word "bricht". */
+.atlas-analogie__tabelle tr.ist-bricht th,
+.atlas-analogie__tabelle tr.ist-bricht td {
+    background: var(--atlas-knopf-an);
+}
+
+.atlas-analogie__tabelle tr.ist-bricht th {
+    border-left-color: var(--atlas-kern);
+}
+
+.atlas-analogie__tabelle tr.ist-bricht .atlas-analogie__art {
+    border-color: var(--atlas-kern);
+    color: var(--atlas-kern-text);
+    font-weight: bold;
+}
+
+.atlas-analogie__fazit {
+    margin: 0;
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 1rem;
+}
+
+/* Narrow: each row becomes a stacked block with labelled cells. */
+@media (max-width: 640px) {
+    .atlas-analogie__tabelle thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .atlas-analogie__tabelle,
+    .atlas-analogie__tabelle tbody,
+    .atlas-analogie__tabelle tr,
+    .atlas-analogie__tabelle tbody th,
+    .atlas-analogie__tabelle td {
+        display: block;
+        width: auto;
+    }
+
+    .atlas-analogie__tabelle tr {
+        margin-bottom: 0.6rem;
+        border-left: 3px solid var(--atlas-linie);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .atlas-analogie__tabelle tr.ist-bricht {
+        border-left-color: var(--atlas-kern);
+    }
+
+    .atlas-analogie__tabelle tbody th,
+    .atlas-analogie__tabelle td,
+    .atlas-analogie__tabelle td:last-child {
+        border-radius: 0;
+        border-left: 0;
+    }
+
+    .atlas-analogie__tabelle td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--atlas-gedaempft);
+    }
+}
+
+/* ---- Graphics (netz.js, balken.js) ---- */
+.atlas-grafik__steuerung:not([hidden]) {
+    display: grid;
+    gap: 0.6rem;
+    margin-bottom: 0.9rem;
+}
+
+.atlas-grafik__steuerung .atlas-schalter {
+    margin-bottom: 0;
+}
+
+.atlas-grafik__schalter {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.atlas-grafik__schalter input {
+    margin-top: 0.2rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--atlas-kern);
+    flex-shrink: 0;
+}
+
+.atlas-grafik__figur {
+    margin: 0;
+}
+
+.atlas-grafik__flaeche {
+    background: var(--atlas-feld);
+    border-radius: 10px;
+}
+
+.atlas-grafik__flaeche svg {
+    display: block;
+    overflow: visible;
+}
+
+.atlas-grafik__figur figcaption {
+    margin: 0.4rem 0 0;
+}
+
+.atlas-grafik__ergebnis:not([hidden]) {
+    margin-top: 0.75rem;
+}
+
+.atlas-grafik__ergebnis p {
+    margin: 0 0 0.3rem;
+}
+
+.atlas-grafik__urteil {
+    font-weight: 500;
+    border-left: 3px solid var(--atlas-offen);
+    padding-left: 0.6rem;
+}
+
+.atlas-grafik__urteil.ist-gut { border-left-color: var(--atlas-hinsicht); }
+.atlas-grafik__urteil.ist-warnung { border-left-color: var(--atlas-kern); color: var(--atlas-kern-text); }
+.atlas-grafik__urteil.ist-neutral { border-left-style: dashed; }
+
+.atlas-grafik__daten {
+    margin-top: 0.9rem;
+}
+
+.atlas-grafik__daten summary {
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--atlas-gedaempft);
+}
+
+/* Network */
+.nk-kante {
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+}
+
+.nk-kante.ist-rueckbindung {
+    stroke: var(--atlas-hinsicht);
+    stroke-width: 2;
+}
+
+.nk-kante.ist-einfluss {
+    stroke: var(--atlas-kern);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+}
+
+.nk-knoten circle {
+    fill: var(--atlas-feld);
+    stroke: var(--atlas-gedaempft);
+    stroke-width: 1.25;
+}
+
+.nk-knoten.ist-publikum circle { fill: var(--atlas-kachel-still); }
+.nk-knoten.ist-vermittler circle { fill: var(--atlas-kern); stroke: var(--atlas-kern-text); }
+.nk-knoten.ist-vermittler2 circle { fill: var(--atlas-hinsicht-flaeche); stroke: var(--atlas-hinsicht); stroke-width: 2; }
+.nk-knoten.ist-thinktank circle { fill: var(--atlas-feld); stroke: var(--atlas-kern); stroke-dasharray: 3 2; stroke-width: 2; }
+.nk-knoten.ist-fach circle { fill: var(--atlas-hinsicht); stroke: var(--atlas-hinsicht); }
+.nk-knoten.ist-fach_anderes circle { fill: var(--atlas-feld); stroke: var(--atlas-hinsicht); stroke-width: 2; }
+.nk-knoten.ist-thema circle { fill: var(--atlas-kachel-effekt); stroke: var(--atlas-kern-text); stroke-width: 2; }
+
+.nk-label {
+    font-size: 11px;
+    fill: var(--atlas-text);
+    paint-order: stroke;
+    stroke: var(--atlas-feld);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+}
+
+/* Bars */
+.bk-text, .bk-wert { font-size: 12px; fill: var(--atlas-text); }
+.bk-thema { font-size: 13px; font-weight: bold; fill: var(--atlas-text); }
+.bk-spur { fill: var(--atlas-kachel-still); }
+.bk-balken.ist-a { fill: var(--atlas-kern); }
+.bk-balken.ist-b { stroke: var(--atlas-hinsicht); stroke-width: 1; }
+.bk-schraffur-grund { fill: var(--atlas-hinsicht-flaeche); }
+.bk-schraffur-linie { stroke: var(--atlas-hinsicht); stroke-width: 3; }
+
+/* Data tables: columns on wide screens, stacked rows below 640 px. */
+.atlas-tabelle {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.atlas-tabelle th,
+.atlas-tabelle td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.35rem 0.5rem;
+    border-bottom: 1px solid var(--atlas-linie);
+    /* long words in the headers (e.g. "Wissenschaftsjournalismus") would
+       otherwise make the table wider than its tile */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    overflow-wrap: anywhere;
+}
+
+.atlas-tabelle thead th {
+    font-weight: normal;
+    color: var(--atlas-gedaempft);
+    font-size: 0.75rem;
+}
+
+.atlas-tabelle tbody th {
+    font-weight: 500;
+}
+
+@media (max-width: 640px) {
+    .atlas-tabelle thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    .atlas-tabelle,
+    .atlas-tabelle tbody,
+    .atlas-tabelle tr,
+    .atlas-tabelle th,
+    .atlas-tabelle td {
+        display: block;
+    }
+
+    .atlas-tabelle tr {
+        background: var(--atlas-feld);
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        padding: 0.3rem 0;
+    }
+
+    .atlas-tabelle th,
+    .atlas-tabelle td {
+        border-bottom: 0;
+        padding: 0.15rem 0.6rem;
+    }
+
+    .atlas-tabelle td::before {
+        content: attr(data-label) ": ";
+        color: var(--atlas-gedaempft);
+    }
+}
+
+/* ---- Means + test ---- */
+.atlas-mittel__name {
+    font-weight: 500;
+    margin: 0;
+}
+
+.atlas-test {
+    border-left: 2px solid var(--atlas-linie);
+    padding-left: 1rem;
+    margin-top: 1rem;
+}
+
+.atlas-test p {
+    margin: 0.2rem 0 0;
+}
+
+/* ---- Literature ---- */
+.atlas-literatur {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.atlas-fliesstext p:first-of-type {
+    margin-top: 0;
+}
+
+@media (max-width: 480px) {
+    .atlas-paar__zeile,
+    .atlas-werte > div,
+    .atlas-einschaetzung .atlas-werte > div,
+    .atlas-einordnung > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+/* ---- Begriffsmodell page ---- */
+.atlas-pruefragen,
+.atlas-optionen {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.atlas-pruefrage {
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-kern);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+}
+
+.atlas-pruefrage dt {
+    margin-bottom: 0.2rem;
+}
+
+.atlas-pruefrage__frage {
+    font-weight: bold;
+}
+
+.atlas-pruefrage dd,
+.atlas-optionen dd {
+    margin: 0;
+}
+
+.atlas-fuer-wen h3 {
+    font-size: 0.95rem;
+    margin: 1.4rem 0 0.4rem;
+}
+
+.atlas-fuer-wen p {
+    margin: 0 0 0.75rem;
+}
+
+.atlas-optionen {
+    margin: 0.5rem 0 0.75rem;
+    gap: 0.4rem;
+}
+
+.atlas-optionen > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 0.75rem;
+    background: var(--atlas-feld);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+}
+
+.atlas-optionen dt {
+    font-weight: 500;
+}
+
+.atlas-fuer-wen__bezug {
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 1rem;
+}
+
+/* Big template with stages: without JS all stages one below the other. */
+.atlas-stufe + .atlas-stufe {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--atlas-linie);
+}
+
+.atlas-stufen.ist-aktiv .atlas-stufe + .atlas-stufe {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.atlas-stufe__titel {
+    font-size: 0.95rem;
+    margin: 0 0 0.3rem;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-stufe__zusatz {
+    margin: 0 0 0.6rem;
+    font-size: 0.9rem;
+}
+
+/* the pattern stage's heading links to its card */
+.atlas-stufe__titel a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+}
+
+.atlas-grenzfaelle {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+}
+
+.atlas-grenzfaelle li {
+    background: var(--atlas-feld);
+    border-left: 3px solid var(--atlas-kern);
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.atlas-grenzfall__titel {
+    font-weight: 500;
+    margin-right: 0.4rem;
+}
+
+.atlas-grenzfall__frage {
+    display: block;
+    margin-top: 0.2rem;
+}
+
+.atlas-weiter {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .atlas-optionen > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+/* ---- Real case (card field `fall`), in place of the minimal pair ---- */
+.atlas-fall__einleitung {
+    margin: 0 0 0.9rem;
+}
+
+.atlas-fall__seiten {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.atlas-fall__seite {
+    min-width: 0;
+    background: var(--atlas-feld);
+    border: 1px solid var(--atlas-linie);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem 0.7rem;
+}
+
+.atlas-fall__seite h3 {
+    font-size: 0.95rem;
+    margin: 0 0 0.35rem;
+}
+
+.atlas-fall__seite p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.atlas-fall__quelle {
+    margin: 0.9rem 0 0.3rem;
+    font-size: 0.9rem;
+}
+
+.atlas-fall__quelle .atlas-label {
+    display: inline;
+    margin-right: 0.4rem;
+}
+
+@media (max-width: 640px) {
+    .atlas-fall__seiten {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ---- Illustrations (grafik.typ: illustration; config/illustration.js) ----
+   Default = revealed (no JS, print). On screen, .ist-zu shows the state
+   before; transitions are soft and switched off for reduced motion. */
+.atlas-illustration {
+    margin: 0;
+}
+
+.il-bild {
+    display: flex;
+    justify-content: center;
+}
+
+.il-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.il-hoch { display: none; }
+
+@media (max-width: 640px) {
+    .il-quer { display: none; }
+    .il-hoch { display: block; }
+}
+
+.il-svg text { font-family: inherit; fill: var(--atlas-text); }
+.il-anmerkung { fill: var(--atlas-kern-text); font-style: italic; }
+.il-legende { fill: var(--atlas-gedaempft); }
+
+.il-blase { fill: var(--atlas-feld); stroke: var(--atlas-offen); stroke-width: 1.3; stroke-linejoin: round; }
+.il-tafel { fill: var(--atlas-feld); stroke: var(--atlas-linie); stroke-width: 1.2; }
+.il-strich { fill: none; stroke: var(--atlas-kern); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 0.8s ease; }
+.il-gegenstand { fill: var(--atlas-kachel-still); stroke: var(--atlas-offen); stroke-width: 1.2; }
+.il-boden { stroke: var(--atlas-offen); stroke-width: 1.2; }
+.il-marke { stroke: var(--atlas-kern); stroke-width: 1.5; stroke-dasharray: 6 4; }
+.il-lineal { fill: var(--atlas-feld); stroke: var(--atlas-kern); stroke-width: 1.2; }
+.il-lineal-strich { stroke: var(--atlas-kern); stroke-width: 1; }
+.il-wachsen { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.7s ease, opacity 0.4s ease; }
+.il-start, .il-ziel { fill: var(--atlas-feld); stroke: var(--atlas-offen); stroke-width: 1.2; transition: stroke 0.5s ease; }
+.il-ziel-zu { stroke-dasharray: 4 4; }
+.il-schwellen { fill: none; stroke: var(--atlas-linie); stroke-width: 9; stroke-dasharray: 2 6; }
+.il-schiene { fill: none; stroke: var(--atlas-text); stroke-width: 1.5; stroke-linejoin: round; transition: stroke 0.5s ease; }
+.il-schiene.il-ast-zu { stroke: var(--atlas-offen); stroke-dasharray: 4 4; }
+.il-pfad { fill: none; stroke: none; }
+.il-zunge { stroke: var(--atlas-kern); stroke-width: 3; stroke-linecap: round; transform: rotate(var(--auf)); transition: transform 0.6s ease; }
+.il-weiche-punkt { fill: var(--atlas-kern); }
+.il-zug-wagen { fill: var(--atlas-kern); }
+.il-zug-rad { fill: var(--atlas-text); }
+.il-zug-fahrt { display: none; }
+
+.il-nur-vorher { opacity: 0; }
+.il-nur-vorher,
+.il-nur-nachher { transition: opacity 0.6s ease; }
+.il-kreis { transform-box: fill-box; transform-origin: center; transition: opacity 0.4s ease, transform 0.4s ease; }
+.il-kreis-2 { transition-delay: 0.12s; }
+.il-kreis-3 { transition-delay: 0.24s; }
+
+.il-unterschriften {
+    margin-top: 0.6rem;
+}
+
+.il-unterschrift {
+    margin: 0 0 0.3rem;
+}
+
+.il-zustand {
+    font-weight: 500;
+    color: var(--atlas-kern-text);
+}
+
+@media screen {
+    .ist-zu .il-nur-vorher { opacity: 1; }
+    .ist-zu .il-nur-nachher { opacity: 0; }
+    .ist-zu .il-kreis { transform: scale(0.2); }
+    .ist-zu .il-strich { stroke-dashoffset: 1; }
+    .ist-zu .il-wachsen { transform: scaleY(0); }
+    .ist-zu .il-zunge { transform: rotate(var(--zu)); }
+    .ist-zu .il-schiene.il-ast-zu { stroke: var(--atlas-text); stroke-dasharray: none; }
+    .ist-zu .il-schiene.il-ast-auf { stroke: var(--atlas-offen); stroke-dasharray: 4 4; }
+    .ist-zu .il-ziel-zu { stroke-dasharray: none; }
+    .ist-zu .il-ziel-auf { stroke-dasharray: 4 4; }
+    .ist-faehrt .il-zug-halt { opacity: 0 !important; transition: none; }
+    .ist-faehrt .il-zug-fahrt { display: inline; }
+
+    /* with JS only the caption of the current state, without its label */
+    .ist-js .il-zustand { display: none; }
+    .ist-js.ist-zu .il-unterschrift-nachher,
+    .ist-js:not(.ist-zu) .il-unterschrift-vorher { display: none; }
+}
+
+.ohne-uebergang * { transition: none !important; }
+
+@media (prefers-reduced-motion: reduce), print {
+    .atlas-illustration * { transition: none !important; }
+}
+
+/* ---- Anhang ---- */
+.atlas-definition {
+    font-size: 1.05rem;
+    background: var(--atlas-feld);
+    border-left: 3px solid var(--atlas-kern);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0 0 1rem;
+}
+
+.atlas-unterkopf {
+    font-size: 0.95rem;
+    margin: 1.2rem 0 0.4rem;
+}
+
+.atlas-zeichen {
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.atlas-zeichen > div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.6rem;
+}
+
+.atlas-zeichen dt {
+    font-weight: bold;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-zeichen dd {
+    margin: 0;
+}
+
+.atlas-schema-figur {
+    margin: 0;
+}
+
+.atlas-schema {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--atlas-feld);
+    border-radius: 10px;
+}
+
+.atlas-schema text { font-size: 13px; fill: var(--atlas-text); }
+.sc-rahmen rect { fill: var(--atlas-kachel-ruhig); stroke: var(--atlas-offen); stroke-width: 1; }
+.sc-rahmen-titel { font-weight: bold; }
+.atlas-schema .sc-rahmen-text { font-size: 11px; fill: var(--atlas-gedaempft); }
+.sc-box rect { fill: var(--atlas-feld); stroke: var(--atlas-kern); stroke-width: 1.25; }
+.sc-box.ist-mitte rect { fill: var(--atlas-kachel-effekt); stroke-width: 2; }
+.sc-box-titel { font-weight: bold; }
+.atlas-schema .sc-box-eigenschaft { font-size: 11px; fill: var(--atlas-gedaempft); }
+.sc-kante { fill: none; stroke: var(--atlas-gedaempft); stroke-width: 1.25; }
+.sc-pfeil { fill: var(--atlas-gedaempft); }
+.atlas-schema .sc-kante-text {
+    font-size: 11px;
+    fill: var(--atlas-kern-text);
+}
+
+.atlas-downloads li {
+    margin-bottom: 0.4rem;
+}
+
+/* ---- Navigation of the Atlas pages (overview) ---- */
+.atlas-seitennav ul {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.5rem;
+}
+
+.atlas-seitennav a {
+    display: inline-block;
+    border: 1px solid var(--atlas-linie);
+    background: var(--atlas-feld);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.9rem;
+}
+
+.atlas-seitennav a:hover {
+    border-color: var(--atlas-kern);
+    font-weight: normal;
+}
+
+/* ---- Handout: on screen a preview of the sheet, in print one A4 page ---- */
+.atlas.atlas-handout {
+    max-width: 52rem;
+}
+
+.atlas-handout__blatt {
+    background: #fff;
+    border: 1px solid var(--atlas-linie);
+    border-radius: 6px;
+    padding: 2rem 2.2rem;
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.atlas-handout__kopf h1 {
+    margin: 0 0 0.1rem;
+    font-size: 1.6rem;
+}
+
+.atlas-handout__kopf .atlas-untertitel {
+    margin: 0 0 0.75rem;
+}
+
+.atlas-handout h2 {
+    font-size: 0.95rem;
+    margin: 1rem 0 0.4rem;
+    color: var(--atlas-kern-text);
+}
+
+.atlas-handout h3 {
+    font-size: 0.9rem;
+    margin: 0 0 0.25rem;
+}
+
+.atlas-handout__fragen {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1.2rem;
+}
+
+.atlas-handout__fragen li.ist-rahmen {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-handout__erklaerung {
+    display: block;
+    font-size: 0.8rem;
+}
+
+.atlas-handout__hinsichten {
+    columns: 2;
+    column-gap: 1.4rem;
+}
+
+.atlas-handout__hinsicht {
+    break-inside: avoid;
+    margin-bottom: 0.7rem;
+}
+
+.atlas-handout__hinsicht.ist-nebensache h3 {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-handout__hinsicht .atlas-hinweis {
+    margin: 0;
+    font-weight: normal;
+}
+
+.atlas-handout__muster {
+    margin: 0 0 0.3rem;
+    font-size: 0.82rem;
+}
+
+.atlas-handout__fuss {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    border-top: 1px solid var(--atlas-linie);
+    margin-top: 0.8rem;
+    padding-top: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--atlas-gedaempft);
+}
+
+@media (max-width: 640px) {
+    .atlas-handout__blatt {
+        padding: 1rem;
+    }
+
+    .atlas-handout__fragen {
+        grid-template-columns: 1fr;
+    }
+
+    .atlas-handout__hinsichten {
+        columns: 1;
+    }
+}
+
+@page {
+    size: A4;
+    margin: 13mm 14mm;
+}
+
+@media print {
+    /* Only the sheet: no site header, menu, toggle, footer or hints. */
+    body:has(.atlas-handout) {
+        background: #fff;
+        padding: 0;
+        font-size: 9.3pt;
+    }
+
+    body:has(.atlas-handout) > h1,
+    body:has(.atlas-handout) #menu,
+    body:has(.atlas-handout) .lang-toggle,
+    body:has(.atlas-handout) > footer,
+    .atlas-handout__druckhinweis {
+        display: none !important;
+    }
+
+    body:has(.atlas-handout) main {
+        margin: 0;
+        max-width: none;
+    }
+
+    .atlas.atlas-handout {
+        max-width: none;
+    }
+
+    .atlas-handout__blatt {
+        border: 0;
+        border-radius: 0;
+        padding: 0;
+        font-size: 9.3pt;
+    }
+
+    .atlas-handout .atlas-kernsatz {
+        font-size: 10.5pt;
+        margin: 0.4rem 0 0.2rem;
+    }
+
+    .atlas-handout__hinsichten {
+        columns: 2;
+    }
+
+    .atlas-handout__fragen {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .atlas-handout * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* ---- Overview ---- */
+.atlas.atlas-uebersicht {
+    max-width: 62rem;
+}
+
+.atlas-uebersicht__kopf,
+.atlas-struktur {
+    max-width: 42rem;
+}
+
+.atlas-haltung {
+    margin-top: 1rem;
+}
+
+/* Map (landkarte.js). SVG text inherits Sono; colours from the variables. */
+.atlas-landkarte {
+    margin: 2rem 0 2.5rem;
+}
+
+.atlas-landkarte__flaeche svg {
+    display: block;
+    overflow: visible;
+}
+
+.atlas-landkarte figcaption {
+    margin-top: 0.5rem;
+}
+
+.lk-text, .lk-titel, .lk-klein, .lk-wert, .lk-frage-text, .lk-muster-text, .lk-band-text {
+    fill: var(--atlas-text);
+}
+
+.lk-titel { font-weight: bold; }
+.lk-klein, .lk-band-text { fill: var(--atlas-gedaempft); }
+
+
+.lk-band {
+    fill: var(--atlas-kachel-ruhig);
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+}
+
+.lk-kern {
+    fill: var(--atlas-kachel-effekt);
+    stroke: var(--atlas-kern);
+    stroke-width: 1.5;
+}
+
+.lk-speiche {
+    stroke: var(--atlas-kern);
+    stroke-width: 1.5;
+}
+
+.lk-frage-box {
+    fill: var(--atlas-feld);
+    stroke: var(--atlas-kern);
+    stroke-width: 1;
+}
+
+.lk-frage-text { font-weight: bold; }
+
+.lk-verbindung {
+    stroke: var(--atlas-offen);
+    stroke-width: 1;
+}
+
+.lk-hinsicht-box {
+    fill: var(--atlas-kachel-kern);
+    stroke: none;
+}
+
+.lk-hinsicht.ist-nebensache .lk-hinsicht-box { fill: var(--atlas-kachel-still); }
+.lk-hinsicht.ist-nebensache .lk-titel { fill: var(--atlas-gedaempft); }
+/* deliberately empty hinsicht: text only, no (empty) box */
+.lk-hinsicht.ist-leer .lk-hinsicht-box { fill: none; stroke: none; }
+.lk-leer-text { font-style: italic; }
+.lk-pille {
+    fill: var(--atlas-feld);
+    stroke: var(--atlas-kern);
+    stroke-width: 1;
+}
+
+.lk-muster.ist-entwurf .lk-pille {
+    fill: transparent;
+    stroke: var(--atlas-offen);
+    stroke-dasharray: 4 3;
+}
+
+.lk-muster.ist-entwurf .lk-muster-text { fill: var(--atlas-gedaempft); }
+
+/* Links in the map: no bold-on-hover (it would overflow the pills). */
+.atlas-landkarte a.lk-link:hover,
+.atlas-landkarte a.lk-link:focus {
+    font-weight: normal;
+}
+
+.atlas-landkarte a.lk-link:hover .lk-pille,
+.atlas-landkarte a.lk-link:focus-visible .lk-pille {
+    fill: var(--atlas-knopf-an);
+    stroke-width: 2;
+}
+
+.atlas-landkarte a.lk-link:hover .lk-muster-text {
+    fill: var(--atlas-kern-text);
+    text-decoration: underline;
+}
+
+.atlas-landkarte a.lk-link:focus {
+    outline: none;
+}
+
+.atlas-landkarte a.lk-link:focus-visible .lk-pille {
+    stroke: var(--atlas-hinsicht);
+    stroke-width: 3;
+}
+
+/* List fallback */
+.atlas-wertebereich {
+    margin: 0.3rem 0 0.4rem;
+    display: grid;
+    gap: 0.15rem;
+}
+
+.atlas-wertebereich > div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 0.5rem;
+}
+
+.atlas-wertebereich dt {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-wertebereich dd {
+    margin: 0;
+}
+
+@media (max-width: 480px) {
+    .atlas-wertebereich > div {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+.atlas-struktur h2 {
+    margin-top: 0;
+}
+
+.atlas-struktur__bereich {
+    font-size: 0.95rem;
+    margin: 1.5rem 0 0.5rem;
+}
+
+.atlas-baum {
+    padding-left: 1.2rem;
+    margin: 0;
+}
+
+.atlas-baum > li {
+    margin-bottom: 0.75rem;
+}
+
+.atlas-baum__knoten {
+    font-weight: 500;
+}
+
+.atlas-baum__art {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-untertitel {
+    margin-top: -0.5rem;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-kernsatz {
+    font-size: 1.1rem;
+    border-left: 2px solid var(--atlas-kern);
+    padding-left: 1rem;
+}
+
+.atlas-hinsichten {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+}
+
+.atlas-hinsichten > li.ist-nebensache {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-hinsicht__name {
+    font-weight: 500;
+}
+
+.atlas-hinsichten ul {
+    margin: 0.3rem 0 0;
+    padding-left: 1.2rem;
+}
+
+/* Schema on narrow screens: keep a legible minimum width and scroll inside
+   the figure (the page itself never scrolls sideways). */
+.atlas-schema-rolle {
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+@media (max-width: 640px) {
+    .atlas-schema-rolle .atlas-schema {
+        min-width: 1140px; /* 1:1 with the viewBox */
+    }
+}
+
+@media print {
+    /* Schema: fit the page width, no scrolling box */
+    .atlas-schema-rolle {
+        overflow: visible;
+    }
+
+    .atlas-schema-rolle .atlas-schema {
+        min-width: 0;
+    }
+}
+
+/* Anhang: the schema gets a wide tile of its own (about its natural size on
+   wide screens instead of being scaled down); the other tiles keep the
+   normal reading width. */
+.atlas.atlas-anhang {
+    max-width: 72rem;
+}
+
+.atlas-anhang > .back-link,
+.atlas-anhang > .atlas-karte__kopf,
+.atlas-anhang > .atlas-kacheln {
+    max-width: 46rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.atlas-anhang > .back-link {
+    display: block;
+}
+
+.atlas-kachel.atlas-kachel--breit {
+    width: 100%;
+    margin: 1.25rem 0;
+}
+
+/* ---- Print header (base.njk, pages with druckkopf: true) ---- */
+.druck-kopf {
+    display: none;
+}
+
+/* ---- Print: all Atlas pages ----
+   No site menu, language toggle or footer; title and address at the top;
+   tiles full width one below the other, kept whole where possible;
+   interactive parts in their no-JS form. The Handout keeps its own rules. */
+@media print {
+    body:has(.atlas) {
+        background: #fff;
+        padding: 0;
+    }
+
+    body:has(.atlas) > h1,
+    body:has(.atlas) #menu,
+    body:has(.atlas) .lang-toggle,
+    body:has(.atlas) > footer,
+    .atlas .back-link,
+    .atlas-seitennav {
+        display: none !important;
+    }
+
+    .druck-kopf {
+        display: block;
+        font-size: 9pt;
+        line-height: 1.4;
+        color: #444;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 4pt;
+        margin-bottom: 12pt;
+    }
+
+    body:has(.atlas) main {
+        margin: 0;
+        max-width: none;
+    }
+
+    .atlas,
+    .atlas.atlas-uebersicht,
+    .atlas.atlas-anhang,
+    .atlas-anhang > .atlas-karte__kopf,
+    .atlas-anhang > .atlas-kacheln,
+    .atlas-uebersicht__kopf,
+    .atlas-struktur {
+        max-width: none;
+    }
+
+    .atlas * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* tiles: no zigzag, full width, kept whole where they fit on a page */
+    .atlas-kacheln {
+        gap: 10pt;
+    }
+
+    .atlas-kachel,
+    .atlas-kachel:nth-child(odd),
+    .atlas-kachel:nth-child(even) {
+        width: 100% !important;
+        align-self: stretch;
+        /* tiles flow across pages; only small units below stay whole */
+        break-inside: auto;
+        page-break-inside: auto;
+        /* a little less padding on paper; the content stays indented */
+        padding: 11pt 13pt 12pt calc(13pt + var(--atlas-einzug));
+    }
+
+    .atlas-kachel > h2 {
+        margin-bottom: 0.7rem;
+    }
+
+    .atlas p,
+    .atlas li {
+        orphans: 3;
+        widows: 3;
+    }
+
+    .atlas h2,
+    .atlas h3 {
+        break-after: avoid;
+    }
+
+    .atlas-feld,
+    .atlas-einschaetzung,
+    .atlas-schablone__mitte,
+    .atlas-analogie__tabelle tr,
+    .atlas-tabelle tr,
+    .atlas-fall__seite,
+    .atlas-illustration {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* data tables: fit the tile width (hyphenate rather than cut words) */
+    .atlas-tabelle {
+        font-size: 8pt;
+    }
+
+    .atlas-tabelle th,
+    .atlas-tabelle td {
+        padding: 3pt 4pt;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        overflow-wrap: break-word;
+    }
+
+    /* interactive parts → their no-JS form */
+    .atlas [data-nur-js],
+    .atlas .atlas-schalter,
+    .atlas-landkarte,
+    .atlas-grafik__flaeche,
+    .atlas-grafik__steuerung,
+    .atlas-grafik__ergebnis {
+        display: none !important;
+    }
+
+    .atlas [data-ohne-js],
+    .atlas .atlas-stufe[data-panel],
+    .atlas-grenzfall [data-panel] {
+        display: block !important;
+    }
+
+    .atlas-stufen.ist-aktiv .atlas-stufe + .atlas-stufe {
+        margin-top: 1.2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--atlas-linie);
+    }
+
+    /* data tables of the graphics: open (atlas.js also opens them before printing) */
+    .atlas-grafik__daten[data-grafik-tabelle]::details-content {
+        content-visibility: visible;
+        display: block;
+    }
+
+    .atlas-grafik__daten summary {
+        display: none;
+    }
+
+    /* the wide schema gets a landscape page of its own, sized to fit it */
+    .atlas-kachel.atlas-kachel--breit {
+        page: atlas-quer;
+        break-before: page;
+        padding: 10pt 14pt 10pt calc(14pt + var(--atlas-einzug));
+    }
+
+    .atlas-kachel--breit .atlas-schema {
+        width: 100%;
+        max-height: 150mm;
+    }
+}
+
+@page atlas-quer {
+    size: A4 landscape;
+    margin: 12mm;
+}
+
+@media (max-width: 480px) {
+    .atlas-zeichen > div {
+        grid-template-columns: 4.6rem 1fr;
+    }
+}
+
+/* ---- Lists of name and explanation (all tiles) ----
+   Each entry is marked by a fine line on the left; the name is bold, the
+   explanation normal beside or below it, so entries never look like the
+   tile heading. Covers: Verzerrungen, Prüffragen, the options of "Für wen?",
+   Wirkungen (Begriffsmodell), Grenzfälle, the signs of the Anhang. */
+.atlas-verzerrungen li,
+.atlas-pruefrage,
+.atlas-optionen > div,
+.atlas-grenzfaelle li,
+.atlas-zeichen > div,
+.atlas-begriffsmodell .atlas-kachel > .atlas-werte > div {
+    border: 0;
+    border-left: 2px solid var(--atlas-offen);
+    border-radius: 0;
+    background: none;
+    padding: 0.1rem 0 0.15rem 0.75rem;
+}
+
+.atlas-verzerrungen strong,
+.atlas-pruefrage__frage,
+.atlas-optionen dt,
+.atlas-grenzfall__titel,
+.atlas-zeichen dt,
+.atlas-begriffsmodell .atlas-kachel > .atlas-werte dt {
+    font-weight: bold;
+    color: var(--atlas-text);
+}

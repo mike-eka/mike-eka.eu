@@ -8,12 +8,17 @@
   {% if description %}<meta name="description" content="{{ description }}">{% endif %}
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="/css/style.css">
+  {# Optional per-page/section extras, e.g. `styles: ["/css/atlas.css"]`. #}
+  {% for href in styles %}<link rel="stylesheet" href="{{ href }}">
+  {% endfor %}
 </head>
 
 <body>
 
   {% set prefix = "/en" if locale == "en" else "" %}
-  {% set otherUrl = page.url | otherLocaleUrl(locale) %}
+  {# A page without a translation can set `alternateUrl` in its data to choose
+     where the language toggle points; otherwise it's derived from the URL. #}
+  {% set otherUrl = alternateUrl if alternateUrl else (page.url | otherLocaleUrl(locale, collections.all)) %}
 
   <div class="lang-toggle">
     {% if locale == "de" %}
@@ -33,12 +38,19 @@
     <div class="item"><a href="{{ prefix }}/projects/" class="{% if section == 'projects' %}current{% endif %}">{{ i18n[locale].projects }}</a></div>
   </div>
 
-  <main>
+  {# Print only (pages with `druckkopf: true`, e.g. the Atlas): title and address #}
+  {% if druckkopf %}
+  <div class="druck-kopf" aria-hidden="true"><strong>{{ title or "Mike Eka" }}</strong> · Mike Eka<br>{{ page.url | absoluteUrl }}</div>
+  {% endif %}
+
+  <main{% if mainClass %} class="{{ mainClass }}"{% endif %}>
     {{ content | safe }}
   </main>
 
   <footer>
     <a href="https://github.com/mike-eka/mike-eka.eu" target="_blank" rel="noopener">{{ i18n[locale].source }}</a>
+    · <a href="/impressum/">{{ i18n[locale].impressum }}</a>
+    · <a href="/datenschutz/">{{ i18n[locale].datenschutz }}</a>
   </footer>
 
   <script>
@@ -71,6 +83,8 @@
     layoutMenu();
     window.addEventListener('resize', layoutMenu);
   </script>
+  {% for src in scripts %}<script src="{{ src }}"></script>
+  {% endfor %}
 
 </body>
 

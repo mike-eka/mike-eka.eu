@@ -1,0 +1,42 @@
+---
+layout: base.njk
+eleventyComputed:
+  title: "{{ atlas.ueber.titel }}"
+---
+{#- Über diesen Atlas: Entstehung, Haltung, KI-Hinweis, Kontakt.
+    Texte aus src/_data/atlas/ueber.yaml. -#}
+{%- set u = atlas.ueber -%}
+{%- set b = atlas.beschriftungen -%}
+<article class="atlas atlas-ueber">
+  <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
+  <header class="atlas-karte__kopf">
+    <h1>{{ u.titel }}</h1>
+  </header>
+
+  <div class="atlas-kacheln">
+    {% if u.entstehung %}
+    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="entstehung">
+      <h2 id="entstehung">{{ b.ueber.entstehung }}</h2>
+      <p>{{ u.entstehung }}</p>
+    </section>
+    {% endif %}
+    {% if u.haltung %}
+    <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="haltung">
+      <h2 id="haltung">{{ b.ueber.haltung }}</h2>
+      <p>{{ u.haltung }}</p>
+    </section>
+    {% endif %}
+    {% if u.ki_hinweis %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="ki-hinweis">
+      <h2 id="ki-hinweis">{{ b.ueber.ki_hinweis }}</h2>
+      <p>{{ u.ki_hinweis }}</p>
+    </section>
+    {% endif %}
+    {% if u.kontakt %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="kontakt">
+      <h2 id="kontakt">{{ b.ueber.kontakt }}</h2>
+      <p>{{ u.kontakt }} <a class="atlas-weiter" href="/impressum/">{{ b.ueber.impressum_link }}</a></p>
+    </section>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,168 @@
+titel: "Lautleise Muster"
+untertitel: "Desinformation jenseits von wahr und falsch"
+kernsatz: >-
+  Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
+  für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
+  verschlechtert.
+# Entwürfe (Karten mit veroeffentlicht: false) als „in Vorbereitung“ zeigen?
+# false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste.
+# Gebaut werden Entwürfe in keinem Fall.
+entwuerfe_anzeigen: true
+
+# Ein Absatz Haltung für die Übersicht
+haltung: >-
+  Lautleise heißen diese Muster, weil sie leise wirken und laut werden,
+  sobald man sie einmal kennt. Der Atlas sammelt Desinformationsmuster, die
+  ohne falsche Behauptung auskommen, und orientiert sich an der
+  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS. Er ist ein
+  Arbeitsstand und ein Gesprächsangebot.
+
+# Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
+begriffsmodell_einleitung: >-
+  Das Begriffsmodell macht sichtbar, welche Entscheidungen in dem Satz
+  „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als
+  Eigenschaft eines Inhalts, sondern als Einschätzung: Ein Inhalt wird für
+  ein Publikum, im Vergleich zu etwas und in einer bestimmten Hinsicht
+  beurteilt. Die Muster des Atlas sind teilweise ausgefüllte Fassungen
+  dieser Einschätzung. Jedes lässt eine Frage offen, und an ihr
+  entscheidet sich das Urteil.
+
+# art: muster  – ein Muster kann diese Frage festlegen oder offenlassen;
+#                nur diese Fragen sind als `kippt_an` (die Frage, an der der
+#                Grenzfall einer Karte offen ist) erlaubt.
+# art: rahmen  – stellt sich bei jeder Einschätzung (Publikum), kein
+#                Merkmal eines Musters.
+pruefragen:
+  - id: was
+    art: muster
+    frage: "Was genau ist der Inhalt?"
+    feld: inhalt
+    erklaerung: >-
+      Eine einzelne Aussage, oder erst eine Auswahl, ein Paar von Aussagen,
+      eine Abfolge oder die Position eines Sprechers. Manches ist erst
+      zusammen problematisch.
+  - id: fuer_wen
+    art: rahmen
+    frage: "Für wen?"
+    feld: publikum
+    erklaerung: >-
+      Welches Publikum, und wie viele dort betroffen sein müssen. Derselbe
+      Satz kann für die einen harmlos sein und für die anderen nicht.
+  - id: vergleich
+    art: muster
+    frage: "Im Vergleich wozu?"
+    feld: vergleichsfall
+    erklaerung: >-
+      Mit der Lage vorher, ohne den Inhalt oder mit einer anderen
+      Formulierung. Ohne Vergleich lässt sich nicht sagen, ob etwas
+      schlechter wird.
+  - id: hinsicht
+    art: muster
+    frage: "In welcher Hinsicht?"
+    feld: hinsicht
+    erklaerung: >-
+      Was genau schlechter wird. Faktenchecks prüfen nur eine dieser
+      Hinsichten.
+
+# Abschnitt „Für wen?“ auf der Begriffsmodell-Seite (Schritt 3). Jede Karte
+# verweist im Rahmen ihrer Schablone darauf (/atlas/begriffsmodell/#<anker>).
+publikum_abschnitt:
+  anker: fuer-wen      # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
+  titel: "Für wen? Eine Frage, die sich immer stellt"
+  einleitung: >-
+    Ob ein Inhalt die Erkenntnislage verschlechtert, hängt immer auch davon
+    ab, wer ihn aufnimmt. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
+    und die Gruppe, in der man etwas hört, verändern seine Wirkung. Derselbe
+    Satz kann für die einen harmlos sein und für die anderen nicht. Weil das
+    für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
+    sondern hier: Sie ist der Rahmen jeder Einschätzung.
+  aggregation:
+    titel: "Wie viele müssen betroffen sein?"
+    text: >-
+      Ist ein Publikum gemischt, muss man entscheiden, wie man die Wirkungen
+      zusammenfasst. Jede Antwort hat Folgen: Reicht es, dass einige
+      schlechter dastehen, wäre fast jede politische Rede Desinformation.
+      Müssen alle betroffen sein, fast keine. Das Begriffsmodell entscheidet
+      diese Frage nicht, es macht sie sichtbar.
+    optionen:
+      - { name: "einige",   text: "Es genügt, dass ein Teil des Publikums schlechter dasteht." }
+      - { name: "Mehrheit", text: "Die meisten müssen schlechter dastehen." }
+      - { name: "alle",     text: "Niemand darf besser oder gleich dastehen." }
+      - { name: "Gewicht",  text: "Es zählt, wie viele betroffen sind und wie stark." }
+  beispiel: >-
+    „Tempo 30 macht unsere Innenstädte kaputt.“ Wer der Sprecherin vertraut,
+    hält die Frage danach womöglich für entschieden. Wer ihr misstraut, hört
+    eine Meinung. Für die einen hat sich die Erkenntnislage verschlechtert,
+    für die anderen nicht.
+  bezug: >-
+    Für die Frage, welche Desinformation eine liberale Demokratie hinnehmen
+    muss, ist das zentral. Ein Maßstab, der sich am verletzlichsten Teil des
+    Publikums ausrichtet, schränkt mehr ein als einer, der sich am
+    Durchschnitt ausrichtet.
+
+hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
+  - id: glauben
+    name: "Was wir glauben"
+    erklaerung: "Welche Aussagen wir für wahr halten und wie sicher wir uns dabei sind."
+    schwerpunkt: false
+    hinweis: "Das klassische Feld der Faktenchecks"
+  - id: achten
+    name: "Worauf wir achten"
+    erklaerung: "Welche Fragen unsere Aufmerksamkeit bekommen und welche als erledigt gelten."
+    schwerpunkt: true
+  - id: vertrauen
+    name: "Wem wir glauben"
+    erklaerung: "Welchen Quellen wir Sachkenntnis zutrauen und ob das zu ihrer Verlässlichkeit passt."
+    schwerpunkt: true
+  - id: begruenden
+    name: "Warum wir glauben"
+    erklaerung: "Aus welchen Gründen und nach welchen Maßstäben wir etwas für richtig halten."
+    schwerpunkt: true
+
+inhaltstypen: [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
+
+vergleichsfaelle:
+  - { id: vorher,      name: "vorher" }
+  - { id: ohne,        name: "ohne den Inhalt" }
+  - { id: alternative, name: "andere Formulierung (Minimalpaar)" }
+
+wirkungen:
+  - { id: verschlechtern, name: "verschlechtern", erklaerung: "Die Erkenntnislage ist danach schlechter als vorher: Man glaubt etwas Falsches, ist sich zu sicher oder versteht weniger." }
+  - { id: festhalten,     name: "festhalten",     erklaerung: "Eine Verbesserung bleibt aus: Eine offene oder falsche Sicht bleibt bestehen, obwohl sie sich hätte klären können." }
+  - { id: abschotten,     name: "abschotten",     erklaerung: "Künftiges Dazulernen wird schwerer: Verlässliche Quellen und Gegenargumente kommen schlechter an." }
+
+urteile:
+  - { id: ja,       name: "ja" }
+  - { id: nein,     name: "nein" }
+  - { id: strittig, name: "strittig" }
+
+# Begriffsmodell-Seite: was die Definition offenlässt
+offen_gelassen:
+  titel: "Was die Definition offenlässt: Wahrheit und Absicht"
+  text: >-
+    Ob ein Inhalt wahr ist und ob jemand täuschen will, spielt für die
+    Re:DIS-Definition keine Rolle. Die vertrauten Begriffe ergeben sich als
+    Sonderfälle: Lüge ist falsch und absichtlich, Fehlinformation falsch ohne
+    Absicht, Irreführung mit Wahrem ist wahr und trotzdem schädlich.
+
+schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
+  muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
+                                   # (jede füllt das Feld aus `kippt_an` und das Urteil)
+
+schablone_leer:        # Texte der leeren Schablone
+  inhalt:         ["Aussage, Auswahl, Paar …", ""]
+  publikum:       ["wer genau?", "und wie viele?"]
+  vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
+  urteil:         ["ja · nein · strittig", ""]
+  hinsicht:       ["Was · Worauf · Wem ·", "Warum wir glauben"]
+  wirkung:        ["verschlechtern ·", "festhalten · abschotten"]
+
+beziehungen:           # für Schema (Anhang) und JSON-LD
+  - { id: betrifft,           label: "betrifft",           von: Einschaetzung,  nach: Inhalt }
+  - { id: giltFuer,           label: "gilt für",           von: Einschaetzung,  nach: Publikum }
+  - { id: verglichenMit,      label: "verglichen mit",     von: Einschaetzung,  nach: Vergleichsfall }
+  - { id: inHinsicht,         label: "in Hinsicht",        von: Einschaetzung,  nach: Hinsicht }
+  - { id: istBeispielFuer,    label: "ist Beispiel für",   von: Inhalt,         nach: Muster }
+  - { id: nutzt,              label: "nutzt",              von: Muster,         nach: SprachlichesMittel }
+  - { id: betrifftVorAllem,   label: "betrifft vor allem", von: Muster,         nach: Hinsicht }
+  - { id: andereFormulierung, label: "andere Formulierung",von: Vergleichsfall, nach: Inhalt }

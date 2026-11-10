@@ -11,6 +11,10 @@ Personal site, built with [Eleventy](https://www.11ty.dev/). Plain HTML/Nunjucks
 - `src/embeds/` — standalone, self-contained HTML files (e.g. a p5.js sketch or D3 chart) that a project page can embed in an iframe. Copied to the site as-is, not templated.
 - `src/css/style.css` — all styling. `src/fonts/` — the Sono font.
 
+## Atlas
+
+The Atlas under `/atlas/` has its own guide: see [README-atlas.md](README-atlas.md) (in German) for how to change content, and run `npm run check:atlas` before merging to `main`.
+
 ## Local development
 
 ```
@@ -29,3 +33,4 @@ The custom domain is set via the `src/CNAME` file (copied to the site root on bu
 
 - **New blog post:** copy `src/posts/example-post.md`, change the front matter and text. Delete the three `example-*` files once you have real posts.
 - **New project:** copy one of the files in `src/projects/` that matches the kind (p5.js/D3 embed one, or the NLP write-up style one).
+- **Translations and the language toggle:** the toggle links to the same path in the other language (`/x/` ↔ `/en/x/`). If that page doesn't exist yet, it links to the other language's start page (`/en/` or `/`) instead, so it never leads nowhere. A page can override this with `alternateUrl` in its front matter.

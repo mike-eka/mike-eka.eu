@@ -1,0 +1,161 @@
+# Feste Beschriftungen der Atlas-Seiten: Überschriften, Knöpfe, Legenden.
+# Inhalte stehen in begriffsmodell.yaml und in atlas/muster/*.md.
+# Im Template verfügbar als `atlas.beschriftungen`.
+
+uebersicht:
+  link: "← Zur Übersicht"
+  nicht_schwerpunkt: "nicht Schwerpunkt"
+  leer_zusatz: "nicht Gegenstand dieses Atlas"   # Hinsicht ohne Schwerpunkt und ohne Muster
+  in_vorbereitung: "in Vorbereitung"
+  landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte."
+  liste_titel: "Die Struktur als Liste"
+  einschaetzung: "Einschätzung"
+  # Wertebereiche der Einschätzung (Werte aus begriffsmodell.yaml: urteile, wirkungen)
+  urteil: "Urteil"
+  wirkung: "Wirkung"
+  wirkung_zusatz: "keine, wenn das Urteil nein lautet"
+  pruefragen: "Prüffragen"
+  rahmen: "Rahmen"                      # Kennzeichnung der Frage mit art: rahmen
+  hinsichten: "Hinsichten"
+  navigation:                           # Links unter Kernsatz und Haltung
+    - { label: "Begriffsmodell", url: "/atlas/begriffsmodell/" }
+    - { label: "Formaler Anhang", url: "/atlas/anhang/" }
+    - { label: "Über diesen Atlas", url: "/atlas/ueber/" }
+    - { label: "Handout (A4)", url: "/atlas/handout/" }
+    - { label: "English", url: "/en/atlas/", lang: "en" }
+
+ueber:                                  # Seite /atlas/ueber/
+  entstehung: "Entstehung"
+  haltung: "Haltung"
+  ki_hinweis: "KI-Hinweis"
+  kontakt: "Kontakt"
+  impressum_link: "Zum Impressum"
+
+anhang:                                 # Seite /atlas/anhang/
+  definition: "Definition"
+  legende: "Die Zeichen"
+  anmerkungen: "Anmerkungen"
+  offene_stellen: "Offene Stellen"
+  schema: "Schema"
+  schema_liste: "Die Beziehungen als Liste"
+  schema_hinweis: "Pfeile zeigen die Beziehungen aus begriffsmodell.yaml. Das Publikum ist als Rahmen um die Einschätzung gezeichnet."
+  modell: "Begriffsmodell und Ontologie"
+  download: "Download"
+  download_json: "Begriffsmodell und Karten als JSON"
+  klassen:                              # Anzeigenamen der Klassen im Schema
+    Einschaetzung: "Einschätzung"
+    Inhalt: "Inhalt"
+    Publikum: "Publikum"
+    Vergleichsfall: "Vergleichsfall"
+    Hinsicht: "Hinsicht"
+    Muster: "Muster"
+    SprachlichesMittel: "Sprachliches Mittel"
+  eigenschaften:                        # Eigenschaften in den Kästen des Schemas
+    # (Einschätzung: Urteil und Wirkung mit ihren Wertebereichen aus urteile /
+    # wirkungen in begriffsmodell.yaml – nicht hier eintragen)
+    Inhalt: ["Wahrheitsstatus · Absicht"]
+  rahmen: "Rahmen jeder Einschätzung"
+
+handout:                                # Seite /atlas/handout/ (A4)
+  druckhinweis: "Diese Seite ist für den Druck auf einer A4-Seite gestaltet (Drucken oder „Als PDF speichern“)."
+  pruefragen: "Die Prüffragen"
+  hinsichten: "Hinsichten und Muster"
+  rahmen: "Rahmen"
+  fuss: "Online: mike-eka.eu/atlas/"
+  stand: "Stand"
+
+begriffsmodell:                         # Seite /atlas/begriffsmodell/
+  titel: "Begriffsmodell"
+  pruefragen: "Die drei Prüffragen"
+  aggregation_optionen: "Mögliche Antworten"
+  beispiel: "Beispiel"
+  wirkungen: "Wirkungen"
+  schablone: "Die Schablone"
+  schablone_schalter: "Stufe wählen"
+  stufe_leer: "leer"
+  stufe_muster: "Muster"
+  stufe_beispiel: "Beispiel"
+  grenzfaelle: "Grenzfälle"
+
+karte:
+  effekt: "Was sich verschlechtert"
+  effekt_vorher: "Vorher"
+  effekt_nachher: "Nachher"
+  fall_quelle: "Quelle"                 # realer Fall (Feld `fall`)
+  effekt_weitere: "Betrifft außerdem:"   # weitere Hinsichten aus effekt.hinsichten (ohne die Haupt-Hinsicht)
+  grenzfall: "Grenzfall"
+  schalter: "Einschätzung wählen"       # Knopfgruppe im Grenzfall und in der Grafik
+  einordnung: "Einordnung"
+  einordnung_zeilen:                    # Zeilen der Einordnung, aus `schablone` der Karte
+    inhalt: "Inhalt"
+    vergleichsfall: "Vergleich"
+    hinsicht: "Hinsicht"
+    wirkung: "Wirkung"
+  minimalpaar: "Minimalpaar"
+  # nur wenn minimalpaar.frage gesetzt ist:
+  minimalpaar_frage: "Gefragt"
+  antwort_muster: "Antwort mit dem Muster"
+  antwort_gegenform: "Gegenform"
+  # nur wenn muster/gegenform Listen sind:
+  paar_zusatz: "+ zusätzlich"    # Eintrag, den nur diese Fassung hat
+  paar_fehlt: "fehlt hier"       # Lücke, wo die andere Fassung einen Eintrag mehr hat
+  paar_getauscht: "↔ ausgetauscht"  # Eintrag an derselben Stelle, in beiden Fassungen verschieden
+  analogie: "Wo die Analogie bricht"
+  analogie_merkmal: "Merkmal"
+  analogie_art:         # steht als Wort in jeder Zeile der Tabelle
+    passt: "passt"
+    bricht: "bricht"
+  muster: "Mit dem Muster"
+  gegenform: "Gegenform"
+  mittel: "Sprachliches Mittel"
+  test: "Test"
+  normalfall: "Normal, weil"
+  verzerrungen: "Verzerrungen, die das Muster begünstigen"
+  literatur: "Literatur"
+  mehr: "Erläuterung"
+
+schablone:
+  mitte: "Einschätzung"
+  # Legende über der Schablone
+  legende: "Farbig: legt das Muster fest. Gestrichelt: lässt es offen."
+  wirkung_keine: "keine"   # Einschätzung mit `wirkung: keine`
+  # Rahmen „Publikum“ um die Schablone (auch in der Landkarte); „Mehr dazu“
+  # führt zu begriffsmodell.publikum_abschnitt
+  publikum_rahmen: "Das Publikum ist der Rahmen jeder Einschätzung, kein Merkmal des Musters."
+  publikum_mehr: "Mehr dazu"
+  felder:            # die Felder der Schablone (im Code angelegt)
+    inhalt:         { frage: "Was?", name: "Inhalt" }
+    publikum:       { frage: "Für wen?", name: "Publikum" }
+    vergleichsfall: { frage: "Im Vergleich wozu?", name: "Vergleichsfall" }
+    hinsicht:       { frage: "In welcher Hinsicht?", name: "Hinsicht" }
+    urteil:         { name: "Urteil" }
+    wirkung:        { name: "Wirkung" }
+  # Status der Felder: für Screenreader und für weitere Legenden-Einträge
+  # (belegt erscheint erst in der großen Schablone)
+  status:
+    offen: "offen"
+    muster: "durch Muster festgelegt"
+    belegt: "durch Beispiel belegt"
+
+grafik:                 # Grafiken auf den Karten (netz.js, balken.js, illustration.js)
+  titel:                # wenn die Karte unter grafik.titel keinen eigenen Titel hat
+    netz: "Die Konstellation"
+    balken: "Berichterstattung im Vergleich"
+    illustration: "Illustration"
+  # Illustrationen: Bezeichnung der beiden Bildunterschriften ohne JS und im Druck
+  zustand_vorher: "Zunächst"
+  zustand_nachher: "Aufgedeckt"
+  # Balken: Hinweis über der Tabelle, wenn Themen absolute Zahlen haben
+  absolut_hinweis: "Anteile in Prozent, in Klammern die absoluten Zahlen."
+  daten: "Die Daten als Tabelle"
+  einschaetzung: "Einschätzung"
+  urteil: "Urteil"
+  thema: "Thema"
+  ja: "ja"
+  nein: "nein"
+  mass_waehlen: "Vergleichsmaß wählen"
+  netz_alt: "Netzdiagramm"
+  # unter den Kennzahlen, wenn eine Grafik kennzahl_2 hat:
+  kennzahl_2_hinweis: "Die erste Zahl bleibt gleich. Das ist der Punkt: Die Brückenposition allein unterscheidet Vermittlung nicht von Kaperung."
+  balken_alt: "Balkendiagramm"
+

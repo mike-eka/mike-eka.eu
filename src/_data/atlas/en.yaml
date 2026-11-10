@@ -1,0 +1,45 @@
+# Englische Kurzfassung /en/atlas/ (übernommen aus docs/texte-schritt5.yaml).
+# Im Template verfügbar als `atlas.en`. Die Muster erscheinen dort mit ihrem
+# `fachbegriff` und verlinken auf die deutschen Karten.
+
+titel: "Lautleise Muster: a small atlas of overlooked disinformation patterns"
+einleitung: >-
+  This atlas collects patterns of disinformation that rarely show up in fact
+  checks, because they get by without a false statement. It follows the
+  working definition of the DFG Priority Programme “Rethinking
+  Disinformation” (Re:DIS), under which any publicly disseminated content
+  can count as disinformation if it worsens its recipients' epistemic
+  situation, regardless of its truth or the authors' intent. The atlas is a
+  work in progress and an invitation to discussion.
+kernsatz: >-
+  Content is not disinformation in itself. Whether it is depends on for
+  whom, compared to what, and in which respect it worsens the epistemic
+  situation.
+fragen:
+  was: "What exactly is the content?"
+  vergleich: "Compared to what?"
+  hinsicht: "In which respect?"
+  fuer_wen: "For whom? The frame of every assessment."
+hinsichten:
+  glauben:
+    name: "What we believe"
+    erklaerung: "Which statements we take to be true, and how certain we are."
+  achten:
+    name: "What we attend to"
+    erklaerung: "Which questions get our attention, and which are treated as settled."
+  vertrauen:
+    name: "Whom we trust"
+    erklaerung: "Whom we credit with expertise, and whether that trust matches their reliability."
+  begruenden:
+    name: "Why we believe"
+    erklaerung: "On what grounds and by which standards we take something to be right."
+muster_hinweis: "The individual pattern cards are available in German."
+
+# Fixed labels of the English page (added in step 5, not from texte-schritt5.yaml)
+beschriftungen:
+  fragen: "The questions"
+  rahmen: "Frame"
+  hinsichten: "Patterns by respect"
+  nicht_schwerpunkt: "not the focus here"
+  deutsch: "German overview"
+  begriffsmodell: "Conceptual model (German)"
