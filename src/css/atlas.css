@@ -32,6 +32,7 @@
 
     --atlas-radius: 14px;
     --atlas-versatz: 1.75rem;          /* zigzag offset on wide screens */
+    --atlas-einzug: 1rem;              /* tile content, indented from its heading */
 }
 
 /* ---- Helpers ---- */
@@ -190,6 +191,31 @@ main.atlas-wide {
     .atlas-kachel {
         width: 100%;
         padding: 1rem 1rem 1.1rem;
+    }
+}
+
+/* Tile heading flush left and set off from the content: larger, in the
+   accent colour, with room below. The content is indented by
+   --atlas-einzug: the tile's left padding grows by it, the heading is
+   pulled back, so inner spacing and full-width tables stay intact. */
+.atlas-kachel {
+    padding-left: calc(1.5rem + var(--atlas-einzug));
+}
+
+.atlas-kachel > h2 {
+    margin: 0 0 1rem calc(-1 * var(--atlas-einzug));
+    font-size: 1.2rem;
+    line-height: 1.35;
+    color: var(--atlas-kern-text);
+}
+
+@media (max-width: 640px) {
+    :root {
+        --atlas-einzug: 0.5rem;
+    }
+
+    .atlas-kachel {
+        padding-left: calc(1rem + var(--atlas-einzug));
     }
 }
 
@@ -1784,6 +1810,12 @@ main.atlas-wide {
         /* tiles flow across pages; only small units below stay whole */
         break-inside: auto;
         page-break-inside: auto;
+        /* a little less padding on paper; the content stays indented */
+        padding: 11pt 13pt 12pt calc(13pt + var(--atlas-einzug));
+    }
+
+    .atlas-kachel > h2 {
+        margin-bottom: 0.7rem;
     }
 
     .atlas p,
@@ -1857,7 +1889,7 @@ main.atlas-wide {
     .atlas-kachel.atlas-kachel--breit {
         page: atlas-quer;
         break-before: page;
-        padding: 10pt 14pt;
+        padding: 10pt 14pt 10pt calc(14pt + var(--atlas-einzug));
     }
 
     .atlas-kachel--breit .atlas-schema {
@@ -1875,4 +1907,32 @@ main.atlas-wide {
     .atlas-zeichen > div {
         grid-template-columns: 4.6rem 1fr;
     }
+}
+
+/* ---- Lists of name and explanation (all tiles) ----
+   Each entry is marked by a fine line on the left; the name is bold, the
+   explanation normal beside or below it, so entries never look like the
+   tile heading. Covers: Verzerrungen, Prüffragen, the options of "Für wen?",
+   Wirkungen (Begriffsmodell), Grenzfälle, the signs of the Anhang. */
+.atlas-verzerrungen li,
+.atlas-pruefrage,
+.atlas-optionen > div,
+.atlas-grenzfaelle li,
+.atlas-zeichen > div,
+.atlas-begriffsmodell .atlas-kachel > .atlas-werte > div {
+    border: 0;
+    border-left: 2px solid var(--atlas-offen);
+    border-radius: 0;
+    background: none;
+    padding: 0.1rem 0 0.15rem 0.75rem;
+}
+
+.atlas-verzerrungen strong,
+.atlas-pruefrage__frage,
+.atlas-optionen dt,
+.atlas-grenzfall__titel,
+.atlas-zeichen dt,
+.atlas-begriffsmodell .atlas-kachel > .atlas-werte dt {
+    font-weight: bold;
+    color: var(--atlas-text);
 }
