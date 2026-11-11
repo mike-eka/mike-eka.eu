@@ -22,7 +22,7 @@ npm run check:atlas   # Prüfung vor dem Merge nach main (siehe unten)
 | `src/css/atlas.css` | Gestaltung; alle Farben als Variablen ganz oben |
 
 Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
-`/atlas/begriffsmodell/`, `/atlas/anhang/`, `/atlas/ueber/`, `/atlas/handout/`,
+`/atlas/begriffsmodell/`, `/atlas/anhang/`, `/atlas/ueber/`,
 `/en/atlas/`, dazu `/atlas/atlas.json` und `/atlas/atlas.jsonld`.
 
 ## Rezepte
@@ -116,7 +116,7 @@ einschaetzungen:
 - Kernsatz, Haltung, Prüffragen, „Für wen?“, Hinsichten, „Was die Definition
   offenlässt“ usw.: `begriffsmodell.yaml`.
 - Hinsichten: `name` und `erklaerung` (ein Satz, was die Hinsicht umfasst; erscheint
-  in Landkarte, Liste und Handout) unter `hinsichten` in `begriffsmodell.yaml`;
+  in Landkarte und Liste) unter `hinsichten` in `begriffsmodell.yaml`;
   englisch in `en.yaml` unter `hinsichten.<id>.name` / `.erklaerung`.
 - Über, Anhang, Englisch: `ueber.yaml`, `anhang.yaml`, `en.yaml`.
 - Längere Texte stehen in YAML als Block:
@@ -136,7 +136,7 @@ einschaetzungen:
 Alle festen Texte (Überschriften wie „Was sich verschlechtert“, Knöpfe, Legenden,
 „in Vorbereitung“, die Navigation der Übersicht) stehen in
 `src/_data/atlas/beschriftungen.yaml`, geordnet nach Seite bzw. Baustein (`karte`,
-`schablone`, `grafik`, `uebersicht`, `begriffsmodell`, `anhang`, `handout` …).
+`schablone`, `grafik`, `uebersicht`, `begriffsmodell`, `anhang` …).
 Die Beschriftungen der englischen Seite stehen in `en.yaml` unter `beschriftungen`.
 
 ### Farbe ändern
@@ -191,7 +191,7 @@ einer Illustration.
 - Alle Entwürfe ausblenden: in `begriffsmodell.yaml` `entwuerfe_anzeigen: false`.
   Dann erscheinen Entwürfe nirgends – nicht in Landkarte und Liste – und es bleibt
   kein leerer Platz.
-- Entwürfe stehen nie in Handout, englischer Seite, `atlas.json` oder `atlas.jsonld`.
+- Entwürfe stehen nie auf der englischen Seite, in `atlas.json` oder `atlas.jsonld`.
 
 ## Hinweise
 
@@ -206,7 +206,7 @@ einer Illustration.
 
 - **Drucken:** Alle Atlas-Seiten haben ein Druck-CSS (in `atlas.css`, Abschnitt
   „Print“): ohne Menü, Sprachschalter und Footer, oben Seitentitel und Adresse
-  (`druckkopf: true`, für das Handout abgeschaltet), Kacheln untereinander;
+  (`druckkopf: true`), Kacheln untereinander;
   interaktive Teile erscheinen wie ohne JavaScript, das Schema im Anhang auf einer
   Querformatseite.
 - **Wertebereiche** von Urteil und Wirkung (Übersicht, Anhang) kommen aus `urteile`

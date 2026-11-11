@@ -35,6 +35,15 @@ hinsichten:
     erklaerung: "On what grounds and by which standards we take something to be right."
 muster_hinweis: "The individual pattern cards are available in German."
 
+# Formal part, as on the German overview (links to the German pages)
+formal:
+  titel: "Formal model"
+  satz: "The concept model and its schema make the working definition precise."
+  hinweis: "(in German)"
+  links:
+    - { label: "Concept model", url: "/atlas/begriffsmodell/" }
+    - { label: "Formal annex with schema", url: "/atlas/anhang/" }
+
 # Fixed labels of the English page (added in step 5, not from texte-schritt5.yaml)
 beschriftungen:
   fragen: "The questions"

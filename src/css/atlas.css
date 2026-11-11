@@ -1335,163 +1335,6 @@ main.atlas-wide {
     font-weight: normal;
 }
 
-/* ---- Handout: on screen a preview of the sheet, in print one A4 page ---- */
-.atlas.atlas-handout {
-    max-width: 52rem;
-}
-
-.atlas-handout__blatt {
-    background: #fff;
-    border: 1px solid var(--atlas-linie);
-    border-radius: 6px;
-    padding: 2rem 2.2rem;
-    font-size: 0.9rem;
-    line-height: 1.45;
-}
-
-.atlas-handout__kopf h1 {
-    margin: 0 0 0.1rem;
-    font-size: 1.6rem;
-}
-
-.atlas-handout__kopf .atlas-untertitel {
-    margin: 0 0 0.75rem;
-}
-
-.atlas-handout h2 {
-    font-size: 0.95rem;
-    margin: 1rem 0 0.4rem;
-    color: var(--atlas-kern-text);
-}
-
-.atlas-handout h3 {
-    font-size: 0.9rem;
-    margin: 0 0 0.25rem;
-}
-
-.atlas-handout__fragen {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.4rem 1.2rem;
-}
-
-.atlas-handout__fragen li.ist-rahmen {
-    color: var(--atlas-gedaempft);
-}
-
-.atlas-handout__erklaerung {
-    display: block;
-    font-size: 0.8rem;
-}
-
-.atlas-handout__hinsichten {
-    columns: 2;
-    column-gap: 1.4rem;
-}
-
-.atlas-handout__hinsicht {
-    break-inside: avoid;
-    margin-bottom: 0.7rem;
-}
-
-.atlas-handout__hinsicht.ist-nebensache h3 {
-    color: var(--atlas-gedaempft);
-}
-
-.atlas-handout__hinsicht .atlas-hinweis {
-    margin: 0;
-    font-weight: normal;
-}
-
-.atlas-handout__muster {
-    margin: 0 0 0.3rem;
-    font-size: 0.82rem;
-}
-
-.atlas-handout__fuss {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    border-top: 1px solid var(--atlas-linie);
-    margin-top: 0.8rem;
-    padding-top: 0.4rem;
-    font-size: 0.75rem;
-    color: var(--atlas-gedaempft);
-}
-
-@media (max-width: 640px) {
-    .atlas-handout__blatt {
-        padding: 1rem;
-    }
-
-    .atlas-handout__fragen {
-        grid-template-columns: 1fr;
-    }
-
-    .atlas-handout__hinsichten {
-        columns: 1;
-    }
-}
-
-@page {
-    size: A4;
-    margin: 13mm 14mm;
-}
-
-@media print {
-    /* Only the sheet: no site header, menu, toggle, footer or hints. */
-    body:has(.atlas-handout) {
-        background: #fff;
-        padding: 0;
-        font-size: 9.3pt;
-    }
-
-    body:has(.atlas-handout) > h1,
-    body:has(.atlas-handout) #menu,
-    body:has(.atlas-handout) .lang-toggle,
-    body:has(.atlas-handout) > footer,
-    .atlas-handout__druckhinweis {
-        display: none !important;
-    }
-
-    body:has(.atlas-handout) main {
-        margin: 0;
-        max-width: none;
-    }
-
-    .atlas.atlas-handout {
-        max-width: none;
-    }
-
-    .atlas-handout__blatt {
-        border: 0;
-        border-radius: 0;
-        padding: 0;
-        font-size: 9.3pt;
-    }
-
-    .atlas-handout .atlas-kernsatz {
-        font-size: 10.5pt;
-        margin: 0.4rem 0 0.2rem;
-    }
-
-    .atlas-handout__hinsichten {
-        columns: 2;
-    }
-
-    .atlas-handout__fragen {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .atlas-handout * {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
-}
-
 /* ---- Overview ---- */
 .atlas.atlas-uebersicht {
     max-width: 62rem;
@@ -1749,7 +1592,12 @@ main.atlas-wide {
 /* ---- Print: all Atlas pages ----
    No site menu, language toggle or footer; title and address at the top;
    tiles full width one below the other, kept whole where possible;
-   interactive parts in their no-JS form. The Handout keeps its own rules. */
+   interactive parts in their no-JS form. */
+@page {
+    size: A4;
+    margin: 13mm 14mm;
+}
+
 @media print {
     body:has(.atlas) {
         background: #fff;

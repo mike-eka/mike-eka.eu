@@ -272,7 +272,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
     return JSON.stringify(daten).replace(/</g, "\\u003c");
   });
 
-  // Step 5: schema SVG (Anhang), JSON / JSON-LD exports, build month (Handout).
+  // Step 5: schema SVG (Anhang), JSON / JSON-LD exports.
   eleventyConfig.addFilter("schemaSvg", (beziehungen, texte, titel, zusatzEigenschaften) =>
     schemaSvg(beziehungen, texte, titel, zusatzEigenschaften));
 
@@ -291,9 +291,6 @@ module.exports = function atlasPlugin(eleventyConfig) {
   eleventyConfig.addFilter("absoluteUrl", (url) => atlasExport.seitenUrl() + (url || "/"));
   eleventyConfig.addFilter("atlasJson", (bm, alle) => JSON.stringify(atlasExport.atlasJson(bm, alle), null, 2));
   eleventyConfig.addFilter("atlasJsonLd", (bm, alle, b) => JSON.stringify(atlasExport.atlasJsonLd(bm, alle, b), null, 2));
-  eleventyConfig.addFilter("monatJahr", () =>
-    new Date().toLocaleDateString("de-DE", { month: "long", year: "numeric" })
-  );
 
   // "Wem wir glauben · Worauf wir achten" -> ["Wem wir glauben", "Worauf wir achten"]
   // effekt.hinsichten (list of hinsicht ids) without the card's main hinsicht,

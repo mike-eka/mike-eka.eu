@@ -18,6 +18,17 @@ eleventyComputed:
     <h1 class="page-title">{{ en.titel }}</h1>
     {% if en.einleitung %}<p>{{ en.einleitung }}</p>{% endif %}
     <p class="atlas-kernsatz">{{ en.kernsatz }}</p>
+    {#- the formal part, at the same place as on the German overview -#}
+    {% if en.formal %}
+    <p class="atlas-en-formal"><strong>{{ en.formal.titel }}.</strong> {{ en.formal.satz }} {{ en.formal.hinweis }}</p>
+    <nav class="atlas-seitennav" aria-label="{{ en.formal.titel }}">
+      <ul>
+        {% for n in en.formal.links %}
+        <li><a href="{{ n.url }}" hreflang="de">{{ n.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    {% endif %}
   </header>
 
   <section class="atlas-struktur" aria-labelledby="en-fragen">

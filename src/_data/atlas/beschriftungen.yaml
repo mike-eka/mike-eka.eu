@@ -21,7 +21,6 @@ uebersicht:
     - { label: "Begriffsmodell", url: "/atlas/begriffsmodell/" }
     - { label: "Formaler Anhang", url: "/atlas/anhang/" }
     - { label: "Über diesen Atlas", url: "/atlas/ueber/" }
-    - { label: "Handout (A4)", url: "/atlas/handout/" }
     - { label: "English", url: "/en/atlas/", lang: "en" }
 
 ueber:                                  # Seite /atlas/ueber/
@@ -55,14 +54,6 @@ anhang:                                 # Seite /atlas/anhang/
     # wirkungen in begriffsmodell.yaml – nicht hier eintragen)
     Inhalt: ["Wahrheitsstatus · Absicht"]
   rahmen: "Rahmen jeder Einschätzung"
-
-handout:                                # Seite /atlas/handout/ (A4)
-  druckhinweis: "Diese Seite ist für den Druck auf einer A4-Seite gestaltet (Drucken oder „Als PDF speichern“)."
-  pruefragen: "Die Prüffragen"
-  hinsichten: "Hinsichten und Muster"
-  rahmen: "Rahmen"
-  fuss: "Online: mike-eka.eu/atlas/"
-  stand: "Stand"
 
 begriffsmodell:                         # Seite /atlas/begriffsmodell/
   titel: "Begriffsmodell"
