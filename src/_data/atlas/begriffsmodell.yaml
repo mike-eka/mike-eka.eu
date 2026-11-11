@@ -68,16 +68,15 @@ publikum_abschnitt:
   anker: fuer-wen # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
   titel: "Für wen? Eine Frage, die sich immer stellt"
   einleitung: >-
-    Ob ein Inhalt die Erkenntnislage verschlechtert, hängt immer auch davon
-    ab, wer ihn aufnimmt. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
-    und die Gruppe, in der man etwas hört, verändern seine Wirkung. Derselbe
-    Satz kann für die einen harmlos sein und für die anderen nicht. Weil das
+    Wenn Desinformation als Information betrachtet wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen Desinformation auch davon
+    ab, wer die/der Rezipient ist. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
+    und die Gruppe, in der man etwas hört, könneben ebenfalls die Wirkung verändern. Dieselbe Information kann für die einen harmlos sein und für die anderen nicht. Weil das
     für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
     sondern hier: Sie ist der Rahmen jeder Einschätzung.
   aggregation:
     titel: "Wie viele müssen betroffen sein?"
     text: >-
-      Ist ein Publikum gemischt, muss man entscheiden, wie man die Wirkungen
+      Ist ein Publikum gemischt, muss man daher entscheiden, wie man die Wirkung – -also den desinformativen Effekt –
       zusammenfasst. Jede Antwort hat Folgen: Reicht es, dass einige
       schlechter dastehen, wäre fast jede politische Rede Desinformation.
       Müssen alle betroffen sein, fast keine. Das Begriffsmodell entscheidet
@@ -100,9 +99,7 @@ publikum_abschnitt:
     für die anderen nicht.
   bezug: >-
     Für die Frage, welche Desinformation eine liberale Demokratie hinnehmen
-    muss, ist das zentral. Ein Maßstab, der sich am verletzlichsten Teil des
-    Publikums ausrichtet, schränkt mehr ein als einer, der sich am
-    Durchschnitt ausrichtet.
+    muss, ist das zentral. Dabei richtet sich meines Erachtens der korrekte Maßstab an den (tatsächlich oder potenziell) destruktiven Effekten einer Information.
 
 hinsichten: # Reihenfolge = Reihenfolge in der Landkarte
   - id: glauben
