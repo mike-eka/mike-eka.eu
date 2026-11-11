@@ -1,9 +1,9 @@
 titel: "Lautleise Muster"
 untertitel: "Desinformation jenseits von wahr und falsch"
 kernsatz: >-
-  Ein Inhalt ist nicht an sich Desinformation. Ob er es ist, hängt davon ab,
-  für wen, im Vergleich wozu und in welcher Hinsicht er die Erkenntnislage
-  verschlechtert.
+  Bestimmte Inhalte sind nicht automatisch (keine) Desinformation. Ob sie es sind, hängt auch davon ab,
+  für wen, im Vergleich wozu und in welcher Hinsicht sie die Erkenntnislage
+  verschlechtern.
 # Entwürfe (Karten mit veroeffentlicht: false) als „in Vorbereitung“ zeigen?
 # false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste.
 # Gebaut werden Entwürfe in keinem Fall.
@@ -67,7 +67,7 @@ pruefragen:
 # Abschnitt „Für wen?“ auf der Begriffsmodell-Seite (Schritt 3). Jede Karte
 # verweist im Rahmen ihrer Schablone darauf (/atlas/begriffsmodell/#<anker>).
 publikum_abschnitt:
-  anker: fuer-wen      # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
+  anker: fuer-wen # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
   titel: "Für wen? Eine Frage, die sich immer stellt"
   einleitung: >-
     Ob ein Inhalt die Erkenntnislage verschlechtert, hängt immer auch davon
@@ -85,10 +85,16 @@ publikum_abschnitt:
       Müssen alle betroffen sein, fast keine. Das Begriffsmodell entscheidet
       diese Frage nicht, es macht sie sichtbar.
     optionen:
-      - { name: "einige",   text: "Es genügt, dass ein Teil des Publikums schlechter dasteht." }
+      - {
+          name: "einige",
+          text: "Es genügt, dass ein Teil des Publikums schlechter dasteht.",
+        }
       - { name: "Mehrheit", text: "Die meisten müssen schlechter dastehen." }
-      - { name: "alle",     text: "Niemand darf besser oder gleich dastehen." }
-      - { name: "Gewicht",  text: "Es zählt, wie viele betroffen sind und wie stark." }
+      - { name: "alle", text: "Niemand darf besser oder gleich dastehen." }
+      - {
+          name: "Gewicht",
+          text: "Es zählt, wie viele betroffen sind und wie stark.",
+        }
   beispiel: >-
     „Tempo 30 macht unsere Innenstädte kaputt.“ Wer der Sprecherin vertraut,
     hält die Frage danach womöglich für entschieden. Wer ihr misstraut, hört
@@ -100,7 +106,7 @@ publikum_abschnitt:
     Publikums ausrichtet, schränkt mehr ein als einer, der sich am
     Durchschnitt ausrichtet.
 
-hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
+hinsichten: # Reihenfolge = Reihenfolge in der Landkarte
   - id: glauben
     name: "Was wir glauben"
     erklaerung: "Welche Aussagen wir für wahr halten und wie sicher wir uns dabei sind."
@@ -119,21 +125,34 @@ hinsichten:            # Reihenfolge = Reihenfolge in der Landkarte
     erklaerung: "Aus welchen Gründen und nach welchen Maßstäben wir etwas für richtig halten."
     schwerpunkt: true
 
-inhaltstypen: [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
+inhaltstypen:
+  [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
 
 vergleichsfaelle:
-  - { id: vorher,      name: "vorher" }
-  - { id: ohne,        name: "ohne den Inhalt" }
+  - { id: vorher, name: "vorher" }
+  - { id: ohne, name: "ohne den Inhalt" }
   - { id: alternative, name: "andere Formulierung (Minimalpaar)" }
 
 wirkungen:
-  - { id: verschlechtern, name: "verschlechtern", erklaerung: "Die Erkenntnislage ist danach schlechter als vorher: Man glaubt etwas Falsches, ist sich zu sicher oder versteht weniger." }
-  - { id: festhalten,     name: "festhalten",     erklaerung: "Eine Verbesserung bleibt aus: Eine offene oder falsche Sicht bleibt bestehen, obwohl sie sich hätte klären können." }
-  - { id: abschotten,     name: "abschotten",     erklaerung: "Künftiges Dazulernen wird schwerer: Verlässliche Quellen und Gegenargumente kommen schlechter an." }
+  - {
+      id: verschlechtern,
+      name: "verschlechtern",
+      erklaerung: "Die Erkenntnislage ist danach schlechter als vorher: Man glaubt etwas Falsches, ist sich zu sicher oder versteht weniger.",
+    }
+  - {
+      id: festhalten,
+      name: "festhalten",
+      erklaerung: "Eine Verbesserung bleibt aus: Eine offene oder falsche Sicht bleibt bestehen, obwohl sie sich hätte klären können.",
+    }
+  - {
+      id: abschotten,
+      name: "abschotten",
+      erklaerung: "Künftiges Dazulernen wird schwerer: Verlässliche Quellen und Gegenargumente kommen schlechter an.",
+    }
 
 urteile:
-  - { id: ja,       name: "ja" }
-  - { id: nein,     name: "nein" }
+  - { id: ja, name: "ja" }
+  - { id: nein, name: "nein" }
   - { id: strittig, name: "strittig" }
 
 # Begriffsmodell-Seite: was die Definition offenlässt
@@ -145,24 +164,45 @@ offen_gelassen:
     Sonderfälle: Lüge ist falsch und absichtlich, Fehlinformation falsch ohne
     Absicht, Irreführung mit Wahrem ist wahr und trotzdem schädlich.
 
-schablone_stufen:      # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
-  muster: meinung-als-tatsache     # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
-                                   # (jede füllt das Feld aus `kippt_an` und das Urteil)
+schablone_stufen: # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
+  muster:
+    meinung-als-tatsache # id einer Karte; ihre einschaetzungen werden die Beispiel-Stufen
+    # (jede füllt das Feld aus `kippt_an` und das Urteil)
 
-schablone_leer:        # Texte der leeren Schablone
-  inhalt:         ["Aussage, Auswahl, Paar …", ""]
-  publikum:       ["wer genau?", "und wie viele?"]
+schablone_leer: # Texte der leeren Schablone
+  inhalt: ["Aussage, Auswahl, Paar …", ""]
+  publikum: ["wer genau?", "und wie viele?"]
   vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
-  urteil:         ["ja · nein · strittig", ""]
-  hinsicht:       ["Was · Worauf · Wem ·", "Warum wir glauben"]
-  wirkung:        ["verschlechtern ·", "festhalten · abschotten"]
+  urteil: ["ja · nein · strittig", ""]
+  hinsicht: ["Was · Worauf · Wem ·", "Warum wir glauben"]
+  wirkung: ["verschlechtern ·", "festhalten · abschotten"]
 
-beziehungen:           # für Schema (Anhang) und JSON-LD
-  - { id: betrifft,           label: "betrifft",           von: Einschaetzung,  nach: Inhalt }
-  - { id: giltFuer,           label: "gilt für",           von: Einschaetzung,  nach: Publikum }
-  - { id: verglichenMit,      label: "verglichen mit",     von: Einschaetzung,  nach: Vergleichsfall }
-  - { id: inHinsicht,         label: "in Hinsicht",        von: Einschaetzung,  nach: Hinsicht }
-  - { id: istBeispielFuer,    label: "ist Beispiel für",   von: Inhalt,         nach: Muster }
-  - { id: nutzt,              label: "nutzt",              von: Muster,         nach: SprachlichesMittel }
-  - { id: betrifftVorAllem,   label: "betrifft vor allem", von: Muster,         nach: Hinsicht }
-  - { id: andereFormulierung, label: "andere Formulierung",von: Vergleichsfall, nach: Inhalt }
+beziehungen: # für Schema (Anhang) und JSON-LD
+  - { id: betrifft, label: "betrifft", von: Einschaetzung, nach: Inhalt }
+  - { id: giltFuer, label: "gilt für", von: Einschaetzung, nach: Publikum }
+  - {
+      id: verglichenMit,
+      label: "verglichen mit",
+      von: Einschaetzung,
+      nach: Vergleichsfall,
+    }
+  - { id: inHinsicht, label: "in Hinsicht", von: Einschaetzung, nach: Hinsicht }
+  - {
+      id: istBeispielFuer,
+      label: "ist Beispiel für",
+      von: Inhalt,
+      nach: Muster,
+    }
+  - { id: nutzt, label: "nutzt", von: Muster, nach: SprachlichesMittel }
+  - {
+      id: betrifftVorAllem,
+      label: "betrifft vor allem",
+      von: Muster,
+      nach: Hinsicht,
+    }
+  - {
+      id: andereFormulierung,
+      label: "andere Formulierung",
+      von: Vergleichsfall,
+      nach: Inhalt,
+    }
