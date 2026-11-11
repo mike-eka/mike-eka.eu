@@ -6,4 +6,4 @@ section: bio
 
 # Bio
 
-*(English translation of your bio goes here.)*
+I'm a linguist, fascinated by anything to do with words and what they do. I publish academic work as Mike Berger.

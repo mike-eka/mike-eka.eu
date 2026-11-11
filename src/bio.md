@@ -6,4 +6,4 @@ section: bio
 
 # Bio
 
-*(Replace this with your actual bio — a few paragraphs about who you are, what you do, and what you're interested in.)*
+Ich bin Linguist und finde alles spannend, was mit Worten und ihrer Wirkung zu tun hat. Wissenschaftlich publiziere ich als Mike Berger.

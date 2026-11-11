@@ -112,6 +112,9 @@ module.exports = function (eleventyConfig) {
   });
 
   eleventyConfig.addFilter("otherLocaleUrl", (url, locale, alle) => {
+    // Entries with `permalink: false` (e.g. the Atlas cards on the Projects
+    // pages) have no URL; they're rendered but never written.
+    if (typeof url !== "string") return locale === "en" ? "/" : "/en/";
     const ziel = locale === "en"
       ? url.replace(/^\/en\//, "/").replace(/^\/en$/, "/")
       : "/en" + url;

@@ -5,7 +5,6 @@ section: sprache
 ---
 {% set posts = collections.sprachePosts | byLocale(locale) %}
 <h1 class="page-title">{{ i18n[locale].sprache }}</h1>
-<p class="page-intro">*(Replace with a standing intro about this topic.)*</p>
 
 {% if posts.length %}
 <ul class="entry-list">

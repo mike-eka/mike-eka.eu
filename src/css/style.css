@@ -492,6 +492,11 @@ main {
     font-size: 1.1rem;
 }
 
+.entry-list .entry-lang {
+    font-size: 0.85rem;
+    color: #7a7267;
+}
+
 .entry-list .entry-excerpt {
     margin: 0.35rem 0 0;
     color: #4a453d;

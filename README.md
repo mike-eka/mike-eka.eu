@@ -31,6 +31,6 @@ The custom domain is set via the `src/CNAME` file (copied to the site root on bu
 
 ## Adding content
 
-- **New blog post:** copy `src/posts/example-post.md`, change the front matter and text. Delete the three `example-*` files once you have real posts.
-- **New project:** copy one of the files in `src/projects/` that matches the kind (p5.js/D3 embed one, or the NLP write-up style one).
+- **New blog post:** copy one of the files in `src/posts/` (e.g. `in-arbeit-denkzettel.md`), change the front matter and text. English posts go in `src/en/posts/`.
+- **New project:** add a Markdown file to `src/projects/` (English: `src/en/projects/`). A project with its own page uses `title`, `kind`, `summary` and optionally `embed`/`repo`/`demo`; a card that only links elsewhere uses `link` plus `permalink: false`, like `atlas.md`.
 - **Translations and the language toggle:** the toggle links to the same path in the other language (`/x/` ↔ `/en/x/`). If that page doesn't exist yet, it links to the other language's start page (`/en/` or `/`) instead, so it never leads nowhere. A page can override this with `alternateUrl` in its front matter.
