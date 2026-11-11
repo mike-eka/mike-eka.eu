@@ -166,7 +166,7 @@ schablone_stufen: # welche Fälle die große Schablone auf der Begriffsmodell-Se
 
 schablone_leer: # Texte der leeren Schablone
   inhalt: ["Aussage, Auswahl, Paar …", ""]
-  publikum: ["wer genau?", "und wie viele?"]
+  publikum: ["Wer genau?", "Wie viele?"]
   vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
   urteil: ["ja · nein · strittig", ""]
   hinsicht: ["Was · Worauf · Wem ·", "Warum wir glauben"]
