@@ -54,7 +54,7 @@ effekt:
 kippt_an: vergleich
 grenzfall_frage: "Womit vergleicht man: mit einer echten Antwort oder mit gar keiner?"
 einschaetzungen:
-  - label: "mit einer Antwort auf die Frage"
+  - label: "mit einer echten Antwort auf die Frage"
     vergleichsfall: "Die Bürgermeisterin nennt den Grund für die Verschiebung."
     urteil: ja
     begruendung: >-
