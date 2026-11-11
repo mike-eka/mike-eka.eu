@@ -9,7 +9,7 @@ kurz: >-
   Ein Werturteil klingt wie eine Feststellung und wird so als Tatsache gehört.
 
 effekt: # Kachel „Was sich verschlechtert“
-  vorher: "Ob Tempo 30 den Innenstädten schadet, ist eine offene Frage. Man wägt Gründe ab."
+  vorher: "Ob Tempo 30 den Innenstädten schadet, ist eine offene Frage."
   nachher: "Die Frage wirkt wie entschieden."
   hinsichten: [vertrauen, achten]
 
