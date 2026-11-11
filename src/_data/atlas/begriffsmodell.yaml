@@ -166,8 +166,8 @@ offen_gelassen:
 
 # Begriffsmodell-Seite: Literatur am Seitenende
 literatur:
-  - "Fallis, Don. 2015. What is disinformation? Library Trends 63(3), 401–426. https://doi.org/10.1353/lib.2015.0014"
-  - "Jaster, Romy & David Lanius. 2019. Die Wahrheit schafft sich ab. Wie Fake News Politik machen. Stuttgart: Reclam."
+  - "Fallis, D. (2015). What is disinformation? Library Trends 63(3), 401–426. https://doi.org/10.1353/lib.2015.0014"
+  - "Jaster, R. & Lanius, D. (2019). Die Wahrheit schafft sich ab. Wie Fake News Politik machen. Stuttgart: Reclam."
 
 schablone_stufen: # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
   muster:
