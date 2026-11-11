@@ -4,18 +4,18 @@ fachbegriff: "opinion presented as fact"
 hinsicht: vertrauen
 reihenfolge: 2
 veroeffentlicht: true
-im_framework: true          # erscheint als Grenzfall auf der Begriffsmodell-Seite
+im_framework: true # erscheint als Grenzfall auf der Begriffsmodell-Seite
 kurz: >-
-  Ein Werturteil klingt wie eine Feststellung und wird als entschieden gehört.
+  Ein Werturteil klingt wie eine Feststellung und wird so als Tatsache gehört.
 
-effekt:                     # Kachel „Was sich verschlechtert“
+effekt: # Kachel „Was sich verschlechtert“
   vorher: "Ob Tempo 30 den Innenstädten schadet, ist eine offene Frage. Man wägt Gründe ab."
-  nachher: "Die Frage gilt als entschieden. Man ist sich sicherer, als die Belege erlauben, und fragt nicht mehr nach Gründen."
+  nachher: "Die Frage wirkt wie entschieden."
   hinsichten: [vertrauen, achten]
 
 minimalpaar:
-  muster:    "Tempo 30 [[macht]] unsere Innenstädte [[kaputt]]."
-  gegenform: "[[Ich halte]] Tempo 30 [[für schädlich]] für unsere Innenstädte."
+  muster: "Tempo 30 verlängert die Fahrzeiten und [[macht]] unsere Innenstädte [[kaputt]]."
+  gegenform: "Tempo 30 verlängert die Fahrzeiten, und [[ich halte]] das [[für schädlich]] für unsere Innenstädte."
   hinweis: >-
     Erfundene Verkehrsministerin. Die Gegenform ist nicht die „wahre“
     Fassung, sondern der Vergleichsfall.
@@ -27,34 +27,45 @@ mittel:
     die Form einer Tatsachenbehauptung.
   test: "Passt als Erwiderung „Das stimmt nicht“ oder „Das sehe ich anders“?"
 
-schablone:                  # Stufe „Muster“: was das Muster festlegt
-  inhalt:         { status: offen,  text: ["Aussage: eine Wertung,", "die wie eine Tatsache klingt"] }
-  vergleichsfall: { status: muster, text: ["dieselbe Aussage mit", "Einstellungsmarker"] }
-  hinsicht:       { status: muster, text: ["Wem wir glauben", ""] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
-  wirkung:        { status: muster, text: ["typisch:", "verschlechtern"] }
+schablone: # Stufe „Muster“: was das Muster festlegt
+  inhalt:
+    {
+      status: offen,
+      text: ["Aussage: eine Wertung,", "die wie eine Tatsache klingt"],
+    }
+  vergleichsfall:
+    { status: muster, text: ["dieselbe Aussage mit", "Einstellungsmarker"] }
+  hinsicht: { status: muster, text: ["Wem wir glauben", ""] }
+  urteil: { status: offen, text: ["ergibt sich aus", "dem offenen Feld"] }
+  wirkung: { status: muster, text: ["typisch:", "verschlechtern"] }
 
 # kippt_an (Grenzfall): was | vergleich | hinsicht (nicht fuer_wen – das Publikum
 # ist Rahmen jeder Einschätzung). Jede Einschätzung füllt das zugehörige
 # Feld (hier: inhalt) und das Urteil.
 kippt_an: was
-grenzfall_frage: "Ist die ganze Aussage der Inhalt, oder nur ihr Tatsachenanteil?"
+grenzfall_frage: "Was ist der Inhalt: die ganze Aussage oder nur ihr prüfbarer Teil?"
 einschaetzungen:
-  - label: "ganze Aussage"
+  - label: "die ganze Aussage"
     inhalt: "Tempo 30 verlängert die Fahrzeiten und macht unsere Innenstädte kaputt."
     urteil: ja
-    begruendung: "Der prüfbare Teil leiht der Wertung seine Autorität; sie wirkt wie eine weitere Tatsache."
+    begruendung: >-
+      Im Vergleich zur Fassung mit „ich halte … für“ klingt die Wertung wie
+      eine zweite Feststellung, gestützt vom prüfbaren Teil davor. Die
+      offene Frage gilt als entschieden.
     wirkung: [verschlechtern, festhalten]
-  - label: "nur der Tatsachenanteil"
+  - label: "nur der prüfbare Teil"
     inhalt: "Tempo 30 verlängert die Fahrzeiten."
     urteil: nein
-    begruendung: "Eine prüfbare Tatsachenbehauptung, gegebenenfalls sogar wahr."
+    begruendung: >-
+      So schneidet ein Faktencheck die Aussage zu. Der prüfbare Teil ist eine
+      gewöhnliche Tatsachenbehauptung. Das Muster steckt aber in der Wertung,
+      und die fällt dabei weg.
     wirkung: keine
-
+    wirkung: keine
 
 normalfall: >-
   Politische Rede ist positionell, und die meisten Zuhörenden wissen das.
-verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+verzerrungen: # Kachel „Verzerrungen, die das Muster begünstigen“
   - name: "Autoritätsheuristik"
     text: "Was eine Person mit Amt sagt, klingt nach Sachkenntnis, auch wenn es eine Position ist."
   - name: "Wahrheitseffekt durch Wiederholung"
