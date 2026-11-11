@@ -6,12 +6,11 @@ reihenfolge: 2
 veroeffentlicht: true
 im_framework: true
 kurz: >-
-  Was ausführlich berichtet wird, wirkt wichtig. Was fehlt, wirkt unwichtig.
-  So beantwortet die Auswahl eine Frage, die niemand gestellt hat.
+  Was ausführlich berichtet wird, wirkt wichtig. Was weniger ausführlich berichtet wird oder fehlt, wirkt unwichtig.
 
-minimalpaar: null           # diese Karte zeigt einen realen Fall, siehe fall
+minimalpaar: null # diese Karte zeigt einen realen Fall, siehe fall
 
-fall:                       # realer Fall statt Minimalpaar
+fall: # realer Fall statt Minimalpaar
   titel: "Würdige und unwürdige Opfer"
   einleitung: >-
     Edward S. Herman und Noam Chomsky haben 1988 verglichen, wie die New York
@@ -37,7 +36,7 @@ fall:                       # realer Fall statt Minimalpaar
     Zahlen nach Herman und Chomsky, gemessen in der New York Times. Die
     Studie ist einflussreich und umstritten: Kritiker haben andere Gründe für
     den Unterschied angeführt, etwa die damals ohnehin große Aufmerksamkeit
-    für Polen. Sie fasst Fälle aus zwei Jahrzehnten zusammen.
+    für Polen.
 
 mittel:
   name: "Relevanzimplikatur auf der Ebene der Agenda"
@@ -50,19 +49,22 @@ mittel:
     diese Berichterstattung kennt? Und nach welchem Maß wäre das richtig?
 
 schablone:
-  inhalt:         { status: muster, text: ["Auswahl:", "welche Fälle wie viel Raum bekommen"] }
-  vergleichsfall: { status: offen,  text: ["gewichtet nach", "welchem Maß?"] }
-  hinsicht:       { status: muster, text: ["Worauf wir achten", ""] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
-  wirkung:        { status: muster, text: ["typisch:", "festhalten"] }
+  inhalt:
+    {
+      status: muster,
+      text: ["Auswahl:", "welche Fälle wie viel Raum bekommen"],
+    }
+  vergleichsfall: { status: offen, text: ["gewichtet nach", "welchem Maß?"] }
+  hinsicht: { status: muster, text: ["Worauf wir achten", ""] }
+  urteil: { status: offen, text: ["ergibt sich aus", "dem offenen Feld"] }
+  wirkung: { status: muster, text: ["typisch:", "festhalten"] }
 
 effekt:
   vorher: >-
     Ob Gewalt gegen Geistliche in verbündeten Staaten ebenso schwer wiegt wie
     in gegnerischen, ist eine offene Frage.
   nachher: >-
-    Die eine Gewalt erscheint als Skandal, die andere als Randnotiz. Die
-    Verantwortung verbündeter Regierungen gerät aus dem Blick.
+    Die eine Gewalt erscheint als Skandal, die andere als Randnotiz. Es wird ein entsprechendes Ungleichgewist in der Wichtigkeit stark suggeriert.
   hinsichten: [achten, glauben]
 
 kippt_an: vergleich
@@ -86,7 +88,7 @@ einschaetzungen:
 
 normalfall: >-
   Jede Berichterstattung wählt aus. Zum Problem wird Gewichtung erst, wenn
-  sie stillschweigend eine offene Frage beantwortet.
+  die Gewichtung selbst bestimmte inhaltliche Fragen beantwortet.
 verzerrungen:
   - name: "Verfügbarkeitsheuristik"
     text: "Was oft berichtet wird und deshalb leicht in den Sinn kommt, halten wir für häufiger und wichtiger."
@@ -105,7 +107,10 @@ grafik:
     Berichterstattung.
   reihe_a: { feld: opfer, label: "Anteil an den Opfern" }
   masse:
-    - { id: spaltenzoll, label: "Anteil am Umfang der Berichterstattung (Spaltenzoll)" }
+    - {
+        id: spaltenzoll,
+        label: "Anteil am Umfang der Berichterstattung (Spaltenzoll)",
+      }
     - { id: titelseiten, label: "Anteil an den Titelseiten" }
     - { id: leitartikel, label: "Anteil an den Leitartikeln" }
   themen:
@@ -123,12 +128,7 @@ grafik:
       absolut: { opfer: 100, spaltenzoll: 605, titelseiten: 8, leitartikel: 0 }
 ---
 
-Keine Redaktion kann über alles berichten; Auswahl ist die Voraussetzung
-jeder Berichterstattung. Aber Auswahl spricht: Was oben steht und mehrfach
+Keine Redaktion kann über alles berichten; eine Auswahl geht zwingend jeder Berichterstattung voraus. Aber Auswahl spricht auch: Was oben steht und mehrfach
 vorkommt, erscheint wichtig, was fehlt, unwichtig. Herman und Chomsky (1988)
-haben das an ermordeten Geistlichen gezeigt: Ein Opfer in einem gegnerischen
-Staat erhielt in der New York Times mehr Raum als hundert Opfer in
-verbündeten Staaten. Jede einzelne Meldung kann dabei zutreffend sein. Der
-Effekt entsteht erst aus dem Gesamtbild. Weil die Auswahl von Themen zur
-Pressefreiheit gehört, ließe sich dieser Schaden kaum regeln, ohne in sie
-einzugreifen.
+haben das an ermordeten Geistlichen gezeigt. Jede einzelne Meldung kann dabei für sich genommen zutreffend sein. Der desinformative
+Effekt entsteht erst aus dem Gesamtbild, dass die unausgewogene Berichterstattung zeichnet.
