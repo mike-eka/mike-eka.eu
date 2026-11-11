@@ -109,11 +109,11 @@ hinsichten: # Reihenfolge = Reihenfolge in der Landkarte
     hinweis: "Das klassische Feld der Faktenchecks"
   - id: achten
     name: "Worauf wir achten"
-    erklaerung: "Welche Fragen unsere Aufmerksamkeit bekommen und welche als erledigt gelten."
+    erklaerung: "Welche Fragen unsere Aufmerksamkeit bekommen."
     schwerpunkt: true
   - id: vertrauen
     name: "Wem wir glauben"
-    erklaerung: "Welchen Quellen wir Sachkenntnis zutrauen und ob das zu ihrer Verlässlichkeit passt."
+    erklaerung: "Welchen Quellen wir Sachkenntnis zutrauen."
     schwerpunkt: true
   - id: begruenden
     name: "Warum wir glauben"
