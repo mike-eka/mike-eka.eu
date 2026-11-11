@@ -7,8 +7,8 @@ Personal site, built with [Eleventy](https://www.11ty.dev/). Plain HTML/Nunjucks
 - `src/_layouts/` — shared page shell (`base.njk`), plus `post.njk` / `project.njk` for individual entries.
 - `src/index.html`, `bio.md`, `blog.njk`, `sprache.njk`, `polit.njk`, `projects.njk` — the standing pages.
 - `src/posts/` — one Markdown file per blog post. Front matter: `title`, `date`, `excerpt`, `tags` (add `sprache` or `polit` to also list a post on that page).
-- `src/projects/` — one Markdown file per project. Front matter: `title`, `kind` (`p5.js` / `D3.js` / `NLP`), `summary`, optional `embed` (path to a standalone HTML file to embed live), `repo`, `demo`.
-- `src/embeds/` — standalone, self-contained HTML files (e.g. a p5.js sketch or D3 chart) that a project page can embed in an iframe. Copied to the site as-is, not templated.
+- `src/projects/` — one Markdown file per project. Front matter: `title`, `kind` (free-text label shown on the card, e.g. `Atlas`), `summary`, optional `embed` (path to a standalone HTML file to embed live), `repo`, `demo`. A card that only links elsewhere uses `link` plus `permalink: false` instead of its own page.
+- `src/embeds/` — standalone, self-contained HTML files (e.g. an embedded graphic) that a project page can embed in an iframe. Copied to the site as-is, not templated.
 - `src/css/style.css` — all styling. `src/fonts/` — the Sono font.
 
 ## Atlas
