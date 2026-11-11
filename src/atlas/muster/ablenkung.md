@@ -100,6 +100,5 @@ zur gerade offenen Frage beiträgt. Wer auf „Warum wird verschoben?“ mit
 einer Zahl über Turnhallen antwortet, nutzt diese Erwartung: Das Publikum
 sucht den Zusammenhang, den die Antwort nur behauptet. Ob das gelingt, hängt
 auch davon ab, ob jemand die Frage festhält. In Interviews und Talkshows
-wäre das die Aufgabe der Moderation – oft wird aber höchstens einmal
-nachgehakt. So wird aus einer ausgewichenen Frage scheinbar eine
+wäre das die Aufgabe der Moderation – oft wird nicht richtig nachgehakt. So wird aus einer ausgewichenen Frage eine scheinbar
 beantwortete.
