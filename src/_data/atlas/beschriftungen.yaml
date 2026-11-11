@@ -4,7 +4,7 @@
 
 uebersicht:
   link: "← Zur Übersicht"
-  nicht_schwerpunkt: "nicht Schwerpunkt"
+  nicht_schwerpunkt: "kein Schwerpunkt"
   leer_zusatz: "nicht Gegenstand dieses Atlas" # Hinsicht ohne Schwerpunkt und ohne Muster
   in_vorbereitung: "in Vorbereitung"
   landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte."
