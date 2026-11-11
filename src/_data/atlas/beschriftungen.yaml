@@ -17,6 +17,8 @@ uebersicht:
   pruefragen: "Prüffragen"
   rahmen: "Rahmen" # Kennzeichnung der Frage mit art: rahmen
   hinsichten: "Hinsichten"
+  hinsicht: "Hinsicht" # Vorzeile über jeder Gruppe (Landkarte und Liste)
+  hinsichten_einleitung: "Die Karten sind nach der Hinsicht geordnet, in der das Muster typischerweise etwas verschlechtert."
   navigation: # Links unter Kernsatz und Haltung
     - { label: "Begriffsmodell", url: "/atlas/begriffsmodell/" }
     - { label: "Formaler Anhang", url: "/atlas/anhang/" }

@@ -44,16 +44,22 @@ eleventyComputed:
         </dl>
         <ul>
           {% for q in bm.pruefragen %}
-          <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ b.uebersicht.rahmen }}:</span> {% endif %}{{ q.frage }}</li>
+          <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ b.uebersicht.rahmen }}:</span> {% endif %}{{ q.frage }}
+            {%- if q.feld == "hinsicht" %}
+            {#- the values of "Hinsicht", each a jump link to its group below -#}
+            <span class="atlas-hinsichtwerte">{% for h in bm.hinsichten | hinsichtenSchwerpunktZuerst %}{% if h.schwerpunkt == false %}<span class="ist-nebensache">{{ h.name }} ({{ b.uebersicht.nicht_schwerpunkt }})</span>{% else %}<a href="#hinsicht-{{ h.id }}">{{ h.name }}</a>{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</span>
+            {%- endif %}</li>
           {% endfor %}
         </ul>
       </li>
       <li>
         <span class="atlas-baum__knoten">{{ b.uebersicht.hinsichten }}</span>
+        {% if b.uebersicht.hinsichten_einleitung %}<p class="atlas-hinsichten__einleitung">{{ b.uebersicht.hinsichten_einleitung }}</p>{% endif %}
         <ul class="atlas-hinsichten">
           {% for h in bm.hinsichten %}
           {%- set karten = alle | musterInHinsicht(h.id) -%}
           <li id="hinsicht-{{ h.id }}" class="{% if h.schwerpunkt == false %}ist-nebensache{% endif %}">
+            <span class="atlas-label">{{ b.uebersicht.hinsicht }}</span>
             <span class="atlas-hinsicht__name">{{ h.name }}</span>
             {%- set leer = (h.schwerpunkt == false and not karten.length) %}
             <span class="atlas-hinweis">– {{ h.erklaerung }}{% if leer %} {{ [h.hinweis, b.uebersicht.leer_zusatz] | select | join(" – ") }}{% elif h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>

@@ -241,6 +241,13 @@ module.exports = function atlasPlugin(eleventyConfig) {
     (items || []).filter((item) => item.data.hinsicht === hinsichtId)
   );
 
+  // Hinsichten as values of the question "In welcher Hinsicht?": the focus
+  // ones first (data order kept), those with schwerpunkt: false at the end.
+  eleventyConfig.addFilter("hinsichtenSchwerpunktZuerst", (hinsichten) => {
+    const alle = hinsichten || [];
+    return alle.filter((h) => h.schwerpunkt !== false).concat(alle.filter((h) => h.schwerpunkt === false));
+  });
+
   // Data for the overview map (landkarte.js), from the same sources as the
   // list fallback. Returned as JSON that is safe inside <script>.
   eleventyConfig.addFilter("landkarteDaten", (bm, b, alleMuster) => {
@@ -249,7 +256,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
         ...b.uebersicht,
         publikum_rahmen: b.schablone?.publikum_rahmen,
       },
-      pruefragen: (bm.pruefragen || []).map(({ id, art, frage }) => ({ id, art, frage })),
+      pruefragen: (bm.pruefragen || []).map(({ id, art, frage, feld }) => ({ id, art, frage, feld })),
       hinsichten: (bm.hinsichten || []).map((h) => ({
         id: h.id,
         name: h.name,

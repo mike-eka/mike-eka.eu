@@ -1451,7 +1451,62 @@ main.atlas-wide {
     stroke-width: 3;
 }
 
+/* Values of "Hinsicht" in the question box: jump links to the columns */
+.lk-wertlink-flaeche { fill: transparent; }
+.lk-wertlink-text {
+    fill: var(--atlas-kern-text);
+    text-decoration: underline;
+}
+
+.atlas-landkarte a.lk-wertlink:hover .lk-wertlink-flaeche,
+.atlas-landkarte a.lk-wertlink:focus-visible .lk-wertlink-flaeche {
+    fill: var(--atlas-knopf-an);
+}
+
+.atlas-landkarte a.lk-wertlink:focus-visible .lk-wertlink-flaeche {
+    stroke: var(--atlas-hinsicht);
+    stroke-width: 2;
+}
+
+/* Small label above each hinsicht column (as .atlas-label) */
+.lk-label {
+    fill: var(--atlas-gedaempft);
+    letter-spacing: 0.05em;
+}
+
+/* Sentence on the connector; the background hides the line behind it */
+.lk-einleitung-grund { fill: var(--atlas-grund); }
+
+/* Jump target from the question box */
+.lk-hinsicht { scroll-margin-top: 1rem; }
+
+.lk-hinsicht:target .lk-hinsicht-box {
+    stroke: var(--atlas-hinsicht);
+    stroke-width: 2;
+}
+
 /* List fallback */
+.atlas-hinsichtwerte {
+    display: block;
+    font-size: 0.85rem;
+}
+
+.atlas-hinsichtwerte .ist-nebensache {
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-hinsichten__einleitung {
+    margin: 0.3rem 0 0.9rem;
+}
+
+.atlas-hinsichten > li {
+    scroll-margin-top: 1rem;
+}
+
+.atlas-hinsichten > li:target .atlas-hinsicht__name {
+    background: var(--atlas-hinsicht-flaeche);
+}
+
 .atlas-wertebereich {
     margin: 0.3rem 0 0.4rem;
     display: grid;

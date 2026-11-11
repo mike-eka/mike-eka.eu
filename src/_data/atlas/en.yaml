@@ -49,6 +49,8 @@ beschriftungen:
   fragen: "The questions"
   rahmen: "Frame"
   hinsichten: "Patterns by respect"
+  hinsicht: "Respect" # small label above each group
+  hinsichten_einleitung: "The cards are grouped by the respect in which the pattern typically makes things worse."
   nicht_schwerpunkt: "not the focus here"
   deutsch: "German overview"
   begriffsmodell: "Conceptual model (German)"

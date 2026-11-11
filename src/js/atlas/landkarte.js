@@ -9,7 +9,10 @@
 //   effect; from begriffsmodell.yaml), framed by a band for the audience
 //   (art "rahmen"). The band's text sits in its lower part: the spokes
 //   enter from above and from the sides, so no line ever crosses it.
-//   the hinsichten as columns, each with its cards (any number, wrapped)
+//   the hinsichten as columns, each with its cards (any number, wrapped),
+//   introduced by a sentence on the connector. The spoke for the question
+//   with feld "hinsicht" lists the hinsichten as its values, the focus ones
+//   as jump links (#lk-hinsicht-<id>) to their columns.
 //
 // Wide (when every spoke box gets at least SPEICHE_MIN px): spokes on an
 // arc, hinsichten side by side. Narrow: spokes in a row above the
@@ -155,9 +158,25 @@
         spokeB = Math.min(W - 2 * RAND, 320);
       }
     }
+    // The question about the hinsicht lists its values below itself: the
+    // focus ones as jump links to their columns, the others greyed out.
+    function hinsichtWerte(breite) {
+      var hs = daten.hinsichten || [];
+      var reihe = hs.filter(function (h) { return h.schwerpunkt; })
+        .concat(hs.filter(function (h) { return !h.schwerpunkt; }));
+      return reihe.map(function (h) {
+        var text = h.schwerpunkt ? h.name : h.name + (T.nicht_schwerpunkt ? " (" + T.nicht_schwerpunkt + ")" : "");
+        var groesse = h.schwerpunkt ? GROESSE.wert : GROESSE.klein;
+        var zeilen = umbrechen(text, breite, groesse);
+        return { h: h, zeilen: zeilen, groesse: groesse, hoehe: hoehe(zeilen, groesse) };
+      });
+    }
     spokes.forEach(function (q) {
       var zeilen = umbrechen(q.frage, spokeB - 2 * PAD, GROESSE.text);
-      spokeBoxen.push({ q: q, zeilen: zeilen, h: hoehe(zeilen, GROESSE.text) + 2 * PAD });
+      var werte = q.feld === "hinsicht" ? hinsichtWerte(spokeB - 2 * PAD - 8) : [];
+      var textH = hoehe(zeilen, GROESSE.text);
+      if (werte.length) textH += 6 + werte.reduce(function (s, w) { return s + w.hoehe + 2; }, 0);
+      spokeBoxen.push({ q: q, zeilen: zeilen, werte: werte, textH: textH, h: textH + 2 * PAD });
     });
     var maxSpokeH = d3.max(spokeBoxen, function (s) { return s.h; }) || 0;
 
@@ -167,11 +186,14 @@
       // assessment box: side spokes run level into it, the others from above
       var rx = rahmenB / 2 + spokeB / 2 + 34;
       var ry = bandOben + innenH / 2 + maxSpokeH / 2 + 26;
-      var cy = y + maxSpokeH + ry - maxSpokeH / 2; // top spoke touches y
       spokeBoxen.forEach(function (s, i) {
-        var a = n === 1 ? Math.PI / 2 : Math.PI - i * Math.PI / (n - 1);
-        s.cx = cx + rx * Math.cos(a);
-        s.cy = cy - ry * Math.sin(a);
+        s.a = n === 1 ? Math.PI / 2 : Math.PI - i * Math.PI / (n - 1);
+      });
+      // the highest box edge touches y (boxes differ in height)
+      var cy = y + (d3.max(spokeBoxen, function (s) { return ry * Math.sin(s.a) + s.h / 2; }) || 0);
+      spokeBoxen.forEach(function (s) {
+        s.cx = cx + rx * Math.cos(s.a);
+        s.cy = cy - ry * Math.sin(s.a);
       });
       rahmenY = cy - bandOben - innenH / 2;
       y = Math.max(rahmenY + rahmenH, d3.max(spokeBoxen, function (s) { return s.cy + s.h / 2; }) || 0);
@@ -230,9 +252,37 @@
       g.append("rect").attr("class", "lk-frage-box")
         .attr("x", s.cx - spokeB / 2).attr("y", s.cy - s.h / 2)
         .attr("width", spokeB).attr("height", s.h).attr("rx", 8);
-      var textH = hoehe(s.zeilen, GROESSE.text);
-      schreibe(g, s.zeilen, s.cx, s.cy - textH / 2, GROESSE.text, "lk-frage-text", "middle");
+      var ty = s.cy - s.textH / 2;
+      ty += schreibe(g, s.zeilen, s.cx, ty, GROESSE.text, "lk-frage-text", "middle");
+      if (s.werte.length) ty += 6;
+      s.werte.forEach(function (w) {
+        var ziel = g;
+        if (w.h.schwerpunkt) {
+          ziel = g.append("a").attr("href", "#lk-hinsicht-" + w.h.id).attr("class", "lk-link lk-wertlink");
+          var breiteW = d3.max(w.zeilen, function (z) { return z.length; }) * zeichenProPx * w.groesse;
+          ziel.append("rect").attr("class", "lk-wertlink-flaeche")
+            .attr("x", s.cx - breiteW / 2 - 4).attr("y", ty - 1)
+            .attr("width", breiteW + 8).attr("height", w.hoehe + 2).attr("rx", 4);
+        }
+        schreibe(ziel, w.zeilen, s.cx, ty, w.groesse,
+          w.h.schwerpunkt ? "lk-wert lk-wertlink-text" : "lk-klein", "middle");
+        ty += w.hoehe + 2;
+      });
     });
+
+    // -- sentence on the connector: how the columns below are grouped
+    var einleitung = T.hinsichten_einleitung
+      ? umbrechen(T.hinsichten_einleitung, Math.min(W - 2 * RAND, 560), GROESSE.klein) : [];
+    if (einleitung.length) {
+      var eY = y + 14;
+      var eH = hoehe(einleitung, GROESSE.klein);
+      var eB = d3.max(einleitung, function (z) { return z.length; }) * zeichenProPx * GROESSE.klein;
+      var gE = ebeneFlaechen.append("g").attr("class", "lk-einleitung");
+      gE.append("rect").attr("class", "lk-einleitung-grund")
+        .attr("x", cx - eB / 2 - 8).attr("y", eY - 4).attr("width", eB + 16).attr("height", eH + 8);
+      schreibe(gE, einleitung, cx, eY, GROESSE.klein, "lk-klein", "middle");
+      y = eY + eH;
+    }
 
     // -- hinsichten as columns (wide) or stacked (narrow)
     y += 40;
@@ -245,6 +295,8 @@
     // measure every column first
     var spaltenInfo = hs.map(function (h) {
       var kopf = [];
+      // small label: the column is one value of "Hinsicht"
+      if (T.hinsicht) kopf.push({ zeilen: [T.hinsicht.toUpperCase()], groesse: GROESSE.klein - 1, klasse: "lk-label" });
       kopf.push({ zeilen: umbrechen(h.name, spB - 2 * PAD, GROESSE.text), groesse: GROESSE.text, klasse: "lk-titel" });
       kopf.push({ zeilen: umbrechen(h.erklaerung, spB - 2 * PAD, GROESSE.klein), groesse: GROESSE.klein, klasse: "lk-klein" });
       var leer = !h.schwerpunkt && !h.muster.length;
@@ -294,7 +346,7 @@
         busY = top + s.inhaltH;
       }
       var klassen = "lk-hinsicht" + (s.h.schwerpunkt ? "" : " ist-nebensache") + (s.leer ? " ist-leer" : "");
-      var g = ebeneFlaechen.append("g").attr("class", klassen);
+      var g = ebeneFlaechen.append("g").attr("class", klassen).attr("id", "lk-hinsicht-" + s.h.id);
       g.append("rect").attr("class", "lk-hinsicht-box")
         .attr("x", x).attr("y", top).attr("width", spB).attr("height", s.inhaltH).attr("rx", 12);
       var yy = top + PAD;
