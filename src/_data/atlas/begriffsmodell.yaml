@@ -158,6 +158,16 @@ offen_gelassen:
     Re:DIS-Definition keine Rolle. Die vertrauten Begriffe ergeben sich als
     Sonderfälle: Lüge ist falsch und absichtlich, Fehlinformation falsch ohne
     Absicht, Irreführung mit Wahrem ist wahr und trotzdem schädlich.
+    Darin folgt der Atlas Fallis (2015): Desinformation muss weder falsch
+    sein noch auf einer Täuschungsabsicht beruhen. Von den zwei Mängeln,
+    über die Jaster & Lanius (2019) Fake News bestimmen, fehlender Wahrheit
+    und fehlender Wahrhaftigkeit, nimmt er nur den ersten auf, und dort das
+    Irreführende: wie ein Inhalt irreführen kann, ohne falsch zu sein.
+
+# Begriffsmodell-Seite: Literatur am Seitenende
+literatur:
+  - "Fallis, Don. 2015. What is disinformation? Library Trends 63(3), 401–426. https://doi.org/10.1353/lib.2015.0014"
+  - "Jaster, Romy & David Lanius. 2019. Die Wahrheit schafft sich ab. Wie Fake News Politik machen. Stuttgart: Reclam."
 
 schablone_stufen: # welche Fälle die große Schablone auf der Begriffsmodell-Seite zeigt
   muster:

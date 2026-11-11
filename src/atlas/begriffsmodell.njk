@@ -7,7 +7,7 @@ eleventyComputed:
 {#- Begriffsmodell: Einleitung, Kernsatz, die drei Prüffragen, das Publikum
     als Rahmen (Abschnitt „Für wen?“), Wirkungen, was die Definition offenlässt
     (Wahrheit und Absicht), die große Schablone mit Stufen und die Liste der
-    Grenzfälle. Alle Texte aus
+    Grenzfälle, am Ende die Literatur. Alle Texte aus
     begriffsmodell.yaml, beschriftungen.yaml und den Karten. -#}
 {%- from "atlas/schablone.njk" import schablone as schablonenRaster -%}
 {%- from "atlas/pruefragen.njk" import pruefragen -%}
@@ -125,5 +125,14 @@ eleventyComputed:
         {% endif %}{% endfor %}
       </ul>
     </section>
+
+    {% if bm.literatur and bm.literatur.length %}
+    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="literatur">
+      <h2 id="literatur">{{ b.karte.literatur }}</h2>
+      <ul class="atlas-literatur">
+        {% for eintrag in bm.literatur %}<li>{{ eintrag }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
   </div>
 </article>
