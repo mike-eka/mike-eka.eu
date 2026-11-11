@@ -1192,7 +1192,9 @@ main.atlas-wide {
 .il-ziel-zu { stroke-dasharray: 4 4; }
 .il-schwellen { fill: none; stroke: var(--atlas-linie); stroke-width: 9; stroke-dasharray: 2 6; }
 .il-schiene { fill: none; stroke: var(--atlas-text); stroke-width: 1.5; stroke-linejoin: round; transition: stroke 0.5s ease; }
-.il-schiene.il-ast-zu { stroke: var(--atlas-offen); stroke-dasharray: 4 4; }
+/* the detour to the diverting answer is always dashed, the direct line always solid;
+   the state only changes which one is drawn dark (the one the train takes) */
+.il-schiene.il-ast-zu { stroke: var(--atlas-offen); stroke-dasharray: 6 4; }
 .il-pfad { fill: none; stroke: none; }
 .il-zunge { stroke: var(--atlas-kern); stroke-width: 3; stroke-linecap: round; transform: rotate(var(--auf)); transition: transform 0.6s ease; }
 .il-weiche-punkt { fill: var(--atlas-kern); }
@@ -1227,8 +1229,8 @@ main.atlas-wide {
     .ist-zu .il-strich { stroke-dashoffset: 1; }
     .ist-zu .il-wachsen { transform: scaleY(0); }
     .ist-zu .il-zunge { transform: rotate(var(--zu)); }
-    .ist-zu .il-schiene.il-ast-zu { stroke: var(--atlas-text); stroke-dasharray: none; }
-    .ist-zu .il-schiene.il-ast-auf { stroke: var(--atlas-offen); stroke-dasharray: 4 4; }
+    .ist-zu .il-schiene.il-ast-zu { stroke: var(--atlas-text); }
+    .ist-zu .il-schiene.il-ast-auf { stroke: var(--atlas-offen); }
     .ist-zu .il-ziel-zu { stroke-dasharray: none; }
     .ist-zu .il-ziel-auf { stroke-dasharray: 4 4; }
     .ist-faehrt .il-zug-halt { opacity: 0 !important; transition: none; }

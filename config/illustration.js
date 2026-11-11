@@ -217,71 +217,111 @@ function zug(x, y, winkel, klasse) {
     `<circle class="il-zug-rad" cx="-7" cy="5" r="2.6"/><circle class="il-zug-rad" cx="7" cy="5" r="2.6"/></g>`;
 }
 
+// Paths of the weiche as segments: ["L", to] or ["C", c1, c2, to], from a start point.
+function pfadD(start, segmente) {
+  return `M${r(start[0])},${r(start[1])}` + segmente.map((sg) => sg[0] === "L"
+    ? ` L${r(sg[1][0])},${r(sg[1][1])}`
+    : ` C${r(sg[1][0])},${r(sg[1][1])} ${r(sg[2][0])},${r(sg[2][1])} ${r(sg[3][0])},${r(sg[3][1])}`).join("");
+}
+// Points along a path (lines and cubic curves), for the resting train.
+function pfadPunkte(start, segmente) {
+  const pkt = [start];
+  let p0 = start;
+  segmente.forEach((sg) => {
+    if (sg[0] === "L") { pkt.push(sg[1]); p0 = sg[1]; return; }
+    const [, c1, c2, p1] = sg;
+    for (let i = 1; i <= 60; i++) {
+      const u = i / 60, v = 1 - u;
+      pkt.push([0, 1].map((k) => v * v * v * p0[k] + 3 * v * v * u * c1[k] + 3 * v * u * u * c2[k] + u * u * u * p1[k]));
+    }
+    p0 = p1;
+  });
+  return pkt;
+}
+// Position and angle at a distance before the end of a path.
+function vorEnde(pkt, abstand) {
+  let rest = abstand;
+  for (let i = pkt.length - 1; i > 0; i--) {
+    const a = pkt[i - 1], b = pkt[i], len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    if (len >= rest) {
+      const t = (len - rest) / len;
+      return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI];
+    }
+    rest -= len;
+  }
+  return [pkt[0][0], pkt[0][1], 0];
+}
+
+// The direct answer lies straight ahead of the question (wide: to the right,
+// narrow: below) and is reached by a straight, solid line. The diverting
+// answer sits off to the side and is reached by a dashed S-bend that first
+// heads towards the direct answer and then turns away - a detour.
 function weiche(g, W) {
   const quer = W >= 500;
   const gr = quer ? 13 : 12;
-  let s = "", pfadZu, pfadAuf, wz, wa, sw, zungeZu, zungeAuf, ende;
+  let s = "", start, sw, astZu, astAuf, zungeZu, zungeAuf, ende;
   if (quer) {
     const sb = 190, sz = umbrechen(g.start, sb - 20, gr);
-    const zb = 200, zx = W - 10 - zb;
-    const uz = umbrechen(g.ziel_umgeleitet, zb - 20, gr), ez = umbrechen(g.ziel_eigentlich, zb - 20, gr);
-    const zh = Math.max(hoehe(uz.length, gr), hoehe(ez.length, gr)) + 20;
-    const mitte = 16 + zh + 18;                       // track height
     const sh = hoehe(sz.length, gr) + 20;
+    const eb = 200, ex = W - 10 - eb;                         // direct answer, straight ahead
+    const ub = 180;                                           // diverting answer, above and offset
+    const ez = umbrechen(g.ziel_eigentlich, eb - 20, gr), uz = umbrechen(g.ziel_umgeleitet, ub - 20, gr);
+    const eh = hoehe(ez.length, gr) + 20, uh = hoehe(uz.length, gr) + 20;
+    const yo = 12 + uh / 2;                                   // centre of the diverting answer
+    const mitte = Math.max(yo + uh / 2 + 22 + eh / 2, 12 + sh / 2);  // the straight line
+    sw = [270, mitte];
+    const ux = sw[0] + 110;
+    start = [10 + sb, mitte];
     s += `<rect class="il-start" x="10" y="${r(mitte - sh / 2)}" width="${sb}" height="${r(sh)}" rx="8"/>`;
     s += text(sz, 10 + sb / 2, mitte - hoehe(sz.length, gr) / 2, gr, "il-text", "middle");
-    const yo = mitte - zh / 2 - 18, yu = mitte + zh / 2 + 18;       // target centres
-    sw = [300, mitte];
-    pfadZu = [[10 + sb, mitte], sw, [350, yo], [zx, yo]];
-    pfadAuf = [[10 + sb, mitte], sw, [350, yu], [zx, yu]];
-    s += zielBox(uz, zx, yo - zh / 2, zb, zh, gr, "il-ziel-zu");
-    s += zielBox(ez, zx, yu - zh / 2, zb, zh, gr, "il-ziel-auf");
-    zungeZu = Math.atan2(yo - mitte, 50) * 180 / Math.PI;
-    zungeAuf = Math.atan2(yu - mitte, 50) * 180 / Math.PI;
-    ende = yu + zh / 2 + 12;
+    s += zielBox(ez, ex, mitte - eh / 2, eb, eh, gr, "il-ziel-auf");
+    s += zielBox(uz, ux, yo - uh / 2, ub, uh, gr, "il-ziel-zu");
+    astAuf = [["L", [ex, mitte]]];
+    astZu = [["C", [sw[0] + 60, mitte - 16], [sw[0] + 40, yo], [ux, yo]]];
+    zungeAuf = 0;
+    zungeZu = -24;
+    ende = Math.max(mitte + eh / 2, mitte + sh / 2) + 12;
   } else {
     const sz = umbrechen(g.start, W - 40, gr);
     const sh = hoehe(sz.length, gr) + 20;
     s += `<rect class="il-start" x="10" y="10" width="${W - 20}" height="${r(sh)}" rx="8"/>`;
     s += text(sz, W / 2, 20, gr, "il-text", "middle");
-    const zb = (W - 30) / 2;
-    const uz = umbrechen(g.ziel_umgeleitet, zb - 16, gr), ez = umbrechen(g.ziel_eigentlich, zb - 16, gr);
-    const zh = Math.max(hoehe(uz.length, gr), hoehe(ez.length, gr)) + 20;
-    const swY = 10 + sh + 36;
-    const zielY = swY + 96;
-    const xl = 10 + zb / 2, xr = W - 10 - zb / 2;
-    sw = [W / 2, swY];
-    pfadZu = [[W / 2, 10 + sh], sw, [xl, swY + 50], [xl, zielY]];
-    pfadAuf = [[W / 2, 10 + sh], sw, [xr, swY + 50], [xr, zielY]];
-    s += zielBox(uz, 10, zielY, zb, zh, gr, "il-ziel-zu");
-    s += zielBox(ez, W - 10 - zb, zielY, zb, zh, gr, "il-ziel-auf");
-    zungeZu = Math.atan2(50, xl - W / 2) * 180 / Math.PI;
-    zungeAuf = Math.atan2(50, xr - W / 2) * 180 / Math.PI;
-    ende = zielY + zh + 10;
+    const cx = W / 2;
+    const eb = 180, ub = W - 10 - (cx + 22);                  // diverting answer: right of the line
+    const ez = umbrechen(g.ziel_eigentlich, eb - 16, gr), uz = umbrechen(g.ziel_umgeleitet, ub - 16, gr);
+    const eh = hoehe(ez.length, gr) + 20, uh = hoehe(uz.length, gr) + 20;
+    sw = [cx, 10 + sh + 26];
+    const ux = cx + 22, uy = sw[1] + 78;                      // top of the diverting answer
+    const ey = uy + uh + 26;                                  // top of the direct answer
+    start = [cx, 10 + sh];
+    s += zielBox(uz, ux, uy, ub, uh, gr, "il-ziel-zu");
+    s += zielBox(ez, cx - eb / 2, ey, eb, eh, gr, "il-ziel-auf");
+    astAuf = [["L", [cx, ey]]];
+    const um = ux + ub / 2;
+    astZu = [["C", [cx + 14, sw[1] + 40], [um, uy - 44], [um, uy]]];
+    zungeAuf = 90;
+    zungeZu = 62;
+    ende = ey + eh + 10;
   }
-  const d = (p) => "M" + p.map((q) => `${r(q[0])},${r(q[1])}`).join(" L");
-  const ast = (p) => d(p.slice(1));
-  // track: sleepers under a thin rail; the main part, then both branches
+  const haupt = pfadD(start, [["L", sw]]);
+  // the main part and the direct branch on sleepers; the detour without, so
+  // its dashes stay clear even small and in print
   const gleis = (pd, klasse) =>
     `<path class="il-schwellen ${klasse}" d="${pd}"/><path class="il-schiene ${klasse}" d="${pd}"/>`;
-  s = gleis(d(pfadZu.slice(0, 2)), "") + gleis(ast(pfadZu), "il-ast-zu") + gleis(ast(pfadAuf), "il-ast-auf") + s;
-  // full paths for the train's ride (invisible)
-  s += `<path class="il-pfad" data-pfad="zu" d="${d(pfadZu)}"/><path class="il-pfad" data-pfad="auf" d="${d(pfadAuf)}"/>`;
+  s = gleis(haupt, "") + gleis(pfadD(sw, astAuf), "il-ast-auf") +
+    `<path class="il-schiene il-ast-zu" d="${pfadD(sw, astZu)}"/>` + s;
+  // full paths for the ride of the train (invisible)
+  const segZu = [["L", sw], ...astZu], segAuf = [["L", sw], ...astAuf];
+  s += `<path class="il-pfad" data-pfad="zu" d="${pfadD(start, segZu)}"/><path class="il-pfad" data-pfad="auf" d="${pfadD(start, segAuf)}"/>`;
   // switch blade, turning around the switch point
   s += `<line class="il-zunge" x1="${r(sw[0])}" y1="${r(sw[1])}" x2="${r(sw[0] + 30)}" y2="${r(sw[1])}" ` +
     `style="transform-origin:${r(sw[0])}px ${r(sw[1])}px;--zu:${r(zungeZu)}deg;--auf:${r(zungeAuf)}deg"/>`;
   s += `<circle class="il-weiche-punkt" cx="${r(sw[0])}" cy="${r(sw[1])}" r="3.5"/>`;
-  // trains at rest: at the end of each branch (shown by state)
-  const halt = (p) => {
-    const a = p[p.length - 2], b = p[p.length - 1];
-    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
-    const t = (len - 20) / len;
-    return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI];
-  };
-  const hz = halt(pfadZu), ha = halt(pfadAuf);
+  // trains at rest: just before each target (shown by state)
+  const hz = vorEnde(pfadPunkte(start, segZu), 20), ha = vorEnde(pfadPunkte(start, segAuf), 20);
   s += zug(hz[0], hz[1], hz[2], "il-zug-halt il-nur-vorher");
   s += zug(ha[0], ha[1], ha[2], "il-zug-halt il-nur-nachher");
-  s += zug(pfadZu[0][0], pfadZu[0][1], 0, "il-zug-fahrt");
+  s += zug(start[0], start[1], 0, "il-zug-fahrt");
   return svg(W, ende, quer ? "quer" : "hoch", s);
 }
 
