@@ -31,7 +31,6 @@
     --atlas-knopf-an: #f8e4db;         /* pressed switch */
 
     --atlas-radius: 14px;
-    --atlas-versatz: 1.75rem;          /* zigzag offset on wide screens */
     --atlas-einzug: 1rem;              /* tile content, indented from its heading */
 }
 
@@ -162,16 +161,14 @@ main.atlas-wide {
     gap: 1.25rem;
 }
 
+/* All tiles full width on one left edge, so every tile heading sits on the
+   same line and every content on the same indent below it. */
 .atlas-kachel {
     border-radius: var(--atlas-radius);
     padding: 1.25rem 1.5rem 1.4rem;
-    width: calc(100% - var(--atlas-versatz));
+    width: 100%;
     box-sizing: border-box;
 }
-
-/* Zigzag: alternately a little to the left and to the right. */
-.atlas-kachel:nth-child(odd) { align-self: flex-start; }
-.atlas-kachel:nth-child(even) { align-self: flex-end; }
 
 .atlas-kachel > :last-child {
     margin-bottom: 0;
@@ -189,7 +186,6 @@ main.atlas-wide {
 
 @media (max-width: 640px) {
     .atlas-kachel {
-        width: 100%;
         padding: 1rem 1rem 1.1rem;
     }
 }
@@ -1799,16 +1795,12 @@ main.atlas-wide {
         print-color-adjust: exact;
     }
 
-    /* tiles: no zigzag, full width, kept whole where they fit on a page */
+    /* tiles: full width, kept whole where they fit on a page */
     .atlas-kacheln {
         gap: 10pt;
     }
 
-    .atlas-kachel,
-    .atlas-kachel:nth-child(odd),
-    .atlas-kachel:nth-child(even) {
-        width: 100% !important;
-        align-self: stretch;
+    .atlas-kachel {
         /* tiles flow across pages; only small units below stay whole */
         break-inside: auto;
         page-break-inside: auto;
