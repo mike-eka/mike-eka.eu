@@ -12,16 +12,15 @@ entwuerfe_anzeigen: true
 # Ein Absatz Haltung für die Übersicht
 haltung: >-
   „Lautleise“ heißen diese Muster, weil sie leise wirken und doch laut werden,
-  sobald man sie einmal kennt. Der Atlas sammelt Desinformationsmuster, die
-  ohne falsche Behauptung auskommen, und exploriert die
-  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS. Er ist ein
-  Arbeitsstand und entwickelt sich laufend weiter.
+  sobald man sie einmal kennt. Der Atlas sammelt Desinformationsmuster, die zwar
+  ohne falsche Behauptung auskommen, dafür aber teilweise umso heimtückischer sind.  Dieses Projekt exploriert die
+  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS; es ntwickelt sich laufend weiter.
 
 # Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
 begriffsmodell_einleitung: >-
-  Das Begriffsmodell macht sichtbar, welche Entscheidungen in dem Satz
-  „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als
-  Eigenschaft eines Inhalts, sondern als Einschätzung: Ein Inhalt wird für
+  Dieses Begriffsmodell macht sichtbar, was alles für Entscheidungen und Präsuppositionen in dem Urteil
+  „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als binäre
+  Eigenschaft eines Inhalts, sondern als Einschätzung, die sich aus dem Zusammenspiel mehrerer Faktoren ergibt: Ein Inhalt wird für
   ein Publikum, im Vergleich zu etwas und in einer bestimmten Hinsicht
   beurteilt. Die Muster des Atlas sind teilweise ausgefüllte Fassungen
   dieser Einschätzung. Jedes lässt eine Frage offen, und an ihr
