@@ -11,11 +11,11 @@ entwuerfe_anzeigen: true
 
 # Ein Absatz Haltung für die Übersicht
 haltung: >-
-  Lautleise heißen diese Muster, weil sie leise wirken und laut werden,
+  „Lautleise“ heißen diese Muster, weil sie leise wirken und doch laut werden,
   sobald man sie einmal kennt. Der Atlas sammelt Desinformationsmuster, die
-  ohne falsche Behauptung auskommen, und orientiert sich an der
-  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS. Er ist ein
-  Arbeitsstand und ein Gesprächsangebot.
+  ohne falsche Behauptung auskommen, und exploriert die
+  Arbeitsdefinition des DFG-Schwerpunktprogramms [Re:DIS](https://www.dfg.de/de/aktuelles/neuigkeiten-themen/info-wissenschaft/2025/ifw-25-45). Er ist ein
+  Arbeitsstand und entwickelt sich laufend weiter.
 
 # Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
 begriffsmodell_einleitung: >-
