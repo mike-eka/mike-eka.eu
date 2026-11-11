@@ -6,17 +6,17 @@ reihenfolge: 1
 veroeffentlicht: true
 im_framework: true
 kurz: >-
-  Eine Erklärung wirkt einleuchtend, weil sie etwas Vertrautes auf etwas
-  Fremdes überträgt. Die Übertragung trägt aber nicht, und man versteht die
+  Eine Erklärung wirkt einleuchtend, z.B. weil sie etwas Vertrautes auf etwas
+  Fremdes überträgt. Die Übertragung hält aber nicht, und man versteht die
   Sache danach falsch.
 
-minimalpaar: null           # diese Karte hat bewusst keine Gegenform, siehe analogie
+minimalpaar: null # diese Karte hat bewusst keine Gegenform, siehe analogie
 
-analogie:                   # ersetzt auf dieser Karte das Minimalpaar
+analogie: # ersetzt auf dieser Karte das Minimalpaar
   aussage: "Der Staat muss sparen, [[denn wie jeder Haushalt kann er nicht dauerhaft mehr ausgeben, als er einnimmt]]."
   hinweis: >-
     Erfundener Satz. Er steht hier nicht für eine Position zur Schuldenbremse,
-    sondern für eine Art zu begründen.
+    sondern für eine Art, zu begründen.
   quelle: "Privathaushalt"
   ziel: "Staat"
   zeilen:
@@ -43,24 +43,26 @@ analogie:                   # ersetzt auf dieser Karte das Minimalpaar
   fazit: >-
     Die Schlussfolgerung „muss sparen“ hängt genau an den Zeilen, in denen die
     Analogie bricht. Ob der Staat sparen sollte, ist damit nicht entschieden –
-    nur, dass die Analogie es nicht begründet.
+    nur, dass die Analogie es nicht korrekt begründet.
 
 mittel:
   name: "Analogie als Begründung (konzeptuelle Metapher: STAAT IST HAUSHALT)"
   erklaerung: >-
     Eine Analogie überträgt Wissen aus einem vertrauten Bereich auf einen
-    fremden. Sie überzeugt durch Vertrautheit, nicht durch den Mechanismus
-    im Zielbereich.
+    fremden. Sie überzeugt, indem Fremdes über Vertrautes erklärt wird.
   test: >-
     An welcher Stelle unterscheiden sich Quelle und Ziel? Hängt die
     Schlussfolgerung an genau dieser Stelle?
 
-schablone:                  # Stufe „Muster“
-  inhalt:         { status: muster, text: ["Argument:", "eine Analogie als Begründung"] }
-  vergleichsfall: { status: muster, text: ["vorher:", "die Frage gilt als offen"] }
-  hinsicht:       { status: offen,  text: ["Was wir glauben –", "oder warum wir glauben?"] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
-  wirkung:        { status: muster, text: ["typisch:", "verschlechtern, abschotten"] }
+schablone: # Stufe „Muster“
+  inhalt:
+    { status: muster, text: ["Argument:", "eine Analogie als Begründung"] }
+  vergleichsfall:
+    { status: muster, text: ["vorher:", "die Frage gilt als offen"] }
+  hinsicht:
+    { status: offen, text: ["Was wir glauben –", "oder warum wir glauben?"] }
+  urteil: { status: offen, text: ["ergibt sich aus", "dem offenen Feld"] }
+  wirkung: { status: muster, text: ["typisch:", "verschlechtern, abschotten"] }
 
 effekt:
   vorher: >-
@@ -68,7 +70,7 @@ effekt:
     umstritten ist.
   nachher: >-
     Man glaubt, den Grund zu verstehen, und die Frage scheint erledigt. Das
-    Gefühl, etwas verstanden zu haben, ersetzt das Verstehen.
+    Gefühl, etwas verstanden zu haben, ersetzt das tatsächliche Verstehen.
   hinsichten: [begruenden, achten]
 
 kippt_an: hinsicht
@@ -90,12 +92,11 @@ einschaetzungen:
       Grundlage.
     wirkung: [verschlechtern, abschotten]
 
-
 normalfall: >-
-  Analogien sind ein Grundwerkzeug des Erklärens. Problematisch werden sie
+  Analogien sind ein Grundprinzip unserer Kognition, und somit unseres Erklärens wie unseres Verstehens. Problematisch werden sie
   erst, wenn die Schlussfolgerung an der Stelle hängt, an der Quelle und Ziel
   sich unterscheiden.
-verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+verzerrungen: # Kachel „Verzerrungen, die das Muster begünstigen“
   - name: "Illusion des Erklärungsverständnisses"
     text: "Wir überschätzen, wie gut wir einen Zusammenhang verstehen, besonders wenn er vertraut klingt."
   - name: "Verarbeitungsflüssigkeit"
@@ -110,7 +111,10 @@ grafik:
   zeilen:
     - { text: "Haushalt: ∀t ≤ T: Einnahmen(t) ≥ Ausgaben(t)" }
     - { text: "Staat ≈ Haushalt", fehler: "Hier bricht die Analogie." }
-    - { text: "⇒ Staat: ∀t: Einnahmen(t) ≥ Ausgaben(t)", fehler: "Ein Staat hat kein Lebensende T." }
+    - {
+        text: "⇒ Staat: ∀t: Einnahmen(t) ≥ Ausgaben(t)",
+        fehler: "Ein Staat hat kein Lebensende T.",
+      }
     - { text: "Σ Schulden → 0   ∫ Wohlstand dt ↑   √Stabilität" }
     - { text: "5 + 3 = 6", fehler: "Sieht aus wie Rechnen, ist keins." }
   knopf: "Nachrechnen"
@@ -122,6 +126,4 @@ Pseudo-Erklärungen behaupten oft nichts Falsches. Dass ein Haushalt nicht
 dauerhaft mehr ausgeben kann, als er einnimmt, stimmt; falsch ist nur der
 Schritt vom Haushalt zum Staat. Deshalb laufen Faktenchecks hier ins Leere.
 Der Schaden liegt im Verstehen: Wer die Analogie übernimmt, glaubt einen
-Zusammenhang zu kennen, den es so nicht gibt, und fragt nicht mehr nach dem
-tatsächlichen Mechanismus – selbst dann, wenn die Schlussfolgerung zufällig
-stimmt.
+Zusammenhang zu kennen, den es so nicht gibt.
