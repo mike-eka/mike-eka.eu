@@ -19,8 +19,8 @@ haltung: >-
 # Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
 begriffsmodell_einleitung: >-
   Dieses Begriffsmodell macht sichtbar, was alles für Entscheidungen und Präsuppositionen in dem Urteil
-  „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als binäre
-  Eigenschaft eines Inhalts, sondern als Einschätzung, die sich aus dem Zusammenspiel mehrerer Faktoren ergibt: Ein Inhalt wird für
+  „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als intrinsische, binäre
+  Eigenschaft eines Inhalts, sondern als extrinsische Einschätzung, die sich aus dem Zusammenspiel mehrerer Faktoren ergibt: Ein Inhalt wird für
   ein Publikum, im Vergleich zu etwas und in einer bestimmten Hinsicht
   beurteilt. Die Muster des Atlas sind teilweise ausgefüllte Fassungen
   dieser Einschätzung. Jedes lässt eine Frage offen, und an ihr
@@ -38,8 +38,7 @@ pruefragen:
     feld: inhalt
     erklaerung: >-
       Eine einzelne Aussage, oder erst eine Auswahl, ein Paar von Aussagen,
-      eine Abfolge oder die Position eines Sprechers. Manches ist erst
-      zusammen problematisch.
+      eine Abfolge oder die Position eines Sprechers. Manches ergibt erst zusammen eine desinformative Situation bzw. ein „Desinformationsobjekt“.
   - id: fuer_wen
     art: rahmen
     frage: "Für wen?"
@@ -60,7 +59,7 @@ pruefragen:
     frage: "In welcher Hinsicht?"
     feld: hinsicht
     erklaerung: >-
-      Was genau schlechter wird. Faktenchecks prüfen nur eine dieser
+      Was genau schlechter wird. Klassische Faktenchecks prüfen nur eine dieser
       Hinsichten.
 
 # Abschnitt „Für wen?“ auf der Begriffsmodell-Seite (Schritt 3). Jede Karte
