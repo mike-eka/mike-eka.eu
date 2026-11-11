@@ -131,4 +131,4 @@ grafik:
 Keine Redaktion kann über alles berichten; eine Auswahl geht zwingend jeder Berichterstattung voraus. Aber Auswahl spricht auch: Was oben steht und mehrfach
 vorkommt, erscheint wichtig, was fehlt, unwichtig. Herman und Chomsky (1988)
 haben das an ermordeten Geistlichen gezeigt. Jede einzelne Meldung kann dabei für sich genommen zutreffend sein. Der desinformative
-Effekt entsteht erst aus dem Gesamtbild, dass die unausgewogene Berichterstattung zeichnet.
+Effekt entsteht erst aus dem Gesamtbild, das die selektive und unausgewogene Berichterstattung zeichnet.
