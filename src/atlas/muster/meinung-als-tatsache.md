@@ -82,9 +82,9 @@ grafik:
   nachher: "Eigentlich eine Gedankenblase: eine Meinung, gesprochen wie eine Tatsache."
 ---
 
-Politische Rede ist voller Werturteile, und das ist in Ordnung. Zum Muster
+Politische Rede ist voller Werturteile, was prinzipiell in Ordnung ist. Zum Muster
 wird ein Werturteil erst, wenn es als schlichter Aussagesatz auftritt, ohne
-„ich halte … für“. Besonders wirksam ist das, wenn Tatsache und Wertung
-verbunden sind: Der prüfbare Teil leiht der Wertung seine Glaubwürdigkeit.
+entsprechende Marker, die es als Meinung kennzeichnen. Besonders wirksam ist das, wenn Tatsache und Wertung
+verbunden werden: Ein prüfbarer Teil verleiht der Wertung Glaubwürdigkeit.
 Auch das Äußerungsrecht trennt Tatsachenbehauptungen von Werturteilen und
 ordnet gemischte Äußerungen danach ein, was in ihnen überwiegt.
