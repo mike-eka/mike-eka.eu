@@ -7,15 +7,15 @@ veroeffentlicht: true
 im_framework: true
 kurz: >-
   Auf eine Frage kommt etwas, das wie eine Antwort klingt, aber eine andere
-  Frage beantwortet. Die ursprüngliche Frage gilt danach als behandelt.
+  Frage beantwortet, die relevant klingt aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für Manche) als behandelt.
 
 minimalpaar:
   frage: "Warum wird die Sanierung der Grundschule erneut verschoben?"
-  muster:    "[[Wissen Sie, wie viele Schulen die Vorgängerregierung verfallen ließ? Wir haben in dieser Wahlperiode schon drei Turnhallen eröffnet.]]"
+  muster: "[[Wissen Sie, wie viele Schulen die Vorgängerregierung verfallen ließ? Wir haben in dieser Wahlperiode schon drei Turnhallen eröffnet.]]"
   gegenform: "[[Weil die Ausschreibung kein Angebot im Kostenrahmen ergeben hat. Wir schreiben im Frühjahr neu aus.]]"
   hinweis: >-
     Erfundene Stadtratssitzung. Beide Antworten können wahr sein. Der
-    Unterschied liegt darin, welche Frage sie beantworten.
+    Unterschied liegt darin, auf welche Frage eingegangen wird.
 
 mittel:
   name: "Verschiebung der Leitfrage (Question under Discussion)"
@@ -27,20 +27,28 @@ mittel:
     Frage-Antwort-Kongruenz: Passt die Antwort zum Fokus der Frage? Lässt sich
     „Warum wird verschoben?“ mit „drei Turnhallen eröffnet“ beantworten?
 
-schablone:                  # Stufe „Muster“
-  inhalt:         { status: muster, text: ["Äußerung:", "eine Antwort auf eine andere Frage"] }
-  vergleichsfall: { status: offen,  text: ["eine Antwort auf die Frage –", "oder gar keine Antwort?"] }
-  hinsicht:       { status: muster, text: ["Worauf wir achten", ""] }
-  urteil:         { status: offen,  text: ["ergibt sich aus", "dem offenen Feld"] }
-  wirkung:        { status: muster, text: ["typisch:", "festhalten"] }
+schablone: # Stufe „Muster“
+  inhalt:
+    {
+      status: muster,
+      text: ["Äußerung:", "eine Antwort auf eine andere Frage"],
+    }
+  vergleichsfall:
+    {
+      status: offen,
+      text: ["eine Antwort auf die Frage –", "oder gar keine Antwort?"],
+    }
+  hinsicht: { status: muster, text: ["Worauf wir achten", ""] }
+  urteil: { status: offen, text: ["ergibt sich aus", "dem offenen Feld"] }
+  wirkung: { status: muster, text: ["typisch:", "festhalten"] }
 
 effekt:
   vorher: >-
     Die Frage nach der Sanierung ist gestellt und wartet auf eine Antwort.
   nachher: >-
     Man hat etwas gehört, das wie eine Antwort klingt. Die eigentliche Frage
-    gilt als behandelt und wird nicht weiter gestellt, oft auch nicht von
-    denen, deren Aufgabe das wäre.
+    gilt als behandelt. Oft wird nicht nachgehakt, auch nicht von
+    denen, deren Aufgabe es wäre.
   hinsichten: [achten]
 
 kippt_an: vergleich
@@ -62,12 +70,11 @@ einschaetzungen:
       geblieben ist.
     wirkung: keine
 
-
 normalfall: >-
   Gespräche wechseln ständig das Thema, und manchmal ist die neue Frage
   tatsächlich wichtiger. Problematisch wird es, wenn der Wechsel als Antwort
   auftritt.
-verzerrungen:                # Kachel „Verzerrungen, die das Muster begünstigen“
+verzerrungen: # Kachel „Verzerrungen, die das Muster begünstigen“
   - name: "Kooperationsannahme"
     text: "Wir unterstellen, dass eine Antwort zur gestellten Frage passt, und suchen den Zusammenhang selbst."
   - name: "Begrenzte Aufmerksamkeit"
