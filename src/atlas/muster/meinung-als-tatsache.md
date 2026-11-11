@@ -61,7 +61,6 @@ einschaetzungen:
       gewöhnliche Tatsachenbehauptung. Das Muster steckt aber in der Wertung,
       und die fällt dabei weg.
     wirkung: keine
-    wirkung: keine
 
 normalfall: >-
   Politische Rede ist positionell, und die meisten Zuhörenden wissen das.
