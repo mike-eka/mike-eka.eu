@@ -99,7 +99,7 @@ publikum_abschnitt:
     für die anderen nicht.
   bezug: >-
     Für die Frage, welche Desinformation eine liberale Demokratie hinnehmen
-    muss, ist das zentral. Dabei richtet sich meines Erachtens der korrekte Maßstab an den (tatsächlich oder potenziell) destruktiven Effekten einer Information.
+    muss, ist das zentral. Dabei sollte sich der korrekte Maßstab meines Erachtens an den (tatsächlichen oder potenziellen) destruktiven Effekten einer Information richten.
 
 hinsichten: # Reihenfolge = Reihenfolge in der Landkarte
   - id: glauben
@@ -132,17 +132,17 @@ wirkungen:
   - {
       id: verschlechtern,
       name: "verschlechtern",
-      erklaerung: "Die Erkenntnislage ist danach schlechter als vorher: Man glaubt etwas Falsches, ist sich zu sicher oder versteht weniger.",
+      erklaerung: "Die Erkenntnislage ist danach schlechter als vorher.",
     }
   - {
       id: festhalten,
       name: "festhalten",
-      erklaerung: "Eine Verbesserung bleibt aus: Eine offene oder falsche Sicht bleibt bestehen, obwohl sie sich hätte klären können.",
+      erklaerung: "Eine Erkenntnislage wird weder verbessert noch verschlechtert, sondern bleibt unverändert bestehen.",
     }
   - {
       id: abschotten,
       name: "abschotten",
-      erklaerung: "Künftiges Dazulernen wird schwerer: Verlässliche Quellen und Gegenargumente kommen schlechter an.",
+      erklaerung: "Eine Erkenntnislage wird aktiv von potenzieller Verbesserung abgeschottet.",
     }
 
 urteile:
