@@ -4,9 +4,7 @@
 
 titel: "Formaler Anhang"
 einleitung: >-
-  Dieser Anhang fasst das Begriffsmodell knapp und etwas formaler. Er ist für
-  alle gedacht, die wissen wollen, was genau behauptet wird und wo die
-  offenen Stellen liegen.
+  Dieser Anhang stellt das Begriffsmodell formal dar.
 definition: >-
   DIS(i, P, V, H) gilt genau dann, wenn für hinreichend viele Personen in P
   die Erkenntnislage in Hinsicht H nach i schlechter ist als im
@@ -26,12 +24,12 @@ legende:
       text: "die Hinsicht: was wir glauben, worauf wir achten, wem wir glauben, warum wir glauben",
     }
 anmerkungen:
-  - titel: "Die Wahrheit wandert"
+  - titel: "Die (subjektive) Wahrheit wandert"
     text: >-
       Die Definition sieht vom Wahrheitsgehalt des Inhalts ab. Um zu sagen,
       dass eine Erkenntnislage schlechter wird, braucht man aber einen
       Maßstab: Wahrheit oder die beste verfügbare Evidenz. Die Wahrheit
-      verschwindet also nicht, sie wandert vom Inhalt in die Bewertung.
+      verschwindet also nicht, sie wandert subjektiv vom Inhalt in die Bewertung.
   - titel: "Der Inhalt kann zusammengesetzt sein"
     text: >-
       Manche Schäden entstehen erst in der Kombination: in einer Auswahl von
@@ -40,18 +38,15 @@ anmerkungen:
   - titel: "Das Publikum ist Rahmen"
     text: >-
       P steht in jeder Einschätzung. Kein Muster legt es fest, deshalb wird
-      es nicht auf den einzelnen Karten verhandelt, sondern einmal für alle.
+      es nicht auf den einzelnen Karten verhandelt.
   - titel: "Muster als teilweise Belegung"
     text: >-
       Ein Muster legt fest, welche Art Inhalt vorliegt, womit verglichen wird
-      und welche Hinsicht betroffen ist, bis auf eine Stelle. An dieser
-      offenen Stelle entscheidet sich das Urteil. Ein Beispiel belegt alle
-      Stellen.
+      und welche Hinsicht betroffen ist. An offenen Stellen entscheidet sich das Urteil.
   - titel: "Urteil und Wirkung"
     text: >-
       Die Einschätzung ist ein eigener Knoten, an dem Inhalt, Publikum,
-      Vergleichsfall und Hinsicht als Rollen hängen, ähnlich dem
-      Ereignisargument in der Ereignissemantik. Urteil und Wirkung sind
+      Vergleichsfall und Hinsicht als Rollen hängen. Urteil und Wirkung sind
       Eigenschaften dieser Einschätzung: Das Urteil sagt, ob die
       Erkenntnislage schlechter wird. Die Wirkung sagt, in welcher Verlaufsform –
       jetzt schlechter (verschlechtern), nicht besser, obwohl sie es könnte

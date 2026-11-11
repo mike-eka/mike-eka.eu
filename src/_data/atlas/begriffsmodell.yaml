@@ -18,7 +18,7 @@ haltung: >-
 
 # Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
 begriffsmodell_einleitung: >-
-  Dieses Begriffsmodell macht sichtbar, was alles für Entscheidungen und Präsuppositionen in dem Urteil
+  Dieses Begriffsmodell macht sichtbar, was alles für Entscheidungen und Präsuppositionen im Urteil
   „Das ist Desinformation“ stecken. Es behandelt Desinformation nicht als intrinsische, binäre
   Eigenschaft eines Inhalts, sondern als extrinsische Einschätzung, die sich aus dem Zusammenspiel mehrerer Faktoren ergibt: Ein Inhalt wird für
   ein Publikum, im Vergleich zu etwas und in einer bestimmten Hinsicht
@@ -68,7 +68,7 @@ publikum_abschnitt:
   anker: fuer-wen # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
   titel: "Für wen? Eine Frage, die sich immer stellt"
   einleitung: >-
-    Wenn Desinformation als Information betrachtet wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen Desinformation auch davon
+    Wenn Desinformation als Information verstanden wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen Desinformation auch davon
     ab, wer die/der Rezipient ist. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
     und die Gruppe, in der man etwas hört, könneben ebenfalls die Wirkung verändern. Dieselbe Information kann für die einen harmlos sein und für die anderen nicht. Weil das
     für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
