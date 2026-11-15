@@ -601,7 +601,7 @@ main.pub-breit {
     align-items: start;
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 56rem) {
     .pub-spalten {
         grid-template-columns: minmax(0, 1fr);
     }
