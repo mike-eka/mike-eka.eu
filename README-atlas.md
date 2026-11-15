@@ -50,6 +50,13 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
      passenden Stelle ergänzen und in `en.yaml` übersetzen. Die Legende im Anhang
      (Zeichen i) folgt von selbst; von Hand nachziehen: `pruefragen` → `was` →
      `erklaerung` und `schablone_leer.inhalt` in `begriffsmodell.yaml`.
+   - `vergleichsart`: womit die Karte vergleicht, eine Liste von ids aus
+     `vergleichsfaelle` in `begriffsmodell.yaml` (`vorher`, `ohne`, `alternative`),
+     z. B. `[alternative, ohne]`. Steht nicht sichtbar auf der Karte, sondern in
+     `atlas.json` und `atlas.jsonld` (Eigenschaft `atlas:vergleichsart`). Fehlt die
+     Liste oder enthält sie eine unbekannte id, meldet der Build das. Eine neue Art:
+     in `vergleichsfaelle` ergänzen (mit `kurz`, wenn der Name für die leere
+     Schablone zu lang ist); Legende V im Anhang und leere Schablone folgen von selbst.
    - `reihenfolge`: Position innerhalb der Hinsicht (kleinere Zahl = weiter oben)
    - `veroeffentlicht: false`, solange die Karte ein Entwurf ist
    - `im_framework: true`, wenn sie in der Liste der Grenzfälle erscheinen soll

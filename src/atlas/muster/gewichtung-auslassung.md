@@ -3,6 +3,7 @@ titel: "Gewichtung & Auslassung"
 fachbegriff: "selective salience"
 hinsicht: achten
 inhaltsart: "eine Auswahl" # Art des Inhalts (Werte: inhaltsarten in begriffsmodell.yaml)
+vergleichsart: [alternative] # womit verglichen wird (ids aus vergleichsfaelle in begriffsmodell.yaml)
 reihenfolge: 2
 veroeffentlicht: true
 im_framework: true

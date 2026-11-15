@@ -16,7 +16,7 @@ function seitenUrl() {
 }
 
 const MUSTER_FELDER = [
-  "titel", "fachbegriff", "hinsicht", "inhaltsart", "reihenfolge", "kurz", "effekt", "fall", "minimalpaar", "analogie",
+  "titel", "fachbegriff", "hinsicht", "inhaltsart", "vergleichsart", "reihenfolge", "kurz", "effekt", "fall", "minimalpaar", "analogie",
   "mittel", "schablone", "kippt_an", "grenzfall_frage", "einschaetzungen",
   "normalfall", "verzerrungen", "literatur", "grafik",
 ];
@@ -82,6 +82,8 @@ function atlasJsonLd(bm, alle, b, en) {
     .forEach(([p, l]) => graph.push({ "@id": `atlas:${p}`, "@type": "rdf:Property", "rdfs:label": l }));
   // property of a card: its kind of content (a concept of the scheme inhaltsarten)
   graph.push({ "@id": "atlas:inhaltsart", "@type": "rdf:Property", "rdfs:label": "Inhaltsart", "rdfs:domain": { "@id": "atlas:Muster" } });
+  // … and the kinds of comparison case it uses (concepts of vergleichsfaelle)
+  graph.push({ "@id": "atlas:vergleichsart", "@type": "rdf:Property", "rdfs:label": "Vergleichsart", "rdfs:domain": { "@id": "atlas:Muster" } });
 
   // vocabulary lists as SKOS concept schemes; `en` (optional) adds an
   // English prefLabel next to the German one (the context's default language)
@@ -122,6 +124,12 @@ function atlasJsonLd(bm, alle, b, en) {
       "atlas:betrifftVorAllem": { "@id": id("hinsichten", d.hinsicht) },
       // only known arts (the build warns about others)
       ...((bm.inhaltsarten || []).includes(d.inhaltsart) ? { "atlas:inhaltsart": { "@id": id("inhaltsarten", inhaltsartId(d.inhaltsart)) } } : {}),
+      ...(() => {
+        // known ids only (the build warns about others); one ref or a list
+        const ids = (bm.vergleichsfaelle || []).map((v) => v.id);
+        const refs = [].concat(d.vergleichsart || []).filter((v) => ids.includes(v)).map((v) => ({ "@id": id("vergleichsfaelle", v) }));
+        return refs.length ? { "atlas:vergleichsart": refs.length === 1 ? refs[0] : refs } : {};
+      })(),
     };
     if (d.mittel && d.mittel.name) {
       muster["atlas:nutzt"] = { "@id": url + "#mittel", "@type": "atlas:SprachlichesMittel", "rdfs:label": d.mittel.name, ...(d.mittel.erklaerung ? { "skos:definition": d.mittel.erklaerung } : {}) };

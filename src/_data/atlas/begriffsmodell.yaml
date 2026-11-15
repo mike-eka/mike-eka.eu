@@ -138,10 +138,17 @@ inhaltsarten:
   - "eine Auswahl"
   - "ein Netzwerk"
 
+# Arten des Vergleichsfalls. Jede Karte nennt ihre unter `vergleichsart` (Liste
+# von ids). `kurz`: Kurzform für die leere Schablone (sonst der Name ohne
+# Klammer). Legende V im Anhang und leere Schablone werden hieraus erzeugt.
 vergleichsfaelle:
   - { id: vorher, name: "vorher" }
   - { id: ohne, name: "ohne den Inhalt" }
-  - { id: alternative, name: "andere Formulierung (Minimalpaar)" }
+  - {
+      id: alternative,
+      name: "eine Alternative derselben Art (z. B. ein Minimalpaar)", #  : kein Umbruch in „z. B.“
+      kurz: "Alternative derselben Art", #  : „derselben Art“ bleibt zusammen
+    }
 
 wirkungen:
   - {

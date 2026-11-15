@@ -163,7 +163,7 @@ function pruefeAtlas(items) {
   const hinsichtIds = (bm.hinsichten || []).map((h) => h.id);
   const inhaltsarten = bm.inhaltsarten || [];
   for (const item of items) {
-    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt, verzerrungen, inhaltsart } = item.data;
+    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt, verzerrungen, inhaltsart, vergleichsart } = item.data;
     const datei = item.inputPath;
 
     // inhaltsart: one of `inhaltsarten` in begriffsmodell.yaml
@@ -171,6 +171,16 @@ function pruefeAtlas(items) {
       warn(`${datei}: inhaltsart fehlt (erlaubt: ${inhaltsarten.join(", ")})`);
     } else if (!inhaltsarten.includes(inhaltsart)) {
       warn(`${datei}: unbekannte inhaltsart "${inhaltsart}" (erlaubt: ${inhaltsarten.join(", ")})`);
+    }
+
+    // vergleichsart: a list of ids of `vergleichsfaelle` in begriffsmodell.yaml
+    const vergleichsIds = (bm.vergleichsfaelle || []).map((v) => v.id);
+    const arten = [].concat(vergleichsart == null ? [] : vergleichsart).filter((v) => !istTodo(v));
+    if (!arten.length) {
+      warn(`${datei}: vergleichsart fehlt (Liste, erlaubt: ${vergleichsIds.join(", ")})`);
+    } else {
+      arten.filter((v) => !vergleichsIds.includes(v)).forEach((v) =>
+        warn(`${datei}: unbekannte vergleichsart "${v}" (erlaubt: ${vergleichsIds.join(", ")})`));
     }
 
     // Values the template itself sets in quotation marks (<q>) must not bring
@@ -536,14 +546,14 @@ module.exports = function atlasPlugin(eleventyConfig) {
 
   // Texts of the empty template (begriffsmodell.yaml → schablone_leer). A
   // field missing there is generated: `vergleichsfall` from vergleichsfaelle,
-  // as short forms (without a bracket like "(Minimalpaar)"), joined with " · "
+  // as short forms (`kurz`, else the name without a bracket), joined with " · "
   // and broken into lines of at most 24 characters (fits the field at 375 px).
   // A continuation line starts with "·" plus a no-break space, so the dot
   // never stands alone on a line.
   eleventyConfig.addFilter("leereSchablone", (bm) => {
     const felder = { ...((bm && bm.schablone_leer) || {}) };
     if (felder.vergleichsfall == null) {
-      const kurz = ((bm && bm.vergleichsfaelle) || []).map((v) => String(v.name).replace(/\s*\([^)]*\)\s*$/, ""));
+      const kurz = ((bm && bm.vergleichsfaelle) || []).map((v) => String(v.kurz || String(v.name).replace(/\s*\([^)]*\)\s*$/, "")));
       const zeilen = [];
       kurz.forEach((k) => {
         const letzte = zeilen[zeilen.length - 1];

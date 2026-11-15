@@ -3,6 +3,7 @@ titel: "Kaperung"
 fachbegriff: "capture of expertise"
 hinsicht: vertrauen
 inhaltsart: "ein Netzwerk" # Art des Inhalts (Werte: inhaltsarten in begriffsmodell.yaml)
+vergleichsart: [alternative] # womit verglichen wird (ids aus vergleichsfaelle in begriffsmodell.yaml)
 reihenfolge: 1
 veroeffentlicht: true
 im_framework: true

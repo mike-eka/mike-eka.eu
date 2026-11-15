@@ -3,6 +3,7 @@ titel: "Pseudo-Erklärung"
 fachbegriff: "pseudo-explanation"
 hinsicht: begruenden
 inhaltsart: "eine Erklärung" # Art des Inhalts (Werte: inhaltsarten in begriffsmodell.yaml)
+vergleichsart: [vorher] # womit verglichen wird (ids aus vergleichsfaelle in begriffsmodell.yaml)
 reihenfolge: 1
 veroeffentlicht: true
 im_framework: true
