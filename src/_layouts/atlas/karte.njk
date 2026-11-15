@@ -103,7 +103,9 @@ layout: base.njk
       </dl>
       {% endif %}
       {#- Geschweifte Klammer: zwei feste Bögen und die Spitze als SVG (1:1,
-          verzerrt nicht), dazwischen zwei Linien, die sich strecken -#}
+          verzerrt nicht), dazwischen zwei Linien, die sich strecken. Nicht bei
+          Listen: dort steht die Erläuterung immer unter dem Paar. -#}
+      {% if not istListe %}
       <span class="atlas-klammer" aria-hidden="true">
         <svg class="atlas-klammer__ende" viewBox="0 0 12 8" width="12" height="8"><path d="M1 0.75C4.5 0.75 6 2.5 6 6V8"/></svg>
         <span class="atlas-klammer__linie"></span>
@@ -111,6 +113,7 @@ layout: base.njk
         <span class="atlas-klammer__linie"></span>
         <svg class="atlas-klammer__ende" viewBox="0 0 12 8" width="12" height="8"><path d="M6 0V2C6 5.5 4.5 7.25 1 7.25"/></svg>
       </span>
+      {% endif %}
       <p class="atlas-paar-erlaeuterung"><span class="atlas-label">{{ b.karte.minimalpaar.titel }}</span> {{ b.karte.minimalpaar.text }}</p>
       </div>
       </div>

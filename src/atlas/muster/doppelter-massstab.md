@@ -19,8 +19,8 @@ minimalpaar: # zwei Aussagen desselben erfundenen Finanzpolitikers
     - "Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen."
     - "[[Auch beim Klima dürfen wir unseren Kindern keine Rechnung hinterlassen. Wir wollen das mit anderen Mitteln erreichen als mit Verboten.]]"
   hinweis: >-
-    Erfundener Politiker. Die Gegenform verlangt keine bestimmte Politik: Man
-    kann Verbote weiterhin ablehnen. Sie legt nur an beide Fragen denselben
+    Erfundener Politiker. Der Vergleichsfall verlangt keine bestimmte Politik:
+    Man kann Verbote weiterhin ablehnen. Er legt nur an beide Fragen denselben
     Maßstab an. Das Muster funktioniert in jeder politischen Richtung, siehe
     das Spiegelbeispiel im Text unten.
 

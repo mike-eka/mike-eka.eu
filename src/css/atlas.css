@@ -575,25 +575,6 @@ main.atlas-wide {
     }
 }
 
-/* two lists side by side need more room before the brace fits beside them */
-@container (min-width: 38rem) {
-    .atlas-paar-rahmen--listen .atlas-paar-rahmen__innen {
-        grid-template-columns: minmax(0, 1fr) 12px minmax(8rem, 9.5rem);
-        column-gap: 0.9rem;
-        align-items: center;
-    }
-
-    .atlas-paar-rahmen--listen .atlas-klammer {
-        display: flex;
-        align-self: stretch;
-    }
-
-    .atlas-paar-rahmen--listen .atlas-paar-erlaeuterung .atlas-label {
-        display: block;
-        margin: 0 0 0.2rem;
-    }
-}
-
 /* Optional question above the pair; both versions read as answers to it. */
 .atlas-paar__frage {
     margin: 0 0 0.9rem;

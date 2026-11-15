@@ -64,8 +64,8 @@ Varianten im Minimalpaar:
 - Die Kachel heißt „Beispiel“. Die Fassungen heißen immer „Mit Muster“ (groß) und
   „Vergleichsfall“ (normal, heller). Rechts daneben eine Klammer mit der Erläuterung
   „Minimalpaar“; sie steht einmal für alle Karten in `beschriftungen.yaml`
-  (`karte.minimalpaar`). Ist die Kachel zu schmal (Handy; bei Listen auch Tablet und
-  Druck), steht die Erläuterung als kleine Zeile unter dem Paar.
+  (`karte.minimalpaar`). Ist die Kachel zu schmal (Handy), steht die Erläuterung als
+  kleine Zeile unter dem Paar; bei Listen steht sie immer darunter, ohne Klammer.
 - `minimalpaar.frage`: eine Frage über dem Paar. Mit `frage_label` (z. B.
   `"Ausgangslage"`) ersetzt du das Label „Gefragt“.
 - `muster` und `gegenform` dürfen Listen sein (eine Auswahl von Meldungen). Die Zeilen

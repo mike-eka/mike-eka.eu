@@ -17,8 +17,8 @@ minimalpaar:
   muster: "Tempo 30 verlängert die Fahrzeiten und [[macht]] unsere Innenstädte [[kaputt]]."
   gegenform: "Tempo 30 verlängert die Fahrzeiten, und [[ich halte]] das [[für schädlich]] für unsere Innenstädte."
   hinweis: >-
-    Erfundene Verkehrsministerin. Die Gegenform ist nicht die „wahre“
-    Fassung, sondern der Vergleichsfall.
+    Erfundene Verkehrsministerin. Der Vergleichsfall ist nicht die „wahre“
+    Fassung.
 
 mittel:
   name: "fehlender Einstellungsmarker"
