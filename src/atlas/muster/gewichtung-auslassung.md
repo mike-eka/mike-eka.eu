@@ -69,7 +69,7 @@ effekt:
   hinsichten: [achten, glauben]
 
 kippt_an: vergleich
-grenzfall_frage: "Nach welchem Maß wäre die Berichterstattung richtig gewichtet?"
+grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, machen wir einmal die Zahl der Opfer zum Maßstab und einmal den Nachrichtenwert."
 einschaetzungen:
   - label: "nach Zahl der Opfer"
     vergleichsfall: "Eine Berichterstattung, die sich nach der Zahl der Opfer richtet."
@@ -84,7 +84,7 @@ einschaetzungen:
     begruendung: >-
       Kritiker verweisen darauf, dass Polen 1984 ohnehin im Fokus stand.
       Ob das den Unterschied erklärt oder selbst Teil der Gewichtung ist,
-      ist genau die offene Frage.
+      ist eine weitere offene Frage.
     wirkung: keine
 
 normalfall: >-
