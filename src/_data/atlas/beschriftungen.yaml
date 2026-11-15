@@ -39,7 +39,7 @@ anhang: # Seite /atlas/anhang/
   offene_stellen: "Offene Stellen"
   schema: "Schema"
   schema_liste: "Die Beziehungen als Liste"
-  schema_hinweis: "Pfeile zeigen die Beziehungen aus begriffsmodell.yaml. Das Publikum ist als Rahmen um die Einschätzung gezeichnet."
+  schema_hinweis: "Pfeile zeigen die Beziehungen im Begriffsmodell."
   modell: "Begriffsmodell und Ontologie"
   download: "Download"
   download_json: "Begriffsmodell und Karten als JSON"
