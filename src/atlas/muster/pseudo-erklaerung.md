@@ -7,7 +7,7 @@ reihenfolge: 1
 veroeffentlicht: true
 im_framework: true
 kurz: >-
-  Eine Erklärung wirkt einleuchtend, z.B. weil sie etwas Vertrautes auf etwas
+  Eine Erklärung wirkt einleuchtend, z. B. weil sie etwas Vertrautes auf etwas
   Fremdes überträgt. Die Übertragung hält aber nicht, und man versteht die
   Sache danach falsch.
 

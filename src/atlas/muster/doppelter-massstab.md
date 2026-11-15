@@ -61,7 +61,7 @@ effekt:
   hinsichten: [begruenden, glauben]
 
 kippt_an: was
-grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse; einmal das Paar; und einmal das Paar mit einem benannten Unterschied."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse, einmal das Paar und einmal das Paar mit einem benannten Unterschied."
 einschaetzungen:
   - label: "nur die Aussage zur Schuldenbremse"
     inhalt: "Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen."
@@ -71,7 +71,7 @@ einschaetzungen:
       Begründung.
     wirkung: keine
   - label: "das Paar"
-    inhalt: (Beide Aussagen zusammen, ohne, dass der Maßstab beim Klima vorkommt.)
+    inhalt: (Beide Aussagen zusammen, ohne dass der Maßstab beim Klima vorkommt.)
     urteil: ja
     begruendung: >-
       Derselbe Maßstab gilt einmal und einmal nicht. Das Publikum schließt,

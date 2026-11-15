@@ -5,7 +5,7 @@
 {%- macro angabe(e) -%}
   {{ e.autoren }}. {{ e.jahr }}. <a href="{{ e.url }}" target="_blank" rel="noopener">{{ e.titel }}</a>
   {%- if e.art == "video" %} [Video]{% endif %}.
-  {%- if e.art == "dissertation" %} {{ i18n[locale].dissertation }}{% if e.hochschule %}, {{ e.hochschule }}{% endif %}.{% endif %}
+  {%- if e.art == "dissertation" %} {{ i18n[locale].dissertation }}{% if e.hochschule %}, {{ e.hochschule[locale] or e.hochschule }}{% endif %}.{% endif %}
   {%- if e.in %}{% set q = e.in | inTeile %} In {{ q.vor }}<em>{{ q.titel }}</em>{% if q.reihe %} {{ q.reihe }}{% endif %}{% if e.seiten %}, {{ e.seiten }}{% endif %}.{% endif %}
   {%- if e.verlag %} {% if e.ort %}{{ e.ort }}: {% endif %}{{ e.verlag }}.{% endif %}
 {%- endmacro -%}

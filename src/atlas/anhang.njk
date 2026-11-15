@@ -31,7 +31,8 @@ eleventyComputed:
       <h3 class="atlas-unterkopf">{{ ba.legende }}</h3>
       <dl class="atlas-zeichen">
         {% for z in a.legende %}
-        <div><dt>{{ z.zeichen }}</dt><dd>{{ z.text }}</dd></div>
+        {#- inhaltsarten: true hängt die Arten aus begriffsmodell.yaml an („der Inhalt: eine Aussage, … oder ein Netzwerk“) -#}
+        <div><dt>{{ z.zeichen }}</dt><dd>{{ z.text }}{% if z.inhaltsarten %}: {{ bm.inhaltsarten | aufzaehlung("oder") }}{% endif %}</dd></div>
         {% endfor %}
         {#- Eigenschaften der Einschätzung mit ihren Wertebereichen -#}
         <div class="ist-eigenschaft"><dt>{{ wb.urteil.label }}</dt><dd>{{ wb.urteil.werte }}</dd></div>

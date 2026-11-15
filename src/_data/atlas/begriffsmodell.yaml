@@ -44,8 +44,8 @@ pruefragen:
     frage: "Was genau ist der Inhalt?"
     feld: inhalt
     erklaerung: >-
-      Eine einzelne Aussage, oder erst eine Auswahl, ein Paar von Aussagen,
-      eine Abfolge oder die Position eines Sprechers. Manches ergibt erst zusammen eine desinformative Situation bzw. ein „Desinformationsobjekt“.
+      Eine einzelne Aussage oder erst eine Antwort auf eine Frage, eine
+      Erklärung, ein Paar von Aussagen, eine Auswahl oder ein Netzwerk. Manches ergibt erst zusammen eine desinformative Situation bzw. ein „Desinformationsobjekt“.
   - id: fuer_wen
     art: rahmen
     frage: "Für wen?"
@@ -76,7 +76,7 @@ publikum_abschnitt:
   titel: "Für wen? Eine Frage, die sich immer stellt"
   einleitung: >-
     Wenn Desinformation als Information verstanden wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen von Desinformation auch davon
-    ab, wer die/der Rezipient ist. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
+    ab, wer den Inhalt aufnimmt. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
     und die Gruppe, in der man etwas hört, können ebenfalls die Wirkung verändern. Dieselbe Information kann für die einen harmlos sein und für die anderen nicht. Weil das
     für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
     sondern hier: Sie ist der Rahmen jeder Einschätzung.
@@ -172,11 +172,11 @@ urteile:
 offen_gelassen:
   titel: "Was die Definition offenlässt: Wahrheit und Absicht"
   text: |
-    Ob ein Inhalt wahr ist oder ob jemand täuschen will, spielt für die Re:DIS-Definition keine Rolle. Die im Zusammenhang von Desinformation vertrauten Konzepte ergeben sich bei ihr als Sonderfälle: Lüge ist falsch und mit Absicht; Fehlinformation falsch ohne Absicht, Irreführung mit Wahrem ist wahr und trotzdem schädlich. Darin folgt der Atlas Fallis (2015): Desinformation muss weder falsch sein noch auf einer Täuschungsabsicht beruhen. Von den zwei Mängeln, über die Jaster & Lanius (2019) Fake News bestimmen – fehlende Wahrheit und fehlende Wahrhaftigkeit –, greift der Atlas nur den ersten auf.
+    Ob ein Inhalt wahr ist oder ob jemand täuschen will, spielt für die Re:DIS-Definition keine Rolle. Die im Zusammenhang von Desinformation vertrauten Konzepte ergeben sich bei ihr als Sonderfälle: Lüge ist falsch und mit Absicht; Fehlinformation falsch ohne Absicht; Irreführung mit Wahrem ist wahr und trotzdem schädlich. Darin folgt der Atlas Fallis (2015): Desinformation muss weder falsch sein noch auf einer Täuschungsabsicht beruhen. Von den zwei Mängeln, über die Jaster & Lanius (2019) Fake News bestimmen – fehlende Wahrheit und fehlende Wahrhaftigkeit –, greift der Atlas nur den ersten auf.
 
     Das hat zwei Vorteile. Erstens muss man niemandem in den Kopf schauen. Stattdessen beobachtet und misst man (sofern möglich) den epistemischen Effekt, den ein Inhalt auf sein Publikum hat. Zweitens erfasst die Re:DIS-Definition die politischen Funktionen von Desinformation, die die anderen Ansätze beschreiben, aber unzureichend abdecken (Zweifel säen, verunsichern, Vertrauen untergraben).
 
-    Der Preis dafür ist allerdings, dass auch ehrliche Fehler (z.B. einer Redaktion) oder missverstandene Satire (z.B. Onion) den Erkenntnisstand ihrer Rezipienten verschlechtern und somit als Desinformation zählen können. Dies spricht dafür, dass Absichten doch in irgendeiner Form in die Begriffsbestimmung von Desinformation eingehen müssen.
+    Der Preis dafür ist allerdings, dass auch ehrliche Fehler (z. B. einer Redaktion) oder missverstandene Satire (z. B. The Onion) den Erkenntnisstand ihrer Rezipienten verschlechtern und somit als Desinformation zählen können. Dies spricht dafür, dass Absichten doch in irgendeiner Form in die Begriffsbestimmung von Desinformation eingehen müssen.
 
     Auch Fallis scheint letztlich nicht ganz ohne sie auszukommen: Seine Definition verzichtet zwar auf eine Täuschungsabsicht, stützt sich aber auf den Begriff der Funktion. Was als Funktion einer Information gilt, hängt jedoch sowohl mit den Absichten ihres Senders als auch mit den Deutungen ihrer Rezipienten zusammen. Bei Lügen oder Propaganda bestimmt Fallis die Funktion sogar ausdrücklich über die Absicht der Urheber. Die Intention, die er aus der Definition verbannt, findet so durch die Hintertür wieder Einzug.
 
@@ -191,7 +191,7 @@ schablone_stufen: # welche Fälle die große Schablone auf der Begriffsmodell-Se
     # (jede füllt das Feld aus `kippt_an` und das Urteil)
 
 schablone_leer: # Texte der leeren Schablone
-  inhalt: ["Aussage, Auswahl, Paar …", ""]
+  inhalt: ["Aussage · Antwort · Erklärung ·", "Paar · Auswahl · Netzwerk"]
   publikum: ["Wer genau?", "Wie viele?"]
   vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
   urteil: ["ja · nein · strittig", ""]

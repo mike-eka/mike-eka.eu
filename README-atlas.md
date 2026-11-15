@@ -45,7 +45,9 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
      beginnt `schablone.inhalt` schon mit der Art, z. B. „Aussage: …“, wird sie
      nicht gedoppelt). Englisch: `en.yaml → inhaltsarten`. Fehlt der Wert oder ist
      er unbekannt, meldet der Build das. Eine neue Art: in `inhaltsarten` an der
-     passenden Stelle ergänzen und in `en.yaml` übersetzen.
+     passenden Stelle ergänzen und in `en.yaml` übersetzen. Die Legende im Anhang
+     (Zeichen i) folgt von selbst; von Hand nachziehen: `pruefragen` → `was` →
+     `erklaerung` und `schablone_leer.inhalt` in `begriffsmodell.yaml`.
    - `reihenfolge`: Position innerhalb der Hinsicht (kleinere Zahl = weiter oben)
    - `veroeffentlicht: false`, solange die Karte ein Entwurf ist
    - `im_framework: true`, wenn sie in der Liste der Grenzfälle erscheinen soll

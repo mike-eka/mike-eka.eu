@@ -8,7 +8,7 @@ veroeffentlicht: true
 im_framework: true
 kurz: >-
   Auf eine Frage kommt etwas, das wie eine Antwort klingt, aber eine andere
-  Frage beantwortet, die relevant klingt aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für manche) als behandelt. Ablenkungsmanöver und falsche Fährten sind natürlich nichts Neues – aber es ist erstaunlich, wie allgegenwärtig vor allem die subtilen Formen davon sind.
+  Frage beantwortet, die relevant klingt, aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für manche) als behandelt. Ablenkungsmanöver und falsche Fährten sind natürlich nichts Neues – aber es ist erstaunlich, wie allgegenwärtig vor allem die subtilen Formen davon sind.
 
 minimalpaar:
   frage: "Warum wird die Sanierung der Grundschule erneut verschoben?"
@@ -44,7 +44,7 @@ effekt:
     Die Frage nach der Sanierung ist gestellt und wartet auf eine Antwort.
   nachher: >-
     Man hat etwas gehört, das wie eine Antwort klingt. Die eigentliche Frage
-    gilt dann oft als behandelt. Oft wird nicht (genug) nachgehakt – auch nicht von
+    gilt dann oft als behandelt. Häufig wird nicht (genug) nachgehakt – auch nicht von
     denen, deren Aufgabe es eigentlich wäre.
   hinsichten: [achten]
 
@@ -97,5 +97,5 @@ zur gerade offenen Frage beiträgt. Wer auf „Warum wird verschoben?“ mit
 einer Zahl über Turnhallen antwortet, nutzt diese Erwartung: Das Publikum
 sucht den Zusammenhang, den die Antwort nur behauptet. Ob das gelingt, hängt
 auch davon ab, ob jemand die Frage festhält. In Interviews und Talkshows
-wäre das die Aufgabe der Moderation – oft wird aber nicht richtig nachgehakt. So wird aus einer ausgewichenen Frage eine scheinbar
+wäre das die Aufgabe der Moderation – oft wird aber nicht richtig nachgehakt. So wird aus einer Frage, der ausgewichen wird, eine scheinbar
 beantwortete.

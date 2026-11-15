@@ -527,6 +527,12 @@ module.exports = function atlasPlugin(eleventyConfig) {
     ...new Set(Object.values(felder || {}).map((f) => (f && f.status) || "offen")),
   ]);
 
+  // A list as running text: ["a", "b", "c"] | aufzaehlung("oder") -> "a, b oder c".
+  eleventyConfig.addFilter("aufzaehlung", (liste, und = "und") => {
+    const l = (liste || []).map(String);
+    return l.length < 2 ? l.join("") : `${l.slice(0, -1).join(", ")} ${und} ${l[l.length - 1]}`;
+  });
+
   // A value as a list ("a" -> ["a"], null -> []), e.g. for wirkung.
   eleventyConfig.addFilter("alsListe", (x) => (x == null || x === "" ? [] : [].concat(x)));
 };

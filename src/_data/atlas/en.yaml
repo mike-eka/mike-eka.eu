@@ -3,18 +3,20 @@
 # `fachbegriff` und verlinken auf die deutschen Karten.
 
 titel: "Lautleise Muster: a small atlas of overlooked disinformation patterns"
+# English for begriffsmodell.yaml → untertitel; shown below the title
+untertitel: "Disinformation beyond true and false"
 einleitung: >-
-  This atlas collects patterns of disinformation that rarely show up in fact
-  checks, because they get by without a false statement. It follows the
-  working definition of the DFG Priority Programme “Rethinking
-  Disinformation” (Re:DIS), under which any publicly disseminated content
-  can count as disinformation if it worsens its recipients' epistemic
-  situation, regardless of its truth or the authors' intent. The atlas is a
-  work in progress and an invitation to discussion.
+  They are called *lautleise* (‘loud-quiet’) because they work quietly, yet
+  become loud once you know them. This atlas collects disinformation
+  patterns that get by without a false statement but can be all the more
+  problematic for it. It explores the working definition of the DFG Priority
+  Programme “Rethinking Disinformation” (Re:DIS), under which
+  disinformation is publicly disseminated information that worsens the
+  epistemic situation. The atlas is a work in progress.
 kernsatz: >-
-  Content is not disinformation in itself. Whether it is depends on for
-  whom, compared to what, and in which respect (dimension) it worsens the epistemic
-  situation.
+  Some content is not in itself disinformation – or not disinformation.
+  Whether it is depends, among other things, on for whom, compared to what
+  and in which respect it worsens the epistemic situation.
 # directly below the core sentence
 inhalt_hinweis: >-
   What counts as content is often more than a single sentence: an answer in
@@ -35,30 +37,46 @@ fragen:
   was: "What exactly is the content?"
   vergleich: "Compared to what?"
   hinsicht: "In which respect?"
-  fuer_wen: "For whom? The frame of every assessment."
+  fuer_wen: "For whom? – the frame of every assessment"
 hinsichten:
   glauben:
     name: "What we believe"
     erklaerung: "Which statements we take to be true, and how certain we are."
+    hinweis: "The classic domain of fact-checking" # as begriffsmodell.yaml → hinweis
   achten:
     name: "What we attend to"
-    erklaerung: "Which questions get our attention, and which are treated as settled."
+    erklaerung: "What our attention is directed to."
   vertrauen:
-    name: "Whom we trust"
-    erklaerung: "Whom we credit with expertise, and whether that trust matches their reliability."
+    name: "Whom we believe"
+    erklaerung: "Which sources we credit with expertise."
   begruenden:
     name: "Why we believe"
     erklaerung: "On what grounds and by which standards we take something to be right."
 muster_hinweis: "The individual pattern cards are available in German."
 
+# English for the value ranges of the assessment (keys: ids of urteile and
+# wirkungen in begriffsmodell.yaml, whose order is kept)
+urteile:
+  ja: "yes"
+  nein: "no"
+  strittig: "contested"
+wirkungen:
+  verschlechtern: "worsen"
+  festhalten: "lock in"
+  abschotten: "seal off"
+
+# As ueber.yaml → ki_hinweis; shown at the end of the page
+ki_hinweis: "I used AI assistants in creating this atlas. I am responsible for the concept, examples and texts myself."
+
 # Formal part, as on the German overview (links to the German pages)
 formal:
   titel: "Formal model"
-  satz: "The concept model and its schema make the working definition precise."
+  satz: "The conceptual model and its schema make the working definition precise."
   hinweis: "(in German)"
   links:
-    - { label: "Concept model", url: "/atlas/begriffsmodell/" }
+    - { label: "Conceptual model", url: "/atlas/begriffsmodell/" }
     - { label: "Formal annex with schema", url: "/atlas/anhang/" }
+    - { label: "About this atlas (in German)", url: "/atlas/ueber/" }
 
 # Fixed labels of the English page (added in step 5, not from texte-schritt5.yaml)
 beschriftungen:
@@ -66,7 +84,14 @@ beschriftungen:
   rahmen: "Frame"
   hinsichten: "Patterns by dimension"
   hinsicht: "Dimension" # small label above each group
-  hinsichten_einleitung: "The cards are grouped by the respect in which the pattern typically makes things worse."
+  hinsichten_einleitung: "The cards are grouped by the dimension in which the pattern typically makes things worse."
   nicht_schwerpunkt: "not the focus here"
+  leer_zusatz: "not covered by this atlas" # dimension without focus and without cards
+  # value ranges of the assessment (as beschriftungen.yaml → uebersicht)
+  einschaetzung: "Assessment"
+  urteil: "Finding"
+  wirkung: "Effect"
+  wirkung_zusatz: "none if the finding is no"
+  ki_hinweis: "AI note"
   deutsch: "German overview"
   begriffsmodell: "Conceptual model (German)"

@@ -5,7 +5,7 @@ section: blog
 ---
 {% set posts = collections.posts | byLocale(locale) %}
 <h1 class="page-title">{{ i18n[locale].blog }}</h1>
-<p class="page-intro">Short articles and notes.</p>
+<p class="page-intro">Short articles and ideas.</p>
 
 {% if posts.length %}
 <ul class="entry-list">

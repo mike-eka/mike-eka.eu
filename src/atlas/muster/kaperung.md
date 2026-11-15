@@ -8,7 +8,7 @@ veroeffentlicht: true
 im_framework: true
 kurz: >-
   Jemand ohne Rückbindung an die Fachgemeinschaft besetzt die Brücke zwischen
-  Publikum und Thema und wird als Expert:in gehört.
+  Publikum und Thema und wird als Fachperson gehört.
 
 minimalpaar:
   muster: "Wir sprechen mit Dr. Kessler, [[Experte für Klimafragen]]."
@@ -56,7 +56,7 @@ effekt:
   hinsichten: [vertrauen]
 
 kippt_an: was
-grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, binden wir die Person einmal an die Klimaforschung zurück; einmal an ein anderes Fach; und einmal an keine Fachgemeinschaft."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, binden wir die Person einmal an die Klimaforschung zurück, einmal an ein anderes Fach und einmal an keine Fachgemeinschaft."
 einschaetzungen:
   - label: "an die Klimaforschung"
     inhalt: "Die Person publiziert in der Klimaforschung und wird dort diskutiert und korrigiert."

@@ -17,6 +17,7 @@ eleventyComputed:
 <article class="atlas atlas-uebersicht atlas-en">
   <header class="atlas-uebersicht__kopf">
     <h1 class="page-title">{{ en.titel }}</h1>
+    {% if en.untertitel %}<p class="atlas-untertitel">{{ en.untertitel }}</p>{% endif %}
     {{ en.einleitung | atlasAbsatz | safe }}
     {{ en.kernsatz | atlasAbsatz("atlas-kernsatz") | safe }}
     {{ en.inhalt_hinweis | atlasAbsatz("atlas-haltung") | safe }}
@@ -36,6 +37,14 @@ eleventyComputed:
   <section class="atlas-struktur" aria-labelledby="en-fragen">
     <h2 id="en-fragen">{{ eb.fragen }}</h2>
     <ul class="atlas-baum">
+      <li>
+        <span class="atlas-baum__knoten">{{ eb.einschaetzung }}</span>
+        {#- value ranges of the assessment's two properties (urteile / wirkungen, in English) -#}
+        <dl class="atlas-wertebereich">
+          <div><dt>{{ eb.urteil }}</dt><dd>{% for u in bm.urteile %}{{ en.urteile[u.id] or u.name }}{% if not loop.last %} · {% endif %}{% endfor %}</dd></div>
+          <div><dt>{{ eb.wirkung }}</dt><dd>{% for w in bm.wirkungen %}{{ en.wirkungen[w.id] or w.name }}{% if not loop.last %} · {% endif %}{% endfor %}{% if eb.wirkung_zusatz %} <span class="atlas-hinweis">({{ eb.wirkung_zusatz }})</span>{% endif %}</dd></div>
+        </dl>
+        <ul>
       {% for q in bm.pruefragen %}{% if en.fragen[q.id] %}
       <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ eb.rahmen }}:</span> {% endif %}{{ en.fragen[q.id] }}
         {%- if q.feld == "inhalt" %}
@@ -47,6 +56,8 @@ eleventyComputed:
         <span class="atlas-hinsichtwerte">{% for h in bm.hinsichten | hinsichtenSchwerpunktZuerst %}{% set eh = en.hinsichten[h.id] %}{% if h.schwerpunkt == false %}<span class="ist-nebensache">{{ eh.name or h.name }} ({{ eb.nicht_schwerpunkt }})</span>{% else %}<a href="#respect-{{ h.id }}">{{ eh.name or h.name }}</a>{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</span>
         {%- endif %}</li>
       {% endif %}{% endfor %}
+        </ul>
+      </li>
     </ul>
 
     <h2 id="en-muster">{{ eb.hinsichten }}</h2>
@@ -58,7 +69,8 @@ eleventyComputed:
         {%- set eh = en.hinsichten[h.id] %}
         <span class="atlas-label">{{ eb.hinsicht }}</span>
         <span class="atlas-hinsicht__name">{{ eh.name or h.name }}</span>
-        <span class="atlas-hinweis">{% if eh.erklaerung %}– {{ eh.erklaerung | atlasText(true) | safe }}{% endif %}{% if h.schwerpunkt == false %} ({{ eb.nicht_schwerpunkt }}){% endif %}</span>
+        {%- set leer = (h.schwerpunkt == false and not karten.length) %}
+        <span class="atlas-hinweis">{% if eh.erklaerung %}– {{ eh.erklaerung | atlasText(true) | safe }}{% endif %}{% if leer %} {{ [eh.hinweis, eb.leer_zusatz] | select | join(" – ") }}{% elif h.schwerpunkt == false %} ({{ eb.nicht_schwerpunkt }}{% if eh.hinweis %}: {{ eh.hinweis }}{% endif %}){% endif %}</span>
         {% if karten.length %}
         <ul>
           {% for k in karten %}
@@ -74,5 +86,6 @@ eleventyComputed:
       <a class="atlas-weiter" href="/atlas/" hreflang="de">{{ eb.deutsch }}</a> ·
       <a class="atlas-weiter" href="/atlas/begriffsmodell/" hreflang="de">{{ eb.begriffsmodell }}</a>
     </p>
+    {% if en.ki_hinweis %}<p class="atlas-hinweis"><strong>{{ eb.ki_hinweis }}.</strong> {{ en.ki_hinweis }}</p>{% endif %}
   </section>
 </article>

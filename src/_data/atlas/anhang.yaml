@@ -12,7 +12,8 @@ definition: >-
 legende:
   - {
       zeichen: "i",
-      text: "der Inhalt: eine Aussage, ein Argument, eine Auswahl, ein Paar, eine Abfolge oder eine Sprecherposition",
+      text: "der Inhalt",
+      inhaltsarten: true, # hängt „: eine Aussage, … oder ein Netzwerk“ aus begriffsmodell.yaml → inhaltsarten an
     }
   - { zeichen: "P", text: "das Publikum; Rahmen jeder Einschätzung" }
   - {

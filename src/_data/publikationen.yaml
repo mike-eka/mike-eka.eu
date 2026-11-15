@@ -1,7 +1,7 @@
 # Publikationen – neue Einträge einfach oben im passenden Abschnitt einfügen.
 # Felder: autoren, jahr, titel, in (optional), seiten (optional),
 #         ort (optional), verlag, art (optional: video | dissertation),
-#         hochschule (bei art: dissertation), url
+#         hochschule (bei art: dissertation; Text oder { de: …, en: … }), url
 # Im Feld `in` wird nach „(eds.), “ bzw. „(ed.), “ der Titel des Sammelbands
 # kursiv gesetzt; eine Reihe in Klammern am Ende bleibt gerade.
 abschnitte:
@@ -19,7 +19,7 @@ abschnitte:
         jahr: 2023
         titel: "Complex Transitivity Restrictions in Grammar"
         art: dissertation
-        hochschule: "Universität Leipzig"
+        hochschule: { de: "Universität Leipzig", en: "Leipzig University" }
         verlag: "LingBuzz"
         url: "https://ling.auf.net/lingbuzz/009495"
 
