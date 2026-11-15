@@ -56,6 +56,7 @@ anhang: # Seite /atlas/anhang/
     # wirkungen in begriffsmodell.yaml – nicht hier eintragen)
     Inhalt: ["Wahrheitsstatus · Absicht"]
   rahmen: "Rahmen jeder Einschätzung"
+  inhaltsart: "Art" # Etikett des Wertebereichs im Kasten „Inhalt“ (Werte: inhaltsarten in begriffsmodell.yaml)
 
 begriffsmodell: # Seite /atlas/begriffsmodell/
   titel: "Begriffsmodell"

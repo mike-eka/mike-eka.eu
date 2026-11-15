@@ -17,7 +17,7 @@ eleventyComputed:
 {%- set wbWirkung = wb.wirkung.label + ": " + wb.wirkung.werte -%}
 {%- set wbZusatz = ("(" + wb.wirkung.zusatz + ")") if wb.wirkung.zusatz else "" -%}
 {#- Wertebereich des Inhalts: die Inhaltsarten (aus inhaltsarten) -#}
-{%- set wbInhalt = (ba.klassen.Inhalt or "Inhalt") + ": " + (bm.inhaltsarten | join(" · ")) -%}
+{%- set wbInhalt = (ba.inhaltsart or "Art") + ": " + (bm.inhaltsarten | join(" · ")) -%}
 <article class="atlas atlas-anhang">
   <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
   <header class="atlas-karte__kopf">
