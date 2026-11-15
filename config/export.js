@@ -69,7 +69,7 @@ function atlasJsonLd(bm, alle, b) {
     "rdfs:range": { "@id": `atlas:${r.nach}` },
   }));
   // properties the assessments carry (verdict, effect, reason, wording)
-  [["urteil", "Urteil"], ["wirkung", "Wirkung"], ["begruendung", "Begründung"], ["text", "Wortlaut"]]
+  [["urteil", "Befund"], ["wirkung", "Wirkung"], ["begruendung", "Begründung"], ["text", "Wortlaut"]]
     .forEach(([p, l]) => graph.push({ "@id": `atlas:${p}`, "@type": "rdf:Property", "rdfs:label": l }));
 
   // vocabulary lists as SKOS concept schemes
@@ -86,7 +86,7 @@ function atlasJsonLd(bm, alle, b) {
   schema("pruefragen", "Prüffragen", (bm.pruefragen || []).map((q) => ({ id: q.id, name: q.frage, definition: q.erklaerung })));
   schema("hinsichten", "Hinsichten", (bm.hinsichten || []).map((h) => ({ id: h.id, name: h.name, definition: h.erklaerung })));
   schema("wirkungen", "Wirkungen", (bm.wirkungen || []).map((w) => ({ id: w.id, name: w.name, definition: w.erklaerung })));
-  schema("urteile", "Urteile", (bm.urteile || []).map((u) => ({ id: u.id, name: u.name })));
+  schema("urteile", "Befunde", (bm.urteile || []).map((u) => ({ id: u.id, name: u.name })));
   schema("vergleichsfaelle", "Vergleichsfälle", (bm.vergleichsfaelle || []).map((v) => ({ id: v.id, name: v.name })));
   schema("inhaltstypen", "Inhaltstypen", (bm.inhaltstypen || []).map((t) => ({ id: t, name: t })));
 

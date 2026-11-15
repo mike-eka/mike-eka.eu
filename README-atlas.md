@@ -15,7 +15,7 @@ npm run check:atlas   # Prüfung vor dem Merge nach main (siehe unten)
 
 | Datei | Inhalt |
 |---|---|
-| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Urteile, „Was die Definition offenlässt“ (`offen_gelassen`), Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
+| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Befunde (`urteile`), „Was die Definition offenlässt“ (`offen_gelassen`), Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
 | `src/_data/atlas/beschriftungen.yaml` | alle festen Beschriftungen: Überschriften, Knöpfe, Legenden, Navigation |
 | `src/_data/atlas/ueber.yaml`, `anhang.yaml`, `en.yaml` | Texte der Seiten Über, Anhang und der englischen Kurzfassung |
 | `src/atlas/muster/*.md` | eine Datei pro Musterkarte (Kopfdaten + Fließtext) |
@@ -88,14 +88,14 @@ fall:
 
 ### Grenzfall ändern oder hinzufügen
 
-Die Kachel „Grenzfall“ zeigt die Frage (`grenzfall_frage`), einen Knopf je Einschätzung
-und darunter Wert, Urteil mit Begründung und Wirkung der gewählten Einschätzung (ohne
+Die Kachel „Grenzfall“ zeigt den Einleitungssatz (`grenzfall_frage`), einen Knopf je Einschätzung
+und darunter Wert, Befund mit Begründung und Wirkung der gewählten Einschätzung (ohne
 JavaScript und im Druck alle untereinander). `kippt_an` sagt, welches Feld die
 Einschätzungen füllen; es erscheint nicht als eigener Begriff.
 
 ```yaml
 kippt_an: vergleich          # was | vergleich | hinsicht  (nie fuer_wen: das Publikum ist Rahmen)
-grenzfall_frage: "Womit vergleicht man …?"
+grenzfall_frage: "Um die Grenzfälle dieses Musters aufzuzeigen, vergleichen wir es mit … und mit …"
 einschaetzungen:
   - label: "mit einer echten Antwort"      # Text des Knopfs
     vergleichsfall: "…"                     # Feld je nach kippt_an: inhalt | vergleichsfall | hinsicht
@@ -108,7 +108,7 @@ einschaetzungen:
 - Beliebig viele Einschätzungen sind möglich; jede wird ein Knopf.
 - Die Wirkung erscheint mit Name und Erklärung (aus `wirkungen` in `begriffsmodell.yaml`);
   ohne `wirkung` steht dort der Text aus `schablone.wirkung`.
-- Lautet das Urteil `nein`, gibt es keine Wirkung: `wirkung: keine` (oder weglassen).
+- Lautet der Befund `nein`, gibt es keine Wirkung: `wirkung: keine` (oder weglassen).
   Der Build warnt, wenn ein `nein` eine Wirkung trägt.
 - Welche Karte die große Schablone auf der Begriffsmodell-Seite zeigt, steht in
   `begriffsmodell.yaml` unter `schablone_stufen.muster`.
@@ -160,7 +160,7 @@ Grafiken stehen im Feld `grafik` einer Karte, direkt nach dem Beispiel. `titel` 
   `kanten` (`von`/`nach`, auch als Liste), Bedingungen in `nur_wenn`, eigene `schalter`,
   `kennzahl` und `kennzahl_2`, `urteile` mit `wenn`.
   Bedingungen: Namen von Schaltern oder des Zustands, `!`, `&&`, `==`, `!=`, Vergleiche
-  wie `kennzahl >= 75`, und `sonst` als letztes Urteil.
+  wie `kennzahl >= 75`, und `sonst` als letzten Befund.
   Kopplung an die Einschätzungen: `zustand_aus_einschaetzung: rueckbindung` und in jeder
   Einschätzung `grafik_zustand: { rueckbindung: klima }`.
 - **`typ: balken`** (Gewichtung): `reihe_a: { feld, label }` ist die feste Vergleichsreihe,
@@ -213,7 +213,7 @@ einer Illustration.
   (`druckkopf: true`), Kacheln untereinander;
   interaktive Teile erscheinen wie ohne JavaScript, das Schema im Anhang auf einer
   Querformatseite.
-- **Wertebereiche** von Urteil und Wirkung (Übersicht, Anhang) kommen aus `urteile`
+- **Wertebereiche** von Befund und Wirkung (Übersicht, Anhang) kommen aus `urteile`
   und `wirkungen` in `begriffsmodell.yaml`; der Zusatz „keine, wenn …“ aus
   `beschriftungen.yaml → uebersicht.wirkung_zusatz`.
 
@@ -238,7 +238,7 @@ Nur wenn alles grün ist (Exit-Code 0), nach `main` mergen.
 ## Grenzen (bewusst)
 
 Im Code angelegt sind die Felder der Schablone (Inhalt, Vergleichsfall, Hinsicht,
-Urteil, Wirkung; Publikum als Rahmen), die Grafiktypen `netz`, `balken` und
+Befund, Wirkung; Publikum als Rahmen), die Grafiktypen `netz`, `balken` und
 `illustration` und deren vier Motive. Eine neue Prüffrage, ein weiteres Schablonenfeld,
 ein neuer Grafiktyp oder ein neues Motiv braucht eine
 Codeänderung.

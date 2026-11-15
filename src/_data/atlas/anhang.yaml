@@ -42,16 +42,16 @@ anmerkungen:
   - titel: "Muster als teilweise Belegung"
     text: >-
       Ein Muster legt fest, welche Art Inhalt vorliegt, womit verglichen wird
-      und welche Hinsicht betroffen ist. An offenen Stellen entscheidet sich das Urteil.
-  - titel: "Urteil und Wirkung"
+      und welche Hinsicht betroffen ist. An offenen Stellen entscheidet sich der Befund.
+  - titel: "Befund und Wirkung"
     text: >-
       Die Einschätzung ist ein eigener Knoten, an dem Inhalt, Publikum,
-      Vergleichsfall und Hinsicht als Rollen hängen. Urteil und Wirkung sind
-      Eigenschaften dieser Einschätzung: Das Urteil sagt, ob die
+      Vergleichsfall und Hinsicht als Rollen hängen. Befund und Wirkung sind
+      Eigenschaften dieser Einschätzung: Der Befund sagt, ob die
       Erkenntnislage schlechter wird. Die Wirkung sagt, in welcher Verlaufsform –
       jetzt schlechter (verschlechtern), nicht besser, obwohl sie es könnte
       (festhalten), oder künftig schwerer zu verbessern (abschotten). Lautet
-      das Urteil nein, gibt es keine Wirkung; eine Einschätzung kann mehrere
+      der Befund nein, gibt es keine Wirkung; eine Einschätzung kann mehrere
       Wirkungen haben.
 offene_stellen:
   - "Welcher Maßstab hinter „schlechter“ steht, ist selbst eine Entscheidung."
@@ -60,6 +60,6 @@ offene_stellen:
 modell: >-
   Im Sinne der Informationswissenschaft ist das Begriffsmodell eine kleine
   Ontologie. Zentral ist die Einschätzung als eigener Knoten: Sie verbindet
-  Inhalt, Publikum, Vergleichsfall und Hinsicht und trägt Urteil und Wirkung.
+  Inhalt, Publikum, Vergleichsfall und Hinsicht und trägt Befund und Wirkung.
   Eine Klasse „desinformativer Inhalt“ gibt es darin bewusst nicht.
 download: "Begriffsmodell und Karten als JSON-LD (Vokabular als SKOS-Konzepte)"

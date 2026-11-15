@@ -47,12 +47,12 @@ effekt:
     Die Frage nach der Sanierung ist gestellt und wartet auf eine Antwort.
   nachher: >-
     Man hat etwas gehört, das wie eine Antwort klingt. Die eigentliche Frage
-    gilt als behandelt. Oft wird nicht nachgehakt, auch nicht von
-    denen, deren Aufgabe es wäre.
+    gilt dann oft als behandelt. Oft wird nicht (genug) nachgehakt – auch nicht von
+    denen, deren Aufgabe es eigentlich wäre.
   hinsichten: [achten]
 
 kippt_an: vergleich
-grenzfall_frage: "Womit vergleicht man: mit einer echten Antwort oder mit gar keiner?"
+grenzfall_frage: "Um die Grenzfälle dieses Musters aufzuzeigen, vergleichen wir es mit einer echten Antwort und mit gar keiner Antwort."
 einschaetzungen:
   - label: "mit einer echten Antwort auf die Frage"
     vergleichsfall: "Die Bürgermeisterin nennt den Grund für die Verschiebung."
