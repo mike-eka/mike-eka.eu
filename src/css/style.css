@@ -587,6 +587,36 @@ article.post p {
     text-decoration: underline;
 }
 
+/* Sections as two equal columns, top-aligned; more than two wrap into
+   further rows. The page's content area is wider (main.pub-breit) so both
+   columns stay readable. Narrow screens and print: one below the other. */
+main.pub-breit {
+    max-width: 60rem;
+}
+
+.pub-spalten {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3rem;
+    align-items: start;
+}
+
+@media (max-width: 48rem) {
+    .pub-spalten {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media print {
+    main.pub-breit {
+        max-width: none;
+    }
+
+    .pub-spalten {
+        display: block;
+    }
+}
+
 footer {
     margin-top: 4rem;
     padding-top: 1.5rem;

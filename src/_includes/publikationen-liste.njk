@@ -10,6 +10,9 @@
   {%- if e.verlag %} {% if e.ort %}{{ e.ort }}: {% endif %}{{ e.verlag }}.{% endif %}
 {%- endmacro -%}
 
+{#- Abschnitte in zwei Spalten (mehr als zwei brechen zweispaltig um);
+    schmal und im Druck untereinander, in der Reihenfolge der Daten -#}
+<div class="pub-spalten">
 {% for a in publikationen.abschnitte %}
 <section class="pub-abschnitt" aria-labelledby="pub-{{ a.id }}">
   <h2 id="pub-{{ a.id }}">{{ a.titel[locale] }}</h2>
@@ -20,3 +23,4 @@
   </ul>
 </section>
 {% endfor %}
+</div>
