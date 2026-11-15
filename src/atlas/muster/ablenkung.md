@@ -7,7 +7,7 @@ veroeffentlicht: true
 im_framework: true
 kurz: >-
   Auf eine Frage kommt etwas, das wie eine Antwort klingt, aber eine andere
-  Frage beantwortet, die relevant klingt aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für Manche) als behandelt.
+  Frage beantwortet, die relevant klingt aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für Manche) als behandelt. Ablenkungsmanöver und falsche Fährten sind natürlich nichts Neues – aber es ist erstaunlich, wie allgegenwärtig vor allem die subtilen Formen davon sind.
 
 minimalpaar:
   frage: "Warum wird die Sanierung der Grundschule erneut verschoben?"
@@ -86,12 +86,12 @@ literatur:
 grafik:
   typ: illustration
   motiv: weiche
-  titel: "Die Frage wird umgeleitet"
+  titel: "Das, worauf wir achten, wird umgeleitet"
   start: "Warum wird die Sanierung verschoben?"
   ziel_umgeleitet: "Drei Turnhallen eröffnet"
   ziel_eigentlich: "Der Grund für die Verschiebung"
   knopf: "Nachhaken"
-  vorher: "Die Weiche lenkt die Frage auf ein anderes Gleis."
+  vorher: "Die Weiche lenkt unseren Fokus auf ein anderes Gleis."
   nachher: "Wer nachhakt, stellt die Weiche zurück, und die Frage erreicht ihr Ziel."
 ---
 

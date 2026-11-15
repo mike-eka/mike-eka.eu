@@ -89,7 +89,7 @@ karte:
   gegenform: "Vergleichsfall" # Vorzeile über der Gegenform
   minimalpaar: # Erläuterung neben der Klammer (schmal: darunter), für alle Karten
     titel: "Minimalpaar"
-    text: "Beide Sätze unterscheiden sich nur an den markierten Stellen. Der Vergleichsfall macht deutlich, was das Muster im Kern ausmacht."
+    text: "Der Vergleichsfall macht deutlich, was das Muster im Kern ausmacht."
   # nur wenn minimalpaar.frage gesetzt ist (ohne frage_label):
   minimalpaar_frage: "Gefragt"
   # nur wenn muster/gegenform Listen sind:
