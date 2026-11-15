@@ -75,8 +75,8 @@ publikum_abschnitt:
   anker: fuer-wen # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
   titel: "Für wen? Eine Frage, die sich immer stellt"
   einleitung: >-
-    Wenn Desinformation als Information verstanden wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen von Desinformation auch davon
-    ab, wer den Inhalt aufnimmt. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
+    Wenn Desinformation als Information verstanden wird, die die Erkenntnislage verschlechtert, hängt es auch davon ab, wer den Inhalt aufnimmt, ob
+    Desinformation vorliegt. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
     und die Gruppe, in der man etwas hört, können ebenfalls die Wirkung verändern. Dieselbe Information kann für die einen harmlos sein und für die anderen nicht. Weil das
     für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
     sondern hier: Sie ist der Rahmen jeder Einschätzung.
@@ -126,9 +126,6 @@ hinsichten: # Reihenfolge = Reihenfolge in der Landkarte
     name: "Warum wir glauben"
     erklaerung: "Aus welchen Gründen und nach welchen Maßstäben wir etwas für richtig halten."
     schwerpunkt: true
-
-inhaltstypen:
-  [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
 
 # Erlaubte Werte für `inhaltsart` einer Karte. Die Reihenfolge (von einfach
 # zu vernetzt) ist die der Wertezeile unter „Was genau ist der Inhalt?“

@@ -27,7 +27,7 @@ function atlasJson(bm, alle) {
   const basis = seitenUrl();
   const modell = {};
   ["titel", "untertitel", "kernsatz", "inhalt_hinweis", "haltung", "pruefragen", "publikum_abschnitt", "hinsichten",
-    "inhaltstypen", "inhaltsarten", "vergleichsfaelle", "wirkungen", "urteile", "offen_gelassen", "beziehungen"]
+    "inhaltsarten", "vergleichsfaelle", "wirkungen", "urteile", "offen_gelassen", "beziehungen"]
     .forEach((k) => { if (bm[k] !== undefined) modell[k] = bm[k]; });
   return {
     quelle: basis + "/atlas/",
@@ -88,7 +88,6 @@ function atlasJsonLd(bm, alle, b) {
   schema("wirkungen", "Wirkungen", (bm.wirkungen || []).map((w) => ({ id: w.id, name: w.name, definition: w.erklaerung })));
   schema("urteile", "Befunde", (bm.urteile || []).map((u) => ({ id: u.id, name: u.name })));
   schema("vergleichsfaelle", "Vergleichsfälle", (bm.vergleichsfaelle || []).map((v) => ({ id: v.id, name: v.name })));
-  schema("inhaltstypen", "Inhaltstypen", (bm.inhaltstypen || []).map((t) => ({ id: t, name: t })));
 
   const hinsichtNachText = (text) => {
     const h = (bm.hinsichten || []).find((x) => x.name === text || x.id === text);
