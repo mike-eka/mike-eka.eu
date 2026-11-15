@@ -29,11 +29,7 @@ mittel:
     „Warum wird verschoben?“ mit „drei Turnhallen eröffnet“ beantworten?
 
 schablone: # Stufe „Muster“
-  inhalt:
-    {
-      status: muster,
-      text: ["sie beantwortet", "eine andere Frage"],
-    }
+  inhalt: { status: muster, text: ["sie beantwortet", "eine andere Frage"] }
   vergleichsfall:
     {
       status: offen,
@@ -53,7 +49,7 @@ effekt:
   hinsichten: [achten]
 
 kippt_an: vergleich
-grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, vergleichen wir es einmal mit einer echten Antwort und einmal mit gar keiner Antwort."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, vergleichen wir es einmal mit einer echten Antwort und einmal mit gar keiner Antwort."
 einschaetzungen:
   - label: "mit einer echten Antwort auf die Frage"
     vergleichsfall: "Die Bürgermeisterin nennt den Grund für die Verschiebung."

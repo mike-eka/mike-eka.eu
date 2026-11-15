@@ -56,8 +56,7 @@ mittel:
     Schlussfolgerung an genau dieser Stelle?
 
 schablone: # Stufe „Muster“
-  inhalt:
-    { status: muster, text: ["eine Analogie", "als Begründung"] }
+  inhalt: { status: muster, text: ["eine Analogie", "als Begründung"] }
   vergleichsfall:
     { status: muster, text: ["vorher:", "die Frage gilt als offen"] }
   hinsicht:
@@ -75,7 +74,7 @@ effekt:
   hinsichten: [begruenden, achten]
 
 kippt_an: hinsicht
-grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur, was wir glauben, und einmal auch, warum wir es glauben."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur, was wir glauben, und einmal auch, warum wir es glauben."
 einschaetzungen:
   - label: "Was wir glauben"
     hinsicht: "Was wir glauben"

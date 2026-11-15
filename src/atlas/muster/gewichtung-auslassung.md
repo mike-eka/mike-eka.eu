@@ -69,7 +69,7 @@ effekt:
   hinsichten: [achten, glauben]
 
 kippt_an: vergleich
-grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, machen wir einmal die Zahl der Opfer zum Maßstab und einmal den Nachrichtenwert."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, machen wir einmal die Zahl der Opfer zum Maßstab und einmal den Nachrichtenwert."
 einschaetzungen:
   - label: "nach Zahl der Opfer"
     vergleichsfall: "Eine Berichterstattung, die sich nach der Zahl der Opfer richtet."

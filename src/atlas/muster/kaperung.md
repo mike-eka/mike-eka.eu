@@ -31,7 +31,11 @@ schablone: # Stufe „Muster“
   inhalt:
     {
       status: offen,
-      text: ["Aussage, Person und Fachgemeinschaft –", "an wen ist die Person rückgebunden?"],
+      text:
+        [
+          "Aussage, Person und Fachgemeinschaft –",
+          "an wen ist die Person rückgebunden?",
+        ],
     }
   vergleichsfall:
     {
@@ -52,7 +56,7 @@ effekt:
   hinsichten: [vertrauen]
 
 kippt_an: was
-grenzfall_frage: "An welche Fachgemeinschaft ist die Person zurückgebunden?"
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, binden wir die Person einmal an die Klimaforschung zurück; einmal an ein anderes Fach; und einmal an keine Fachgemeinschaft."
 einschaetzungen:
   - label: "an die Klimaforschung"
     inhalt: "Die Person publiziert in der Klimaforschung und wird dort diskutiert und korrigiert."

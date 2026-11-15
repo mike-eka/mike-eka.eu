@@ -61,7 +61,7 @@ effekt:
   hinsichten: [begruenden, glauben]
 
 kippt_an: was
-grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse; einmal das Paar; und einmal das Paar mit einm benannten Unterschied."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse; einmal das Paar; und einmal das Paar mit einm benannten Unterschied."
 einschaetzungen:
   - label: "nur die Aussage zur Schuldenbremse"
     inhalt: "Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen."
