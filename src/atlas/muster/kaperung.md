@@ -29,7 +29,10 @@ mittel:
 
 schablone: # Stufe „Muster“
   inhalt:
-    { status: offen, text: ["Sprecherposition:", "rückgebunden – an wen?"] }
+    {
+      status: offen,
+      text: ["Aussage, Person und Fachgemeinschaft –", "an wen ist die Person rückgebunden?"],
+    }
   vergleichsfall:
     {
       status: muster,

@@ -32,7 +32,7 @@ schablone: # Stufe „Muster“
   inhalt:
     {
       status: muster,
-      text: ["Äußerung:", "eine Antwort auf eine andere Frage"],
+      text: ["sie beantwortet", "eine andere Frage"],
     }
   vergleichsfall:
     {

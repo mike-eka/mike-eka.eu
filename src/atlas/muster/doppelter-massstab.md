@@ -37,7 +37,11 @@ mittel:
     dasselbe Merkmal? Wird der Maßstab dort genannt, oder verschwindet er?
 
 schablone: # Stufe „Muster“
-  inhalt: { status: offen, text: ["eine einzelne Aussage –", "oder das Paar?"] }
+  inhalt:
+    {
+      status: offen,
+      text: ["erst im Paar wird der Maßstab", "sichtbar (siehe Grenzfall)"],
+    }
   vergleichsfall:
     {
       status: muster,

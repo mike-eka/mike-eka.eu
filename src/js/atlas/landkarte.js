@@ -220,10 +220,11 @@
       rahmenY = sy - 8 + 28;
       y = rahmenY + rahmenH;
     } else {
+      // side by side, top-aligned, each box with its own height; the spokes
+      // run from each box's centre into the assessment
       spokeBoxen.forEach(function (s, i) {
         s.cx = RAND + spokeB / 2 + i * (spokeB + 8);
-        s.cy = y + maxSpokeH / 2;
-        s.h = maxSpokeH;
+        s.cy = y + s.h / 2;
       });
       rahmenY = y + maxSpokeH + 28;
       y = rahmenY + rahmenH;

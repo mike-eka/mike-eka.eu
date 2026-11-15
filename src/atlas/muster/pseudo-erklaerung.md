@@ -57,7 +57,7 @@ mittel:
 
 schablone: # Stufe „Muster“
   inhalt:
-    { status: muster, text: ["Argument:", "eine Analogie als Begründung"] }
+    { status: muster, text: ["eine Analogie", "als Begründung"] }
   vergleichsfall:
     { status: muster, text: ["vorher:", "die Frage gilt als offen"] }
   hinsicht:
