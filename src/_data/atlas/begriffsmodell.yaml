@@ -7,9 +7,8 @@ kernsatz: >-
 # Übersicht: steht direkt unter dem Kernsatz
 inhalt_hinweis: >-
   Was als Inhalt zählt, ist dabei oft mehr als ein einzelner Satz: eine
-  Antwort im Verhältnis zur Frage, ein Paar von Aussagen, eine Auswahl aus
-  vielen Berichten oder eine Aussage samt dem Netzwerk, in das sie
-  eingebunden ist. Bei mehreren Mustern liegt das Problem nicht in einer
+  Antwort im Verhältnis zur vorher gestellten Frage; eine Kombination von Aussagen; eine Auswahl und Gewichtung von Informationen; oder eine Aussage samt dem Netzwerk, in das sie
+  eingebunden ist. Bei manchen Mustern liegt das Problem also nicht in einer
   einzelnen Information, sondern in ihrem Verhältnis zu anderen.
 # Entwürfe (Karten mit veroeffentlicht: false) als „in Vorbereitung“ zeigen?
 # false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste.
