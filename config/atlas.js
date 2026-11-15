@@ -405,7 +405,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
   // Absolute address of a page (site URL from src/CNAME), e.g. for print headers.
   eleventyConfig.addFilter("absoluteUrl", (url) => atlasExport.seitenUrl() + (url || "/"));
   eleventyConfig.addFilter("atlasJson", (bm, alle) => JSON.stringify(atlasExport.atlasJson(bm, alle), null, 2));
-  eleventyConfig.addFilter("atlasJsonLd", (bm, alle, b) => JSON.stringify(atlasExport.atlasJsonLd(bm, alle, b), null, 2));
+  eleventyConfig.addFilter("atlasJsonLd", (bm, alle, b, en) => JSON.stringify(atlasExport.atlasJsonLd(bm, alle, b, en), null, 2));
 
   // "Wem wir glauben · Worauf wir achten" -> ["Wem wir glauben", "Worauf wir achten"]
   // effekt.hinsichten (list of hinsicht ids) without the card's main hinsicht,

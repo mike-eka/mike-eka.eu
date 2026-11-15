@@ -41,7 +41,16 @@ function atlasJson(bm, alle) {
   };
 }
 
-function atlasJsonLd(bm, alle, b) {
+// Id of an inhaltsart ("eine Antwort auf eine Frage" -> "antwort-auf-eine-frage").
+const inhaltsartId = (art) => String(art)
+  .replace(/^(eine?|ein)\s+/i, "")
+  .toLowerCase()
+  .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+  .replace(/[^a-z0-9]+/g, "-")
+  .replace(/^-|-$/g, "");
+
+// en: atlas.en (en.yaml), for English labels where it has them.
+function atlasJsonLd(bm, alle, b, en) {
   const basis = seitenUrl();
   const ns = basis + "/atlas/begriffsmodell#";
   const klassenNamen = (b && b.anhang && b.anhang.klassen) || {};
@@ -71,15 +80,18 @@ function atlasJsonLd(bm, alle, b) {
   // properties the assessments carry (verdict, effect, reason, wording)
   [["urteil", "Befund"], ["wirkung", "Wirkung"], ["begruendung", "Begründung"], ["text", "Wortlaut"]]
     .forEach(([p, l]) => graph.push({ "@id": `atlas:${p}`, "@type": "rdf:Property", "rdfs:label": l }));
+  // property of a card: its kind of content (a concept of the scheme inhaltsarten)
+  graph.push({ "@id": "atlas:inhaltsart", "@type": "rdf:Property", "rdfs:label": "Inhaltsart", "rdfs:domain": { "@id": "atlas:Muster" } });
 
-  // vocabulary lists as SKOS concept schemes
+  // vocabulary lists as SKOS concept schemes; `en` (optional) adds an
+  // English prefLabel next to the German one (the context's default language)
   const schema = (name, label, eintraege) => {
     graph.push({ "@id": `atlas:${name}`, "@type": "skos:ConceptScheme", "skos:prefLabel": label });
     eintraege.forEach((e) => graph.push({
       "@id": id(name, e.id),
       "@type": "skos:Concept",
       "skos:inScheme": { "@id": `atlas:${name}` },
-      "skos:prefLabel": e.name,
+      "skos:prefLabel": e.en ? [e.name, { "@value": e.en, "@language": "en" }] : e.name,
       ...(e.definition ? { "skos:definition": e.definition } : {}),
     }));
   };
@@ -88,6 +100,8 @@ function atlasJsonLd(bm, alle, b) {
   schema("wirkungen", "Wirkungen", (bm.wirkungen || []).map((w) => ({ id: w.id, name: w.name, definition: w.erklaerung })));
   schema("urteile", "Befunde", (bm.urteile || []).map((u) => ({ id: u.id, name: u.name })));
   schema("vergleichsfaelle", "Vergleichsfälle", (bm.vergleichsfaelle || []).map((v) => ({ id: v.id, name: v.name })));
+  const inhaltsartenEn = (en && en.inhaltsarten) || {};
+  schema("inhaltsarten", "Inhaltsarten", (bm.inhaltsarten || []).map((art) => ({ id: inhaltsartId(art), name: art, en: inhaltsartenEn[art] })));
 
   const hinsichtNachText = (text) => {
     const h = (bm.hinsichten || []).find((x) => x.name === text || x.id === text);
@@ -106,6 +120,8 @@ function atlasJsonLd(bm, alle, b) {
       ...(d.fachbegriff ? { "skos:altLabel": { "@value": d.fachbegriff, "@language": "en" } } : {}),
       ...(d.kurz ? { "skos:definition": d.kurz } : {}),
       "atlas:betrifftVorAllem": { "@id": id("hinsichten", d.hinsicht) },
+      // only known arts (the build warns about others)
+      ...((bm.inhaltsarten || []).includes(d.inhaltsart) ? { "atlas:inhaltsart": { "@id": id("inhaltsarten", inhaltsartId(d.inhaltsart)) } } : {}),
     };
     if (d.mittel && d.mittel.name) {
       muster["atlas:nutzt"] = { "@id": url + "#mittel", "@type": "atlas:SprachlichesMittel", "rdfs:label": d.mittel.name, ...(d.mittel.erklaerung ? { "skos:definition": d.mittel.erklaerung } : {}) };
