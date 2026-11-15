@@ -43,7 +43,9 @@ anmerkungen:
   - titel: "Muster als teilweise Belegung"
     text: >-
       Ein Muster legt fest, welche Art Inhalt vorliegt, womit verglichen wird
-      und welche Hinsicht betroffen ist. An offenen Stellen entscheidet sich der Befund.
+      und welche Hinsicht betroffen ist. Bei vielen Mustern unterscheidet sich der
+      Vergleichsfall nur an wenigen Stellen vom Inhalt (Minimalpaar). An offenen
+      Stellen entscheidet sich der Befund.
   - titel: "Befund und Wirkung"
     text: >-
       Die Einschätzung ist ein eigener Knoten, an dem Inhalt, Publikum,

@@ -219,8 +219,8 @@ beziehungen: # für Schema (Anhang) und JSON-LD
       nach: Hinsicht,
     }
   - {
-      id: andereFormulierung,
-      label: "andere Formulierung",
+      id: kontrastiertMit,
+      label: "kontrastiert mit",
       von: Vergleichsfall,
       nach: Inhalt,
     }
