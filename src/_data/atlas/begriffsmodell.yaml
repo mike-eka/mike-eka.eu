@@ -171,7 +171,7 @@ urteile:
 # Begriffsmodell-Seite: was die Definition offenlässt
 offen_gelassen:
   titel: "Was die Definition offenlässt: Wahrheit und Absicht"
-  text: >-
+  text: |
     Ob ein Inhalt wahr ist oder ob jemand täuschen will, spielt für die
     Re:DIS-Definition keine Rolle. Die im Zusammenhang von Desinformation vertrauten Konzepte
      ergeben sich bei ihr als Sonderfälle: Lüge ist falsch und mit Absicht; Fehlinformation falsch ohne
@@ -183,7 +183,16 @@ offen_gelassen:
 
     Das hat zwei Vorteile. Erstens muss man niemandem in den Kopf schauen.
     Stattdessen beobachtet und misst man (sofern möglich) den epistemischen Effekt, den ein Inhalt
-    auf sein Publikum hat.
+    auf sein Publikum hat. Zweitens  erfasst die Re:DIS-Definition die politischen FUnktionen von Desinformation,
+    die die anderen Ansätze beschreiben, aber unzureichend abdecken (Zweifel säen, versuncichern, Vertrauen untergraben).
+
+    Der Preis dafür ist allerdings, dass auch ehrliche Fehler (z.B. einer Redaktion) oder missverstandene Satira (z.B. Onion)
+    den Erkenntnisstand ihrer Rezipienten verschlechtern und somit als Desinformation zählen können.
+    Dies spricht dafür, dass Absichten doch in irgendeiner Form in die Begriffsbestimmung von Desinformation eingehen müssen.
+
+    Auch Fallis scheint letztlich nicht ganz ohne sie auszukommen: Seine Definition verzichtet zwar auf eine Täuschungsabsicht, stützt sich aber auf den Begriff der Funktion.
+    Was als Funktion einer Information gilt, hängt jedoch sowohl mit den Absichten ihres Senders als auch mit den Deutungen ihrer Rezipienten zusammen.
+    Bei Lügen oder Propaganda bestimmt Fallis die Funktion sogar ausdrücklich über die Absicht der Urheber. Die Intention, die er aus der Definition verbannt, findet so durch die Hintertür wieder Einzug.
 
 # Begriffsmodell-Seite: Literatur am Seitenende
 literatur:
