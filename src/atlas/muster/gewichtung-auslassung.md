@@ -65,7 +65,7 @@ effekt:
     Ob Gewalt gegen Geistliche in verbündeten Staaten ebenso schwer wiegt wie
     in gegnerischen, ist eine offene Frage.
   nachher: >-
-    Die eine Gewalt erscheint als Skandal, die andere als Randnotiz. Es wird ein entsprechendes Ungleichgewist in der Wichtigkeit stark suggeriert.
+    Die eine Gewalt erscheint als Skandal, die andere als Randnotiz. Es wird ein entsprechendes Ungleichgewicht in der Wichtigkeit stark suggeriert.
   hinsichten: [achten, glauben]
 
 kippt_an: vergleich

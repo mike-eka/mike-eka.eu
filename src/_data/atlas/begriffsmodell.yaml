@@ -20,8 +20,8 @@ entwuerfe_anzeigen: true
 haltung: >-
   „Lautleise“ heißen diese Muster, weil sie leise wirken und doch laut werden,
   sobald man sie einmal kennt. Der Atlas sammelt Desinformationsmuster, die zwar
-  ohne falsche Behauptung auskommen, dafür aber teilweise umso problematischer sind.  Dieses Projekt exploriert die
-  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS, nach der Desinformationen öffentlich verbreitete Informationenen sind, die den Erkenntnisstand verschlechtern. Der Atlas entwickelt sich laufend weiter.
+  ohne falsche Behauptung auskommen, dafür aber teilweise umso problematischer sind. Dieses Projekt exploriert die
+  Arbeitsdefinition des DFG-Schwerpunktprogramms Re:DIS, nach der Desinformationen öffentlich verbreitete Informationen sind, die den Erkenntnisstand verschlechtern. Der Atlas entwickelt sich laufend weiter.
 
 # Einleitung der Begriffsmodell-Seite (/atlas/begriffsmodell/)
 begriffsmodell_einleitung: >-
@@ -75,9 +75,9 @@ publikum_abschnitt:
   anker: fuer-wen # Sprungmarke; die Karten verlinken /atlas/begriffsmodell/#fuer-wen
   titel: "Für wen? Eine Frage, die sich immer stellt"
   einleitung: >-
-    Wenn Desinformation als Information verstanden wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen Desinformation auch davon
+    Wenn Desinformation als Information verstanden wird, die die Erkenntnislage verschlechtert, hängt die Einordnung zum Vorliegen von Desinformation auch davon
     ab, wer die/der Rezipient ist. Vorwissen, Vertrauen in die Quelle, Aufmerksamkeit
-    und die Gruppe, in der man etwas hört, könneben ebenfalls die Wirkung verändern. Dieselbe Information kann für die einen harmlos sein und für die anderen nicht. Weil das
+    und die Gruppe, in der man etwas hört, können ebenfalls die Wirkung verändern. Dieselbe Information kann für die einen harmlos sein und für die anderen nicht. Weil das
     für jedes Muster gilt, steht diese Frage nicht auf den einzelnen Karten,
     sondern hier: Sie ist der Rahmen jeder Einschätzung.
   aggregation:

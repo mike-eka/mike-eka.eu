@@ -8,7 +8,7 @@ veroeffentlicht: true
 im_framework: true
 kurz: >-
   Auf eine Frage kommt etwas, das wie eine Antwort klingt, aber eine andere
-  Frage beantwortet, die relevant klingt aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für Manche) als behandelt. Ablenkungsmanöver und falsche Fährten sind natürlich nichts Neues – aber es ist erstaunlich, wie allgegenwärtig vor allem die subtilen Formen davon sind.
+  Frage beantwortet, die relevant klingt aber eigentlich irrelevant ist. Die ursprüngliche Frage gilt danach (für manche) als behandelt. Ablenkungsmanöver und falsche Fährten sind natürlich nichts Neues – aber es ist erstaunlich, wie allgegenwärtig vor allem die subtilen Formen davon sind.
 
 minimalpaar:
   frage: "Warum wird die Sanierung der Grundschule erneut verschoben?"

@@ -180,7 +180,7 @@ grafik:
 ---
 
 Zwischen Publikum und Forschung stehen fast immer Vermittler. Das ist kein
-Problem, sondern eine wichtiger Kanal zur Wissensvermittlung an die (nicht-wissenschaftliche) Öffentlichkeit. Kaperung
+Problem, sondern ein wichtiger Kanal zur Wissensvermittlung an die (nicht-wissenschaftliche) Öffentlichkeit. Kaperung
 beginnt, wenn jemand diese Brückenposition besetzt, ohne mit der
 Fachgemeinschaft auf der anderen Seite verbunden zu sein. Netzwerkanalytisch
 gesprochen ist die Betweenness dieselbe wie bei guter

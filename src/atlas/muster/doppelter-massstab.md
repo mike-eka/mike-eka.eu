@@ -7,7 +7,7 @@ reihenfolge: 2
 veroeffentlicht: true
 im_framework: true
 kurz: >-
-  Ein Maßstab wird bei der einen Sache streng angelegt und bei einer anderen (potenziell wichtigeren Sache) umgekerht angelegt oder gar stillschweigend weggelassen, obwohl beide ihn gleichermaßen erfüllen. Die
+  Ein Maßstab wird bei der einen Sache streng angelegt und bei einer anderen (potenziell wichtigeren Sache) umgekehrt angelegt oder gar stillschweigend weggelassen, obwohl beide ihn gleichermaßen erfüllen. Die
   eine erscheint dadurch dringlich, die andere belanglos.
 
 minimalpaar: # zwei Aussagen desselben erfundenen Finanzpolitikers
@@ -61,7 +61,7 @@ effekt:
   hinsichten: [begruenden, glauben]
 
 kippt_an: was
-grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse; einmal das Paar; und einmal das Paar mit einm benannten Unterschied."
+grenzfall_frage: "Um zu sehen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse; einmal das Paar; und einmal das Paar mit einem benannten Unterschied."
 einschaetzungen:
   - label: "nur die Aussage zur Schuldenbremse"
     inhalt: "Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen."
@@ -86,7 +86,7 @@ einschaetzungen:
     wirkung: keine
 
 normalfall: >-
-  Niemand wendet alle Maßstäbe überall gleich an, und gewisse Dinge lassen sich tatsächlich nur bedingt odar sogar gar nicht vergleichen. Problematisch wird es, wenn ein Maßstab ausdrücklich
+  Niemand wendet alle Maßstäbe überall gleich an, und gewisse Dinge lassen sich tatsächlich nur bedingt oder sogar gar nicht vergleichen. Problematisch wird es, wenn ein Maßstab ausdrücklich
   beansprucht und an anderer Stelle unberechtigterweise fallengelassen wird.
 verzerrungen: # Kachel „Verzerrungen, die das Muster begünstigen“
   - name: "Motiviertes Denken"

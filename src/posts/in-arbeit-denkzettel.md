@@ -5,4 +5,4 @@ excerpt: "Denkzettel greift auf, was prominente Akteure gerade gesagt oder getan
 tags: ["polit"]
 ---
 
-Denkzettel greift auf, was prominente Akteure gerade gesagt oder getan haben, ordnet es insichtlich ihrer eigenen Aussagen ein und richtet daraus einen Appell an sie.
+Denkzettel greift auf, was prominente Akteure gerade gesagt oder getan haben, ordnet es hinsichtlich ihrer eigenen Aussagen ein und richtet daraus einen Appell an sie.
