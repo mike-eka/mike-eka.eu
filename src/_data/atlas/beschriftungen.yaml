@@ -7,7 +7,7 @@ uebersicht:
   nicht_schwerpunkt: "kein Schwerpunkt"
   leer_zusatz: "nicht Gegenstand dieses Atlas" # Hinsicht ohne Schwerpunkt und ohne Muster
   in_vorbereitung: "in Vorbereitung"
-  landkarte_hinweis: "Ein Klick auf ein Muster öffnet seine Karte."
+  landkarte_hinweis: "Ein Klick auf ein Muster öffnet die dazugehörige Karte."
   liste_titel: "Die Struktur als Liste"
   einschaetzung: "Einschätzung"
   # Wertebereiche der Einschätzung (Werte aus begriffsmodell.yaml: urteile, wirkungen)
@@ -114,7 +114,7 @@ schablone:
   wirkung_keine: "keine" # Einschätzung mit `wirkung: keine`
   # Rahmen „Publikum“ um die Schablone (auch in der Landkarte); „Mehr dazu“
   # führt zu begriffsmodell.publikum_abschnitt
-  publikum_rahmen: "Das Publikum ist der Rahmen jeder Einschätzung, kein Merkmal des Musters."
+  publikum_rahmen: "Das Publikum ist der Rahmen jeder Einschätzung, kein intrinsisches Merkmal des Musters selbst."
   publikum_mehr: "Mehr dazu"
   felder: # die Felder der Schablone (im Code angelegt)
     inhalt: { frage: "Was?", name: "Inhalt" }
