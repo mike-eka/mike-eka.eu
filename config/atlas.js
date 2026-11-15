@@ -528,9 +528,32 @@ module.exports = function atlasPlugin(eleventyConfig) {
   ]);
 
   // A list as running text: ["a", "b", "c"] | aufzaehlung("oder") -> "a, b oder c".
+  // Entries may be objects with `name` (e.g. vergleichsfaelle).
   eleventyConfig.addFilter("aufzaehlung", (liste, und = "und") => {
-    const l = (liste || []).map(String);
+    const l = (liste || []).map((x) => (x && typeof x === "object" ? String(x.name) : String(x)));
     return l.length < 2 ? l.join("") : `${l.slice(0, -1).join(", ")} ${und} ${l[l.length - 1]}`;
+  });
+
+  // Texts of the empty template (begriffsmodell.yaml → schablone_leer). A
+  // field missing there is generated: `vergleichsfall` from vergleichsfaelle,
+  // as short forms (without a bracket like "(Minimalpaar)"), joined with " · "
+  // and broken into lines of at most 24 characters (fits the field at 375 px).
+  // A continuation line starts with "·" plus a no-break space, so the dot
+  // never stands alone on a line.
+  eleventyConfig.addFilter("leereSchablone", (bm) => {
+    const felder = { ...((bm && bm.schablone_leer) || {}) };
+    if (felder.vergleichsfall == null) {
+      const kurz = ((bm && bm.vergleichsfaelle) || []).map((v) => String(v.name).replace(/\s*\([^)]*\)\s*$/, ""));
+      const zeilen = [];
+      kurz.forEach((k) => {
+        const letzte = zeilen[zeilen.length - 1];
+        if (letzte == null) zeilen.push(k);
+        else if ((letzte + " · " + k).length <= 24) zeilen[zeilen.length - 1] = letzte + " · " + k;
+        else zeilen.push("· " + k);
+      });
+      felder.vergleichsfall = zeilen;
+    }
+    return felder;
   });
 
   // A value as a list ("a" -> ["a"], null -> []), e.g. for wirkung.

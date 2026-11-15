@@ -188,9 +188,10 @@ schablone_stufen: # welche Fälle die große Schablone auf der Begriffsmodell-Se
     # (jede füllt das Feld aus `kippt_an` und das Urteil)
 
 schablone_leer: # Texte der leeren Schablone
-  inhalt: ["Aussage · Antwort · Erklärung ·", "Paar · Auswahl · Netzwerk"]
+  # vergleichsfall: wird aus vergleichsfaelle erzeugt (Kurzformen, ohne Klammer);
+  # eine eigene Zeile hier ersetzt das
+  inhalt: ["Aussage · Antwort", "· Erklärung · Paar", "· Auswahl · Netzwerk"]
   publikum: ["Wer genau?", "Wie viele?"]
-  vergleichsfall: ["vorher · ohne den Inhalt", "· andere Formulierung"]
   urteil: ["ja · nein · strittig", ""]
   hinsicht: ["Was · Worauf · Wem ·", "Warum wir glauben"]
   wirkung: ["verschlechtern ·", "festhalten · abschotten"]

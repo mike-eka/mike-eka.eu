@@ -18,7 +18,8 @@ legende:
   - { zeichen: "P", text: "das Publikum; Rahmen jeder Einschätzung" }
   - {
       zeichen: "V",
-      text: "der Vergleichsfall: vorher, ohne den Inhalt oder mit einer anderen Formulierung",
+      text: "der Vergleichsfall",
+      vergleichsfaelle: true, # hängt „: vorher, … oder …“ aus begriffsmodell.yaml → vergleichsfaelle an
     }
   - {
       zeichen: "H",

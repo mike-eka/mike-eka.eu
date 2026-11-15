@@ -99,7 +99,7 @@ eleventyComputed:
           {% endif %}
         </div>
 
-        {{ stufe("leer", bb.stufe_leer, bm.schablone_leer | schablonenFelder("offen"), "", b, anker) }}
+        {{ stufe("leer", bb.stufe_leer, bm | leereSchablone | schablonenFelder("offen"), "", b, anker) }}
 
         {% if mk %}
         {#- Die Überschrift ist selbst der Link auf die Karte (nur veröffentlicht) -#}
