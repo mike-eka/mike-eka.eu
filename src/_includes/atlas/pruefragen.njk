@@ -23,7 +23,7 @@
   <div class="atlas-pruefrage">
     <dt><span class="atlas-pruefrage__frage">{{ q.frage }}</span></dt>
     {% if q.feld == "inhalt" and werte and werte.length %}<dd class="atlas-pruefrage__werte">{{ inhaltswerte(werte) }}</dd>{% endif %}
-    <dd>{{ q.erklaerung }}</dd>
+    <dd>{{ q.erklaerung | atlasText | safe }}</dd>
   </div>
   {% endif %}{% endfor %}
 </dl>

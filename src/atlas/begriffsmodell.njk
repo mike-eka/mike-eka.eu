@@ -39,8 +39,8 @@ eleventyComputed:
   <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
   <header class="atlas-karte__kopf">
     <h1>{{ bb.titel }}</h1>
-    {% if bm.begriffsmodell_einleitung %}<p class="atlas-kurz">{{ bm.begriffsmodell_einleitung }}</p>{% endif %}
-    <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+    {{ bm.begriffsmodell_einleitung | atlasAbsatz("atlas-kurz") | safe }}
+    {{ bm.kernsatz | atlasAbsatz("atlas-kernsatz") | safe }}
   </header>
 
   <div class="atlas-kacheln">
@@ -51,30 +51,30 @@ eleventyComputed:
 
     <section class="atlas-kachel atlas-kachel--ruhig atlas-fuer-wen" id="{{ anker }}" aria-labelledby="{{ anker }}-titel">
       <h2 id="{{ anker }}-titel">{{ pa.titel }}</h2>
-      {% if pa.einleitung %}<p>{{ pa.einleitung }}</p>{% endif %}
+      {{ pa.einleitung | atlasAbsatz | safe }}
       {% if pa.aggregation %}
       <h3>{{ pa.aggregation.titel }}</h3>
-      {% if pa.aggregation.text %}<p>{{ pa.aggregation.text }}</p>{% endif %}
+      {{ pa.aggregation.text | atlasAbsatz | safe }}
       {% if pa.aggregation.optionen and pa.aggregation.optionen.length %}
       <dl class="atlas-optionen" aria-label="{{ bb.aggregation_optionen }}">
         {% for opt in pa.aggregation.optionen %}
-        <div><dt>{{ opt.name }}</dt><dd>{{ opt.text }}</dd></div>
+        <div><dt>{{ opt.name }}</dt><dd>{{ opt.text | atlasText | safe }}</dd></div>
         {% endfor %}
       </dl>
       {% endif %}
       {% endif %}
       {% if pa.beispiel %}
       <h3>{{ bb.beispiel }}</h3>
-      <p>{{ pa.beispiel }}</p>
+      {{ pa.beispiel | atlasAbsatz | safe }}
       {% endif %}
-      {% if pa.bezug %}<p class="atlas-fuer-wen__bezug">{{ pa.bezug }}</p>{% endif %}
+      {{ pa.bezug | atlasAbsatz("atlas-fuer-wen__bezug") | safe }}
     </section>
 
     <section class="atlas-kachel atlas-kachel--still" aria-labelledby="wirkungen">
       <h2 id="wirkungen">{{ bb.wirkungen }}</h2>
       <dl class="atlas-werte">
         {% for w in bm.wirkungen %}
-        <div><dt>{{ w.name }}</dt><dd>{{ w.erklaerung }}</dd></div>
+        <div><dt>{{ w.name }}</dt><dd>{{ w.erklaerung | atlasText | safe }}</dd></div>
         {% endfor %}
       </dl>
     </section>
@@ -82,7 +82,7 @@ eleventyComputed:
     {% if bm.offen_gelassen %}
     <section class="atlas-kachel atlas-kachel--still" aria-labelledby="offen-gelassen">
       <h2 id="offen-gelassen">{{ bm.offen_gelassen.titel }}</h2>
-      <p>{{ bm.offen_gelassen.text }}</p>
+      {{ bm.offen_gelassen.text | atlasAbsatz | safe }}
     </section>
     {% endif %}
 

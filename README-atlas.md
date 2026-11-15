@@ -141,6 +141,34 @@ einschaetzungen:
   ```
   Bei Anführungszeichen im Text die typografischen „…“ verwenden oder den Text in
   `"…"` setzen und innere `"` vermeiden.
+- **Markdown in Textfeldern.** Diese Felder werden als Markdown gesetzt
+  (`*kursiv*`, `**fett**`, Links; dazu `[[…]]` für Hervorhebungen):
+  - `begriffsmodell.yaml`: `kernsatz`, `inhalt_hinweis`, `haltung`,
+    `begriffsmodell_einleitung`, `pruefragen[].erklaerung`,
+    `publikum_abschnitt` → `einleitung`, `aggregation.text`,
+    `aggregation.optionen[].text`, `beispiel`, `bezug`,
+    `hinsichten[].erklaerung`, `wirkungen[].erklaerung`, `offen_gelassen.text`
+  - `anhang.yaml`: `einleitung`, `definition`, `anmerkungen[].text`, `modell`
+  - `en.yaml`: `einleitung`, `kernsatz`, `inhalt_hinweis`, `hinsichten.<id>.erklaerung`
+
+  Nicht Markdown: Titel, Namen, Labels, Fragen, Listen wie `literatur` und
+  `offene_stellen`, alles in `beschriftungen.yaml` und `ueber.yaml`.
+
+  Eine Leerzeile beginnt einen neuen Absatz, ein einfacher Zeilenumbruch
+  bleibt ein Umbruch auf der Seite. Dafür den Block mit `|` schreiben:
+  ```yaml
+  bezug: |-
+    Erster Absatz, erste Zeile
+    erster Absatz, zweite Zeile.
+
+    Zweiter Absatz.
+  ```
+  Bei `>-` fügt YAML die Zeilen selbst zu einer zusammen. Dort ergibt eine
+  Leerzeile nur einen Zeilenumbruch, erst zwei Leerzeilen einen Absatz. Bei `|`
+  also nicht mitten im Satz umbrechen, sonst steht der Umbruch auch auf der Seite.
+  In der Landkarte erscheint `hinsichten[].erklaerung` als reiner Text, ohne
+  Umbrüche und Formatierung. In Zeilen (Hinsichten in der Liste, Wirkung in der
+  Schablone) wird ein Absatz zur Leerzeile.
 - Zitierte Sätze (`inhalt` einer Einschätzung, `minimalpaar.muster`/`gegenform`,
   `minimalpaar.frage` ohne `frage_label`, `analogie.aussage`) ohne eigene
   Anführungszeichen schreiben: Die Seite setzt sie selbst. Der Build warnt sonst.

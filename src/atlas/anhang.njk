@@ -20,13 +20,13 @@ eleventyComputed:
   <a class="back-link" href="/atlas/">{{ b.uebersicht.link }}</a>
   <header class="atlas-karte__kopf">
     <h1>{{ a.titel }}</h1>
-    {% if a.einleitung %}<p class="atlas-kurz">{{ a.einleitung }}</p>{% endif %}
+    {{ a.einleitung | atlasAbsatz("atlas-kurz") | safe }}
   </header>
 
   <div class="atlas-kacheln">
     <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="definition">
       <h2 id="definition">{{ ba.definition }}</h2>
-      <p class="atlas-definition">{{ a.definition }}</p>
+      {{ a.definition | atlasAbsatz("atlas-definition") | safe }}
       {% if a.legende and a.legende.length %}
       <h3 class="atlas-unterkopf">{{ ba.legende }}</h3>
       <dl class="atlas-zeichen">
@@ -70,7 +70,7 @@ eleventyComputed:
       <h2 id="anmerkungen">{{ ba.anmerkungen }}</h2>
       {% for m in a.anmerkungen %}
       <h3 class="atlas-unterkopf">{{ m.titel }}</h3>
-      <p>{{ m.text }}</p>
+      {{ m.text | atlasAbsatz | safe }}
       {% endfor %}
     </section>
     {% endif %}
@@ -86,7 +86,7 @@ eleventyComputed:
     {% if a.modell %}
     <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="modell">
       <h2 id="modell">{{ ba.modell }}</h2>
-      <p>{{ a.modell }}</p>
+      {{ a.modell | atlasAbsatz | safe }}
     </section>
     {% endif %}
 

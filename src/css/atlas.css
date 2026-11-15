@@ -53,6 +53,24 @@
     display: none !important;
 }
 
+/* Text fields with several paragraphs (Markdown filter atlasAbsatz /
+   atlasText in config/atlas.js). The wrapper stands in for the former <p>
+   and takes its margin; class rules further down (e.g. .atlas-kurz) override
+   it. Inside, the paragraphs sit flush, with a gap between them. */
+.atlas-absaetze {
+    margin: 1em 0;
+}
+
+.atlas-absaetze > .atlas-absatz,
+dd > .atlas-absatz {
+    margin: 0;
+}
+
+.atlas-absaetze > .atlas-absatz + .atlas-absatz,
+dd > .atlas-absatz + .atlas-absatz {
+    margin-top: 0.75em;
+}
+
 /* Atlas pages are wider than the 40rem text column and centred. */
 main.atlas-wide {
     max-width: none;

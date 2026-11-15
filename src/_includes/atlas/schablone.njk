@@ -52,7 +52,7 @@
       {%- set w = o.wirkungen | nachId(id) -%}
       {%- if not loop.first %}<br>{% endif -%}
       {%- if w -%}
-        <strong class="atlas-variante__urteil">{{ w.name }}</strong> <span class="atlas-variante__begruendung">{{ w.erklaerung }}</span>
+        <strong class="atlas-variante__urteil">{{ w.name }}</strong> <span class="atlas-variante__begruendung">{{ w.erklaerung | atlasText(true) | safe }}</span>
       {%- elif id == "keine" -%}
         <strong class="atlas-variante__urteil">{{ b.wirkung_keine }}</strong>
       {%- else -%}

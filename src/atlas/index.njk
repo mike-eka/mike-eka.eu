@@ -15,9 +15,9 @@ eleventyComputed:
   <header class="atlas-uebersicht__kopf">
     <h1 class="page-title">{{ bm.titel }}</h1>
     <p class="atlas-untertitel">{{ bm.untertitel }}</p>
-    <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
-    {% if bm.inhalt_hinweis %}<p class="atlas-haltung">{{ bm.inhalt_hinweis }}</p>{% endif %}
-    {% if bm.haltung %}<p class="atlas-haltung">{{ bm.haltung }}</p>{% endif %}
+    {{ bm.kernsatz | atlasAbsatz("atlas-kernsatz") | safe }}
+    {{ bm.inhalt_hinweis | atlasAbsatz("atlas-haltung") | safe }}
+    {{ bm.haltung | atlasAbsatz("atlas-haltung") | safe }}
     <nav class="atlas-seitennav" aria-label="{{ bm.titel }}">
       <ul>
         {% for n in b.uebersicht.navigation %}
@@ -68,7 +68,7 @@ eleventyComputed:
             <span class="atlas-label">{{ b.uebersicht.hinsicht }}</span>
             <span class="atlas-hinsicht__name">{{ h.name }}</span>
             {%- set leer = (h.schwerpunkt == false and not karten.length) %}
-            <span class="atlas-hinweis">– {{ h.erklaerung }}{% if leer %} {{ [h.hinweis, b.uebersicht.leer_zusatz] | select | join(" – ") }}{% elif h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>
+            <span class="atlas-hinweis">– {{ h.erklaerung | atlasText(true) | safe }}{% if leer %} {{ [h.hinweis, b.uebersicht.leer_zusatz] | select | join(" – ") }}{% elif h.schwerpunkt == false %} ({{ b.uebersicht.nicht_schwerpunkt }}{% if h.hinweis %}: {{ h.hinweis }}{% endif %}){% endif %}</span>
             {% if karten.length %}
             <ul>
               {% for k in karten %}

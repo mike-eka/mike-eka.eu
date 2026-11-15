@@ -31,6 +31,61 @@ function netzZustaende(grafik, einschaetzungen) {
 // Without [[…]] marks, for comparing list entries.
 const ohneMarken = (s) => String(s).replace(/\[\[|\]\]/g, "").trim();
 
+// Markdown for the longer text fields of the YAML files (see README-atlas.md,
+// "Markdown in Textfeldern"): a blank line starts a new paragraph, a single
+// line break becomes <br>. Own instance, so `breaks` stays off for the rest
+// of the site. No raw HTML; no indented code blocks (a stray indent in a YAML
+// text must not turn into code).
+const md = require("markdown-it")({ html: false, breaks: true }).disable("code");
+
+// [[…]] -> <mark>…</mark>, applied to the rendered HTML (markdown-it leaves
+// the brackets alone), so marks and Markdown work together.
+const marken = (html) => html.replace(/\[\[(.+?)\]\]/g, "<mark>$1</mark>");
+
+// A text as Markdown blocks; `einzeln` is the content of its only paragraph
+// (or null if it has several blocks or is not a plain paragraph).
+function mdBloecke(text) {
+  const html = marken(md.render(String(text == null ? "" : text))).trim();
+  const m = /^<p>([\s\S]*)<\/p>$/.exec(html);
+  const einzeln = m && !m[1].includes("<p>") ? m[1] : null;
+  return { html, einzeln };
+}
+
+// For a text that the template used to output as <p class="…">: one
+// paragraph stays exactly that element. Several paragraphs: without a class
+// simply several <p>; with a class (border, background …) a <div> with that
+// class around one <p class="atlas-absatz"> per paragraph (no <p> inside <p>).
+function textAbsatz(text, klasse) {
+  if (text == null || text === "") return "";
+  const { html, einzeln } = mdBloecke(text);
+  if (!klasse) return html;
+  if (einzeln != null) return `<p class="${escapeHtml(klasse)}">${einzeln}</p>`;
+  return `<div class="atlas-absaetze ${escapeHtml(klasse)}">${html.replace(/<p>/g, '<p class="atlas-absatz">')}</div>`;
+}
+
+// For a text inside an existing element (dd, span): one paragraph comes out
+// inline. `inline: true` (phrasing content, e.g. a span) keeps everything
+// inline, a blank line as an empty line (<br><br>); otherwise several
+// paragraphs become <p class="atlas-absatz">.
+function textInline(text, inline) {
+  if (text == null || text === "") return "";
+  if (inline) return marken(md.renderInline(String(text)).replace(/\n/g, ""));
+  const { html, einzeln } = mdBloecke(text);
+  return einzeln != null ? einzeln : html.replace(/<p>/g, '<p class="atlas-absatz">');
+}
+
+// The same text as plain text, for the map (SVG text): Markdown and marks
+// removed, line breaks as spaces.
+function textPlain(text) {
+  if (text == null) return text;
+  return md.renderInline(String(text).replace(/\[\[|\]\]/g, ""))
+    .replace(/<br\s*\/?>/g, " ")
+    .replace(/<[^>]*>/g, "")
+    .replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 const MUSTER_GLOB = "./src/atlas/muster/*.md";
 
 function escapeHtml(value) {
@@ -266,6 +321,13 @@ module.exports = function atlasPlugin(eleventyConfig) {
     text == null ? "" : escapeHtml(text).replace(/\[\[(.+?)\]\]/g, "<mark>$1</mark>")
   );
 
+  // Longer text fields as Markdown with [[…]] marks (see textAbsatz /
+  // textInline above). Both return HTML, to be output with `| safe`:
+  //   {{ text | atlasAbsatz("klasse") | safe }}  instead of <p class="klasse">{{ text }}</p>
+  //   <dd>{{ text | atlasText | safe }}</dd>, <span>{{ text | atlasText(true) | safe }}</span>
+  eleventyConfig.addFilter("atlasAbsatz", (text, klasse) => textAbsatz(text, klasse));
+  eleventyConfig.addFilter("atlasText", (text, inline) => textInline(text, inline));
+
   // First entry of a list whose `id` matches, e.g. hinsichten | nachId("achten").
   eleventyConfig.addFilter("nachId", (liste, id) => (liste || []).find((x) => x && x.id === id));
 
@@ -304,7 +366,7 @@ module.exports = function atlasPlugin(eleventyConfig) {
       hinsichten: (bm.hinsichten || []).map((h) => ({
         id: h.id,
         name: h.name,
-        erklaerung: h.erklaerung,
+        erklaerung: textPlain(h.erklaerung),
         hinweis: h.hinweis,
         schwerpunkt: h.schwerpunkt !== false,
         muster: (alleMuster || [])

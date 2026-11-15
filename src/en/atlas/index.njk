@@ -17,9 +17,9 @@ eleventyComputed:
 <article class="atlas atlas-uebersicht atlas-en">
   <header class="atlas-uebersicht__kopf">
     <h1 class="page-title">{{ en.titel }}</h1>
-    {% if en.einleitung %}<p>{{ en.einleitung }}</p>{% endif %}
-    <p class="atlas-kernsatz">{{ en.kernsatz }}</p>
-    {% if en.inhalt_hinweis %}<p class="atlas-haltung">{{ en.inhalt_hinweis }}</p>{% endif %}
+    {{ en.einleitung | atlasAbsatz | safe }}
+    {{ en.kernsatz | atlasAbsatz("atlas-kernsatz") | safe }}
+    {{ en.inhalt_hinweis | atlasAbsatz("atlas-haltung") | safe }}
     {#- the formal part, at the same place as on the German overview -#}
     {% if en.formal %}
     <p class="atlas-en-formal"><strong>{{ en.formal.titel }}.</strong> {{ en.formal.satz }} {{ en.formal.hinweis }}</p>
@@ -58,7 +58,7 @@ eleventyComputed:
         {%- set eh = en.hinsichten[h.id] %}
         <span class="atlas-label">{{ eb.hinsicht }}</span>
         <span class="atlas-hinsicht__name">{{ eh.name or h.name }}</span>
-        <span class="atlas-hinweis">{% if eh.erklaerung %}– {{ eh.erklaerung }}{% endif %}{% if h.schwerpunkt == false %} ({{ eb.nicht_schwerpunkt }}){% endif %}</span>
+        <span class="atlas-hinweis">{% if eh.erklaerung %}– {{ eh.erklaerung | atlasText(true) | safe }}{% endif %}{% if h.schwerpunkt == false %} ({{ eb.nicht_schwerpunkt }}){% endif %}</span>
         {% if karten.length %}
         <ul>
           {% for k in karten %}
