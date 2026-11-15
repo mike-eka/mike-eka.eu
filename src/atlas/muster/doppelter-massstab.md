@@ -56,7 +56,7 @@ effekt:
   hinsichten: [begruenden, glauben]
 
 kippt_an: was
-grenzfall_frage: "Ist eine einzelne Aussage der Inhalt, oder das Paar?"
+grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur die Aussage zur Schuldenbremse; einmal das Paar; und einmal das Paar mit einm benannten Unterschied."
 einschaetzungen:
   - label: "nur die Aussage zur Schuldenbremse"
     inhalt: "Wir halten an der Schuldenbremse fest, damit unsere Kinder nicht die Rechnung von heute bezahlen."
@@ -66,14 +66,14 @@ einschaetzungen:
       Begründung.
     wirkung: keine
   - label: "das Paar"
-    inhalt: "Beide Aussagen zusammen, ohne dass der Maßstab beim Klima vorkommt."
+    inhalt: (Beide Aussagen zusammen, ohne, dass der Maßstab beim Klima vorkommt.)
     urteil: ja
     begruendung: >-
       Derselbe Maßstab gilt einmal und einmal nicht. Das Publikum schließt,
       dass er für das Klima keine Rolle spielt, und ordnet die Frage falsch ein.
     wirkung: verschlechtern
   - label: "das Paar mit benanntem Unterschied"
-    inhalt: "Beide Aussagen, dazu eine Begründung, warum das Klima anders zu bewerten sei."
+    inhalt: (Beide Aussagen, dazu eine Begründung, warum das Klima anders zu bewerten sei.)
     urteil: strittig
     begruendung: >-
       Wer einen Unterschied benennt, legt den Maßstab offen an. Ob der

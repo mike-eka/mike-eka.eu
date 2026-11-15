@@ -74,7 +74,7 @@ effekt:
   hinsichten: [begruenden, achten]
 
 kippt_an: hinsicht
-grenzfall_frage: "Zählt nur, was man glaubt, oder auch, warum man es glaubt?"
+grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, betrachten wir einmal nur, was wir glauben, und einmal auch, warum wir es glauben."
 einschaetzungen:
   - label: "Was wir glauben"
     hinsicht: "Was wir glauben"

@@ -43,7 +43,7 @@ schablone: # Stufe „Muster“: was das Muster festlegt
 # ist Rahmen jeder Einschätzung). Jede Einschätzung füllt das zugehörige
 # Feld (hier: inhalt) und das Urteil.
 kippt_an: was
-grenzfall_frage: "Was ist der Inhalt: die ganze Aussage oder nur ihr prüfbarer Teil?"
+grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, lassen wir einmal die ganze Aussage unverändert und betrachten einmal nur den überprüfbaren Teil."
 einschaetzungen:
   - label: "die ganze Aussage"
     inhalt: "Tempo 30 verlängert die Fahrzeiten und macht unsere Innenstädte kaputt."

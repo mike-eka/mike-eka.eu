@@ -52,7 +52,7 @@ effekt:
   hinsichten: [achten]
 
 kippt_an: vergleich
-grenzfall_frage: "Um die Grenzfälle dieses Musters aufzuzeigen, vergleichen wir es mit einer echten Antwort und mit gar keiner Antwort."
+grenzfall_frage: "Um zu zeigen, unter welchen Bedingungen dieses Muster eine Desinformation darstellt, vergleichen wir es einmal mit einer echten Antwort und einmal mit gar keiner Antwort."
 einschaetzungen:
   - label: "mit einer echten Antwort auf die Frage"
     vergleichsfall: "Die Bürgermeisterin nennt den Grund für die Verschiebung."
