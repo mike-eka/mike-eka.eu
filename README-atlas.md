@@ -61,9 +61,13 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
 
 Varianten im Minimalpaar:
 - Markierungen: `[[so]]` wird hervorgehoben.
-- `minimalpaar.frage`: eine Frage über dem Paar; die Fassungen heißen dann
-  „Antwort mit dem Muster“ und „Gegenform“. Mit `frage_label` (z. B. `"Ausgangslage"`)
-  ersetzt du das Label „Gefragt“; die Fassungen heißen dann „Mit dem Muster“ und „Gegenform“.
+- Die Kachel heißt „Beispiel“. Die Fassungen heißen immer „Mit Muster“ (groß) und
+  „Vergleichsfall“ (normal, heller). Rechts daneben eine Klammer mit der Erläuterung
+  „Minimalpaar“; sie steht einmal für alle Karten in `beschriftungen.yaml`
+  (`karte.minimalpaar`). Ist die Kachel zu schmal (Handy; bei Listen auch Tablet und
+  Druck), steht die Erläuterung als kleine Zeile unter dem Paar.
+- `minimalpaar.frage`: eine Frage über dem Paar. Mit `frage_label` (z. B.
+  `"Ausgangslage"`) ersetzt du das Label „Gefragt“.
 - `muster` und `gegenform` dürfen Listen sein (eine Auswahl von Meldungen). Die Zeilen
   werden automatisch ausgerichtet und markiert: Einträge, die nur eine Fassung hat
   („+ zusätzlich“, gegenüber „fehlt hier“), und Einträge, die an derselben Stelle in

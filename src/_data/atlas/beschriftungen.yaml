@@ -84,11 +84,14 @@ karte:
     vergleichsfall: "Vergleich"
     hinsicht: "Hinsicht"
     wirkung: "Wirkung"
-  minimalpaar: "Minimalpaar"
-  # nur wenn minimalpaar.frage gesetzt ist:
+  beispiel: "Beispiel" # Überschrift der Kachel mit dem Minimalpaar
+  muster: "Mit Muster" # Vorzeile über dem Satz mit dem Muster
+  gegenform: "Vergleichsfall" # Vorzeile über der Gegenform
+  minimalpaar: # Erläuterung neben der Klammer (schmal: darunter), für alle Karten
+    titel: "Minimalpaar"
+    text: "Beide Sätze unterscheiden sich nur an den markierten Stellen. Der Vergleichsfall macht deutlich, was das Muster im Kern ausmacht."
+  # nur wenn minimalpaar.frage gesetzt ist (ohne frage_label):
   minimalpaar_frage: "Gefragt"
-  antwort_muster: "Antwort mit dem Muster"
-  antwort_gegenform: "Gegenform"
   # nur wenn muster/gegenform Listen sind:
   paar_zusatz: "+ zusätzlich" # Eintrag, den nur diese Fassung hat
   paar_fehlt: "fehlt hier" # Lücke, wo die andere Fassung einen Eintrag mehr hat
@@ -98,8 +101,6 @@ karte:
   analogie_art: # steht als Wort in jeder Zeile der Tabelle
     passt: "passt"
     bricht: "bricht"
-  muster: "Mit dem Muster"
-  gegenform: "Gegenform"
   mittel: "Sprachliches Mittel"
   test: "Test"
   normalfall: "Normal, weil"

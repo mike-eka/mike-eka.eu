@@ -46,28 +46,33 @@ layout: base.njk
     {% endif %}
 
     {% if minimalpaar %}
-    <section class="atlas-kachel atlas-kachel--ruhig" aria-labelledby="minimalpaar">
-      <h2 id="minimalpaar">{{ b.karte.minimalpaar }}</h2>
-      {# Optional: die Frage, auf die beide Fassungen antworten #}
-      {#- Optional: frage (über dem Paar) mit frage_label (ersetzt „Gefragt“; dann
-          heißen die Fassungen nur „Muster“/„Gegenform“). muster/gegenform dürfen
-          Listen sein: dann zwei ausgerichtete Listen; Einträge, die nur eine
-          Fassung hat, sind markiert, die Lücke in der anderen ebenfalls. -#}
+    <section class="atlas-kachel atlas-kachel--ruhig atlas-beispiel" aria-labelledby="beispiel">
+      <h2 id="beispiel">{{ b.karte.beispiel }}</h2>
+      {#- Optional: frage (über dem Paar) mit frage_label (ersetzt „Gefragt“).
+          Darunter die beiden Sätze: „Mit Muster“ groß, „Vergleichsfall“ normal
+          und heller; rechts eine Klammer mit der Erläuterung „Minimalpaar“ (aus
+          beschriftungen.yaml), wenn die Kachel breit genug ist, sonst die
+          Erläuterung als Zeile darunter (Container-Query, reines CSS).
+          muster/gegenform dürfen Listen sein: dann zwei ausgerichtete Listen;
+          Einträge, die nur eine Fassung hat, sind markiert, die Lücke in der
+          anderen ebenfalls. -#}
       {%- set mitFrage = minimalpaar.frage -%}
-      {%- set alsAntworten = mitFrage and not minimalpaar.frage_label -%}
-      {%- set labelMuster = b.karte.antwort_muster if alsAntworten else b.karte.muster -%}
-      {%- set labelGegenform = b.karte.antwort_gegenform if alsAntworten else b.karte.gegenform -%}
+      {%- set labelMuster = b.karte.muster -%}
+      {%- set labelGegenform = b.karte.gegenform -%}
+      {%- set istListe = minimalpaar.muster | istListe(minimalpaar.gegenform) -%}
       {% if mitFrage %}
       <p class="atlas-paar__frage">
         <span class="atlas-label">{{ minimalpaar.frage_label or b.karte.minimalpaar_frage }}</span>
         {% if minimalpaar.frage_label %}{{ minimalpaar.frage }}{% else %}<q>{{ minimalpaar.frage }}</q>{% endif %}
       </p>
       {% endif %}
-      {% if minimalpaar.muster | istListe(minimalpaar.gegenform) %}
+      <div class="atlas-paar-rahmen{% if istListe %} atlas-paar-rahmen--listen{% endif %}{% if mitFrage %} atlas-paar--antworten{% endif %}">
+      <div class="atlas-paar-rahmen__innen">
+      {% if istListe %}
       {%- set zeilen = minimalpaar.muster | paarZeilen(minimalpaar.gegenform) -%}
-      <div class="atlas-paar-listen{% if mitFrage %} atlas-paar--antworten{% endif %}" style="--zeilen: {{ zeilen.length }}">
+      <div class="atlas-paar-listen" style="--zeilen: {{ zeilen.length }}">
         {% for seite in [["muster", "gegenform", labelMuster], ["gegenform", "muster", labelGegenform]] %}
-        <div class="atlas-paar-liste">
+        <div class="atlas-paar-liste ist-{{ seite[0] }}">
           <h3 class="atlas-paar-liste__titel">{{ seite[2] }}</h3>
           <ul>
             {% for z in zeilen %}
@@ -86,17 +91,29 @@ layout: base.njk
         {% endfor %}
       </div>
       {% else %}
-      <dl class="atlas-paar{% if mitFrage %} atlas-paar--antworten{% endif %}">
-        <div class="atlas-paar__zeile">
+      <dl class="atlas-paar">
+        <div class="atlas-paar__zeile ist-muster">
           <dt>{{ labelMuster }}</dt>
           <dd><q>{{ minimalpaar.muster | markiere | safe }}</q></dd>
         </div>
-        <div class="atlas-paar__zeile">
+        <div class="atlas-paar__zeile ist-gegenform">
           <dt>{{ labelGegenform }}</dt>
           <dd><q>{{ minimalpaar.gegenform | markiere | safe }}</q></dd>
         </div>
       </dl>
       {% endif %}
+      {#- Geschweifte Klammer: zwei feste Bögen und die Spitze als SVG (1:1,
+          verzerrt nicht), dazwischen zwei Linien, die sich strecken -#}
+      <span class="atlas-klammer" aria-hidden="true">
+        <svg class="atlas-klammer__ende" viewBox="0 0 12 8" width="12" height="8"><path d="M1 0.75C4.5 0.75 6 2.5 6 6V8"/></svg>
+        <span class="atlas-klammer__linie"></span>
+        <svg class="atlas-klammer__spitze" viewBox="0 0 12 16" width="12" height="16"><path d="M6 0V2C6 5.5 7.5 8 11.25 8C7.5 8 6 10.5 6 14V16"/></svg>
+        <span class="atlas-klammer__linie"></span>
+        <svg class="atlas-klammer__ende" viewBox="0 0 12 8" width="12" height="8"><path d="M6 0V2C6 5.5 4.5 7.25 1 7.25"/></svg>
+      </span>
+      <p class="atlas-paar-erlaeuterung"><span class="atlas-label">{{ b.karte.minimalpaar.titel }}</span> {{ b.karte.minimalpaar.text }}</p>
+      </div>
+      </div>
       {% if minimalpaar.hinweis %}<p class="atlas-hinweis">{{ minimalpaar.hinweis }}</p>{% endif %}
     </section>
     {% endif %}

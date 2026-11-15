@@ -7,7 +7,9 @@
     --atlas-grund: #fffaf0;            /* page background (as in style.css) */
     --atlas-text: #1f1b16;
     --atlas-gedaempft: #6b6358;        /* secondary text */
+    --atlas-text-zweit: #4a453d;       /* comparison case in the minimal pair (as in style.css) */
     --atlas-linie: #e5ddcf;            /* decorative hairlines */
+    --atlas-klammer: #7a7267;          /* brace beside the minimal pair */
 
     /* Accent 1 (warm, from #bf5748): fixed by the pattern, core content */
     --atlas-kern: #bf5748;             /* lines */
@@ -466,18 +468,27 @@ main.atlas-wide {
     }
 }
 
-/* ---- Minimal pair ---- */
+/* ---- Minimal pair (tile "Beispiel") ----
+   The sentence with the pattern large, the comparison case normal and a
+   little lighter, each under a small label. Wide: a curly brace to the right
+   over both sentences, the explanation "Minimalpaar" beside it. Narrow (the
+   default, also without container queries): no brace, the explanation as a
+   small line below. The switch is a container query on the pair, so the
+   tile's real width decides – on screen and on paper alike. */
+.atlas-paar-rahmen {
+    container-type: inline-size;
+}
+
+.atlas-paar-rahmen__innen {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.9rem;
+}
+
 .atlas-paar {
     margin: 0;
     display: grid;
-    gap: 0.75rem;
-}
-
-.atlas-paar__zeile {
-    display: grid;
-    grid-template-columns: 7rem 1fr;
-    gap: 0.75rem;
-    align-items: baseline;
+    gap: 1rem;
 }
 
 .atlas-paar dt {
@@ -485,11 +496,102 @@ main.atlas-wide {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--atlas-gedaempft);
+    margin-bottom: 0.15rem;
 }
 
 .atlas-paar dd {
     margin: 0;
-    font-size: 1.1rem;
+}
+
+.atlas-paar .ist-muster dd {
+    font-size: 1.25rem;
+    line-height: 1.45;
+    color: var(--atlas-text);
+}
+
+.atlas-paar .ist-gegenform dd {
+    font-size: 1rem;
+    color: var(--atlas-text-zweit);
+}
+
+/* the brace: two fixed ends and the tip (SVG, 1:1), two stretching lines */
+.atlas-klammer {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 12px;
+    color: var(--atlas-klammer);
+}
+
+.atlas-klammer svg {
+    display: block;
+    flex: none;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.25;
+    stroke-linecap: round;
+}
+
+.atlas-klammer__linie {
+    flex: 1 1 0;
+    min-height: 0.5rem;
+    width: 0;
+    margin-left: 5.375px; /* centre of the stroke on x = 6, as in the SVG */
+    border-left: 1.25px solid currentColor;
+}
+
+.atlas-paar-erlaeuterung {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.45;
+    color: var(--atlas-gedaempft);
+}
+
+.atlas-paar-erlaeuterung .atlas-label {
+    display: inline;
+    margin-right: 0.4em;
+}
+
+@container (min-width: 32rem) {
+    .atlas-paar-rahmen:not(.atlas-paar-rahmen--listen) .atlas-paar-rahmen__innen {
+        grid-template-columns: minmax(0, 1fr) 12px minmax(8rem, 11.5rem);
+        column-gap: 0.9rem;
+        align-items: center;
+    }
+
+    .atlas-paar-rahmen:not(.atlas-paar-rahmen--listen) .atlas-klammer {
+        display: flex;
+        align-self: stretch;
+    }
+
+    .atlas-paar-rahmen:not(.atlas-paar-rahmen--listen) .atlas-paar-erlaeuterung .atlas-label {
+        display: block;
+        margin: 0 0 0.2rem;
+    }
+
+    .atlas-paar .ist-muster dd {
+        font-size: 1.4rem;
+    }
+}
+
+/* two lists side by side need more room before the brace fits beside them */
+@container (min-width: 38rem) {
+    .atlas-paar-rahmen--listen .atlas-paar-rahmen__innen {
+        grid-template-columns: minmax(0, 1fr) 12px minmax(8rem, 9.5rem);
+        column-gap: 0.9rem;
+        align-items: center;
+    }
+
+    .atlas-paar-rahmen--listen .atlas-klammer {
+        display: flex;
+        align-self: stretch;
+    }
+
+    .atlas-paar-rahmen--listen .atlas-paar-erlaeuterung .atlas-label {
+        display: block;
+        margin: 0 0 0.2rem;
+    }
 }
 
 /* Optional question above the pair; both versions read as answers to it. */
@@ -561,6 +663,17 @@ main.atlas-wide {
     padding: 0.4rem 0.6rem;
     font-size: 0.9rem;
     line-height: 1.4;
+}
+
+/* as in the single pair: the version with the pattern larger and in full
+   text colour, the comparison case normal and lighter */
+.atlas-paar-liste.ist-muster li {
+    font-size: 1.05rem;
+    color: var(--atlas-text);
+}
+
+.atlas-paar-liste.ist-gegenform li {
+    color: var(--atlas-text-zweit);
 }
 
 .atlas-paar-liste li.ist-einzeln {
@@ -1732,6 +1845,7 @@ main.atlas-wide {
     .atlas-analogie__tabelle tr,
     .atlas-tabelle tr,
     .atlas-fall__seite,
+    .atlas-paar-rahmen,
     .atlas-illustration {
         break-inside: avoid;
         page-break-inside: avoid;
