@@ -81,9 +81,8 @@ einschaetzungen:
     wirkung: keine
 
 normalfall: >-
-  Niemand wendet alle Maßstäbe überall gleich an, und Fälle unterscheiden sich
-  oft tatsächlich. Problematisch wird es, wenn ein Maßstab ausdrücklich
-  beansprucht und an anderer Stelle stillschweigend fallengelassen wird.
+  Niemand wendet alle Maßstäbe überall gleich an, und gewisse Dinge lassen sich tatsächlich nur bedingt odar sogar gar nicht vergleichen. Problematisch wird es, wenn ein Maßstab ausdrücklich
+  beansprucht und an anderer Stelle unberechtigterweise fallengelassen wird.
 verzerrungen: # Kachel „Verzerrungen, die das Muster begünstigen“
   - name: "Motiviertes Denken"
     text: "Wir prüfen streng, was unserer Sicht widerspricht, aber nachsichtig, was sie stützt."
