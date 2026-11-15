@@ -40,8 +40,42 @@ const POSITION = {
   SprachlichesMittel: [140, 630],
 };
 
-function boxHoehe(eigenschaften) {
-  return BOX_H + (eigenschaften ? eigenschaften.length * PROP_H : 0);
+// Property lines are 11px Sono (monospace, see .sc-box-eigenschaft in
+// atlas.css): about 6.6 units per character, plus some room at the sides.
+const ZEICHEN_B = 6.8;
+const PROP_RAND = 12;
+
+// A property line wider than its box is broken at " · " (the dot stays at the
+// end of the line, as in the template's value lines), a single item that is
+// still too long at spaces.
+function umbrechen(zeile, breite) {
+  const max = Math.max(10, Math.floor((breite - 2 * PROP_RAND) / ZEICHEN_B));
+  if (String(zeile).length <= max) return [String(zeile)];
+  const teile = String(zeile).split(" · ");
+  const zeilen = [];
+  let akt = "";
+  teile.forEach((t, i) => {
+    const stueck = t + (i < teile.length - 1 ? " ·" : "");
+    if (!akt) akt = stueck;
+    else if ((akt + " " + stueck).length <= max) akt += " " + stueck;
+    else { zeilen.push(akt); akt = stueck; }
+  });
+  if (akt) zeilen.push(akt);
+  // a single item longer than the box: break it at spaces
+  return zeilen.flatMap((z) => {
+    if (z.length <= max) return [z];
+    const out = [];
+    let a = "";
+    z.split(" ").forEach((w) => {
+      if (a && (a + " " + w).length > max) { out.push(a); a = w; } else a = a ? a + " " + w : w;
+    });
+    if (a) out.push(a);
+    return out;
+  });
+}
+
+function boxHoehe(zeilen) {
+  return BOX_H + (zeilen ? zeilen.length * PROP_H : 0);
 }
 
 const links = (b) => b.x - b.w / 2;
@@ -106,7 +140,9 @@ module.exports = function schemaSvg(beziehungen, texte, titel, zusatzEigenschaft
   klassen.filter((k) => k !== RAHMEN).forEach((k) => {
     let p = POSITION[k];
     if (!p) { p = [115 + (extra % 3) * 435, 790 + Math.floor(extra / 3) * 100]; extra++; }
-    boxen[k] = { k, x: p[0], y: p[1], w: BREITE[k] || BOX_W, h: boxHoehe(eigenschaften[k]) };
+    const w = BREITE[k] || BOX_W;
+    const zeilen = (eigenschaften[k] || []).flatMap((e) => umbrechen(e, w));
+    boxen[k] = { k, x: p[0], y: p[1], w, h: boxHoehe(zeilen), zeilen };
   });
   const H = Math.ceil(Math.max(...Object.values(boxen).map((b) => unten(b))) + 30);
 
@@ -163,7 +199,7 @@ module.exports = function schemaSvg(beziehungen, texte, titel, zusatzEigenschaft
     const x = links(b), y = oben(b);
     teile.push(`<g class="${klasse}"><rect x="${zahl(x)}" y="${zahl(y)}" width="${b.w}" height="${b.h}" rx="8"/>`);
     teile.push(`<text x="${b.x}" y="${zahl(y + 25)}" text-anchor="middle" class="sc-box-titel">${esc(name(b.k))}</text>`);
-    (eigenschaften[b.k] || []).forEach((e, i) => {
+    b.zeilen.forEach((e, i) => {
       teile.push(`<text x="${b.x}" y="${zahl(y + BOX_H + i * PROP_H + 3)}" text-anchor="middle" class="sc-box-eigenschaft">${esc(e)}</text>`);
     });
     teile.push(`</g>`);
