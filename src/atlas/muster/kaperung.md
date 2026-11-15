@@ -70,7 +70,7 @@ einschaetzungen:
     begruendung: >-
       Die Expertise ist echt, aber im falschen Fach (epistemic trespassing).
       Ob das Publikum schlechter dasteht, hängt davon ab, wie weit ihre
-      Methoden hier tragen.
+      Expertise beim Thema Klima trägt.
     wirkung: verschlechtern
     grafik_zustand: { rueckbindung: anderes_fach }
   - label: "an keine Fachgemeinschaft"
