@@ -7,12 +7,16 @@
 // 4. Keine TODO, keine PRÜFEN und keine [PLATZHALTER] auf veröffentlichten
 //    Seiten und in den JSON-Ausgaben; keine TODO/PRÜFEN in den Daten
 //    veröffentlichter Karten und in src/_data/atlas/
+// 5. Downloads passen zum Schalter `downloads` in src/_data/site.js: bei true
+//    sind die Dateien da, bei false fehlen sie (ein Link auf eine fehlende
+//    Datei meldet weiterhin Punkt 2)
 //
 // Exit-Code 0 nur, wenn alles bestanden ist. Läuft ohne zusätzliche Pakete.
 // Hinweis: Den Dev-Server (`npm start`) vorher beenden – unter Windows kann er
 // Dateien in _site sperren.
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -20,7 +24,12 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = path.join(ROOT, "_site");
 const ERLAUBTE_WARNUNG = /^\[mike-eka\] Platzhalter vor dem Merge/;
 
-const befunde = { build: [], links: [], extern: [], inhalt: [], quellen: [] };
+// Self-hosted downloads and their switch (src/_data/site.js → downloads);
+// the files come from src/atlas/atlas.json.njk and atlas.jsonld.njk.
+const DOWNLOADS_AN = createRequire(import.meta.url)(path.join(ROOT, "src/_data/site.js")).downloads === true;
+const DOWNLOADS = ["atlas/atlas.json", "atlas/atlas.jsonld"];
+
+const befunde = { build: [], links: [], extern: [], inhalt: [], quellen: [], downloads: [] };
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join("/");
 
 // ---------------------------------------------------------------- 1. Build
@@ -165,6 +174,13 @@ for (const p of quellen) {
   }
 }
 
+// ---------------------------------------------------------------- 5. downloads
+for (const d of DOWNLOADS) {
+  const da = fs.existsSync(path.join(SITE, d));
+  if (DOWNLOADS_AN && !da) befunde.downloads.push(`/${d} fehlt, obwohl downloads: true`);
+  if (!DOWNLOADS_AN && da) befunde.downloads.push(`/${d} wird ausgegeben, obwohl downloads: false`);
+}
+
 // ---------------------------------------------------------------- report
 const TITEL = {
   build: "Build ohne Warnungen (außer Platzhalter-Hinweis)",
@@ -172,6 +188,7 @@ const TITEL = {
   extern: "Keine externen Requests",
   inhalt: "Keine TODO / PRÜFEN / [Platzhalter] auf veröffentlichten Seiten",
   quellen: "Keine TODO / PRÜFEN in Atlas-Daten und veröffentlichten Karten",
+  downloads: `Downloads passen zum Schalter (downloads: ${DOWNLOADS_AN}: ${DOWNLOADS.join(", ")} ${DOWNLOADS_AN ? "ausgegeben" : "nicht ausgegeben"})`,
 };
 let ok = true;
 console.log(`\ncheck:atlas – ${html.length} Seiten, ${css.length} CSS, ${json.length} JSON geprüft\n`);

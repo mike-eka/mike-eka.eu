@@ -5,7 +5,9 @@ eleventyComputed:
 ---
 {#- Formaler Anhang: Definition mit Zeichen, Schema (statisches SVG aus
     begriffsmodell.yaml → beziehungen; im Druck auf eigener Querformatseite),
-    Anmerkungen, offene Stellen, Modell, Download.
+    Anmerkungen, offene Stellen, Modell, Download. Die Kachel Download
+    erscheint nur mit site.downloads (src/_data/site.js); sonst fehlt sie
+    ganz, und atlas.json / atlas.jsonld werden nicht ausgegeben.
     Texte aus src/_data/atlas/anhang.yaml. -#}
 {%- set a = atlas.anhang -%}
 {%- set bm = atlas.begriffsmodell -%}
@@ -94,12 +96,12 @@ eleventyComputed:
     </section>
     {% endif %}
 
-    <section class="atlas-kachel atlas-kachel--still" aria-labelledby="download">
+    {% if site.downloads %}<section class="atlas-kachel atlas-kachel--still" aria-labelledby="download">
       <h2 id="download">{{ ba.download }}</h2>
       <ul class="atlas-liste-schlicht atlas-downloads">
         <li><a class="atlas-weiter" href="/atlas/atlas.jsonld" download>{{ a.download }}</a> <span class="atlas-hinweis">(atlas.jsonld)</span></li>
         <li><a class="atlas-weiter" href="/atlas/atlas.json" download>{{ ba.download_json }}</a> <span class="atlas-hinweis">(atlas.json)</span></li>
       </ul>
-    </section>
+    </section>{% endif %}
   </div>
 </article>

@@ -20,10 +20,12 @@ npm run check:atlas   # Prüfung vor dem Merge nach main (siehe unten)
 | `src/_data/atlas/ueber.yaml`, `anhang.yaml`, `en.yaml` | Texte der Seiten Über, Anhang und der englischen Kurzfassung |
 | `src/atlas/muster/*.md` | eine Datei pro Musterkarte (Kopfdaten + Fließtext) |
 | `src/css/atlas.css` | Gestaltung; alle Farben als Variablen ganz oben |
+| `src/_data/site.js` | Schalter für die ganze Website, z. B. `downloads` |
 
 Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
 `/atlas/begriffsmodell/`, `/atlas/anhang/`, `/atlas/ueber/`,
-`/en/atlas/`, dazu `/atlas/atlas.json` und `/atlas/atlas.jsonld`.
+`/en/atlas/`, dazu `/atlas/atlas.json` und `/atlas/atlas.jsonld` (nur mit
+`downloads: true`, siehe unten).
 
 ## Rezepte
 
@@ -237,6 +239,24 @@ einer Illustration.
   kein leerer Platz.
 - Entwürfe stehen nie auf der englischen Seite, in `atlas.json` oder `atlas.jsonld`.
 
+### Downloads ein- und ausblenden
+
+Schalter `downloads` in `src/_data/site.js` (gilt für die ganze Website, DE und EN).
+Selbst gehostete Downloads sind derzeit `/atlas/atlas.json` und `/atlas/atlas.jsonld`,
+verlinkt nur in der Kachel „Download“ im Anhang.
+
+- `downloads: false`: Die Kachel „Download“ fehlt ganz (ohne Überschrift und ohne
+  leeren Platz), und die beiden Dateien werden nicht nach `_site/` geschrieben; ihre
+  Adressen liefern 404.
+- `downloads: true`: alles wie vorher.
+
+Templates (`src/atlas/atlas.json.njk`, `atlas.jsonld.njk`, Kachel in `anhang.njk`),
+Erzeugung (`config/export.js`) und Texte (`anhang.yaml → download`,
+`beschriftungen.yaml → anhang.download`, `download_json`) bleiben in jedem Fall im
+Repo. Ein neuer Download: Template mit `permalink` abhängig von `site.downloads`,
+Link in `{% if site.downloads %}`, Datei in die Liste `DOWNLOADS` in
+`scripts/check-atlas.mjs`.
+
 ## Hinweise
 
 - **Nach Änderungen an `config/atlas.js`** (oder anderen Dateien in `config/`) muss der
@@ -272,6 +292,8 @@ Das Skript baut neu und prüft:
 4. keine `TODO`, kein `PRÜFEN` und keine `[PLATZHALTER]` auf veröffentlichten Seiten
    und in den JSON-Ausgaben; keine `TODO`/`PRÜFEN` in den Atlas-Daten und in
    veröffentlichten Karten
+5. die Downloads passen zum Schalter `downloads`: bei `true` sind die Dateien da,
+   bei `false` fehlen sie (ein Link auf eine fehlende Datei meldet Punkt 2)
 
 Nur wenn alles grün ist (Exit-Code 0), nach `main` mergen.
 

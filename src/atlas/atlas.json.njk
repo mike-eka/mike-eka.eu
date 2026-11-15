@@ -1,5 +1,11 @@
----
-permalink: /atlas/atlas.json
-eleventyExcludeFromCollections: true
+---js
+{
+  // Only written when downloads are switched on (src/_data/site.js);
+  // otherwise /atlas/atlas.json is not part of the site (404).
+  eleventyComputed: {
+    permalink: (data) => (data.site && data.site.downloads ? "/atlas/atlas.json" : false),
+  },
+  eleventyExcludeFromCollections: true,
+}
 ---
 {{ atlas.begriffsmodell | atlasJson(collections.atlasMusterAlle) | safe }}

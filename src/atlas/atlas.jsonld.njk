@@ -1,5 +1,11 @@
----
-permalink: /atlas/atlas.jsonld
-eleventyExcludeFromCollections: true
+---js
+{
+  // Only written when downloads are switched on (src/_data/site.js);
+  // otherwise /atlas/atlas.jsonld is not part of the site (404).
+  eleventyComputed: {
+    permalink: (data) => (data.site && data.site.downloads ? "/atlas/atlas.jsonld" : false),
+  },
+  eleventyExcludeFromCollections: true,
+}
 ---
 {{ atlas.begriffsmodell | atlasJsonLd(collections.atlasMusterAlle, atlas.beschriftungen, atlas.en) | safe }}
