@@ -15,6 +15,22 @@ kernsatz: >-
   Content is not disinformation in itself. Whether it is depends on for
   whom, compared to what, and in which respect (dimension) it worsens the epistemic
   situation.
+# directly below the core sentence
+inhalt_hinweis: >-
+  What counts as content is often more than a single sentence: an answer in
+  relation to the question, a pair of statements, a selection from many
+  reports, or a statement together with the network it is embedded in. For
+  several patterns, the problem lies not in a single piece of information
+  but in its relation to others.
+# English for each `inhaltsart` of the cards (keys: inhaltsarten in
+# begriffsmodell.yaml, whose order is kept)
+inhaltsarten:
+  "eine Aussage": "a statement"
+  "eine Antwort auf eine Frage": "an answer to a question"
+  "eine Erklärung": "an explanation"
+  "ein Paar": "a pair"
+  "eine Auswahl": "a selection"
+  "ein Netzwerk": "a network"
 fragen:
   was: "What exactly is the content?"
   vergleich: "Compared to what?"

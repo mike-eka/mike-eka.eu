@@ -4,6 +4,13 @@ kernsatz: >-
   Bestimmte Inhalte sind nicht per se (keine) Desinformation. Ob sie es sind, hängt auch davon ab,
   für wen, im Vergleich wozu und in welcher Hinsicht sie die Erkenntnislage
   verschlechtern.
+# Übersicht: steht direkt unter dem Kernsatz
+inhalt_hinweis: >-
+  Was als Inhalt zählt, ist dabei oft mehr als ein einzelner Satz: eine
+  Antwort im Verhältnis zur Frage, ein Paar von Aussagen, eine Auswahl aus
+  vielen Berichten oder eine Aussage samt dem Netzwerk, in das sie
+  eingebunden ist. Bei mehreren Mustern liegt das Problem nicht in einer
+  einzelnen Information, sondern in ihrem Verhältnis zu anderen.
 # Entwürfe (Karten mit veroeffentlicht: false) als „in Vorbereitung“ zeigen?
 # false: Entwürfe erscheinen nirgends – nicht in Landkarte und Liste.
 # Gebaut werden Entwürfe in keinem Fall.
@@ -122,6 +129,17 @@ hinsichten: # Reihenfolge = Reihenfolge in der Landkarte
 
 inhaltstypen:
   [Aussage, Argument, Auswahl, Paar, Abfolge, Menge, Sprecherposition]
+
+# Erlaubte Werte für `inhaltsart` einer Karte. Die Reihenfolge (von einfach
+# zu vernetzt) ist die der Wertezeile unter „Was genau ist der Inhalt?“
+# (Landkarte, Liste, Begriffsmodell). Englisch: en.yaml → inhaltsarten.
+inhaltsarten:
+  - "eine Aussage"
+  - "eine Antwort auf eine Frage"
+  - "eine Erklärung"
+  - "ein Paar"
+  - "eine Auswahl"
+  - "ein Netzwerk"
 
 vergleichsfaelle:
   - { id: vorher, name: "vorher" }

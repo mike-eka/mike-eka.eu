@@ -46,7 +46,7 @@ eleventyComputed:
   <div class="atlas-kacheln">
     <section class="atlas-kachel atlas-kachel--kern" aria-labelledby="pruefragen">
       <h2 id="pruefragen">{{ bb.pruefragen }}</h2>
-      {{ pruefragen(bm.pruefragen) }}
+      {{ pruefragen(bm.pruefragen, bm | inhaltsartenWerte(collections.atlasMusterSichtbar)) }}
     </section>
 
     <section class="atlas-kachel atlas-kachel--ruhig atlas-fuer-wen" id="{{ anker }}" aria-labelledby="{{ anker }}-titel">

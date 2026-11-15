@@ -41,6 +41,36 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
+// Values of the question "Was genau ist der Inhalt?": the `inhaltsarten` of
+// begriffsmodell.yaml in their fixed order, each with the first card that
+// has it as `inhaltsart` (url null for a draft). Arts without a card are
+// left out. `namen` optionally maps the German art to another language.
+// -> [{ art, name, url }]
+function inhaltsartenWerte(bm, karten, namen) {
+  return ((bm && bm.inhaltsarten) || []).map((art) => {
+    const karte = (karten || []).find((item) => item.data.inhaltsart === art);
+    if (!karte) return null;
+    return {
+      art,
+      name: (namen && namen[art]) || art,
+      url: karte.data.veroeffentlicht === true ? karte.url : null,
+    };
+  }).filter(Boolean);
+}
+
+// Line "Inhalt" of the tile "Einordnung": the card's inhaltsart in front, in
+// bold, capitalised, with a colon ("Ein Paar: …"). If the text already starts
+// with that art (with or without article, e.g. "Aussage: …"), the art
+// replaces that start instead of doubling it. Returns escaped HTML.
+function inhaltMitArt(text, art) {
+  const rest = String(text == null ? "" : text);
+  if (!art) return escapeHtml(rest);
+  const kern = String(art).replace(/^eine?\s+/i, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const ohne = rest.replace(new RegExp("^\\s*(?:eine?\\s+)?" + kern + "\\s*:\\s*", "i"), "");
+  const kopf = String(art).charAt(0).toUpperCase() + String(art).slice(1) + ":";
+  return `<strong class="atlas-einordnung__art">${escapeHtml(kopf)}</strong> ${escapeHtml(ohne)}`;
+}
+
 // Sort cards by the order of `hinsichten` in begriffsmodell.yaml, then by
 // `reihenfolge`, then by title. Unknown hinsicht ids sort last (with a warning).
 function sortiereMuster(items) {
@@ -76,9 +106,17 @@ function pruefeAtlas(items) {
 
   const wirkungsIds = (bm.wirkungen || []).map((w) => w.id);
   const hinsichtIds = (bm.hinsichten || []).map((h) => h.id);
+  const inhaltsarten = bm.inhaltsarten || [];
   for (const item of items) {
-    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt, verzerrungen } = item.data;
+    const { kippt_an: kipp, einschaetzungen, veroeffentlicht, effekt, verzerrungen, inhaltsart } = item.data;
     const datei = item.inputPath;
+
+    // inhaltsart: one of `inhaltsarten` in begriffsmodell.yaml
+    if (istTodo(inhaltsart)) {
+      warn(`${datei}: inhaltsart fehlt (erlaubt: ${inhaltsarten.join(", ")})`);
+    } else if (!inhaltsarten.includes(inhaltsart)) {
+      warn(`${datei}: unbekannte inhaltsart "${inhaltsart}" (erlaubt: ${inhaltsarten.join(", ")})`);
+    }
 
     // Values the template itself sets in quotation marks (<q>) must not bring
     // their own: einschaetzungen[].inhalt, minimalpaar.muster / gegenform (as
@@ -241,6 +279,12 @@ module.exports = function atlasPlugin(eleventyConfig) {
     (items || []).filter((item) => item.data.hinsicht === hinsichtId)
   );
 
+  // Arts of content as values of "Was genau ist der Inhalt?" (see inhaltsartenWerte).
+  eleventyConfig.addFilter("inhaltsartenWerte", (bm, karten, namen) => inhaltsartenWerte(bm, karten, namen));
+
+  // Line "Inhalt" of the tile "Einordnung" with the inhaltsart in front (HTML).
+  eleventyConfig.addFilter("inhaltMitArt", (text, art) => inhaltMitArt(text, art));
+
   // Hinsichten as values of the question "In welcher Hinsicht?": the focus
   // ones first (data order kept), those with schwerpunkt: false at the end.
   eleventyConfig.addFilter("hinsichtenSchwerpunktZuerst", (hinsichten) => {
@@ -270,6 +314,8 @@ module.exports = function atlasPlugin(eleventyConfig) {
             url: item.data.veroeffentlicht === true ? item.url : null,
           })),
       })),
+      // values of the question with feld "inhalt", in fixed order
+      inhaltsarten: inhaltsartenWerte(bm, alleMuster),
       // value ranges of the assessment's two properties
       urteile: (bm.urteile || []).map((u) => u.name),
       wirkungen: (bm.wirkungen || []).map((w) => w.name),

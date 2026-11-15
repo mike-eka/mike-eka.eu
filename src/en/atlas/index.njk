@@ -13,11 +13,13 @@ eleventyComputed:
 {%- set en = atlas.en -%}
 {%- set eb = en.beschriftungen -%}
 {%- set bm = atlas.begriffsmodell -%}
+{%- from "atlas/pruefragen.njk" import inhaltswerte -%}
 <article class="atlas atlas-uebersicht atlas-en">
   <header class="atlas-uebersicht__kopf">
     <h1 class="page-title">{{ en.titel }}</h1>
     {% if en.einleitung %}<p>{{ en.einleitung }}</p>{% endif %}
     <p class="atlas-kernsatz">{{ en.kernsatz }}</p>
+    {% if en.inhalt_hinweis %}<p class="atlas-haltung">{{ en.inhalt_hinweis }}</p>{% endif %}
     {#- the formal part, at the same place as on the German overview -#}
     {% if en.formal %}
     <p class="atlas-en-formal"><strong>{{ en.formal.titel }}.</strong> {{ en.formal.satz }} {{ en.formal.hinweis }}</p>
@@ -36,6 +38,10 @@ eleventyComputed:
     <ul class="atlas-baum">
       {% for q in bm.pruefragen %}{% if en.fragen[q.id] %}
       <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ eb.rahmen }}:</span> {% endif %}{{ en.fragen[q.id] }}
+        {%- if q.feld == "inhalt" %}
+        {#- the arts of content in English, linking to the German cards (published only) -#}
+        {{ inhaltswerte(bm | inhaltsartenWerte(collections.atlasMuster, en.inhaltsarten), { hreflang: "de" }) }}
+        {%- endif %}
         {%- if q.feld == "hinsicht" %}
         {#- the values of "respect", each a jump link to its group below -#}
         <span class="atlas-hinsichtwerte">{% for h in bm.hinsichten | hinsichtenSchwerpunktZuerst %}{% set eh = en.hinsichten[h.id] %}{% if h.schwerpunkt == false %}<span class="ist-nebensache">{{ eh.name or h.name }} ({{ eb.nicht_schwerpunkt }})</span>{% else %}<a href="#respect-{{ h.id }}">{{ eh.name or h.name }}</a>{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</span>

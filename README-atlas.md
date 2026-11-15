@@ -15,7 +15,7 @@ npm run check:atlas   # Prüfung vor dem Merge nach main (siehe unten)
 
 | Datei | Inhalt |
 |---|---|
-| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Haltung, Prüffragen, Hinsichten, Wirkungen, Befunde (`urteile`), „Was die Definition offenlässt“ (`offen_gelassen`), Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
+| `src/_data/atlas/begriffsmodell.yaml` | Titel, Kernsatz, Hinweis zum Inhalt (`inhalt_hinweis`), Haltung, Prüffragen, Inhaltsarten (`inhaltsarten`), Hinsichten, Wirkungen, Befunde (`urteile`), „Was die Definition offenlässt“ (`offen_gelassen`), Beziehungen (Schema), große Schablone (`schablone_stufen`), Abschnitt „Für wen?“, Schalter `entwuerfe_anzeigen` |
 | `src/_data/atlas/beschriftungen.yaml` | alle festen Beschriftungen: Überschriften, Knöpfe, Legenden, Navigation |
 | `src/_data/atlas/ueber.yaml`, `anhang.yaml`, `en.yaml` | Texte der Seiten Über, Anhang und der englischen Kurzfassung |
 | `src/atlas/muster/*.md` | eine Datei pro Musterkarte (Kopfdaten + Fließtext) |
@@ -36,6 +36,16 @@ Seiten: `/atlas/` (Übersicht mit Landkarte), `/atlas/muster/<datei>/`,
    - `titel`, `fachbegriff` (ein englischer Fachbegriff; erscheint auf der englischen Seite), `kurz`
    - `hinsicht`: eine `id` aus `hinsichten` in `begriffsmodell.yaml`
      (`glauben`, `achten`, `vertrauen`, `begruenden`)
+   - `inhaltsart`: was hier als Inhalt zählt, ein Wert aus `inhaltsarten` in
+     `begriffsmodell.yaml` (`"eine Aussage"`, `"eine Antwort auf eine Frage"`,
+     `"eine Erklärung"`, `"ein Paar"`, `"eine Auswahl"`, `"ein Netzwerk"`).
+     Erscheint in der Wertezeile unter „Was genau ist der Inhalt?“ (Übersicht,
+     Begriffsmodell; Reihenfolge wie in `inhaltsarten`, verlinkt auf die Karte)
+     und vorne in der Zeile „Inhalt“ der Kachel „Einordnung“ („**Ein Paar:** …“;
+     beginnt `schablone.inhalt` schon mit der Art, z. B. „Aussage: …“, wird sie
+     nicht gedoppelt). Englisch: `en.yaml → inhaltsarten`. Fehlt der Wert oder ist
+     er unbekannt, meldet der Build das. Eine neue Art: in `inhaltsarten` an der
+     passenden Stelle ergänzen und in `en.yaml` übersetzen.
    - `reihenfolge`: Position innerhalb der Hinsicht (kleinere Zahl = weiter oben)
    - `veroeffentlicht: false`, solange die Karte ein Entwurf ist
    - `im_framework: true`, wenn sie in der Liste der Grenzfälle erscheinen soll

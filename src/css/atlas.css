@@ -1585,6 +1585,11 @@ main.atlas-wide {
     font-size: 0.85rem;
 }
 
+/* Begriffsmodell: the arts of content below "Was genau ist der Inhalt?" */
+.atlas-pruefrage dd.atlas-pruefrage__werte {
+    margin-bottom: 0.3rem;
+}
+
 .atlas-hinsichtwerte .ist-nebensache {
     color: var(--atlas-gedaempft);
 }

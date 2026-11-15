@@ -314,7 +314,8 @@ layout: base.njk
       <h2 id="einordnung">{{ b.karte.einordnung }}</h2>
       <dl class="atlas-werte atlas-einordnung">
         {% for id, label in b.karte.einordnung_zeilen %}{% if schablone[id] %}
-        <div><dt>{{ label }}</dt><dd>{{ schablone[id].text | alsListe | select | join(" ") }}</dd></div>
+        {%- set zeile = schablone[id].text | alsListe | select | join(" ") %}
+        <div><dt>{{ label }}</dt><dd>{% if id == "inhalt" %}{{ zeile | inhaltMitArt(inhaltsart) | safe }}{% else %}{{ zeile }}{% endif %}</dd></div>
         {% endif %}{% endfor %}
       </dl>
       <p class="atlas-einordnung__publikum">

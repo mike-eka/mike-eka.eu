@@ -16,7 +16,7 @@ function seitenUrl() {
 }
 
 const MUSTER_FELDER = [
-  "titel", "fachbegriff", "hinsicht", "reihenfolge", "kurz", "effekt", "fall", "minimalpaar", "analogie",
+  "titel", "fachbegriff", "hinsicht", "inhaltsart", "reihenfolge", "kurz", "effekt", "fall", "minimalpaar", "analogie",
   "mittel", "schablone", "kippt_an", "grenzfall_frage", "einschaetzungen",
   "normalfall", "verzerrungen", "literatur", "grafik",
 ];
@@ -26,8 +26,8 @@ const veroeffentlicht = (alle) => (alle || []).filter((i) => i.data.veroeffentli
 function atlasJson(bm, alle) {
   const basis = seitenUrl();
   const modell = {};
-  ["titel", "untertitel", "kernsatz", "haltung", "pruefragen", "publikum_abschnitt", "hinsichten",
-    "inhaltstypen", "vergleichsfaelle", "wirkungen", "urteile", "offen_gelassen", "beziehungen"]
+  ["titel", "untertitel", "kernsatz", "inhalt_hinweis", "haltung", "pruefragen", "publikum_abschnitt", "hinsichten",
+    "inhaltstypen", "inhaltsarten", "vergleichsfaelle", "wirkungen", "urteile", "offen_gelassen", "beziehungen"]
     .forEach((k) => { if (bm[k] !== undefined) modell[k] = bm[k]; });
   return {
     quelle: basis + "/atlas/",

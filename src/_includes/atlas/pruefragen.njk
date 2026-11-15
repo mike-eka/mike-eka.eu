@@ -4,12 +4,25 @@
   steht nicht hier, sondern im Abschnitt „Für wen?“.
 
   pruefragen: atlas.begriffsmodell.pruefragen
+  werte:      Werte der Frage mit feld "inhalt" (Filter inhaltsartenWerte)
 #}
-{% macro pruefragen(liste) %}
+{#
+  Wertezeile unter „Was genau ist der Inhalt?“: die Inhaltsarten in fester
+  Reihenfolge (begriffsmodell.yaml → inhaltsarten), jede verlinkt auf ihre
+  Karte (Entwürfe ohne Link). o.hreflang: Sprache der Ziele (englische Seite).
+#}
+{% macro inhaltswerte(werte, o) -%}
+{%- if werte and werte.length -%}
+<span class="atlas-hinsichtwerte atlas-inhaltswerte">{% for w in werte %}{% if w.url %}<a href="{{ w.url }}"{% if o and o.hreflang %} hreflang="{{ o.hreflang }}"{% endif %}>{{ w.name }}</a>{% else %}<span class="ist-nebensache">{{ w.name }}</span>{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</span>
+{%- endif -%}
+{%- endmacro %}
+
+{% macro pruefragen(liste, werte) %}
 <dl class="atlas-pruefragen">
   {% for q in liste %}{% if q.art == "muster" %}
   <div class="atlas-pruefrage">
     <dt><span class="atlas-pruefrage__frage">{{ q.frage }}</span></dt>
+    {% if q.feld == "inhalt" and werte and werte.length %}<dd class="atlas-pruefrage__werte">{{ inhaltswerte(werte) }}</dd>{% endif %}
     <dd>{{ q.erklaerung }}</dd>
   </div>
   {% endif %}{% endfor %}

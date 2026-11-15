@@ -10,11 +10,13 @@ eleventyComputed:
 {%- set bm = atlas.begriffsmodell -%}
 {%- set b = atlas.beschriftungen -%}
 {%- set alle = collections.atlasMusterSichtbar -%}
+{%- from "atlas/pruefragen.njk" import inhaltswerte -%}
 <article class="atlas atlas-uebersicht">
   <header class="atlas-uebersicht__kopf">
     <h1 class="page-title">{{ bm.titel }}</h1>
     <p class="atlas-untertitel">{{ bm.untertitel }}</p>
     <p class="atlas-kernsatz">{{ bm.kernsatz }}</p>
+    {% if bm.inhalt_hinweis %}<p class="atlas-haltung">{{ bm.inhalt_hinweis }}</p>{% endif %}
     {% if bm.haltung %}<p class="atlas-haltung">{{ bm.haltung }}</p>{% endif %}
     <nav class="atlas-seitennav" aria-label="{{ bm.titel }}">
       <ul>
@@ -45,6 +47,10 @@ eleventyComputed:
         <ul>
           {% for q in bm.pruefragen %}
           <li>{% if q.art == "rahmen" %}<span class="atlas-baum__art">{{ b.uebersicht.rahmen }}:</span> {% endif %}{{ q.frage }}
+            {%- if q.feld == "inhalt" %}
+            {#- the arts of content, fixed order, each linking to its card -#}
+            {{ inhaltswerte(bm | inhaltsartenWerte(alle)) }}
+            {%- endif %}
             {%- if q.feld == "hinsicht" %}
             {#- the values of "Hinsicht", each a jump link to its group below -#}
             <span class="atlas-hinsichtwerte">{% for h in bm.hinsichten | hinsichtenSchwerpunktZuerst %}{% if h.schwerpunkt == false %}<span class="ist-nebensache">{{ h.name }} ({{ b.uebersicht.nicht_schwerpunkt }})</span>{% else %}<a href="#hinsicht-{{ h.id }}">{{ h.name }}</a>{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}</span>

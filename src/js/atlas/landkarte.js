@@ -12,7 +12,8 @@
 //   the hinsichten as columns, each with its cards (any number, wrapped),
 //   introduced by a sentence on the connector. The spoke for the question
 //   with feld "hinsicht" lists the hinsichten as its values, the focus ones
-//   as jump links (#lk-hinsicht-<id>) to their columns.
+//   as jump links (#lk-hinsicht-<id>) to their columns; the one with feld
+//   "inhalt" lists the arts of content, each linking to its card.
 //
 // Wide (when every spoke box gets at least SPEICHE_MIN px): spokes on an
 // arc, hinsichten side by side. Narrow: spokes in a row above the
@@ -168,12 +169,22 @@
         var text = h.schwerpunkt ? h.name : h.name + (T.nicht_schwerpunkt ? " (" + T.nicht_schwerpunkt + ")" : "");
         var groesse = h.schwerpunkt ? GROESSE.wert : GROESSE.klein;
         var zeilen = umbrechen(text, breite, groesse);
-        return { h: h, zeilen: zeilen, groesse: groesse, hoehe: hoehe(zeilen, groesse) };
+        return { href: h.schwerpunkt ? "#lk-hinsicht-" + h.id : null, zeilen: zeilen, groesse: groesse, hoehe: hoehe(zeilen, groesse) };
+      });
+    }
+    // The question about the content lists the arts of content (fixed order
+    // from the data), each linking to its card; drafts without a link.
+    function inhaltWerte(breite) {
+      return (daten.inhaltsarten || []).map(function (a) {
+        var groesse = a.url ? GROESSE.wert : GROESSE.klein;
+        var zeilen = umbrechen(a.name, breite, groesse);
+        return { href: a.url, zeilen: zeilen, groesse: groesse, hoehe: hoehe(zeilen, groesse) };
       });
     }
     spokes.forEach(function (q) {
       var zeilen = umbrechen(q.frage, spokeB - 2 * PAD, GROESSE.text);
-      var werte = q.feld === "hinsicht" ? hinsichtWerte(spokeB - 2 * PAD - 8) : [];
+      var werte = q.feld === "hinsicht" ? hinsichtWerte(spokeB - 2 * PAD - 8)
+        : q.feld === "inhalt" ? inhaltWerte(spokeB - 2 * PAD - 8) : [];
       var textH = hoehe(zeilen, GROESSE.text);
       if (werte.length) textH += 6 + werte.reduce(function (s, w) { return s + w.hoehe + 2; }, 0);
       spokeBoxen.push({ q: q, zeilen: zeilen, werte: werte, textH: textH, h: textH + 2 * PAD });
@@ -257,15 +268,15 @@
       if (s.werte.length) ty += 6;
       s.werte.forEach(function (w) {
         var ziel = g;
-        if (w.h.schwerpunkt) {
-          ziel = g.append("a").attr("href", "#lk-hinsicht-" + w.h.id).attr("class", "lk-link lk-wertlink");
+        if (w.href) {
+          ziel = g.append("a").attr("href", w.href).attr("class", "lk-link lk-wertlink");
           var breiteW = d3.max(w.zeilen, function (z) { return z.length; }) * zeichenProPx * w.groesse;
           ziel.append("rect").attr("class", "lk-wertlink-flaeche")
             .attr("x", s.cx - breiteW / 2 - 4).attr("y", ty - 1)
             .attr("width", breiteW + 8).attr("height", w.hoehe + 2).attr("rx", 4);
         }
         schreibe(ziel, w.zeilen, s.cx, ty, w.groesse,
-          w.h.schwerpunkt ? "lk-wert lk-wertlink-text" : "lk-klein", "middle");
+          w.href ? "lk-wert lk-wertlink-text" : "lk-klein", "middle");
         ty += w.hoehe + 2;
       });
     });
